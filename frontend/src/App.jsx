@@ -17,7 +17,7 @@ const App = () => {
   return (
     <div>
       <h1>Backend Data:</h1>
-        {data.map(info => info.name)}
+      {data.map(info => info.name)}
     </div>
   )
 }
