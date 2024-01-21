@@ -18,13 +18,5 @@ def get_data():
     data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
     return jsonify(data)
 
-import controllers.clients
-
-@app.route('/api/data')
-def get_data():
-    """ Main data page """
-    data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
-    return jsonify(data)
-
 if __name__ == '__main__':
     app.run()
