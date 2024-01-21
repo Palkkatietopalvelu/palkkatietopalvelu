@@ -1,8 +1,8 @@
 """ Application Database """
 
+from os import getenv
 from flask_sqlalchemy import SQLAlchemy
+from app import app
 
-db = SQLAlchemy()
-
-def init_db(app):
-    db.init_app(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+db = SQLAlchemy(app)
