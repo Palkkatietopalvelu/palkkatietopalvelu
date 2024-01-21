@@ -1,4 +1,5 @@
-# backend/app.py
+""" backend/app.py """
+
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -10,6 +11,7 @@ CORS(app)
 
 @app.route('/api/data')
 def get_data():
+    """ Main data page """
     data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
     return jsonify(data)
 
