@@ -1,8 +1,10 @@
-FROM python:3.8
+FROM python:3.10
 
 WORKDIR /app
 
 ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=5000
 
 COPY poetry.lock pyproject.toml /app/
 
