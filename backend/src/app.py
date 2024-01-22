@@ -3,11 +3,20 @@
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
+from controllers.login import login_blueprint
+from controllers.users import users_blueprint
+from db import init_db
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.secret_key = getenv("SECRET_KEY")
 CORS(app)
+
+init_db(app)
+
+app.register_blueprint(login_blueprint)
+app.register_blueprint(users_blueprint)
 
 @app.route('/api/data')
 def get_data():
