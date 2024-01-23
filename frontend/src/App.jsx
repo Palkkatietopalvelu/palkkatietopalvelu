@@ -10,6 +10,8 @@ import Menu from './components/Menu'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
+import AddClient from './components/AddClient'
+import ClientsList from './components/ClientsList'
 
 const App = () => {
   const padding = {

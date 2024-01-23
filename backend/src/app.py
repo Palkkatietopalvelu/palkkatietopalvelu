@@ -15,6 +15,7 @@ init_db(app)
 import controllers.clients
 import controllers.users
 import controllers.login
+import controllers.clients
 
 @app.route('/api/data')
 def get_data():
