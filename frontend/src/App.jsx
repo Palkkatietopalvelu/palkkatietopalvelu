@@ -60,7 +60,9 @@ const App = () => {
     event.preventDefault()
     try {
       const newUser = await userService.create({
-        username: newUsername, password: newPassword
+        username: newUsername,
+        password: newPassword,
+        role: 1
       })
       setNewUsername('')
       setNewPassword('')
