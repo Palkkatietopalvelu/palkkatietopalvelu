@@ -13,12 +13,5 @@ CREATE TABLE customers (
   phonenumber TEXT,
   bi_code TEXT,
   deadline DATE,
-  payperiod TEXT,
-  material_id INTEGER
-); 
-
-CREATE TABLE salarydata (
-  id SERIAL PRIMARY KEY,
-  material_id INTEGER REFERENCES customers,
-  delivered BOOLEAN
+  payperiod TEXT
 );
