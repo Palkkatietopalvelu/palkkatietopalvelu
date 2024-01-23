@@ -18,6 +18,7 @@ def get_data():
     data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
     return jsonify(data)
 
+import controllers.clients
 
 if __name__ == '__main__':
     app.run()
