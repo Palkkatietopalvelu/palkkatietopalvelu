@@ -10,7 +10,7 @@ def get_clients():
 
 def get_client_data(client_id: int):
     sql = text("""SELECT company, email, phonenumber, bi_code, deadline, payperiod
-               FROM customers WHERE id=:id""")
+               FROM clients WHERE id=:id""")
     result = db.session.execute(sql, {"id": client_id}).fetchone()
     if result:
         columns = ["company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]

@@ -14,14 +14,13 @@ def get_clients():
 def get_client(client_id):
     try:
         client_data = clients.get_client_data(client_id)
-        print(client_data)
         if client_data:
             return jsonify(client_data), 200
         return jsonify({'message': 'Asiakasta ei löytynyt'}), 404
     except Exception as error:
         return str(error), 400
 
-@app.route("/api/add", methods=["POST"])
+@app.route("/api/client", methods=["POST"])
 def add_client():
     try:
         client_data = request.json
