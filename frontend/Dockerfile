@@ -8,6 +8,8 @@ RUN npm ci
 
 RUN npm run build
 
+RUN npm install serve --global
+
 EXPOSE 5173
 
-CMD [ "npm", "run", "host" ]
+CMD [ "serve","-s","dist" ]
