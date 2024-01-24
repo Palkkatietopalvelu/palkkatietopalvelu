@@ -20,7 +20,7 @@ const ClientsList = () => {
       <div>
         {clients.map((client) => (
           <div key={client.id}>
-            <Link to={`client/${client.id}`}>
+            <Link to={`/client/${client.id}`}>
               {client.company}
             </Link>
           </div>
