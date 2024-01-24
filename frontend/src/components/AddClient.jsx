@@ -8,7 +8,6 @@ const AddClient = () => {
   const [newBiCode, setNewBiCode] = useState('')
   const [newDeadline, setNewDeadline] = useState('')
   const [newPayperiod, setNewPayperiod] = useState('')
-  const [newMaterialId, setNewMaterialId] = useState('')
 
   const handleCompanyChange = (event) => {
     setNewCompany(event.target.value)
@@ -34,10 +33,6 @@ const AddClient = () => {
     setNewPayperiod(event.target.value)
   }
 
-  const handleMaterialIdChange = (event) => {
-    setNewMaterialId(event.target.value)
-  }
-
   const handleAddClient = async (event) => {
     event.preventDefault()
     try {
@@ -47,8 +42,7 @@ const AddClient = () => {
         phonenumber: newPhonenumber,
         bi_code: newBiCode,
         deadline: newDeadline,
-        payperiod: newPayperiod,
-        material_id: newMaterialId
+        payperiod: newPayperiod
       }
       console.log(newClient)
       await clientService.add(newClient)
@@ -58,7 +52,6 @@ const AddClient = () => {
       setNewBiCode('')
       setNewDeadline('')
       setNewPayperiod('')
-      setNewMaterialId('')
     } catch (exeption) {
       console.log('ei toiminut')
     }
@@ -86,10 +79,6 @@ const AddClient = () => {
     <br/>
     <label>
           Palkkakausi: <input name="payperiodInput" value={newPayperiod} onChange={handlePayperiodChange} />
-    </label>
-    <br/>
-    <label>
-          Palkkatietojen tunnus: <input name="materialidInput" value={newMaterialId} onChange={handleMaterialIdChange} />
     </label>
     <div>
       <button type="submit">lisää</button>
