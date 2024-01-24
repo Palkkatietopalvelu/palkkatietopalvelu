@@ -5,7 +5,7 @@ CREATE TABLE users (
   role INTEGER
 );
 
-CREATE TABLE customers (
+CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   company TEXT,
   email TEXT,
