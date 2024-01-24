@@ -7,7 +7,6 @@ CREATE TABLE users (
 
 CREATE TABLE customers (
   id SERIAL PRIMARY KEY,
-  role INTEGER REFERENCES users,
   company TEXT,
   email TEXT,
   phonenumber TEXT,
