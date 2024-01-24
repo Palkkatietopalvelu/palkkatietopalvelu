@@ -3,10 +3,20 @@ from sqlalchemy.sql import text
 from db import db
 
 def get_all_clients_from_db():
-    sql = text("SELECT company FROM customers")
+    sql = text("SELECT id, company FROM customers")
     result = db.session.execute(sql)
-    all_companies = [row[0] for row in result.fetchall()]
-    return all_companies
+    all_clients = [{"id": row[0], "company": row[1]} for row in result.fetchall()]
+    return all_clients
+
+def get_client_data(id: int):
+    sql = text("SELECT company, email, phonenumber, bi_code, deadline, payperiod FROM customers WHERE id=:id")
+    result = db.session.execute(sql, {"id": id}).fetchone()
+    if result:
+        columns = ["company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
+        client_data = dict(zip(columns, result))
+        return client_data
+    else:
+        return None
 
 def add_new_client(client_data):
     deadline_str = client_data.get("deadline")
@@ -21,4 +31,3 @@ def add_new_client(client_data):
                                 "deadline": deadline,
                                 "payperiod": client_data.get("payperiod")})
     db.session.commit()
-    

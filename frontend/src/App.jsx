@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import AddClient from './components/AddClient'
 import ClientsList from './components/ClientsList'
+import Client from './components/Client'
 
 const App = () => {
   return (
@@ -15,8 +16,9 @@ const App = () => {
       </div>
 
       <Routes>
-        <Route path="/all_clients" element={<ClientsList />} />
+        <Route path="/home" element={<ClientsList />} />
         <Route path="/add_client" element={<AddClient />} />
+        <Route path="/home/client/:id" element={<Client />} />
       </Routes>
 
     </Router>
