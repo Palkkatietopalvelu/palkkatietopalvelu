@@ -1,8 +1,8 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/client'
+const baseUrl = 'http://localhost:5000/api/add'
 
-const add = async credentials => {
-  const response = await axios.post(baseUrl, credentials)
+const add = async object => {
+  const response = await axios.post(baseUrl, object)
   return response.data
 }
 

@@ -1,26 +1,28 @@
-import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route, Link
 } from 'react-router-dom'
-import AddClient from './components/AddClient'
+import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
 
 const App = () => {
+  const padding = {
+    paddingRight: 5
+  }
+
   return (
     <Router>
       <div>
-        <Link to="/add_client">add client</Link>
-
+        <Link style={padding} to="/add">add client</Link>
+        <Link style={padding} to="/clients">clients</Link>
       </div>
-
-      <Routes>
-        <Route path="/home" element={<ClientsList />} />
-        <Route path="/add_client" element={<AddClient />} />
-        <Route path="/home/client/:id" element={<Client />} />
-      </Routes>
-
+        <Routes>
+          <Route path="/home" element={<ClientsList />} />
+          <Route path="/clients" element={<ClientsList />} />
+          <Route path="/add" element={<ClientForm />} />
+          <Route path="/home/client/:id" element={<Client />} />
+        </Routes>
     </Router>
   )
 }

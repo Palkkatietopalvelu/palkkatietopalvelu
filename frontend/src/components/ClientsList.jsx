@@ -9,16 +9,9 @@ const ClientsList = () => {
   const [clients, setClients] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await clientsService.get()
-        setClients(data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    fetchData()
+    clientsService.get().then(clients => {
+      setClients(clients)
+    })
   }, [])
 
   return (
