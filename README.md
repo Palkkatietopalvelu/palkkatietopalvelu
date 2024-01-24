@@ -4,21 +4,30 @@
 * Palvelu muistuttaa asiakasta puuttuvista tiedoista automaattisesti eräpäivän lähestyessä.
 ## Asennus ja käynnistysohjeet
 
-Kloonaa repo ja aja seuraavat komennot:
+- Kloonaa repo
+- Luo .env-tiedosto ja lisää sinne nämä asiat:
+  >DATABASE_URL="sinun_osoite"
+  >
+  >SECRET_KEY="sinun_salainen_avain"
+  >
+  >SECRET="toinen_avain"
+
+  .env-tiedosto on henkilökohtainen, älä ikinä jaa sitä mihinkään.
+  DATABASE_URLin määrittelemiseen tietoa [täällä](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING)
+
+- Aja seuraavat komennot:
 
 ### backend:
 
-python3 -m venv venv
-
-source venv/bin/activate
-
-flask run
+> poetry install
+>
+> poetry run invoke start
 
 ### frontend:
 
-npm install
+> npm install
 
-npm run dev
+> npm run dev
 
 ## Backlogit
 [backlog](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)
