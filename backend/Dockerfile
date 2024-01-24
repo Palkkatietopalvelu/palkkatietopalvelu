@@ -16,4 +16,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD [ "poetry", "run", "flask", "--app", "src/app.py", "run"]
+CMD ["poetry", "run", "gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "src.app:app"]

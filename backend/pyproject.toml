@@ -23,6 +23,7 @@ werkzeug = "^3.0.1"
 robotframework = "^7.0"
 robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
+gunicorn = "^21.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
