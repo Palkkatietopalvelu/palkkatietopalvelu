@@ -8,7 +8,9 @@ ENV FLASK_RUN_PORT=5000
 
 COPY poetry.lock pyproject.toml /app/
 
-RUN pip install poetry && poetry install
+RUN pip install poetry  \
+    && poetry config virtualenvs.create false \
+    && poetry install
 
 COPY . .
 
