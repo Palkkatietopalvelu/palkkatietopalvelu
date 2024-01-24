@@ -8,15 +8,15 @@ def get_all_clients_from_db():
     all_clients = [{"id": row[0], "company": row[1]} for row in result.fetchall()]
     return all_clients
 
-def get_client_data(id: int):
-    sql = text("SELECT company, email, phonenumber, bi_code, deadline, payperiod FROM customers WHERE id=:id")
-    result = db.session.execute(sql, {"id": id}).fetchone()
+def get_client_data(client_id: int):
+    sql = text("""SELECT company, email, phonenumber, bi_code, deadline, payperiod
+               FROM customers WHERE id=:id""")
+    result = db.session.execute(sql, {"id": client_id}).fetchone()
     if result:
         columns = ["company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
         client_data = dict(zip(columns, result))
         return client_data
-    else:
-        return None
+    return None
 
 def add_new_client(client_data):
     deadline_str = client_data.get("deadline")

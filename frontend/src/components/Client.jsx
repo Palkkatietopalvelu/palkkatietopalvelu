@@ -19,7 +19,7 @@ const Client = () => {
         setCompany(data.company)
         setEmail(data.email)
         setPhonenumber(data.phonenumber)
-        setBiCode(data.biCode)
+        setBiCode(data.bi_code)
         setDeadline(data.deadline)
         setPayperiod(data.payperiod)
       } catch (error) {

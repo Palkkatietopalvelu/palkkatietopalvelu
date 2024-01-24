@@ -17,8 +17,7 @@ def get_client(client_id):
         print(client_data)
         if client_data:
             return jsonify(client_data), 200
-        else:
-            return jsonify({'message': 'Asiakasta ei löytynyt'}), 404
+        return jsonify({'message': 'Asiakasta ei löytynyt'}), 404
     except Exception as error:
         return str(error), 400
 

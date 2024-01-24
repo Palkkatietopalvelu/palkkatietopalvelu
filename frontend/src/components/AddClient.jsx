@@ -1,6 +1,18 @@
 import clientService from '../services/client'
 import { useState } from 'react'
 
+const isValidDate = (dateString) => {
+  const regex = /^\d{4}-\d{2}-\d{2}$/
+  if (!regex.test(dateString)) return false
+  return true
+}
+
+const isValidBicode = (bicode) => {
+  const regex = /^\d{7}-\d{1}$/
+  if (!regex.test(bicode)) return false
+  return true
+}
+
 const AddClient = () => {
   const [newCompany, setNewCompany] = useState('')
   const [newEmail, setNewEmail] = useState('')
@@ -44,14 +56,22 @@ const AddClient = () => {
         deadline: newDeadline,
         payperiod: newPayperiod
       }
-      console.log(newClient)
-      await clientService.add(newClient)
-      setNewCompany('')
-      setNewEmail('')
-      setNewPhonenumber('')
-      setNewBiCode('')
-      setNewDeadline('')
-      setNewPayperiod('')
+
+      if (!isValidDate(newDeadline)) {
+        console.log('Päivämäärä ei ole oikeassa muodossa (yyyy-mm-dd)')
+      }
+      else if (!isValidBicode(newBiCode)){
+        console.log('Y-tunnus ei ole oikeassa muodossa')
+      }
+      else {
+        await clientService.add(newClient)
+        setNewCompany('')
+        setNewEmail('')
+        setNewPhonenumber('')
+        setNewBiCode('')
+        setNewDeadline('')
+        setNewPayperiod('')
+      }
     } catch (exeption) {
       console.log('ei toiminut')
     }
@@ -62,7 +82,7 @@ const AddClient = () => {
     </label>
     <br/>
     <label>
-          Sähköposti: <input name="emailInput" value={newEmail} onChange={handleEmailChange} />
+          Sähköposti: <input name="emailInput" value={newEmail} type="email" onChange={handleEmailChange} />
     </label>
     <br/>
     <label>
@@ -70,11 +90,11 @@ const AddClient = () => {
     </label>
     <br/>
     <label>
-          Y-tunnus: <input name="bicodeInput" value={newBiCode} onChange={handleBiCodeChange} />
+          Y-tunnus: <input name="bicodeInput" value={newBiCode} placeholder="1234567-8" onChange={handleBiCodeChange} />
     </label>
     <br/>
     <label>
-          Eräpäivä: <input name="deadlineInput" value={newDeadline} onChange={handleDeadlineChange} />
+          Eräpäivä: <input name="deadlineInput" value={newDeadline} placeholder="yyyy-mm-dd" onChange={handleDeadlineChange} />
     </label>
     <br/>
     <label>
