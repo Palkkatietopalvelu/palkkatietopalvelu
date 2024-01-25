@@ -25,6 +25,5 @@ __pycache__/
 *.njsproj
 *.sln
 *.sw?
-
-
 requests
+**/migrations/
