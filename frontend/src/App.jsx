@@ -21,14 +21,15 @@ const App = () => {
       })
       setNewUsername('')
       setNewPassword('')
-      setSuccessMessage('User created successfully')
+      setNotification('User created successfully')
       setTimeout(() => {
-        setSuccessMessage(null)
+        setNotification(null)
       }, 3000)
     } catch (exception) {
-      setErrorMessage('Error creating user')
+      const errorMessage = exception.response?.data?.error || 'Error creating user'
+      setNotification(errorMessage)
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification(null)
       }, 3000)
     }
   }
@@ -46,18 +47,18 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setSuccessMessage(
+      setNotification(
         'login successful'
       )
       setTimeout(() => {
-        setSuccessMessage(null)
+        setNotification(null)
       }, 3000)
     } catch (exception) {
-      setErrorMessage(
+      setNotification(
         'wrong username or password'
       )
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification(null)
       }, 3000)
     }
   }
@@ -71,52 +72,22 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              id="username"
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              id="password"
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button id="login" type="submit">login</button>
-        </form>
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+        />
         <h2>Create new user</h2>
-        <form onSubmit={handleRegistration}>
-          <div>
-            username
-            <input
-              type="text"
-              value={newUsername}
-              name="NewUsername"
-              onChange={({ target }) => setNewUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              type="password"
-              value={newPassword}
-              name="NewPassword"
-              onChange={({ target }) => setNewPassword(target.value)}
-            />
-          </div>
-          <button type="submit">create</button>
-        </form>
-        <BadNotification message={errorMessage}/>
+        <RegistrationForm
+          handleRegistration={handleRegistration}
+          newUsername={newUsername}
+          setNewUsername={setNewUsername}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+        />
+        <Notification message={notification} type="error"/>
       </div>
     )
   }
