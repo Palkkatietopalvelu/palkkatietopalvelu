@@ -2,7 +2,6 @@ from app import app
 from os import getenv
 from flask_mail import Mail, Message
 
-mail = Mail(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['MAIL_SERVER']='smtp-mail.outlook.com'
 app.config['MAIL_PORT'] = 587
