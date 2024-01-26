@@ -14,8 +14,13 @@ python-dotenv = "^1.0.0"
 flask-sqlalchemy = "^3.1.1"
 psycopg2 = "^2.9.9"
 pyjwt = "^2.8.0"
+<<<<<<< HEAD
 psycopg2-binary = "^2.9.9"
 werkzeug = "^3.0.1"
+=======
+robotframework = "^7.0"
+robotframework-seleniumlibrary = "^6.2.0"
+>>>>>>> 4329d7af24999abf857e4b68079f6bf86ca82d48
 
 
 [tool.poetry.group.dev.dependencies]
