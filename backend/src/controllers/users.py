@@ -1,13 +1,14 @@
 from flask import request, jsonify
 from models.user import User, db
-from flask_bcrypt import Bcrypt
+from app import app
+from werkzeug.security import generate_password_hash
 
-bcrypt = Bcrypt()
-
+@app.route('/api/users', methods=['GET'])
 def get_users():
     users = User.query.all()
     return jsonify([user.serialize() for user in users])
 
+@app.route('/api/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     username = data['username']
@@ -21,7 +22,7 @@ def create_user():
     if existing_user:
         return jsonify({"error": "Username already exists"}), 400
 
-    hashed_password = bcrypt.generate_password_hash(password)
+    hashed_password = generate_password_hash(password)
     new_user = User(username=username, password=hashed_password, role=role)
     db.session.add(new_user)
     db.session.commit()
