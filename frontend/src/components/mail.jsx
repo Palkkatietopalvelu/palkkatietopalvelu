@@ -1,23 +1,30 @@
+import { useField } from '../hooks/index'
+import mailService from '../services/mail'
+
 const Mail = () => {
-    const id = useParams().id
-    const [client, setClient] = useState({})
-  
-    useEffect(() => {
-      clientService.get(id).then(data => {
-        setClient(data)
-      })
-    }, [])
-  
+  const recipient = useField()
+  const message = useField()
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    {
+      const newMessage = {
+        recipient: recipient.value,
+        message: message.value
+      }
+      await mailService.add(newMessage)
+    }
+  }
+
     return (
       <div>
-        <h1>{client.company}</h1>
-        <h4>Yhteystiedot</h4>
-        <p>Sähköposti: {client.email}</p>
-        <p>Puhelinnumero: {client.phonenumber}</p>
-        <h4>Laskutustiedot</h4>
-        <p>Y-tunnus: {client.bi_code}</p>
-        <p>Eräpäivä: {client.deadline}</p>
-        <p>Palkkakausi: {client.payperiod}</p>
+        <form onSubmit={handleSubmit}>
+          <label>Vastaanottaja: <input {...recipient} /></label><br/>
+          <label>Viesti: <input {...message} /></label>
+          <div>
+            <button type="submit">lisää</button>
+          </div>
+        </form>
       </div>
     )
   }

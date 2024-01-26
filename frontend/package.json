@@ -8,10 +8,14 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "host":"vite --host"
+    "host": "vite --host"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.6.5",
+=======
+    "axios": "^1.6.7",
+>>>>>>> a06c215 (Initial front for sending e-mails)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3"

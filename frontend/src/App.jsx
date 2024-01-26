@@ -15,14 +15,16 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Link style={padding} to="/add">add client</Link>
-        <Link style={padding} to="/clients">clients</Link>
+        <Link style={padding} to="/mail">mail</Link>
       </div>
         <Routes>
+<<<<<<< HEAD
           <Route path="/home" element={<ClientsList />} />
           <Route path="/clients" element={<ClientsList />} />
           <Route path="/add" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
+=======
+>>>>>>> a06c215 (Initial front for sending e-mails)
           <Route path="/mail" element={<Mail />} />
         </Routes>
     </Router>

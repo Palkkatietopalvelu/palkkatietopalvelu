@@ -1,3 +1,4 @@
+from flask import request, jsonify
 from app import app
 from os import getenv
 from flask_mail import Mail, Message
@@ -11,10 +12,11 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
-@app.route('/mail')
+@app.route('/api/mail', methods = ['GET', 'POST'])
 def send_mail():
     """ mailpga """
-    msg = Message('Hello', sender = app.config['MAIL_USERNAME'], recipients = [app.config['MAIL_USERNAME']])
-    msg.body = 'Hello, this is flaskmailtest'
+    mail_object = request.json
+    msg = Message('Hello', sender = app.config['MAIL_USERNAME'], recipients = [mail_object['recipient']])
+    msg.body = mail_object['recipient']
     mail.send(msg)
     return "Sent"
