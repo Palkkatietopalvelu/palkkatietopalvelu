@@ -15,8 +15,12 @@ Open And Configure Browser
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
 
-Main Page Should Be Open
-    Title Should Be  Log in to application
+Logged In Page Should Be Open
+    Title Should Be  Vite + React
+    Page Should Contain  logged in
 
-Go To Starting Page
+Go To Home Page
     Go To  ${HOME_URL}
+
+Home Page Should Be Open
+    Page Should Contain  Log in to application
