@@ -22,5 +22,11 @@ Logged In Page Should Be Open
 Go To Home Page
     Go To  ${HOME_URL}
 
+Go To Login Page
+    Go To  ${HOME_URL}/login
+
+Go To Register Page
+    Go To  ${HOME_URL}/register
+
 Home Page Should Be Open
-    Page Should Contain  Log in to application
+    Page Should Contain  Palkkatietopalvelu

@@ -13,6 +13,7 @@ Go To Home Page
 Login With Correct Credentials
     Go To Home Page
     # NB! create user: "masa", password: "masa123" in the browser before tests
+    Click Link  login
     Set Username  masa
     Set Password  masa123
     Submit Credentials
@@ -20,7 +21,7 @@ Login With Correct Credentials
     Close Browser
 
 Login Should Fail With Incorrect Username
-    Go To Home Page
+    Go To Login Page
     Set Username  pekka
     Set Password  masa123
     Submit Credentials
@@ -28,7 +29,7 @@ Login Should Fail With Incorrect Username
     Close Browser
 
 Login Should Fail With Incorrect Password
-    Go To Home Page
+    Go To Login Page
     Set Username  masa
     Set Password  wrong
     Submit Credentials
@@ -36,7 +37,7 @@ Login Should Fail With Incorrect Password
     Close Browser
 
 Logout Should Succeed After Login
-    Go To Home Page
+    Go To Login Page
     Set Username  masa
     Set Password  masa123
     Submit Credentials
@@ -50,16 +51,16 @@ Login Should Succeed
     Logged In Page Should Be Open
 
 Login Should Fail
-    Page Should Contain  wrong username or password
+    Page Should Contain  invalid username or password
 
 Logout Should Succeed
-    Page Should Contain  Log in to application
+    Page Should Contain  login
 
 Submit Credentials
     Click Button  login
 
 Log Out
-    Click Button  logout
+    Click Link  logout
 
 Set Username
     [Arguments]  ${username}

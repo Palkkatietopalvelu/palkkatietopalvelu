@@ -7,52 +7,46 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Create Account Page Can Be Opened
     Go To Home Page
-    Click Create Account Button
-    Page Should Contain  Create a new user account
+    Click Link  register
+    Page Should Contain  Create a new user
 
 New Account Can Be Created
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  antti56
     Set Password  antti123
     Submit Credentials
     Create Account Should Succeed
 
 Create New Account Fails With One Letter Username
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  a
     Set Password  pass123
     Submit Credentials
     Create Account Should Fail With Short Username And Password
 
 Create New Account Fails With One Letter Password
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  bertta
     Set Password  p
     Submit Credentials
     Create Account Should Fail With Short Username And Password
 
 Create New Account Fails With One Letter Username And Password
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  x
     Set Password  y
     Submit Credentials
     Create Account Should Fail With Short Username And Password
 
 Create New Account Fails With Username Too Long
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  thisusernameisverylong
     Set Password  pass123
     Submit Credentials
     Create Account Should Fail With Long Username And Password
 
 Create New Account Fails With Password Too Long
-    Go To Home Page
-    Click Create Account Button
+    Go To Register Page
     Set Username  cecilia
     Set Password  thispasswordisverylong123
     Submit Credentials
@@ -74,11 +68,11 @@ Click Create Account Button
 
 Set Username
     [Arguments]  ${username}
-    Input Text  NewUsername  ${username}
+    Input Text  username  ${username}
 
 Set Password
     [Arguments]  ${password}
-    Input Password  NewPassword  ${password}
+    Input Password  password  ${password}
 
 Submit Credentials
     Click Button  create
