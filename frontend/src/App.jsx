@@ -24,6 +24,7 @@ const App = () => {
       setNotification('User created successfully')
       setTimeout(() => {
         setNotification(null)
+        setCreateUser(false)
       }, 3000)
     } catch (exception) {
       const errorMessage = exception.response?.data?.error || 'Error creating user'
@@ -36,7 +37,6 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-
     try {
       const user = await loginService.login({
         username, password
@@ -68,7 +68,7 @@ const App = () => {
     window.location.reload()
   }
 
-  if (user === null) {
+  if (user === null && createUser === false) {
     return (
       <div>
         <h2>Log in to application</h2>
@@ -80,6 +80,35 @@ const App = () => {
           setPassword={setPassword}
         />
         <h2>Create new user</h2>
+        <RegistrationForm
+          handleRegistration={handleRegistration}
+          newUsername={newUsername}
+          setNewUsername={setNewUsername}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+        />
+        <Notification message={notification} type="error"/>
+
+        <hr />
+        <h2>New create & login structure</h2>
+        <h3>Log in to application</h3>
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+        />
+        <Notification message={notification} type="error"/>
+        <p>Not a user yet? Create your account here</p>
+        <button onClick={() => setCreateUser(true)}>Create account</button>
+      </div>
+    )
+  }
+  else if (user === null && createUser === true) {
+    return (
+      <div>
+        <h2>Create a new user account</h2>
         <RegistrationForm
           handleRegistration={handleRegistration}
           newUsername={newUsername}
