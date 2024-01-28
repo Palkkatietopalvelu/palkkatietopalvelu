@@ -13,6 +13,9 @@ const App = () => {
   const [newPassword, setNewPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
+  // createAccount is by default false but if user wants to create an account,
+  // it is set to true
+  const [createUser, setCreateUser] = useState(false)
 
   useEffect(() => {
     if (user !== null) {
@@ -47,6 +50,7 @@ const App = () => {
       setNotification('User created successfully')
       setTimeout(() => {
         setNotification(null)
+        setCreateUser(false)
       }, 3000)
     } catch (exception) {
       const errorMessage = exception.response?.data?.error || 'Error creating user'
@@ -59,7 +63,6 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-
     try {
       const user = await loginService.login({
         username, password
@@ -91,7 +94,7 @@ const App = () => {
     window.location.reload()
   }
 
-  if (user === null) {
+  if (user === null && createUser === false) {
     return (
       <div>
         <h2>Log in to application</h2>
@@ -111,6 +114,35 @@ const App = () => {
           setNewPassword={setNewPassword}
         />
         <Notification message={notification} type="error"/>
+
+        <hr />
+        <h2>New create & login structure</h2>
+        <h3>Log in to application</h3>
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+        />
+        <Notification message={notification} type="error"/>
+        <p>Not a user yet? Create your account here</p>
+        <button onClick={() => setCreateUser(true)}>Create account</button>
+      </div>
+    )
+  }
+  else if (user === null && createUser === true) {
+    return (
+      <div>
+        <h2>Create a new user account</h2>
+        <RegistrationForm
+          handleRegistration={handleRegistration}
+          newUsername={newUsername}
+          setNewUsername={setNewUsername}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+        />
+        <Notification message={notification} type="error"/>
       </div>
     )
   }
@@ -118,10 +150,10 @@ const App = () => {
   return (
     <div>
       <div>
-        <h1>blogs</h1>
+        <h1>User page</h1>
         <Notification message={setNotification}/>
         <p>
-          {user.name} logged in
+          {user.username} logged in <br />
           <button onClick={handleLogout}>logout</button>
         </p>
       </div>
