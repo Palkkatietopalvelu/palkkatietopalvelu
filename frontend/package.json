@@ -11,11 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.6.5",
-=======
     "axios": "^1.6.7",
->>>>>>> a06c215 (Initial front for sending e-mails)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3"

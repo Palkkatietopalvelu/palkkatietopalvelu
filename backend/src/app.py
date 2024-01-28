@@ -7,12 +7,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-<<<<<<< HEAD
 
 import controllers.clients
-=======
 import controllers.mail
->>>>>>> 61b26f9 (Move mail to own module)
 
 @app.route('/api/data')
 def get_data():
