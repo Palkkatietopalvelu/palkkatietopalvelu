@@ -13,6 +13,12 @@ const isValidBicode = (bicode) => {
   return true
 }
 
+const isValidPhonenumber = (phonenumber) => {
+  const regex = /^\+\d{1,3}\s\d{8,12}$/
+  if (!regex.test(phonenumber)) return false
+  return true
+}
+
 const ClientForm = () => {
   const company = useField()
   const email = useField()
@@ -36,12 +42,14 @@ const ClientForm = () => {
         console.log('Päivämäärä ei ole oikeassa muodossa (yyyy-mm-dd)')
       } else if (!isValidBicode(bicode.value)) {
         console.log('Y-tunnus ei ole oikeassa muodossa')
+      } else if (!isValidPhonenumber(phonenumber.value)) {
+        console.log('Puhelinnumero ei ole oikeassa muodossa (plusmerkki suuntakoodi välilyönti puhelinnumero')
       } else {
         await clientService.add(newClient)
         resetFields(event)
       }
     } catch (exception) {
-      console.log('ei toiminut')
+      console.log(exception.response)
     }
   }
 
@@ -58,12 +66,12 @@ const ClientForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>Yritys: <input {...company} /></label><br/>
-        <label>Sähköposti: <input {...email} /></label><br/>
-        <label>Puhelinnumero: <input {...phonenumber} /></label><br/>
-        <label>Y-tunnus: <input placeholder="1234567-8" {...bicode} /></label><br/>
-        <label>Eräpäivä: <input placeholder="yyyy-mm-dd" {...deadline} /></label><br/>
-        <label>Palkkakausi: <input {...payperiod} /></label>
+        <label>Yritys: <input {...company} required/></label><br/>
+        <label>Sähköposti: <input {...email} required/></label><br/>
+        <label>Puhelinnumero: <input placeholder="+358 451234567" {...phonenumber} required/></label><br/>
+        <label>Y-tunnus: <input placeholder="1234567-8" {...bicode} required/></label><br/>
+        <label>Eräpäivä: <input placeholder="yyyy-mm-dd" {...deadline} required/></label><br/>
+        <label>Palkkakausi: <input {...payperiod} required/></label>
         <div>
           <button type="submit">lisää</button>
         </div>
