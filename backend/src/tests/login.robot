@@ -13,7 +13,7 @@ Go To Home Page
 Login With Correct Credentials
     Go To Home Page
     # NB! create user: "masa", password: "masa123" in the browser before tests
-    Click Link  login
+    Click Link  kirjaudu sisään
     Set Username  masa
     Set Password  masa123
     Submit Credentials
@@ -51,7 +51,7 @@ Login Should Succeed
     Logged In Page Should Be Open
 
 Login Should Fail
-    Page Should Contain  wrong username or password
+    Page Should Contain  Väärä käyttäjätunnus tai salasana
 
 Logout Should Succeed
     Page Should Contain  login

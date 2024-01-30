@@ -7,7 +7,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Create Account Page Can Be Opened
     Go To Home Page
-    Click Link  register
+    Click Link  rekisteröidy
     Page Should Contain  Create a new user
 
 New Account Can Be Created
@@ -55,7 +55,7 @@ Create New Account Fails With Password Too Long
 
 *** Keywords ***
 Create Account Should Succeed
-    Page Should Contain  User created successfully
+    Page Should Contain  Käyttäjä luotu onnistuneesti
 
 Create Account Should Fail With Short Username And Password
     Page Should Contain  Username and password must be at least 3 characters long

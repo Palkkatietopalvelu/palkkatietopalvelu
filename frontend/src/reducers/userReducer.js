@@ -30,7 +30,7 @@ export const loginUser = (credentials) => {
       dispatch(set(user))
       return true
     } catch (e) {
-      dispatch(notify('wrong username or password'))
+      dispatch(notify('Väärä käyttäjätunnus tai salasana'))
       return false
     }
   }
@@ -54,9 +54,9 @@ export const registerUser = (credentials) => {
   return async dispatch => {
     try {
       await userService.create(credentials)
-      dispatch(notify('User created successfully'))
+      dispatch(notify('Käyttäjä luotu onnistuneesti'))
     } catch (e) {
-      dispatch(notify(e.response?.data?.error || 'Error creating user'))
+      dispatch(notify(e.response?.data?.error || 'Virhe käyttäjän luonnissa'))
     }
   }
 }
