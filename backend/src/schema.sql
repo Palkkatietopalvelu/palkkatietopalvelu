@@ -5,20 +5,12 @@ CREATE TABLE users (
   role INTEGER
 );
 
-CREATE TABLE customers (
+CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
-  role INTEGER REFERENCES users,
   company TEXT,
   email TEXT,
   phonenumber TEXT,
   bi_code TEXT,
   deadline DATE,
-  payperiod TEXT,
-  material_id INTEGER
-); 
-
-CREATE TABLE salarydata (
-  id SERIAL PRIMARY KEY,
-  material_id INTEGER REFERENCES customers,
-  delivered BOOLEAN
+  payperiod TEXT
 );
