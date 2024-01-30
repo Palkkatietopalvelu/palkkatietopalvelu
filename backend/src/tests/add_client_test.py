@@ -1,6 +1,6 @@
 import unittest
-from app import app
 from unittest.mock import Mock
+from app import app
 
 class TestAddClient(unittest.TestCase):
     def setUp(self):

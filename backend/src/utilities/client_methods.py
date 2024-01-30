@@ -1,7 +1,8 @@
+import re
 from datetime import datetime
 from sqlalchemy.sql import text
 from db import db
-import re
+
 
 def get_clients():
     sql = text("SELECT id, company FROM clients")

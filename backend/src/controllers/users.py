@@ -1,7 +1,7 @@
 from flask import request, jsonify
+from werkzeug.security import generate_password_hash
 from models.user import User, db
 from app import app
-from werkzeug.security import generate_password_hash
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -17,7 +17,7 @@ def create_user():
 
     if len(password) < 3 or len(username) < 3:
         return jsonify({"error": "Username and password must be at least 3 characters long"}), 400
-    
+
     if len(password) > 15 or len(username) > 15:
         return jsonify({"error": "Username and password can not be over 15 characters long"}), 400
 

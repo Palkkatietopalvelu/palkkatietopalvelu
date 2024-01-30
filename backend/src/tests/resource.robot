@@ -1,6 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library  ../AccountLibrary.py
+Library  ../applibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
