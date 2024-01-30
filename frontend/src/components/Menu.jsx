@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom'
 import storageService from '../services/storage'
+import { useEffect, useState } from 'react'
 
-const Menu = ({ user }) => {
+const Menu = () => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const online = storageService.loadUser()
+    setUser(online)
+  })
+
   const handleLogout = async (event) => {
     event.preventDefault()
     storageService.removeUser()
-    window.location.reload()
   }
 
   const padding = {
