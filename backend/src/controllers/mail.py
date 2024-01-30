@@ -17,6 +17,6 @@ def send_mail():
     """ mailpga """
     mail_object = request.json
     msg = Message('Hello', sender = app.config['MAIL_USERNAME'], recipients = [mail_object['recipient']])
-    msg.body = mail_object['recipient']
+    msg.body = mail_object['message']
     mail.send(msg)
     return "Sent"
