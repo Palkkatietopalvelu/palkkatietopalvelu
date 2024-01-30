@@ -11,10 +11,6 @@ flask = "^3.0.0"
 invoke = "^2.2.0"
 flask-cors = "^4.0.0"
 python-dotenv = "^1.0.0"
-sqlalchemy = "^2.0.25"
-flask-sqlalchemy = "^3.1.1"
-psycopg2 = "^2.9.9"
-pytest = "^8.0.0"
 flask-sqlalchemy = "^3.1.1"
 psycopg2 = "^2.9.9"
 pyjwt = "^2.8.0"
@@ -23,18 +19,14 @@ werkzeug = "^3.0.1"
 robotframework = "^7.0"
 robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
-<<<<<<< HEAD
+sqlalchemy = "^2.0.25"
 gunicorn = "^21.2.0"
-=======
-pytest = "^8.0.0"
->>>>>>> dbfc2b4 (Validate inputs (back))
 
-<<<<<<< HEAD
-=======
+
 
 [tool.poetry.group.dev.dependencies]
->>>>>>> 052ca27 (main branch to add-client branch)
 pylint = "^3.0.3"
+pytest = "^7.4.4"
 
 [build-system]
 requires = ["poetry-core"]

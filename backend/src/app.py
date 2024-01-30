@@ -12,17 +12,7 @@ app.secret_key = getenv("SECRET_KEY")
 CORS(app)
 init_db(app)
 
-import controllers.clients
-import controllers.users
-import controllers.login
-import controllers.clients
-
-@app.route('/api/data')
-def get_data():
-    """ Main data page """
-    data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
-    return jsonify(data)
-
+from controllers import users, clients, login
 
 if __name__ == '__main__':
     app.run()

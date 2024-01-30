@@ -7,8 +7,10 @@ const Menu = () => {
 
   useEffect(() => {
     const online = storageService.loadUser()
-    setUser(online)
-  })
+    if (online) {
+      setUser(online)
+    }
+  }, [])
 
   const handleLogout = async (event) => {
     event.preventDefault()
@@ -24,6 +26,8 @@ const Menu = () => {
       {user ?
         <span>
           <Link style={padding} to="/">home</Link>
+          <Link style={padding} to="/clients">clients</Link>
+          <Link style={padding} to="/client">add a client</Link>
           <Link style={padding} onClick={handleLogout}>logout</Link>
           <i>{user.username} logged in&nbsp;</i></span>
         :<span>

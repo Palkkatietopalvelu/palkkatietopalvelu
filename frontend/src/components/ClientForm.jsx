@@ -49,7 +49,7 @@ const ClientForm = () => {
         resetFields(event)
       }
     } catch (exception) {
-      console.log(exception.response)
+      console.log('moi',exception)
     }
   }
 
