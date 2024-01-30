@@ -51,7 +51,7 @@ Login Should Succeed
     Logged In Page Should Be Open
 
 Login Should Fail
-    Page Should Contain  invalid username or password
+    Page Should Contain  wrong username or password
 
 Logout Should Succeed
     Page Should Contain  login

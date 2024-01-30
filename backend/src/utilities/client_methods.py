@@ -38,12 +38,12 @@ def add_client(client_data):
 
 def validate_client_data(client_data):
     if not client_data.get("company") or not client_data.get("payperiod"):
-        raise ValueError('Missing company or payperiod')
+        raise ValueError('Tietoja puuttuu')
     if not re.match("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", client_data.get("email")):
-        raise ValueError('Invalid email')
+        raise ValueError('Sähköposti ei ole oikeassa muodossa')
     if not re.match("^\+\d{1,3}\s\d{8,12}$", client_data.get("phonenumber")):
-        raise ValueError('Invalid phonenumber')
-    if not re.match("^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
-        raise ValueError('Invalid deadline')
+        raise ValueError('Puhelinnumero ei ole oikeassa muodossa (plusmerkki suuntakoodi välilyönti puhelinnumero)')
     if not re.match("^\d{7}-\d{1}$", client_data.get("bi_code")):
-        raise ValueError('Invalid bi-code')
+        raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
+    if not re.match("^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
+        raise ValueError('Eräpäivä ei ole oikeassa muodossa (yyyy-mm-dd)')
