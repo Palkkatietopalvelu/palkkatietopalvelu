@@ -1,56 +1,40 @@
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import loginService from '../services/login'
-import storageService from '../services/storage'
+import { useField } from '../hooks'
+import { loginUser } from '../reducers/userReducer'
 import Notification from './Notification'
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [notification, setNotification] = useState(null)
+  const username = useField('text')
+  const password = useField('password')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const user = useSelector(({ user }) => user)
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username, password
-      })
-      storageService.saveUser(user)
-      navigate('/')
-      window.location.reload()
-    } catch (exception) {
-      setNotification(
-        exception.response.data.error
-      )
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000)
-    }
+    dispatch(loginUser({
+      username: username.value,
+      password: password.value })).then(result => {
+      if (result) {
+        navigate('/')
+      }
+    })
   }
 
   return (
     <div>
-      {!storageService.loadUser() && <div>
+      {!user && <div>
         <h2>Log in</h2>
-        <Notification message={notification}/>
+        <Notification />
         <form onSubmit={handleLogin}>
           <div>
             username
-            <input
-              id='username'
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-            />
+            <input id='username' {...username} />
           </div>
           <div>
           password
-            <input
-              id='password'
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-            />
+            <input id='password' {...password} />
           </div>
           <button id="login" type="submit">login</button>
         </form>

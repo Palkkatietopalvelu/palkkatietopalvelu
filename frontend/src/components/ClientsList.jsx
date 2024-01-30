@@ -1,22 +1,18 @@
 import { useEffect, useState } from 'react'
-import clientsService from '../services/clients'
-import {
-  BrowserRouter as Router,
-  Routes, Route, Link
-} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const ClientsList = () => {
-  const [clients, setClients] = useState([])
+  const user = useSelector(({ user }) => user)
+  const clients = useSelector(({ clients }) => clients)
 
-  useEffect(() => {
-    clientsService.get().then(clients => {
-      setClients(clients)
-    })
-  }, [])
+  if (!user) {
+    return
+  }
 
   return (
     <div>
-      <h1>All clients:</h1>
+      <h1>Asiakkaat:</h1>
       <div>
         {clients.map((client) => (
           <div key={client.id}>

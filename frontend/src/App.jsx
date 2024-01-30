@@ -1,7 +1,11 @@
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route
 } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getUser } from './reducers/userReducer'
+import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
@@ -11,9 +15,15 @@ import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 
 const App = () => {
-  const padding = {
-    paddingRight: 5
-  }
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getClients())
+  }, [dispatch])
 
   return (
     <div>

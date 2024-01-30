@@ -1,25 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
-import clientService from '../services/client'
-
-const isValidDate = (dateString) => {
-  const regex = /^\d{4}-\d{2}-\d{2}$/
-  if (!regex.test(dateString)) return false
-  return true
-}
-
-const isValidBicode = (bicode) => {
-  const regex = /^\d{7}-\d{1}$/
-  if (!regex.test(bicode)) return false
-  return true
-}
-
-const isValidPhonenumber = (phonenumber) => {
-  const regex = /^\+\d{1,3}\s\d{8,12}$/
-  if (!regex.test(phonenumber)) return false
-  return true
-}
+import { notify } from '../reducers/notificationReducer'
+import { addClient } from '../reducers/clientsReducer'
+import Notification from './Notification'
 
 const ClientForm = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(({ user }) => user)
+
   const company = useField()
   const email = useField()
   const phonenumber = useField()
@@ -27,30 +15,24 @@ const ClientForm = () => {
   const deadline = useField()
   const payperiod = useField()
 
+  if (!user) {
+    return
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    try {
-      const newClient = {
-        company: company.value,
-        email: email.value,
-        phonenumber: phonenumber.value,
-        bi_code: bicode.value,
-        deadline: deadline.value,
-        payperiod: payperiod.value
-      }
-      if (!isValidDate(deadline.value)) {
-        console.log('Päivämäärä ei ole oikeassa muodossa (yyyy-mm-dd)')
-      } else if (!isValidBicode(bicode.value)) {
-        console.log('Y-tunnus ei ole oikeassa muodossa')
-      } else if (!isValidPhonenumber(phonenumber.value)) {
-        console.log('Puhelinnumero ei ole oikeassa muodossa (plusmerkki suuntakoodi välilyönti puhelinnumero')
-      } else {
-        await clientService.add(newClient)
+    dispatch(addClient({
+      company: company.value,
+      email: email.value,
+      phonenumber: phonenumber.value,
+      bi_code: bicode.value,
+      deadline: deadline.value,
+      payperiod: payperiod.value
+    })).then(result => {
+      if (result) {
         resetFields(event)
       }
-    } catch (exception) {
-      console.log('moi',exception)
-    }
+    })
   }
 
   const resetFields = (event) => {
@@ -65,6 +47,7 @@ const ClientForm = () => {
 
   return (
     <div>
+      <Notification />
       <form onSubmit={handleSubmit}>
         <label>Yritys: <input {...company} required/></label><br/>
         <label>Sähköposti: <input {...email} required/></label><br/>

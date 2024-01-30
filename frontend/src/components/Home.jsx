@@ -1,21 +1,13 @@
-import { useEffect, useState } from 'react'
-import storageService from '../services/storage'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
-  const [data, setData] = useState([])
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const online = storageService.loadUser()
-    setUser(online)
-  }, [])
-
+  const user = useSelector(({ user }) => user)
 
   return (
     <div>
       {user && <div>
         <div>
-          <h2>Home page</h2>
+          <h2>Kotinäkymä</h2>
         </div>
       </div>}
     </div>
