@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react'
+import storageService from '../services/storage'
 
-const Home = ({ user }) => {
+const Home = () => {
   const [data, setData] = useState([])
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const online = storageService.loadUser()
+    setUser(online)
+  })
 
   useEffect(() => {
     const fetchData = async () => {
