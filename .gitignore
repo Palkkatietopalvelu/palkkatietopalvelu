@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+log.html
+output.xml
+report.html
+*selenium-screenshot-*
 
 node_modules
 dist
