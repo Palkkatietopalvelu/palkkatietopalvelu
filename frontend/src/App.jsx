@@ -1,23 +1,24 @@
-import { useEffect, useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes, Route
+} from 'react-router-dom'
+import Menu from './components/Menu'
+import Home from './components/Home'
+import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 
 const App = () => {
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/api/data')
-      const result = await response.json()
-      console.log(result)
-      setData(result)
-    }
-
-    fetchData()
-  }, [])
-
   return (
     <div>
-      <h1>Backend Data:</h1>
-      {data.map(info => info.name)}
+      <h2>Palkkatietopalvelu</h2>
+      <Router>
+        <Menu />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
