@@ -23,7 +23,11 @@ werkzeug = "^3.0.1"
 robotframework = "^7.0"
 robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
+<<<<<<< HEAD
 gunicorn = "^21.2.0"
+=======
+pytest = "^8.0.0"
+>>>>>>> dbfc2b4 (Validate inputs (back))
 
 <<<<<<< HEAD
 =======
