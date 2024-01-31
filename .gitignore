@@ -31,4 +31,3 @@ __pycache__/
 *.sw?
 requests
 **/migrations/
-requests
