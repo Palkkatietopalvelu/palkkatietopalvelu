@@ -16,7 +16,7 @@ const ClientForm = () => {
   const payperiod = useField()
 
   if (!user) {
-    return
+    return ('Et ole kirjautunut sisään')
   }
 
   const handleSubmit = async (event) => {

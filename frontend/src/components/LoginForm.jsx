@@ -25,18 +25,18 @@ const LoginForm = () => {
   return (
     <div>
       {!user && <div>
-        <h2>Log in</h2>
+        <h2>Kirjaudu sisään</h2>
         <Notification />
         <form onSubmit={handleLogin}>
           <div>
-            username
+            käyttäjätunnus
             <input id='username' {...username} />
           </div>
           <div>
-          password
+          salasana
             <input id='password' {...password} />
           </div>
-          <button id="login" type="submit">login</button>
+          <button id="login" type="submit">kirjaudu</button>
         </form>
       </div>}
     </div>

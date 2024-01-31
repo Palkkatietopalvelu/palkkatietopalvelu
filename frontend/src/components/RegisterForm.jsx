@@ -27,18 +27,18 @@ const RegisterForm = () => {
   return (
     <div>
       {!user && <div>
-        <h2>Create a new user</h2>
+        <h2>Luo uusi käyttäjä</h2>
         <Notification />
         <form onSubmit={handleRegistration}>
           <div>
-            username
+            käyttäjätunnus
             <input id='username' {...username}/>
           </div>
           <div>
-            password
+            salasana
             <input id='password' {...password} />
           </div>
-          <button type="submit">create</button>
+          <button id='create' type="submit">luo käyttäjä</button>
         </form>
       </div>}
     </div>

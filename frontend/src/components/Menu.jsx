@@ -27,7 +27,7 @@ const Menu = () => {
           <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
           <i>{user.username} kirjautunut sisään&nbsp;</i></span>
         :<span>
-          <Link style={padding} to="/login">kirjaudu sisään</Link>
+          <Link style={padding} to="/login">kirjaudu</Link>
           <Link style={padding} to="/register">rekisteröidy</Link>
         </span>
       }

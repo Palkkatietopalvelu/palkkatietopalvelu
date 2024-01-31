@@ -5,9 +5,17 @@ from db import db
 
 
 def get_clients():
-    sql = text("SELECT id, company FROM clients")
+    sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod
+               FROM clients""")
     result = db.session.execute(sql)
-    all_clients = [{"id": row[0], "company": row[1]} for row in result.fetchall()]
+    all_clients = [{"id": row[0],
+                    "company": row[1],
+                    "email": row[2],
+                    "phonenumber": row[3],
+                    "bi_code": row[4],
+                    "deadline": row[5],
+                    "payperiod": row[6]
+                    } for row in result.fetchall()]
     return all_clients
 
 def get_client_data(client_id: int):

@@ -12,10 +12,10 @@ const Client = () => {
     clientService.get(id).then(data => {
       setClient(data)
     })
-  })
+  }, [])
 
   if (!user) {
-    return null
+    return ('Et ole kirjautunut sisään')
   }
 
   return (
