@@ -1,9 +1,9 @@
 """ backend/app.py """
 
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask
 from flask_cors import CORS
-from db import init_db, db
+from db import init_db
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -12,14 +12,7 @@ app.secret_key = getenv("SECRET_KEY")
 CORS(app)
 init_db(app)
 
-import controllers.users
-import controllers.login
-
-@app.route('/api/data')
-def get_data():
-    """ Main data page """
-    data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
-    return jsonify(data)
+from controllers import users, clients, login
 
 if __name__ == '__main__':
     app.run()

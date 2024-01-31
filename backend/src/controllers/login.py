@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
-from models.user import User
-import jwt
 import os
-from app import app
+from flask import request, jsonify
+import jwt
 from werkzeug.security import check_password_hash
+from models.user import User
+from app import app
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -17,5 +17,4 @@ def login():
         user_info = {"username": user.username, "id": user.id}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username}), 200
-    else:
-        return jsonify({"error": "invalid username or password"}), 401
+    return jsonify({"error": "väärä käyttäjätunnus tai salasana"}), 401

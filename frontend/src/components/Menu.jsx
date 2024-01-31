@@ -1,18 +1,16 @@
-import { Link } from 'react-router-dom'
-import storageService from '../services/storage'
-import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { logoutUser } from '../reducers/userReducer'
 
 const Menu = () => {
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const online = storageService.loadUser()
-    setUser(online)
-  })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector(({ user }) => user)
 
   const handleLogout = async (event) => {
     event.preventDefault()
-    storageService.removeUser()
+    dispatch(logoutUser())
+    navigate('/')
   }
 
   const padding = {
@@ -23,12 +21,14 @@ const Menu = () => {
     <div>
       {user ?
         <span>
-          <Link style={padding} to="/">home</Link>
-          <Link style={padding} onClick={handleLogout}>logout</Link>
-          <i>{user.username} logged in&nbsp;</i></span>
+          <Link style={padding} to="/">koti</Link>
+          <Link style={padding} to="/clients">asiakkaat</Link>
+          <Link style={padding} to="/client">lisää asiakas</Link>
+          <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
+          <i>{user.username} kirjautunut sisään&nbsp;</i></span>
         :<span>
-          <Link style={padding} to="/login">login</Link>
-          <Link style={padding} to="/register">register</Link>
+          <Link style={padding} to="/login">kirjaudu</Link>
+          <Link style={padding} to="/register">rekisteröidy</Link>
         </span>
       }
     </div>
