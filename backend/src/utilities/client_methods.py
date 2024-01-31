@@ -32,3 +32,10 @@ def add_client(client_data):
                             "deadline": deadline,
                             "payperiod": client_data.get("payperiod")})
     db.session.commit()
+
+def get_email(client_id):
+    sql = text("SELECT email FROM clients WHERE id=:id")
+    result = db.session.execute(sql, {"id":client_id}).fetchone()
+    if result:
+        return result.email
+    return None
