@@ -31,8 +31,7 @@ jobs:
             - name: Run Pylint
               run: |
                 cd backend
-                poetry shell
-                pylint src --exit-zero .
+                poetry run pylint src --exit-zero .
     
             - name: Run Pytest
               run: |
