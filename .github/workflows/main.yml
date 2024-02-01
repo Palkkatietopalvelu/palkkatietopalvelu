@@ -31,17 +31,17 @@ jobs:
             - name: Run Pylint
               run: |
                 cd backend
-                poetry run pylint src --exit-zero .
+                poetry run pylint src
     
             - name: Run Pytest
               run: |
                 cd backend
-                pytest src/tests
+                poetry run pytest src/tests
     
             - name: Run Robot Tests
               run: |
                 cd backend
-                robot src/tests
+                poetry run robot src/tests
     
     build_frontend:
         runs-on: ubuntu-latest
