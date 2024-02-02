@@ -2,8 +2,8 @@
 Resource  resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
-#Test Setup  Create User And Go To Login Page
 Test Setup  Open And Configure Browser
+# run initialize_db.py before running robot tests
 
 *** Test Cases ***
 Go To Home Page
@@ -11,9 +11,7 @@ Go To Home Page
     Home Page Should Be Open
 
 Login With Correct Credentials
-    Go To Home Page
-    # NB! create user: "masa", password: "masa123" in the browser before tests
-    Click Link  kirjaudu
+    Create User And Go To Login Page
     Set Username  masa
     Set Password  masa123
     Submit Credentials
@@ -47,6 +45,13 @@ Logout Should Succeed After Login
 
 
 *** Keywords ***
+Create User And Go To Login Page
+    Go To Register Page
+    Set Username  masa
+    Set Password  masa123
+    Register User
+    Go To Login Page
+
 Login Should Succeed
     Logged In Page Should Be Open
 
@@ -55,6 +60,9 @@ Login Should Fail
 
 Logout Should Succeed
     Page Should Contain  kirjaudu
+
+Register User
+    Click Button  create
 
 Submit Credentials
     Click Button  kirjaudu
@@ -69,8 +77,3 @@ Set Username
 Set Password
     [Arguments]  ${password}
     Input Password  password  ${password}
-
-#Create User And Go To Login Page
-#    Create User  masa  masa123
-#    Go To Login Page
-#    Login Page Should Be Open
