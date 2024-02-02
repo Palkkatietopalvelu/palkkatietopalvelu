@@ -1,8 +1,8 @@
 from os import getenv
-
-from app import app
 from flask import jsonify, request
 from flask_mail import Mail, Message
+
+from app import app
 from utilities.client_methods import get_clients_deadlines, get_email
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -26,9 +26,9 @@ def reminder():
         for client_id in data:
             recipient = get_email(client_id)
             msg = Message('Muistutus',
-                        sender = app.config['MAIL_USERNAME'], 
+                        sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
-            msg.body = '''Hei! Tämä on automaattinen muistutus 
+            msg.body = '''Hei! Tämä on automaattinen muistutus
             palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'''
             mail.send(msg)
         return 'Reminders sent', 200
