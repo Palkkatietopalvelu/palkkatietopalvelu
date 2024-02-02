@@ -14,7 +14,7 @@ app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 @app.route('/api/mail', methods = ['GET', 'POST'])
-def mail():
+def reminder():
     if request.method == 'GET':
         clients = get_clients_deadlines()
         print(clients[0]['deadline'])
@@ -24,7 +24,6 @@ def mail():
         data = request.json
         for client_id in data:
             recipient = get_email(client_id)
-            print(recipient)
             msg = Message('Muistutus', sender = app.config['MAIL_USERNAME'], recipients = [recipient])
             msg.body = 'Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'
             mail.send(msg)

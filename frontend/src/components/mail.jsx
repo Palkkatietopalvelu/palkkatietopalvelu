@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 const CheckBox = ({name, inputs, setInputs}) => {
 
   const handleCheckChange = () => {
-    console.log(name)
     if (inputs.includes(name)) {
       setInputs(inputs.filter((input) => input !== name))
     }
