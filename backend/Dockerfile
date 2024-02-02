@@ -26,7 +26,9 @@ COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 
 RUN chmod -R 755 *
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install poetry  \
+    && poetry config virtualenvs.create false \
+    && poetry install
 
 COPY . .
 
