@@ -1,6 +1,6 @@
 from flask import request, jsonify
-from app import app
-import utilities.client_methods as clients
+from ..app import app
+from ..utilities import client_methods as clients
 
 @app.route("/api/clients")
 def get_clients():

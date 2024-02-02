@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 from sqlalchemy.sql import text
-from db import db
+from ..db import db
 
 
 def get_clients():
