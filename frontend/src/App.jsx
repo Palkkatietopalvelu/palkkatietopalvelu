@@ -1,32 +1,48 @@
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route
 } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getUser } from './reducers/userReducer'
+import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
 import ClientReminder from './components/mail'
+import Menu from './components/Menu'
+import Home from './components/Home'
+import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 
 const App = () => {
-  const padding = {
-    paddingRight: 5
-  }
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getClients())
+  }, [dispatch])
 
   return (
-    <Router>
-      <div>
-        <Link style={padding} to="/add">add client</Link>
-        <Link style={padding} to="/clients">clients</Link>
-        <Link style={padding} to="/reminders">muistutukset</Link>
-      </div>
+    <div>
+      <h2>Palkkatietopalvelu</h2>
+      <Router>
+        <Menu />
         <Routes>
+          <Route path="/" element={<ClientsList />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
           <Route path="/home" element={<ClientsList />} />
           <Route path="/clients" element={<ClientsList />} />
-          <Route path="/add" element={<ClientForm />} />
+          <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
           <Route path="/reminders" element={<ClientReminder />} />
         </Routes>
-    </Router>
+      </Router>
+    </div>
   )
 }
 

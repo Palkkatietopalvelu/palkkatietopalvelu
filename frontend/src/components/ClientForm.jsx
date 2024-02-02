@@ -1,19 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
-import clientService from '../services/client'
-
-const isValidDate = (dateString) => {
-  const regex = /^\d{4}-\d{2}-\d{2}$/
-  if (!regex.test(dateString)) return false
-  return true
-}
-
-const isValidBicode = (bicode) => {
-  const regex = /^\d{7}-\d{1}$/
-  if (!regex.test(bicode)) return false
-  return true
-}
+import { notify } from '../reducers/notificationReducer'
+import { addClient } from '../reducers/clientsReducer'
+import Notification from './Notification'
 
 const ClientForm = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(({ user }) => user)
+
   const company = useField()
   const email = useField()
   const phonenumber = useField()
@@ -21,28 +15,24 @@ const ClientForm = () => {
   const deadline = useField()
   const payperiod = useField()
 
+  if (!user) {
+    return ('Et ole kirjautunut sisään')
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    try {
-      const newClient = {
-        company: company.value,
-        email: email.value,
-        phonenumber: phonenumber.value,
-        bi_code: bicode.value,
-        deadline: deadline.value,
-        payperiod: payperiod.value
-      }
-      if (!isValidDate(deadline.value)) {
-        console.log('Päivämäärä ei ole oikeassa muodossa (yyyy-mm-dd)')
-      } else if (!isValidBicode(bicode.value)) {
-        console.log('Y-tunnus ei ole oikeassa muodossa')
-      } else {
-        await clientService.add(newClient)
+    dispatch(addClient({
+      company: company.value,
+      email: email.value,
+      phonenumber: phonenumber.value,
+      bi_code: bicode.value,
+      deadline: deadline.value,
+      payperiod: payperiod.value
+    })).then(result => {
+      if (result) {
         resetFields(event)
       }
-    } catch (exception) {
-      console.log('ei toiminut')
-    }
+    })
   }
 
   const resetFields = (event) => {
@@ -57,13 +47,14 @@ const ClientForm = () => {
 
   return (
     <div>
+      <Notification />
       <form onSubmit={handleSubmit}>
-        <label>Yritys: <input {...company} /></label><br/>
-        <label>Sähköposti: <input {...email} /></label><br/>
-        <label>Puhelinnumero: <input {...phonenumber} /></label><br/>
-        <label>Y-tunnus: <input placeholder="1234567-8" {...bicode} /></label><br/>
-        <label>Eräpäivä: <input placeholder="yyyy-mm-dd" {...deadline} /></label><br/>
-        <label>Palkkakausi: <input {...payperiod} /></label>
+        <label>Yritys: <input {...company} required/></label><br/>
+        <label>Sähköposti: <input {...email} required/></label><br/>
+        <label>Puhelinnumero: <input placeholder="+358 451234567" {...phonenumber} required/></label><br/>
+        <label>Y-tunnus: <input placeholder="1234567-8" {...bicode} required/></label><br/>
+        <label>Eräpäivä: <input placeholder="yyyy-mm-dd" {...deadline} required/></label><br/>
+        <label>Palkkakausi: <input {...payperiod} required/></label>
         <div>
           <button type="submit">lisää</button>
         </div>
