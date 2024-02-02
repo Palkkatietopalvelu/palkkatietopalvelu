@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import clientsService from '../services/clients'
 import mailService from '../services/mail'
+import { format } from 'date-fns';
 
 const CheckBox = ({name, inputs, setInputs}) => {
 
@@ -25,17 +25,15 @@ const CheckBox = ({name, inputs, setInputs}) => {
 const ClientReminder = () => {
   const [clients, setClients] = useState([])
   const [inputs, setInputs] = useState([])
-  
 
   useEffect(() => {
-    clientsService.get().then(clients => {
+    mailService.get().then(clients => {
       setClients(clients)
     })
   }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(inputs)
     mailService.send(inputs)
     }
 
@@ -46,7 +44,7 @@ const ClientReminder = () => {
         <div>
         {clients.map((client) => (
           <div key={client.id}>
-              {client.company}
+            {client.company} {format(client.deadline, 'yyyy-MM-dd')}
               <CheckBox name={client.id}
               inputs={inputs}
               setInputs={setInputs}/>
@@ -58,5 +56,5 @@ const ClientReminder = () => {
     </div>
   )
 }
-  
-  export default ClientReminder
+
+export default ClientReminder

@@ -5,6 +5,11 @@ const send = async object => {
   console.log(object)
     const response = await axios.post(baseUrl, object)
     return response.data
-  }
+}
 
-export default { send }
+const get = async () => {
+  const response = await axios.get(baseUrl)
+  return response.data
+}
+
+export default { send, get}

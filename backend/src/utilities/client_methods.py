@@ -39,3 +39,9 @@ def get_email(client_id):
     if result:
         return result.email
     return None
+
+def get_clients_deadlines():
+    sql = text("SELECT id, company, deadline FROM clients")
+    result = db.session.execute(sql)
+    clients = [{"id": row[0], "company": row[1], "deadline": row[2]} for row in result.fetchall()]
+    return clients
