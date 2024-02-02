@@ -1,8 +1,9 @@
-from flask import request, jsonify
-from app import app
 from os import getenv
+
+from app import app
+from flask import jsonify, request
 from flask_mail import Mail, Message
-from utilities.client_methods import get_email, get_clients_deadlines
+from utilities.client_methods import get_clients_deadlines, get_email
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
@@ -24,7 +25,11 @@ def reminder():
         data = request.json
         for client_id in data:
             recipient = get_email(client_id)
-            msg = Message('Muistutus', sender = app.config['MAIL_USERNAME'], recipients = [recipient])
-            msg.body = 'Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'
+            msg = Message('Muistutus',
+                        sender = app.config['MAIL_USERNAME'], 
+                        recipients = [recipient])
+            msg.body = '''Hei! Tämä on automaattinen muistutus 
+            palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'''
             mail.send(msg)
         return 'Reminders sent', 200
+    return 400

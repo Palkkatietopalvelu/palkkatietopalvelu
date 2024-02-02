@@ -14,11 +14,6 @@ CORS(app)
 #db.init_app(app)
 init_db(app)
 
-@app.route('/api/data')
-def get_data():
-    """ Main data page """
-    data = [{'id': 1, 'name': 'Example 1'}, {'id': 2, 'name': 'Example 2'}]
-    return jsonify(data)
 # pylint: disable=unused-import,wrong-import-position
 from controllers import users, clients, login, mail
 # pylint: enable=unused-import,wrong-import-position
