@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import mailService from '../services/mail'
-import { format } from 'date-fns';
+import { format } from 'date-fns'
 
-const CheckBox = ({name, inputs, setInputs}) => {
+const CheckBox = ({ name, inputs, setInputs }) => {
 
   const handleCheckChange = () => {
     if (inputs.includes(name)) {
@@ -14,10 +14,11 @@ const CheckBox = ({name, inputs, setInputs}) => {
   }
 
   return (
-    <input 
-    type='checkbox' 
-    name={name}
-    onChange={handleCheckChange}/>
+    <input
+      type='checkbox'
+      name={name}
+      onChange={handleCheckChange}
+    />
   )
 }
 
@@ -34,22 +35,22 @@ const ClientReminder = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     mailService.send(inputs)
-    }
+  }
 
   return (
     <div>
       <p>Valitse asiakkaat, joille muistutus lähetetään</p>
       <form onSubmit={handleSubmit}>
-        <div>
-        {clients.map((client) => (
-          <div key={client.id}>
-            {client.company} {format(client.deadline, 'yyyy-MM-dd')}
-              <CheckBox name={client.id}
-              inputs={inputs}
-              setInputs={setInputs}/>
-          </div>
+          <div>
+          {clients.map((client) => (
+            <div key={client.id}>
+              {client.company} {format(client.deadline, 'yyyy-MM-dd')}
+                <CheckBox name={client.id}
+                inputs={inputs}
+                setInputs={setInputs}/>
+            </div>
         ))}
-        </div>
+      </div>
           <button type="submit">Lähetä</button>
       </form>
     </div>
