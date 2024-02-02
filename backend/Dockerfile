@@ -20,10 +20,11 @@ ENV PYTHONUNBUFFERED 1
 ENV FLASK_APP=src/app:app
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
+ENV POETRY_VIRTUALENVS_IN_PROJECT = true
 
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 
-RUN chmod -R 755 /app
+RUN chmod -R 755 *
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 

@@ -2,8 +2,8 @@ import os
 from flask import request, jsonify
 import jwt
 from werkzeug.security import check_password_hash
-from models.user import User
-from app import app
+from ..models.user import User
+from ..app import app
 
 @app.route('/api/login', methods=['POST'])
 def login(testing="no", username="", password=""):
