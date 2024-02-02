@@ -21,6 +21,7 @@ robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
 sqlalchemy = "^2.0.25"
 gunicorn = "^21.2.0"
+flask-mail = "^0.9.1"
 
 
 
