@@ -41,17 +41,18 @@ const ClientReminder = () => {
     <div>
       <p>Valitse asiakkaat, joille muistutus lähetetään</p>
       <form onSubmit={handleSubmit}>
-          <div>
+        <div>
           {clients.map((client) => (
             <div key={client.id}>
               {client.company} {format(client.deadline, 'yyyy-MM-dd')}
-                <CheckBox name={client.id}
+              <CheckBox name={client.id}
                 inputs={inputs}
-                setInputs={setInputs}/>
+                setInputs={setInputs}
+              />
             </div>
-        ))}
-      </div>
-          <button type="submit">Lähetä</button>
+          ))}
+        </div>
+        <button type="submit">Lähetä</button>
       </form>
     </div>
   )
