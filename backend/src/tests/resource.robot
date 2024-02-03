@@ -1,5 +1,5 @@
 *** Settings ***
-Library  SeleniumLibrary
+Library  SeleniumLibrary screenshot_root_directory = None
 Library  ../applibrary.py
 
 *** Variables ***
