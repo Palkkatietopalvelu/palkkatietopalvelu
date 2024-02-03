@@ -43,6 +43,19 @@ def add_client(client_data):
                              "payperiod": client_data.get("payperiod")})
     db.session.commit()
 
+def get_email(client_id):
+    sql = text("SELECT email FROM clients WHERE id=:id")
+    result = db.session.execute(sql, {"id":client_id}).fetchone()
+    if result:
+        return result.email
+    return None
+
+def get_clients_deadlines():
+    sql = text("SELECT id, company, deadline FROM clients")
+    result = db.session.execute(sql)
+    clients = [{"id": row[0], "company": row[1], "deadline": row[2]} for row in result.fetchall()]
+    return clients
+
 def validate_client_data(client_data):
     if not client_data.get("company") or not client_data.get("payperiod"):
         raise ValueError('Tietoja puuttuu')
@@ -57,4 +70,3 @@ def validate_client_data(client_data):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
     if not re.match(r"^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
         raise ValueError('Eräpäivä ei ole oikeassa muodossa (yyyy-mm-dd)')
-    

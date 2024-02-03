@@ -9,6 +9,7 @@ import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
+import ClientReminder from './components/mail'
 import Menu from './components/Menu'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/clients" element={<ClientsList />} />
           <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
+          <Route path="/reminders" element={<ClientReminder />} />
         </Routes>
       </Router>
     </div>
