@@ -9,11 +9,16 @@ def get_users():
     return jsonify([user.serialize() for user in users])
 
 @app.route('/api/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    username = data['username']
-    password = data['password']
-    role = data['role']
+def create_user(testing="no", uname="", upass="", urole=""):
+    if testing == "no":
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+        role = data['role']
+    elif testing == "yes":
+        username = uname
+        password = upass
+        role = urole
 
     if len(password) < 3 or len(username) < 3:
         return jsonify(
