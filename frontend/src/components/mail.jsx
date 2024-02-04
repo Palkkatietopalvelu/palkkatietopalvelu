@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import mailService from '../services/mail'
+import Notification from './Notification'
 import { format } from 'date-fns'
+import { notify } from '../reducers/notificationReducer'
 
 const CheckBox = ({ name, inputs, setInputs }) => {
 
@@ -23,6 +26,7 @@ const CheckBox = ({ name, inputs, setInputs }) => {
 }
 
 const ClientReminder = () => {
+  const dispatch = useDispatch()
   const [clients, setClients] = useState([])
   const [inputs, setInputs] = useState([])
 
@@ -35,10 +39,12 @@ const ClientReminder = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     mailService.send(inputs)
+    dispatch(notify('Muistutukset lähetetty'))
   }
 
   return (
     <div>
+      <Notification />
       <p>Valitse asiakkaat, joille muistutus lähetetään</p>
       <form onSubmit={handleSubmit}>
         <div>
