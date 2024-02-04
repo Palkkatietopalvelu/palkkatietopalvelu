@@ -70,3 +70,4 @@ def validate_client_data(client_data):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
     if not re.match(r"^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
         raise ValueError('Eräpäivä ei ole oikeassa muodossa (yyyy-mm-dd)')
+    return True
