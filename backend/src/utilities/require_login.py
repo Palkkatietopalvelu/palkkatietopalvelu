@@ -1,6 +1,6 @@
 import os
-from functools import wraps
 from flask import request, jsonify
+from functools import wraps
 import jwt
 
 def require_login(f):
