@@ -24,17 +24,17 @@ const ClientsList = () => {
         <tbody>
           {clients.filter(filterBy)
             .map(client => {
-            return (
-              <tr key={client.id}>
-                <td>
-                  <Link to={`/client/${client.id}`}>
-                    {client.company}
-                  </Link>
-                </td>
-                <td>{client.deadline}</td>
-              </tr>
+              return (
+                <tr key={client.id}>
+                  <td>
+                    <Link to={`/client/${client.id}`}>
+                      {client.company}
+                    </Link>
+                  </td>
+                  <td>{client.deadline}</td>
+                </tr>
+              )}
             )}
-          )}
         </tbody>
       </table>
     </div>
