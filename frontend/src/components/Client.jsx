@@ -1,21 +1,15 @@
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import clientService from '../services/client'
 
 const Client = () => {
   const user = useSelector(({ user }) => user)
-  const id = useParams().id
-  const [client, setClient] = useState({})
-
-  useEffect(() => {
-    clientService.get(id).then(data => {
-      setClient(data)
-    })
-  }, [])
+  const id = Number(useParams().id)
+  const client = useSelector(({ clients }) => clients).find(c => c.id === id)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
+  } else if (!client) {
+    return
   }
 
   return (

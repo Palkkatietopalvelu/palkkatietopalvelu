@@ -22,7 +22,6 @@ const Menu = () => {
       {user ?
         <span>
           <Link style={padding} to="/">koti</Link>
-          <Link style={padding} to="/clients">asiakkaat</Link>
           <Link style={padding} to="/client">lisää asiakas</Link>
           <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
           <i>{user.username} kirjautunut sisään&nbsp;</i></span>
