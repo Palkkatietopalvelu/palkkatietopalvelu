@@ -1,0 +1,13 @@
+[MASTER]
+
+# List of files or directories to exclude
+ignore=db.py,AccountLibrary.py,schema.sql,.env,__pycache__,tests,venv
+
+# Patterns for files/directories to exclude
+ignore-patterns=.*__pycache__.*
+
+[MESSAGES CONTROL]
+disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,cyclic-import
+
+[DESIGN]
+min-public-methods=1

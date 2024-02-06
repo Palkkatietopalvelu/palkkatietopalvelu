@@ -18,6 +18,9 @@ dist-ssr
 .env
 venv
 __pycache__/
+.coverage
+.coveragerc
+htmlcov
 
 # Editor directories and files
 .vscode/*

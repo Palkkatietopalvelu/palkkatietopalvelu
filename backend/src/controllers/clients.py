@@ -9,7 +9,8 @@ def get_clients():
     try:
         all_clients = clients.get_clients()
         return jsonify(all_clients)
-    except Exception as error:
+    # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
+    except Exception as error: # pylint: disable=broad-except
         return str(error), 400
 
 @app.route("/api/client/<int:client_id>")
@@ -20,7 +21,8 @@ def get_client(client_id):
         if client_data:
             return jsonify(client_data), 200
         return jsonify({'message': 'Asiakasta ei löytynyt'}), 404
-    except Exception as error:
+    # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
+    except Exception as error: # pylint: disable=broad-except
         return str(error), 400
 
 @app.route("/api/client", methods=["POST"])
@@ -30,5 +32,7 @@ def add_client():
         client_data = request.json
         clients.add_client(client_data)
         return "Client added successfully", 201
-    except Exception as error:
+    # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
+    except Exception as error: # pylint: disable=broad-except
         return str(error), 400
+    

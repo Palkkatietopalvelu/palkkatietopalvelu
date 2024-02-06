@@ -27,6 +27,16 @@ jobs:
               run: |
                 cd backend
                 poetry install
+
+            - name: Run Pylint
+              run: |
+                cd backend
+                poetry run pylint src
+    
+            - name: Run Pytest
+              run: |
+                cd backend
+                poetry run pytest src/tests
     
     build_frontend:
         runs-on: ubuntu-latest
@@ -42,5 +52,8 @@ jobs:
               run: |
                 cd frontend
                 npm ci
-            
-            
+
+            - name: Run Pylint
+              run: |
+                cd frontend
+                npm run lint --exit-zero .
