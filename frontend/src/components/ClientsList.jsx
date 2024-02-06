@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 const ClientsList = () => {
   const user = useSelector(({ user }) => user)
-  const clients = useSelector(({ clients }) => clients)
+  const clients = useSelector(({ clients }) =>
+    clients)
+  const filterBy = (c => c.user_id === user.id)
 
   if (!user) {
     return
@@ -20,7 +22,8 @@ const ClientsList = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.map(client => {
+          {clients.filter(filterBy)
+            .map(client => {
             return (
               <tr key={client.id}>
                 <td>

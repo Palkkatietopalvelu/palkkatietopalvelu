@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 from ..db import db
 
 def get_clients():
-    sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod
+    sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod, user_id
                FROM clients""")
     result = db.session.execute(sql)
     all_clients = [{"id": row[0],
@@ -13,7 +13,8 @@ def get_clients():
                     "phonenumber": row[3],
                     "bi_code": row[4],
                     "deadline": row[5],
-                    "payperiod": row[6]
+                    "payperiod": row[6],
+                    "user_id": row[7]
                     } for row in result.fetchall()]
     return all_clients
 
@@ -32,15 +33,16 @@ def add_client(client_data):
     deadline_str = client_data.get("deadline")
     deadline = datetime.strptime(deadline_str, "%Y-%m-%d").date()
     sql = text(
-        """INSERT INTO clients (company, email, phonenumber, bi_code, deadline, payperiod)
-            VALUES (:company, :email, :phonenumber, :bi_code, :deadline, :payperiod)""")
+        """INSERT INTO clients (user_id, company, email, phonenumber,bi_code, deadline, payperiod)
+            VALUES (:user_id, :company, :email, :phonenumber, :bi_code, :deadline, :payperiod)""")
 
-    db.session.execute(sql, {"company": client_data.get("company"),
-                             "email": client_data.get("email"),
-                             "phonenumber": client_data.get("phonenumber"),
-                             "bi_code": client_data.get("bi_code"),
-                             "deadline": deadline,
-                             "payperiod": client_data.get("payperiod")})
+    db.session.execute(sql, {"user_id": client_data.get("user_id"),
+                            "company": client_data.get("company"),
+                            "email": client_data.get("email"),
+                            "phonenumber": client_data.get("phonenumber"),
+                            "bi_code": client_data.get("bi_code"),
+                            "deadline": deadline,
+                            "payperiod": client_data.get("payperiod")})
     db.session.commit()
 
 def get_email(client_id):
