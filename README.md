@@ -40,11 +40,15 @@ Frontendin lint-virheet voi korjata näin:
 
 ### Testit
 
+robot-testit:
+> poetry run invoke robottests
+
 yksikkötestit:
 > poetry run invoke test
 
-robot-testit:
-> poetry run invoke robottests
+testikattavuus:
+> poetry run invoke coverage
+> poetry run invoke coverage-report
 
 ## Backlogit
 [backlog](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)
