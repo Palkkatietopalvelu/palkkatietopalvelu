@@ -6,7 +6,7 @@ from models.user import User
 from app import app
 
 @app.route('/api/login', methods=['POST'])
-def login(testing="no", username="", password="", role=""):
+def login(testing="no", username="", password=""):
     if testing == "no":
         data = request.get_json()
         username = data['username']
