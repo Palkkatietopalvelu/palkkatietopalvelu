@@ -3,8 +3,8 @@
 from os import getenv
 from flask import Flask
 from flask_cors import CORS
-from .db import init_db
-from .config import DATABASE_URL
+from db import init_db
+from config import DATABASE_URL
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
