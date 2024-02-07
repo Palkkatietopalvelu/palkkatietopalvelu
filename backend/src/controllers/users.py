@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash
-from ..models.user import User, db
-from ..app import app
+from models.user import User, db
+from app import app
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
