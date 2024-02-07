@@ -9,17 +9,22 @@ def get_users():
     return jsonify([user.serialize() for user in users])
 
 @app.route('/api/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    username = data['username']
-    password = data['password']
-    role = data['role']
+def create_user(testing="no", username="", password="", role=""):
+    if testing == "no":
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+        role = data['role']
 
     if len(password) < 3 or len(username) < 3:
-        return jsonify({"error": "Käyttäjätunnus ja salasana täytyy olla ainakin 3 merkkiä pitkiä"}), 400
+        return jsonify(
+            {"error": "Käyttäjätunnus ja salasana täytyy olla ainakin 3 merkkiä pitkiä"}
+        ), 400
 
     if len(password) > 15 or len(username) > 15:
-        return jsonify({"error": "Käyttäjätunnus ja salasana ei saa olla yli 15 merkkiä pitkiä"}), 400
+        return jsonify(
+            {"error": "Käyttäjätunnus ja salasana ei saa olla yli 15 merkkiä pitkiä"}
+        ), 400
 
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:

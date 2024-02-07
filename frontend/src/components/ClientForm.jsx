@@ -22,6 +22,7 @@ const ClientForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     dispatch(addClient({
+      user_id: user.id,
       company: company.value,
       email: email.value,
       phonenumber: phonenumber.value,

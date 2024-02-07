@@ -14,7 +14,9 @@ CORS(app)
 #db.init_app(app)
 init_db(app)
 
-from .controllers import users, clients, login
+# pylint: disable=unused-import,wrong-import-position
+from controllers import users, clients, login, mail
+# pylint: enable=unused-import,wrong-import-position
 
 if __name__ == '__main__':
     #db.init_app(app)

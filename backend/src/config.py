@@ -11,7 +11,4 @@ except FileNotFoundError:
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL is None:
-    raise Exception(
-        f"Database URI is not defined with the DATABASE_URL environment variable"
-    )
-
+    raise RuntimeError("Database URI is not defined with the DATABASE_URL environment variable.")

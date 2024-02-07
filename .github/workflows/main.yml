@@ -38,11 +38,6 @@ jobs:
                 cd backend
                 poetry run pytest src/tests
     
-            - name: Run Robot Tests
-              run: |
-                cd backend
-                poetry run robot src/tests
-    
     build_frontend:
         runs-on: ubuntu-latest
         steps:

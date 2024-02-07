@@ -9,8 +9,8 @@ import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
+import ClientReminder from './components/mail'
 import Menu from './components/Menu'
-import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 
@@ -19,10 +19,11 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUser())
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(getClients())
+      .then(user => {
+        if (user) {
+          dispatch(getClients())
+        }
+      })
   }, [dispatch])
 
   return (
@@ -34,10 +35,9 @@ const App = () => {
           <Route path="/" element={<ClientsList />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/home" element={<ClientsList />} />
-          <Route path="/clients" element={<ClientsList />} />
           <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
+          <Route path="/reminders" element={<ClientReminder />} />
         </Routes>
       </Router>
     </div>

@@ -4,6 +4,7 @@ import userService from '../services/user'
 import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
+import { getClients } from './clientsReducer'
 
 const initialState = null
 
@@ -28,6 +29,7 @@ export const loginUser = (credentials) => {
       const user = await loginService.login(credentials)
       storageService.saveUser(user)
       dispatch(set(user))
+      dispatch(getClients())
       return true
     } catch (e) {
       dispatch(notify('Väärä käyttäjätunnus tai salasana'))
@@ -40,6 +42,7 @@ export const getUser = () => {
   return async dispatch => {
     const user = storageService.loadUser()
     dispatch(set(user))
+    return user
   }
 }
 
