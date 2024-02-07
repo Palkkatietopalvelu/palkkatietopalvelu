@@ -4,12 +4,12 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm ci 
+RUN npm ci --legacy-peer-deps --only=production
 
 RUN npm run build
 
-RUN npm install serve -g
+RUN npm install --global serve
 
-EXPOSE 3000
+RUN chmod -R 755 /usr/src/app
 
-CMD [ "serve","-s","dist"]
+CMD ["npx","serve","-s","dist"]
