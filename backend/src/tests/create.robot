@@ -2,7 +2,7 @@
 Resource  resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
-#Test Setup  Open And Configure Browser
+Test Setup  Initialize Db
 
 *** Test Cases ***
 Create Account Page Can Be Opened

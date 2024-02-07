@@ -3,11 +3,38 @@ from db import db
 from app import app
 from datetime import datetime, date
 
-import utilities.client_methods
+import utilities.client_methods 
+from initialize_db import initialize_database
 
-# there has to be at least one client in database before test start
+class TestAddClient(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+    
+    def test_add_client_with_correct_inputs(self):
+        with app.app_context():
+            client_data = {"company": "Testiyritys",
+                    "email": "testi@gmail.com",
+                    "phonenumber": "+358 123456789",
+                    "bi_code": "1234567-8",
+                    "deadline": "2024-10-04",
+                    "payperiod": "kuukausi"}
+            utilities.client_methods.add_client(client_data)
+            all_clients = utilities.client_methods.get_clients()
+            self.assertEqual(len(all_clients), 1)
+
 
 class TestClientMethods(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+        
+        self.client_data = {"company": "Testiyritys",
+                            "email": "testi@gmail.com",
+                            "phonenumber": "+358 123456789",
+                            "bi_code": "1234567-8",
+                            "deadline": "2024-10-04",
+                            "payperiod": "kuukausi"}
+        utilities.client_methods.add_client(self.client_data)
+
     def test_get_clients_returns_type_list(self):
         with app.app_context():
             all_clients = utilities.client_methods.get_clients()

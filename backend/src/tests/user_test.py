@@ -3,13 +3,15 @@ from db import db
 from app import app
 from models.user import User
 import controllers.users
-import random
-
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash
 from models.user import User, db
+from initialize_db import initialize_database
 
 class TestUsersController(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+
     def test_get_users(self):
         with app.app_context():
             all_users = controllers.users.get_users()
@@ -17,7 +19,7 @@ class TestUsersController(unittest.TestCase):
 
     def test_create_user_with_valid_credentials(self):
         with app.test_request_context():
-            username = create_random_username()
+            username = "pekka"
             password = "pekkaspass"
             role = 1
             new_user = controllers.users.create_user(testing="yes", username=username, 
@@ -27,7 +29,7 @@ class TestUsersController(unittest.TestCase):
 
     def test_create_user_that_already_exists(self):
         with app.test_request_context():
-            username = create_random_username()
+            username = "maija"
             password = "maijaspass"
             role = 1
             new_user = controllers.users.create_user(testing="yes", username=username, 
@@ -43,6 +45,9 @@ class TestUsersController(unittest.TestCase):
         # long username and password
 
 class TestUserModel(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+
     def test_create_user_with_valid_credentials(self):
         with app.app_context():
             username = "masa"
@@ -55,6 +60,3 @@ class TestUserModel(unittest.TestCase):
             self.assertEqual(len(new_user.password), 162)
             self.assertEqual(new_user.role, role)
 
-def create_random_username():
-    username = "pekka" + str(random.randint(5, 10000))
-    return username

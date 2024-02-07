@@ -23,3 +23,7 @@ def coverage_report(ctx):
 @task
 def robottests(ctx):
     ctx.run("robot src/tests", pty=True)
+
+@task
+def testbackend(ctx):
+    ctx.run("poetry run dotenv -f .env.test run -- flask --app src/app.py run")

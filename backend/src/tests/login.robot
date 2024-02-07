@@ -2,8 +2,7 @@
 Resource  resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
-Test Setup  Open And Configure Browser
-# run initialize_db.py before running robot tests
+Test Setup  Initialize Db
 
 *** Test Cases ***
 Go To Home Page
@@ -16,26 +15,24 @@ Login With Correct Credentials
     Set Password  masa123
     Submit Credentials
     Login Should Succeed
-    Close Browser
+    Log Out
 
 Login Should Fail With Incorrect Username
-    Go To Login Page
+    Create User And Go To Login Page
     Set Username  pekka
     Set Password  masa123
     Submit Credentials
     Login Should Fail
-    Close Browser
 
 Login Should Fail With Incorrect Password
-    Go To Login Page
+    Create User And Go To Login Page
     Set Username  masa
     Set Password  wrong
     Submit Credentials
     Login Should Fail
-    Close Browser
 
 Logout Should Succeed After Login
-    Go To Login Page
+    Create User And Go To Login Page
     Set Username  masa
     Set Password  masa123
     Submit Credentials
