@@ -1,8 +1,10 @@
 from flask import request, jsonify
 from app import app
 import utilities.client_methods as clients
+from utilities.require_login import require_login
 
 @app.route("/api/clients")
+@require_login
 def get_clients():
     try:
         all_clients = clients.get_clients()
@@ -12,6 +14,7 @@ def get_clients():
         return str(error), 400
 
 @app.route("/api/client/<int:client_id>")
+@require_login
 def get_client(client_id):
     try:
         client_data = clients.get_client_data(client_id)
@@ -23,6 +26,7 @@ def get_client(client_id):
         return str(error), 400
 
 @app.route("/api/client", methods=["POST"])
+@require_login
 def add_client():
     try:
         client_data = request.json
