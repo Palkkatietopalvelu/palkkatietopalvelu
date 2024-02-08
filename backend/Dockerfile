@@ -24,11 +24,9 @@ ENV POETRY_VIRTUALENVS_IN_PROJECT = true
 
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 
-RUN chmod -R 755 *
+RUN chmod -R 755 /app
 
-RUN pip install poetry  \
-    && poetry config virtualenvs.create false \
-    && poetry install
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY . .
 
