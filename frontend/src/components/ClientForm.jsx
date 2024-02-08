@@ -50,12 +50,12 @@ const ClientForm = () => {
     <div>
       <Notification />
       <form onSubmit={handleSubmit}>
-        <label>Yritys: <input {...company} required/></label><br/>
-        <label>Sähköposti: <input {...email} required/></label><br/>
-        <label>Puhelinnumero: <input placeholder="+358 451234567" {...phonenumber} required/></label><br/>
-        <label>Y-tunnus: <input placeholder="1234567-8" {...bicode} required/></label><br/>
-        <label>Eräpäivä: <input placeholder="yyyy-mm-dd" {...deadline} required/></label><br/>
-        <label>Palkkakausi: <input {...payperiod} required/></label>
+        <label>Yritys: <input id='company' {...company} required/></label><br/>
+        <label>Sähköposti: <input id='email' {...email} required/></label><br/>
+        <label>Puhelinnumero: <input id='phonenumber' placeholder="+358 451234567" {...phonenumber} required/></label><br/>
+        <label>Y-tunnus: <input id='bicode' placeholder="1234567-8" {...bicode} required/></label><br/>
+        <label>Eräpäivä: <input id='deadline' placeholder="yyyy-mm-dd" {...deadline} required/></label><br/>
+        <label>Palkkakausi: <input id='payperiod'  {...payperiod} required/></label>
         <div>
           <button type="submit">lisää</button>
         </div>
