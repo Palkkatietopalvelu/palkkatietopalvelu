@@ -59,7 +59,7 @@ def get_clients_deadlines():
     return clients
 
 def validate_client_data(client_data):
-    if not client_data.get("company") or not client_data.get("payperiod"):
+    if not client_data.get("company") or not client_data.get("payperiod") or not client_data.get("user_id"):
         raise ValueError('Tietoja puuttuu')
     if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", client_data.get("email")):
         raise ValueError('Sähköposti ei ole oikeassa muodossa')

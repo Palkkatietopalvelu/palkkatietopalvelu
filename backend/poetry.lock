@@ -4,6 +4,7 @@
 name = "apscheduler"
 version = "3.10.4"
 description = "In-process task scheduler with Cron-like capabilities"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -14,7 +15,7 @@ files = [
 [package.dependencies]
 pytz = "*"
 six = ">=1.4.0"
-tzlocal = ">=2.0,<3.dev0 || >=4.dev0"
+tzlocal = ">=2.0,<3.0.0 || >=4.0.0"
 
 [package.extras]
 doc = ["sphinx", "sphinx-rtd-theme"]
@@ -67,6 +68,7 @@ tests-no-zope = ["attrs[tests-mypy]", "cloudpickle", "hypothesis", "pympler", "p
 name = "backports-zoneinfo"
 version = "0.2.1"
 description = "Backport of the standard library zoneinfo module"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -311,6 +313,7 @@ files = [
 name = "coverage"
 version = "7.4.1"
 description = "Code coverage measurement for Python"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -1056,6 +1059,7 @@ cli = ["click (>=5.0)"]
 name = "pytz"
 version = "2024.1"
 description = "World timezone definitions, modern and historical"
+category = "main"
 optional = false
 python-versions = "*"
 files = [
@@ -1149,6 +1153,7 @@ urllib3 = {version = ">=1.26,<3", extras = ["socks"]}
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 files = [
@@ -1346,6 +1351,7 @@ files = [
 name = "tzdata"
 version = "2023.4"
 description = "Provider of IANA time zone data"
+category = "main"
 optional = false
 python-versions = ">=2"
 files = [
@@ -1357,6 +1363,7 @@ files = [
 name = "tzlocal"
 version = "5.2"
 description = "tzinfo object for the local timezone"
+category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -1444,4 +1451,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "436c3c463a67db71492a27306a6ba318de90c7b6a7abdde8b8654468941e69ca"
+content-hash = "9d14d2ce5a3a37b03bd73e3f723cc9f288f1257a512209e197c1bebb7616199c"
