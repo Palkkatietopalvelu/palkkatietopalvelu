@@ -15,3 +15,8 @@ CREATE TABLE clients (
   deadline DATE,
   payperiod TEXT
 );
+
+CREATE TABLE deadlines (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+);
