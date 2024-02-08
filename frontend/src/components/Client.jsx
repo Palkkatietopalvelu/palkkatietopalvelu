@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Client = () => {
   const user = useSelector(({ user }) => user)
@@ -22,6 +23,8 @@ const Client = () => {
       <p>Y-tunnus: {client.bi_code}</p>
       <p>Eräpäivä: {client.deadline}</p>
       <p>Palkkakausi: {client.payperiod}</p>
+      <hr />
+      <Link to={`/client/${client.id}/changedata`}>Muuta asiakkaan tietoja</Link>
     </div>
   )
 }

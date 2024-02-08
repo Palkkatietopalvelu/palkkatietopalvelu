@@ -13,11 +13,14 @@ const slice = createSlice({
     },
     add(state, { payload }) {
       return state.concat(payload)
+    },
+    update(state, { payload }) {
+      return state // most likely has to be changed
     }
   }
 })
 
-export const { set, add } = slice.actions
+export const { set, add, update } = slice.actions
 
 export const getClients = () => {
   return async dispatch => {
@@ -33,6 +36,21 @@ export const addClient = (client) => {
       dispatch(add(data))
       dispatch(notify('Asiakas lisätty onnistuneesti'))
       dispatch(getClients())
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      return false
+    }
+  }
+}
+
+export const updateClient = (clientObject) => {
+  console.log("clientsReducer updateClient: ", clientObject)
+  return async dispatch => {
+    try {
+      const data = await clientService.update(clientObject)
+      dispatch(update(data))
+      dispatch(notify('Asiakkaan tiedot päivitetty onnistuneesti'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))

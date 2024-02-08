@@ -12,4 +12,11 @@ const get = async id => {
   return response.data
 }
 
-export default { add, get }
+const update = async (clientObject) => {
+  console.log('client.js update newObject: ', clientObject)
+  const id = Number(clientObject.company_id)
+  const response = await axios.put(`${baseUrl}/${id}`, clientObject)
+  return response.data
+}
+
+export default { add, get, update }
