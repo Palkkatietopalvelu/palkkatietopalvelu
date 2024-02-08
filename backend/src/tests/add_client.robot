@@ -1,12 +1,12 @@
 *** Settings ***
 Resource  resource.robot
-Library  ../applibrary.py
+Library  ../AppLibrary.py
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
-# initialize db before running
 
 *** Test Cases ***
 Login Succeeds
+    Initialize Database
     Create User And Login
     Page Should Contain  kirjautunut sisään
 

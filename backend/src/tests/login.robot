@@ -2,7 +2,7 @@
 Resource  resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
-Test Setup  Initialize Db
+Test Setup  Initialize Database
 
 *** Test Cases ***
 Go To Home Page
