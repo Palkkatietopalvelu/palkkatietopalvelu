@@ -15,7 +15,7 @@ const slice = createSlice({
       return state.concat(payload)
     },
     update(state, { payload }) {
-      return state // most likely has to be changed
+      return state.map(client => client.company_id === payload.company_id ? payload : client)
     }
   }
 })

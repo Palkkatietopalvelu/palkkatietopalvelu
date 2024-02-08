@@ -45,6 +45,18 @@ def add_client(client_data):
                             "payperiod": client_data.get("payperiod")})
     db.session.commit()
 
+def update_client(client_id, client_data):
+    validate_client_data(client_data)
+    deadline_str = client_data.get("deadline")
+    client_data["deadline"] = datetime.strptime(deadline_str, "%Y-%m-%d").date()
+    sql = text("""UPDATE clients
+                  SET company=:company, email=:email, phonenumber=:phonenumber, bi_code=:bi_code, 
+                      deadline=:deadline, payperiod=:payperiod
+                  WHERE id=:id""")
+    db.session.execute(sql, {**client_data, "id": client_id})
+    db.session.commit()
+    return get_client_data(client_id)
+
 def get_email(client_id):
     sql = text("SELECT email FROM clients WHERE id=:id")
     result = db.session.execute(sql, {"id":client_id}).fetchone()
