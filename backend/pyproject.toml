@@ -22,6 +22,7 @@ requests = "^2.31.0"
 sqlalchemy = "^2.0.25"
 gunicorn = "^21.2.0"
 flask-mail = "^0.9.1"
+apscheduler = "^3.10.4"
 
 
 
