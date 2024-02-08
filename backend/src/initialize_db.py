@@ -21,6 +21,7 @@ def create_tables():
     db.session.execute(text("""
         CREATE TABLE clients (
             id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users,
             company TEXT,
             email TEXT,
             phonenumber TEXT,
