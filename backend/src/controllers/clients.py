@@ -13,7 +13,7 @@ def get_clients():
     except Exception as error: # pylint: disable=broad-except
         return str(error), 400
 
-@app.route("/api/client/<int:client_id>")
+@app.route("/api/client/<int:client_id>", methods=["GET"])
 @require_login
 def get_client(client_id):
     try:
@@ -36,7 +36,7 @@ def add_client():
     except Exception as error: # pylint: disable=broad-except
         return str(error), 400
 
-@app.route("/api/client/<int:client_id>", methods=["PUT"])
+@app.route("/api/client/<int:client_id>", methods=["POST"])
 @require_login
 def update_client(client_id):
     try:
@@ -46,12 +46,11 @@ def update_client(client_id):
     except Exception as error:  # pylint: disable=broad-except
         return str(error), 400
 
-@app.route("/api/client/<int:client_id>", methods=["PUT"])
+@app.route("/api/client/<int:client_id>", methods=["DELETE"])
 @require_login
 def delete_client(client_id):
     try:
-        client_data = request.json
-        deleted_client = clients.delete_client(client_id, client_data)
-        return jsonify(deleted_client), 200  # no need to return deleted_client?
+        clients.delete_client(client_id)
+        return "Asiakas poistettu", 200
     except Exception as error:  # pylint: disable=broad-except
         return str(error), 400

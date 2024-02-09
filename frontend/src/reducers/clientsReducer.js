@@ -18,12 +18,12 @@ const slice = createSlice({
       return state.map(client => client.company_id === payload.company_id ? payload : client)
     },
     remove(state, { payload }) {
-      return state
+      return state.filter(c => c.id !== payload)
     }
   }
 })
 
-export const { set, add, update } = slice.actions
+export const { set, add, update, remove } = slice.actions
 
 export const getClients = () => {
   return async dispatch => {
@@ -62,12 +62,11 @@ export const updateClient = (clientObject) => {
   }
 }
 
-export const deleteClient = (clientObject) => {
-  console.log("clientsReducer deleteClient: ", clientObject)
+export const deleteClient = (object) => {
   return async dispatch => {
     try {
-      const data = await clientService.remove(clientObject)
-      dispatch(remove(data))
+      await clientService.remove(object.id)
+      dispatch(remove(object.id))
       dispatch(notify('Asiakkaan tiedot poistettu onnistuneesti'))
       return true
     } catch (e) {

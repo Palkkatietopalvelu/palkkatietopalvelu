@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Notification from './Notification'
 
 const ClientsList = () => {
   const user = useSelector(({ user }) => user)
@@ -14,6 +15,7 @@ const ClientsList = () => {
   return (
     <div>
       <h1>Asiakkaat</h1>
+      <Notification />
       <table>
         <thead>
           <tr>

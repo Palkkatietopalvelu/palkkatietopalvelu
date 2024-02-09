@@ -20,12 +20,8 @@ const update = async (clientObject) => {
   return response.data
 }
 
-const remove = async (clientObject) => {
-  console.log('client.js remove clientObject: ', clientObject)
-  const id = Number(clientObject.company_id)
-  const response = await axios.delete(`${baseUrl}/${id}`, { headers: storage.setHeaders() })
-  console.log('response ok:', response)
-  return response.data
+const remove = async id => {
+  await axios.delete(`${baseUrl}/${id}`, { headers: storage.setHeaders() })
 }
 
 export default { add, get, update, remove }

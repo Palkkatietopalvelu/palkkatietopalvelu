@@ -57,12 +57,10 @@ def update_client(client_id, client_data):
     db.session.commit()
     return get_client_data(client_id)
 
-def delete_client(client_id, client_data):
-    print("backend client_methods delete_client")
+def delete_client(client_id):
     sql = text("""DELETE FROM clients WHERE id=:id""")
-    db.session.execute(sql, {**client_data, "id": client_id})
+    db.session.execute(sql, {"id": client_id})
     db.session.commit()
-    return clients
 
 def get_email(client_id):
     sql = text("SELECT email FROM clients WHERE id=:id")
