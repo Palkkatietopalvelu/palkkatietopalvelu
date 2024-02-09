@@ -16,6 +16,7 @@ dist
 dist-ssr
 *.local
 .env
+.env.test
 venv
 __pycache__/
 .coverage

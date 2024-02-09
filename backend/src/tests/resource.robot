@@ -1,6 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary  run_on_failure=NOTHING
-Library  ../applibrary.py
+Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
@@ -14,6 +14,9 @@ Open And Configure Browser
     Call Method  ${options}  add_argument  --headless
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
+
+Initialize Database
+    Initialize Db
 
 Logged In Page Should Be Open
     Title Should Be  Vite + React
