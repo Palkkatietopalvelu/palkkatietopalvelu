@@ -16,6 +16,9 @@ const slice = createSlice({
     },
     update(state, { payload }) {
       return state.map(client => client.company_id === payload.company_id ? payload : client)
+    },
+    remove(state, { payload }) {
+      return state
     }
   }
 })
@@ -51,6 +54,21 @@ export const updateClient = (clientObject) => {
       const data = await clientService.update(clientObject)
       dispatch(update(data))
       dispatch(notify('Asiakkaan tiedot päivitetty onnistuneesti'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      return false
+    }
+  }
+}
+
+export const deleteClient = (clientObject) => {
+  console.log("clientsReducer deleteClient: ", clientObject)
+  return async dispatch => {
+    try {
+      const data = await clientService.remove(clientObject)
+      dispatch(remove(data))
+      dispatch(notify('Asiakkaan tiedot poistettu onnistuneesti'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))

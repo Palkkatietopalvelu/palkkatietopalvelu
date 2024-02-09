@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useReducer, useEffect, useState } from 'react'
-//import { useField } from '../hooks/index'
-//import { notify } from '../reducers/notificationReducer'
-//import { addClient } from '../reducers/clientsReducer'
+import { useReducer } from 'react'
 import Notification from './Notification'
-import { updateClient } from '../reducers/clientsReducer'
+import { updateClient, deleteClient } from '../reducers/clientsReducer'
 import { format } from 'date-fns'
 
 const ClientDataChange = () => {
@@ -48,6 +45,7 @@ const ClientDataChange = () => {
       user_id: client.user_id,
       ...formState,
     }))
+    navigate('/')
   }
 
   const handleInputChange = (event) => {
@@ -56,6 +54,17 @@ const ClientDataChange = () => {
       field: event.target.name,
       value: event.target.value,
     })
+  }
+
+  const deleteCompany = (event) => {
+    event.preventDefault()
+    dispatch(deleteClient({
+      company_id: client.id,
+      user_id: client.user_id,
+      ...formState,
+    }))
+    console.log("ClientDataChangeForm deleting company")
+    navigate('/')
   }
 
   return (
@@ -73,6 +82,9 @@ const ClientDataChange = () => {
         <div>
           <button type="submit">Tallenna tiedot</button>
         </div>
+      </form><br />
+      <form onSubmit={deleteCompany}>
+        <button type={"submit"}>Poista asiakas tietokannasta</button>
       </form>
       <hr />
     </div>
