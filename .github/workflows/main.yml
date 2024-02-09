@@ -52,6 +52,7 @@ jobs:
                 poetry run pytest src/tests
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  SECRET_KEY: SECRET
     
     build_frontend:
         runs-on: ubuntu-latest
