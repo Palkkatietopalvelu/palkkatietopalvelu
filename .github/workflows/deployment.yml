@@ -1,0 +1,61 @@
+name: Push Docker images
+
+on:
+    push:
+        branches: ["deployment"]
+
+env:
+    REGISTRY: docker-io
+    IMAGE_NAME_FRONT: palkkatieto-front
+    IMAGE_NAME_BACK: palkkatieto-back
+
+jobs:
+
+    build:
+
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v3
+        - name: Build the Docker image
+          run: docker-compose build --no-cache --force-rm 
+    test:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          - name: Test the Docker image
+            run: docker-compose up -d 
+    push_to_registry:
+        name: Push Docker image to Docker Hub
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - dockerfile: ./backend/Dockerfile
+                      image: docker.io/${{ secrets.DOCKER_USERNAME }}/palkkatieto-back
+                    - dockerfile: ./frontend/Dockerfile
+                      image: docker.io/${{ secrets.DOCKER_USERNAME }}/palkkatieto-front
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+    
+          - name: Log in to Docker Hub
+            uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+            with:
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+    
+          - name: Extract metadata (tags, labels) for Docker
+            id: meta
+            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            with:
+              images: ${{  matrix.image  }}
+    
+          - name: Build and push Docker image
+            uses: docker/build-push-action@v2
+            with:
+              context: "{{defaultContext}}"
+              file: ${{  matrix.dockerfile  }}
+              push: true
+              tags: ${{ matrix.image }}:staging
+              labels: ${{ steps.meta.outputs.labels }}
