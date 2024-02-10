@@ -30,10 +30,9 @@ jobs:
             matrix:
                 include:
                     - dockerfile: ./backend/Dockerfile
-                      image: docker.io/${{ env.docker_user }}/palkkatieto-back
+                      image: docker.io/$docker_user/palkkatieto-back
                     - dockerfile: ./frontend/Dockerfile
-                      image: docker.io/${{ env.docker_user }}/palkkatieto-front
-            with: secrets
+                      image: docker.io/$docker_user/palkkatieto-front
 
         steps:
           - name: Checkout repo
