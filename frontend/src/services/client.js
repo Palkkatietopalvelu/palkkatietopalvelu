@@ -13,9 +13,9 @@ const get = async id => {
 }
 
 const update = async (clientObject) => {
-  console.log('client.js update clientObject: ', clientObject)
-  const id = Number(clientObject.company_id)
-  const response = await axios.put(`${baseUrl}/${id}`, clientObject, { headers: storage.setHeaders() })
+  const id = Number(clientObject.id)
+  console.log('client.js update clientObject: ', clientObject.id, id)
+  const response = await axios.post(`${baseUrl}/${id}`, clientObject, { headers: storage.setHeaders() })
   console.log('response ok:', response)
   return response.data
 }

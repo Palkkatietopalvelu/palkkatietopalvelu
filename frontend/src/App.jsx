@@ -10,13 +10,8 @@ import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
-<<<<<<< HEAD
-import ClientDataChangeForm from './components/EditClient'
-import ClientReminder from './components/mail'
-=======
 import ClientDataChangeForm from './components/ClientUpdateForm'
 import ClientReminder from './components/Mail'
->>>>>>> 3cfaa0677944f1be1223eb5809ebbd6a738ee6d2
 import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
@@ -53,13 +48,13 @@ const App = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/">koti</Link> : ""}
+                {user ? <Link style={padding} to="/">koti</Link> : ''}
               </Nav.Link>
               <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/client">lisää asiakas</Link> : ""}
+                {user ? <Link style={padding} to="/client">lisää asiakas</Link> : ''}
               </Nav.Link>
               <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/reminders">muistutukset</Link> : ""}
+                {user ? <Link style={padding} to="/reminders">muistutukset</Link> : ''}
               </Nav.Link>
               <Nav.Link href="#" as="span">
                 {user
@@ -68,7 +63,7 @@ const App = () => {
                 }
               </Nav.Link>
               <Nav.Link href="#" as="span">
-                {user ? "" : <Link style={padding} to="/register">rekisteröidy</Link>}
+                {user ? '' : <Link style={padding} to="/register">rekisteröidy</Link>}
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

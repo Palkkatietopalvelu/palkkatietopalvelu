@@ -15,7 +15,7 @@ const slice = createSlice({
       return state.concat(payload)
     },
     update(state, { payload }) {
-      return state.map(client => client.company_id === payload.company_id ? payload : client)
+      return state.map(client => client.id === payload.id ? payload : client)
     },
     remove(state, { payload }) {
       return state.filter(c => c.id !== payload)
@@ -48,12 +48,13 @@ export const addClient = (client) => {
 }
 
 export const updateClient = (clientObject) => {
-  console.log("clientsReducer updateClient: ", clientObject)
+  console.log('clientsReducer updateClient: ', clientObject)
   return async dispatch => {
     try {
       const data = await clientService.update(clientObject)
       dispatch(update(data))
       dispatch(notify('Asiakkaan tiedot päivitetty onnistuneesti'))
+      dispatch(getClients())
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))

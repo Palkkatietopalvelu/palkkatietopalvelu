@@ -5,6 +5,7 @@ import Notification from './Notification'
 import { updateClient, deleteClient } from '../reducers/clientsReducer'
 import { format } from 'date-fns'
 import { Table, Form, Button } from 'react-bootstrap'
+import { useField } from '../hooks'
 
 const ClientDataChange = () => {
   const navigate = useNavigate()
@@ -13,52 +14,35 @@ const ClientDataChange = () => {
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
 
+  const company = useField(client ? client.company : '')
+  const email = useField(client ? client.email : '')
+  const phonenumber = useField(client ? client.phonenumber : '')
+  const bicode = useField(client ? client.bi_code : '')
+  const deadline = useField(client ? format(new Date(client.deadline), 'yyyy-MM-dd') : '')
+  const payperiod = useField(client ? client.payperiod : '')
+
   if (!user) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
   }
 
-  /*
-  const initialState = {
-    company: client.company,
-    email: client.email,
-    phonenumber: client.phonenumber,
-    bi_code: client.bi_code,
-    deadline: format(new Date(client.deadline), 'yyyy-MM-dd'),
-    payperiod: client.payperiod,
-  }
-
-  function formReducer(state, action) {
-    switch (action.type) {
-    case 'UPDATE_FIELD':
-      return { ...state, [action.field]: action.value }
-    case 'RESET':
-      return action.newState
-    default:
-      return state
-    }
-  }
-
-  const [formState, dispatchForm] = useReducer(formReducer, initialState)*/
-
-  const updateData = (event) => {
+  const updateData = async (event) => {
     event.preventDefault()
-    /*dispatch(updateClient({
-      company_id: client.id,
-      user_id: client.user_id,
-      ...formState,
-    }))
-    navigate('/')*/
-  }
-
-  const handleInputChange = (event) => {
-    null
-    /*dispatchForm({
-      type: 'UPDATE_FIELD',
-      field: event.target.name,
-      value: event.target.value,
-    })*/
+    const clientObject = {
+      id: id,
+      user_id: user.id,
+      company: company.value,
+      email: email.value,
+      phonenumber: phonenumber.value,
+      bi_code: bicode.value,
+      deadline: deadline.value,
+      payperiod: payperiod.value,
+    }
+    const result = await dispatch(updateClient(clientObject))
+    if (result) {
+      navigate(`/client/${client.id}`)
+    }
   }
 
   const remove = () => {
@@ -78,29 +62,30 @@ const ClientDataChange = () => {
       <Form onSubmit={updateData}>
         <Form.Group>
           <Form.Label>Yritys</Form.Label>
-          <Form.Control name="company" value={client.company} onChange={handleInputChange} />
+          <Form.Control {...company} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Sähköposti</Form.Label>
-          <Form.Control name="email" value={client.email} onChange={handleInputChange} />
+          <Form.Control {...email} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Puhelinnumero</Form.Label>
-          <Form.Control name="phonenumber" value={client.phonenumber} onChange={handleInputChange} />
+          <Form.Control {...phonenumber} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Y-tunnus</Form.Label>
-          <Form.Control name="bi_code" value={client.bi_code} onChange={handleInputChange} />
+          <Form.Control {...bicode} required/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Eräpäivä</Form.Label>
-          <Form.Control name="deadline" value={client.deadline} onChange={handleInputChange} />
+          <Form.Control {...deadline} required/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi</Form.Label>
-          <Form.Control name="payperiod" value={client.payperiod} onChange={handleInputChange} />
+          <Form.Control {...payperiod} required style={{ marginBottom: '20px' }} />
         </Form.Group>
-        <Button variant="primary" onClick={remove}>Tallenna tiedot</Button>
+        <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
+        <Button variant="primary" onClick={remove}>Poista asiakas</Button>
       </Form>
     </div>
   )

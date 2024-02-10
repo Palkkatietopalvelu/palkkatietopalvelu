@@ -37,7 +37,7 @@ const ClientsList = () => {
                   <td>{client.deadline}</td>
                 </tr>
               )}
-          )}
+            )}
         </tbody>
       </Table>
     </div>

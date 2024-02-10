@@ -19,11 +19,11 @@ def get_clients():
     return all_clients
 
 def get_client_data(client_id: int):
-    sql = text("""SELECT company, email, phonenumber, bi_code, deadline, payperiod
+    sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod
                FROM clients WHERE id=:id""")
     result = db.session.execute(sql, {"id": client_id}).fetchone()
     if result:
-        columns = ["company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
+        columns = ["id", "company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
         client_data = dict(zip(columns, result))
         return client_data
     return None
