@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
+import Notification from './Notification'
 
 const Client = () => {
   const user = useSelector(({ user }) => user)
@@ -16,8 +17,9 @@ const Client = () => {
 
   return (
     <div>
-      <br /><h2>{client.company}</h2>
-      <h4>Yhteystiedot</h4>
+      <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
+      <Notification />
+      <h4 style={{ marginTop: '20px' }}>Yhteystiedot</h4>
       <Table striped>
         <tbody>
           <tr><td>Sähköposti</td><td>{client.email}</td></tr>

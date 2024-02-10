@@ -11,8 +11,6 @@ class TestAddClient(unittest.TestCase):
                             "deadline": "2024-10-04",
                             "payperiod": "kuukausi"}
 
-
-        
     def test_validate_client_data_correct(self):
         result = client.validate_client_data(self.client_data)
         self.assertTrue(result)
@@ -46,9 +44,8 @@ class TestAddClient(unittest.TestCase):
         self.client_data["payperiod"] = None
         with self.assertRaises(ValueError):
             client.validate_client_data(self.client_data)
-        
-        
-   #self.app = app.test_client()     
+
+   #self.app = app.test_client()
          #def test_add_client(self):
     #    response = self.app.get('/api/')
     #    assert response.status_code == 200
