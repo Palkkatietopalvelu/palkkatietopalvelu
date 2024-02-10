@@ -4,6 +4,7 @@ import { useReducer } from 'react'
 import Notification from './Notification'
 import { updateClient, deleteClient } from '../reducers/clientsReducer'
 import { format } from 'date-fns'
+import { Table, Form, Button } from 'react-bootstrap'
 
 const ClientDataChange = () => {
   const navigate = useNavigate()
@@ -72,22 +73,35 @@ const ClientDataChange = () => {
 
   return (
     <div>
-      <hr />
       <h3>{client.company}:n tietojen muuttaminen</h3>
       <Notification />
-      <form onSubmit={updateData}>
-        <label>Yritys: <input name="company" value={client.company} onChange={handleInputChange} /></label><br />
-        <label>Sähköposti: <input name="email" value={client.email} onChange={handleInputChange} /></label><br />
-        <label>Puhelinnumero: <input name="phonenumber" value={client.phonenumber} onChange={handleInputChange} /></label><br />
-        <label>Y-tunnus: <input name="bi_code" value={client.bi_code} onChange={handleInputChange} /></label><br />
-        <label>Eräpäivä: <input name="deadline" value={client.deadline} onChange={handleInputChange} /></label><br />
-        <label>Palkkakausi: <input name="payperiod" value={client.payperiod} onChange={handleInputChange} /></label><br />
-        <div>
-          <button type="submit">Tallenna tiedot</button>
-        </div>
-      </form><br />
-      <button onClick={remove}>Poista asiakas tietokannasta</button>
-      <hr />
+      <Form onSubmit={updateData}>
+        <Form.Group>
+          <Form.Label>Yritys</Form.Label>
+          <Form.Control name="company" value={client.company} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Sähköposti</Form.Label>
+          <Form.Control name="email" value={client.email} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Puhelinnumero</Form.Label>
+          <Form.Control name="phonenumber" value={client.phonenumber} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Y-tunnus</Form.Label>
+          <Form.Control name="bi_code" value={client.bi_code} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Eräpäivä</Form.Label>
+          <Form.Control name="deadline" value={client.deadline} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Palkkakausi</Form.Label>
+          <Form.Control name="payperiod" value={client.payperiod} onChange={handleInputChange} />
+        </Form.Group>
+        <Button variant="primary" onClick={remove}>Tallenna tiedot</Button>
+      </Form>
     </div>
   )
 }

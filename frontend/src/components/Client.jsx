@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 const Client = () => {
   const user = useSelector(({ user }) => user)
@@ -15,15 +16,22 @@ const Client = () => {
 
   return (
     <div>
-      <h1>{client.company}</h1>
+      <br /><h2>{client.company}</h2>
       <h4>Yhteystiedot</h4>
-      <p>Sähköposti: {client.email}</p>
-      <p>Puhelinnumero: {client.phonenumber}</p>
+      <Table striped>
+        <tbody>
+          <tr><td>Sähköposti</td><td>{client.email}</td></tr>
+          <tr><td>Puhelinnumero</td><td>{client.phonenumber}</td></tr>
+        </tbody>
+      </Table>
       <h4>Laskutustiedot</h4>
-      <p>Y-tunnus: {client.bi_code}</p>
-      <p>Eräpäivä: {client.deadline}</p>
-      <p>Palkkakausi: {client.payperiod}</p>
-      <hr />
+      <Table striped>
+        <tbody>
+          <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
+          <tr><td>Eräpäivä</td><td>{client.deadline}</td></tr>
+          <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
+        </tbody>
+      </Table>
       <Link to={`/client/${client.id}/changedata`}>Muuta asiakkaan tietoja</Link>
     </div>
   )
