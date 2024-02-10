@@ -4,6 +4,7 @@ import mailService from '../services/mail'
 import Notification from './Notification'
 import { format } from 'date-fns'
 import { notify } from '../reducers/notificationReducer'
+import { Table, Form, Button } from 'react-bootstrap'
 
 const CheckBox = ({ name, inputs, setInputs }) => {
 
@@ -44,22 +45,34 @@ const ClientReminder = () => {
 
   return (
     <div>
+      <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2>
       <Notification />
-      <p>Valitse asiakkaat, joille muistutus lähetetään</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          {clients.map((client) => (
-            <div key={client.id}>
-              {client.company} {format(client.deadline, 'yyyy-MM-dd')}
-              <CheckBox name={client.id}
-                inputs={inputs}
-                setInputs={setInputs}
-              />
-            </div>
-          ))}
-        </div>
-        <button type="submit">Lähetä</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Valitse</th>
+                <th>Yritys</th>
+                <th>Eräpäivä</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients.map((client) => (
+                <tr key={client.id}>
+                  <td><CheckBox name={client.id}
+                    inputs={inputs}
+                    setInputs={setInputs}
+                  /></td>
+                  <td>{client.company}</td>
+                  <td>{format(client.deadline, 'yyyy-MM-dd')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Button type="submit">Lähetä</Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Notification from './Notification'
+import { Table } from 'react-bootstrap'
 
 const ClientsList = () => {
   const user = useSelector(({ user }) => user)
@@ -14,9 +15,9 @@ const ClientsList = () => {
 
   return (
     <div>
-      <h1>Asiakkaat</h1>
+      <br /><h2>Asiakkaat</h2>
       <Notification />
-      <table>
+      <Table striped>
         <thead>
           <tr>
             <th>Yritys</th>
@@ -36,9 +37,9 @@ const ClientsList = () => {
                   <td>{client.deadline}</td>
                 </tr>
               )}
-            )}
+          )}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
