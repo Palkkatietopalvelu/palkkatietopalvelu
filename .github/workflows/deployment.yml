@@ -5,9 +5,7 @@ on:
         branches: ["deployment"]
 
 env:
-    REGISTRY: docker-io
-    IMAGE_NAME_FRONT: palkkatieto-front
-    IMAGE_NAME_BACK: palkkatieto-back
+    docker_user: ${{ secrets.DOCKER_USERNAME }}
 
 jobs:
 
@@ -32,9 +30,11 @@ jobs:
             matrix:
                 include:
                     - dockerfile: ./backend/Dockerfile
-                      image: docker.io/${{ secrets.DOCKER_USERNAME }}/palkkatieto-back
+                      image: docker.io/${{ env.docker_user }}/palkkatieto-back
                     - dockerfile: ./frontend/Dockerfile
-                      image: docker.io/${{ secrets.DOCKER_USERNAME }}/palkkatieto-front
+                      image: docker.io/${{ env.docker_user }}/palkkatieto-front
+            with: secrets
+
         steps:
           - name: Checkout repo
             uses: actions/checkout@v3
