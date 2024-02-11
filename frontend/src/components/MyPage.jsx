@@ -1,23 +1,26 @@
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 
-const ClientsList = () => {
+const MyPage = () => {
   const user = useSelector(({ user }) => user)
-  const clients = useSelector(({ clients }) =>
-    clients)
+  const id = Number(useParams().id)
+  const clients = useSelector(({ clients }) => clients)
   const filterBy = (c => c.user_id === user.id)
 
   if (!user) {
-    return
+    return ('Et ole kirjautunut sisään')
   }
 
   return (
     <div>
-      <br /><h2>Asiakkaat</h2>
-      <Notification />
+      <br /><h2 style={{ marginBottom: '20px' }}>Omat sivut</h2>
+      <h4 style={{ marginTop: '20px' }}>Käyttäjätilin asetukset</h4>
+      <p>Käyttäjätunnus: {user.username}</p>
+      <p>Salasanan vaihto</p>
+      <h4 style={{ marginTop: '20px' }}>Minun yritykset</h4>
       <Table striped>
         <thead>
           <tr>
@@ -44,4 +47,5 @@ const ClientsList = () => {
     </div>
   )
 }
-export default ClientsList
+
+export default MyPage

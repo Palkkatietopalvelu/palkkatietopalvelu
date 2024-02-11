@@ -27,6 +27,7 @@ const CheckBox = ({ name, inputs, setInputs }) => {
 }
 
 const ClientReminder = () => {
+
   const dispatch = useDispatch()
   const [clients, setClients] = useState([])
   const [inputs, setInputs] = useState([])
@@ -65,7 +66,7 @@ const ClientReminder = () => {
                     setInputs={setInputs}
                   /></td>
                   <td>{client.company}</td>
-                  <td>{format(client.deadline, 'yyyy-MM-dd')}</td>
+                  <td>{format(client.deadline, 'dd.MM.yyyy')}</td>
                 </tr>
               ))}
             </tbody>

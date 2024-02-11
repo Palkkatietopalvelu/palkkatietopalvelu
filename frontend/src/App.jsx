@@ -15,6 +15,7 @@ import ClientReminder from './components/Mail'
 import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
+import MyPage from './components/MyPage'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -51,6 +52,9 @@ const App = () => {
                 {user ? <Link style={padding} to="/">koti</Link> : ''}
               </Nav.Link>
               <Nav.Link href="#" as="span">
+                {user ? <Link style={padding} to="/mypage">omat sivut</Link> : ''}
+              </Nav.Link>
+              <Nav.Link href="#" as="span">
                 {user ? <Link style={padding} to="/client">lisää asiakas</Link> : ''}
               </Nav.Link>
               <Nav.Link href="#" as="span">
@@ -80,6 +84,7 @@ const App = () => {
           <Route path="/" element={<ClientsList />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/changedata" element={<ClientDataChangeForm />} />

@@ -57,7 +57,7 @@ const ClientDataChange = () => {
 
   return (
     <div>
-      <h3>{client.company}:n tietojen muuttaminen</h3>
+      <br /><h2>{client.company}:n tietojen muuttaminen</h2>
       <Notification />
       <Form onSubmit={updateData}>
         <Form.Group>
