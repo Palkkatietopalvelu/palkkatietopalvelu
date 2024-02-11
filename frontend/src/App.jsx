@@ -1,16 +1,15 @@
 import { useEffect } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link, useNavigate
+  Routes, Route
 } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUser, logoutUser } from './reducers/userReducer'
+import { useDispatch } from 'react-redux'
+import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import ClientsList from './components/ClientsList'
 import Client from './components/Client'
-import ClientDataChangeForm from './components/ClientUpdateForm'
+import UpdateClient from './components/ClientUpdateForm'
 import ClientReminder from './components/Mail'
 import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
@@ -19,8 +18,6 @@ import MyPage from './components/MyPage'
 
 const App = () => {
   const dispatch = useDispatch()
-  //const navigate = useNavigate()
-  const user = useSelector(({ user }) => user)
 
   useEffect(() => {
     dispatch(getUser())
@@ -31,55 +28,10 @@ const App = () => {
       })
   }, [dispatch])
 
-  const handleLogout = async (event) => {
-    event.preventDefault()
-    dispatch(logoutUser())
-    //navigate('/')
-  }
-
-  const padding = {
-    padding: 3
-  }
-
   return (
     <div className="container">
       <Router>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/">koti</Link> : ''}
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/mypage">omat sivut</Link> : ''}
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/client">lisää asiakas</Link> : ''}
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
-                {user ? <Link style={padding} to="/reminders">muistutukset</Link> : ''}
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
-                {user
-                  ? <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
-                  : <Link style={padding} to="/login">kirjaudu sisään</Link>
-                }
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
-                {user ? '' : <Link style={padding} to="/register">rekisteröidy</Link>}
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-          <div className="logo-container"> 
-            <img 
-                src={'./src/Reilu_logo_green.png'} 
-                className="logo img-fluid"
-                alt="Logo"
-                width="180" height="180"
-            /> 
-          </div>
-        </Navbar>
+        <Menu/>
         <Routes>
           <Route path="/" element={<ClientsList />} />
           <Route path="/login" element={<LoginForm />} />
@@ -87,7 +39,7 @@ const App = () => {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
-          <Route path="/client/:id/changedata" element={<ClientDataChangeForm />} />
+          <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/reminders" element={<ClientReminder />} />
         </Routes>
       </Router>

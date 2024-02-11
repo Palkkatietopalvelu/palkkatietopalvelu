@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
-  const id = Number(useParams().id)
   const clients = useSelector(({ clients }) => clients)
   const filterBy = (c => c.user_id === user.id)
 
@@ -20,7 +18,7 @@ const MyPage = () => {
       <h4 style={{ marginTop: '20px' }}>Käyttäjätilin asetukset</h4>
       <p>Käyttäjätunnus: {user.username}</p>
       <p>Salasanan vaihto</p>
-      <h4 style={{ marginTop: '20px' }}>Minun yritykset</h4>
+      <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4>
       <Table striped>
         <thead>
           <tr>

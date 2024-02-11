@@ -12,11 +12,8 @@ const get = async id => {
   return response.data
 }
 
-const update = async (clientObject) => {
-  const id = Number(clientObject.id)
-  console.log('client.js update clientObject: ', clientObject.id, id)
-  const response = await axios.post(`${baseUrl}/${id}`, clientObject, { headers: storage.setHeaders() })
-  console.log('response ok:', response)
+const update = async object => {
+  const response = await axios.post(`${baseUrl}/${object.id}`, object, { headers: storage.setHeaders() })
   return response.data
 }
 

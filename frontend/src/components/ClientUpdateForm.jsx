@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useReducer } from 'react'
 import Notification from './Notification'
 import { updateClient, deleteClient } from '../reducers/clientsReducer'
 import { format } from 'date-fns'
-import { Table, Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 
-const ClientDataChange = () => {
+const UpdateClient = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
@@ -27,7 +26,7 @@ const ClientDataChange = () => {
     return
   }
 
-  const updateData = async (event) => {
+  const updateData = (event) => {
     event.preventDefault()
     const clientObject = {
       id: id,
@@ -39,10 +38,11 @@ const ClientDataChange = () => {
       deadline: deadline.value,
       payperiod: payperiod.value,
     }
-    const result = await dispatch(updateClient(clientObject))
-    if (result) {
-      navigate(`/client/${client.id}`)
-    }
+    dispatch(updateClient(clientObject)).then(result => {
+      if (result) {
+        navigate(`/client/${client.id}`)
+      }
+    })
   }
 
   const remove = () => {
@@ -91,4 +91,4 @@ const ClientDataChange = () => {
   )
 }
 
-export default ClientDataChange
+export default UpdateClient

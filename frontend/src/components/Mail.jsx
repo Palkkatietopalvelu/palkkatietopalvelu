@@ -7,7 +7,6 @@ import { notify } from '../reducers/notificationReducer'
 import { Table, Form, Button } from 'react-bootstrap'
 
 const CheckBox = ({ name, inputs, setInputs }) => {
-
   const handleCheckChange = () => {
     if (inputs.includes(name)) {
       setInputs(inputs.filter((input) => input !== name))
@@ -27,7 +26,6 @@ const CheckBox = ({ name, inputs, setInputs }) => {
 }
 
 const ClientReminder = () => {
-
   const dispatch = useDispatch()
   const [clients, setClients] = useState([])
   const [inputs, setInputs] = useState([])

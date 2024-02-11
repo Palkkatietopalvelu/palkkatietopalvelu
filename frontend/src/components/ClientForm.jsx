@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
-import { notify } from '../reducers/notificationReducer'
 import { addClient } from '../reducers/clientsReducer'
 import Notification from './Notification'
-import { Table, Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
 const ClientForm = () => {
   const dispatch = useDispatch()

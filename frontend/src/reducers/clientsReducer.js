@@ -47,11 +47,10 @@ export const addClient = (client) => {
   }
 }
 
-export const updateClient = (clientObject) => {
-  console.log('clientsReducer updateClient: ', clientObject)
+export const updateClient = (client) => {
   return async dispatch => {
     try {
-      const data = await clientService.update(clientObject)
+      const data = await clientService.update(client)
       dispatch(update(data))
       dispatch(notify('Asiakkaan tiedot päivitetty onnistuneesti'))
       dispatch(getClients())
@@ -63,11 +62,11 @@ export const updateClient = (clientObject) => {
   }
 }
 
-export const deleteClient = (object) => {
+export const deleteClient = (client) => {
   return async dispatch => {
     try {
-      await clientService.remove(object.id)
-      dispatch(remove(object.id))
+      await clientService.remove(client.id)
+      dispatch(remove(client.id))
       dispatch(notify('Asiakkaan tiedot poistettu onnistuneesti'))
       return true
     } catch (e) {
