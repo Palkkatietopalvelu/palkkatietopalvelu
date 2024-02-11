@@ -13,11 +13,17 @@ const slice = createSlice({
     },
     add(state, { payload }) {
       return state.concat(payload)
+    },
+    update(state, { payload }) {
+      return state.map(client => client.id === payload.id ? payload : client)
+    },
+    remove(state, { payload }) {
+      return state.filter(c => c.id !== payload)
     }
   }
 })
 
-export const { set, add } = slice.actions
+export const { set, add, update, remove } = slice.actions
 
 export const getClients = () => {
   return async dispatch => {
@@ -33,6 +39,35 @@ export const addClient = (client) => {
       dispatch(add(data))
       dispatch(notify('Asiakas lisätty onnistuneesti'))
       dispatch(getClients())
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      return false
+    }
+  }
+}
+
+export const updateClient = (client) => {
+  return async dispatch => {
+    try {
+      const data = await clientService.update(client)
+      dispatch(update(data))
+      dispatch(notify('Asiakkaan tiedot päivitetty onnistuneesti'))
+      dispatch(getClients())
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      return false
+    }
+  }
+}
+
+export const deleteClient = (client) => {
+  return async dispatch => {
+    try {
+      await clientService.remove(client.id)
+      dispatch(remove(client.id))
+      dispatch(notify('Asiakkaan tiedot poistettu onnistuneesti'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))

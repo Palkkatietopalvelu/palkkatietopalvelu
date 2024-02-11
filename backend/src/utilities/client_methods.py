@@ -19,11 +19,11 @@ def get_clients():
     return all_clients
 
 def get_client_data(client_id: int):
-    sql = text("""SELECT company, email, phonenumber, bi_code, deadline, payperiod
+    sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod
                FROM clients WHERE id=:id""")
     result = db.session.execute(sql, {"id": client_id}).fetchone()
     if result:
-        columns = ["company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
+        columns = ["id", "company", "email", "phonenumber", "bi_code", "deadline", "payperiod"]
         client_data = dict(zip(columns, result))
         return client_data
     return None
@@ -43,6 +43,23 @@ def add_client(client_data):
                             "bi_code": client_data.get("bi_code"),
                             "deadline": deadline,
                             "payperiod": client_data.get("payperiod")})
+    db.session.commit()
+
+def update_client(client_id, client_data):
+    validate_client_data(client_data)
+    deadline_str = client_data.get("deadline")
+    client_data["deadline"] = datetime.strptime(deadline_str, "%Y-%m-%d").date()
+    sql = text("""UPDATE clients
+                  SET company=:company, email=:email, phonenumber=:phonenumber, bi_code=:bi_code, 
+                      deadline=:deadline, payperiod=:payperiod
+                  WHERE id=:id""")
+    db.session.execute(sql, {**client_data, "id": client_id})
+    db.session.commit()
+    return get_client_data(client_id)
+
+def delete_client(client_id):
+    sql = text("""DELETE FROM clients WHERE id=:id""")
+    db.session.execute(sql, {"id": client_id})
     db.session.commit()
 
 def get_email(client_id):

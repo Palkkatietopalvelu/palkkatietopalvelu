@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
-import { notify } from '../reducers/notificationReducer'
 import { addClient } from '../reducers/clientsReducer'
 import Notification from './Notification'
+import { Form, Button } from 'react-bootstrap'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
@@ -48,18 +48,35 @@ const ClientForm = () => {
 
   return (
     <div>
+      <br /><h2>Lisää asiakas</h2>
       <Notification />
-      <form onSubmit={handleSubmit}>
-        <label>Yritys: <input id='company' {...company} required/></label><br/>
-        <label>Sähköposti: <input id='email' {...email} required/></label><br/>
-        <label>Puhelinnumero: <input id='phonenumber' placeholder="+358 451234567" {...phonenumber} required/></label><br/>
-        <label>Y-tunnus: <input id='bicode' placeholder="1234567-8" {...bicode} required/></label><br/>
-        <label>Eräpäivä: <input id='deadline' placeholder="yyyy-mm-dd" {...deadline} required/></label><br/>
-        <label>Palkkakausi: <input id='payperiod'  {...payperiod} required/></label>
-        <div>
-          <button type="submit">lisää</button>
-        </div>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Yritys:</Form.Label>
+          <Form.Control {...company} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Sähköposti:</Form.Label>
+          <Form.Control {...email} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Puhelinnumero:</Form.Label>
+          <Form.Control placeholder="+358 451234567" {...phonenumber} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Y-tunnus:</Form.Label>
+          <Form.Control placeholder="1234567-8" {...bicode} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Eräpäivä:</Form.Label>
+          <Form.Control placeholder="yyyy-mm-dd" {...deadline} required />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Palkkakausi:</Form.Label>
+          <Form.Control {...payperiod} required />
+        </Form.Group>
+        <Button variant="primary" type="submit">Lisää</Button>
+      </Form>
     </div>
   )
 }

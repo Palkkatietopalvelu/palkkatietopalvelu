@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
+import Notification from './Notification'
 
 const Client = () => {
   const user = useSelector(({ user }) => user)
@@ -14,14 +17,24 @@ const Client = () => {
 
   return (
     <div>
-      <h1>{client.company}</h1>
-      <h4>Yhteystiedot</h4>
-      <p>Sähköposti: {client.email}</p>
-      <p>Puhelinnumero: {client.phonenumber}</p>
+      <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
+      <Notification />
+      <h4 style={{ marginTop: '20px' }}>Yhteystiedot</h4>
+      <Table striped>
+        <tbody>
+          <tr><td>Sähköposti</td><td>{client.email}</td></tr>
+          <tr><td>Puhelinnumero</td><td>{client.phonenumber}</td></tr>
+        </tbody>
+      </Table>
       <h4>Laskutustiedot</h4>
-      <p>Y-tunnus: {client.bi_code}</p>
-      <p>Eräpäivä: {client.deadline}</p>
-      <p>Palkkakausi: {client.payperiod}</p>
+      <Table striped>
+        <tbody>
+          <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
+          <tr><td>Eräpäivä</td><td>{client.deadline}</td></tr>
+          <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
+        </tbody>
+      </Table>
+      <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
     </div>
   )
 }

@@ -12,4 +12,13 @@ const get = async id => {
   return response.data
 }
 
-export default { add, get }
+const update = async object => {
+  const response = await axios.post(`${baseUrl}/${object.id}`, object, { headers: storage.setHeaders() })
+  return response.data
+}
+
+const remove = async id => {
+  await axios.delete(`${baseUrl}/${id}`, { headers: storage.setHeaders() })
+}
+
+export default { add, get, update, remove }

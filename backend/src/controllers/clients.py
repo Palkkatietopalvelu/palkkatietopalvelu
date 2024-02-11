@@ -13,7 +13,7 @@ def get_clients():
     except Exception as error: # pylint: disable=broad-except
         return str(error), 400
 
-@app.route("/api/client/<int:client_id>")
+@app.route("/api/client/<int:client_id>", methods=["GET"])
 @require_login
 def get_client(client_id):
     try:
@@ -35,4 +35,22 @@ def add_client():
     # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
     except Exception as error: # pylint: disable=broad-except
         return str(error), 400
-    
+
+@app.route("/api/client/<int:client_id>", methods=["POST"])
+@require_login
+def update_client(client_id):
+    try:
+        client_data = request.json
+        updated_client = clients.update_client(client_id, client_data)
+        return jsonify(updated_client), 200
+    except Exception as error:  # pylint: disable=broad-except
+        return str(error), 400
+
+@app.route("/api/client/<int:client_id>", methods=["DELETE"])
+@require_login
+def delete_client(client_id):
+    try:
+        clients.delete_client(client_id)
+        return "Asiakas poistettu", 200
+    except Exception as error:  # pylint: disable=broad-except
+        return str(error), 400

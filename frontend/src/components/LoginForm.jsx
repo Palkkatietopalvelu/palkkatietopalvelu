@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { useField } from '../hooks'
 import { loginUser } from '../reducers/userReducer'
 import Notification from './Notification'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = () => {
-  const username = useField('text')
-  const password = useField('password')
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(({ user }) => user)
+  const username = useField()
+  const password = useField()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -23,21 +24,21 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
+    <div><br />
       {!user && <div>
         <h2>Kirjaudu sisään</h2>
         <Notification />
-        <form onSubmit={handleLogin}>
-          <div>
-            käyttäjätunnus
-            <input id='username' {...username} />
-          </div>
-          <div>
-          salasana
-            <input id='password' {...password} />
-          </div>
-          <button id="login" type="submit">kirjaudu</button>
-        </form>
+        <Form onSubmit={handleLogin}>
+          <Form.Group>
+            <Form.Label>käyttäjätunnus</Form.Label>
+            <Form.Control id='username' type='text' {...username} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>salasana</Form.Label>
+            <Form.Control id='password' type='password' {...password} />
+          </Form.Group>
+          <Button id="login" type="submit" variant="primary">kirjaudu</Button>
+        </Form>
       </div>}
     </div>
   )
