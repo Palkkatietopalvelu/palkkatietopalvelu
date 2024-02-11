@@ -4,11 +4,16 @@ from os import getenv
 from flask import Flask
 from flask_cors import CORS
 from db import init_db
-from config import DATABASE_URL
+from config import DATABASE_URL, TEST_DATABASE_URL, ENV
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+
+if ENV == "development":
+    app.config["SQLALCHEMY_DATABASE_URI"] = TEST_DATABASE_URL
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+
 app.secret_key = getenv("SECRET_KEY")
 CORS(app)
 #db.init_app(app)

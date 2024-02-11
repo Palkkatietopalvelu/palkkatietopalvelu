@@ -4,7 +4,8 @@ from utilities import client_methods as client
 
 class TestAddClient(unittest.TestCase):
     def setUp(self):
-        self.client_data = {"company": "Testiyritys",
+        self.client_data = {"user_id": 1,
+                            "company": "Testiyritys",
                             "email": "testi@gmail.com",
                             "phonenumber": "+358 123456789",
                             "bi_code": "1234567-8",

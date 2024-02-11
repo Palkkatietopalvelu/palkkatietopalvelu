@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app import app
-import utilities.client_methods as clients
+from utilities import client_methods as clients
 from utilities.require_login import require_login
 
 @app.route("/api/clients")
