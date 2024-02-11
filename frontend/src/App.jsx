@@ -67,6 +67,14 @@ const App = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
+          <div className="logo-container"> 
+            <img 
+                src={'./src/Reilu_logo_green.png'} 
+                className="logo img-fluid"
+                alt="Logo"
+                width="180" height="180"
+            /> 
+          </div>
         </Navbar>
         <Routes>
           <Route path="/" element={<ClientsList />} />
