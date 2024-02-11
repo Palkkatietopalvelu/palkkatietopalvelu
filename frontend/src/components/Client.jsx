@@ -34,7 +34,7 @@ const Client = () => {
           <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
         </tbody>
       </Table>
-      <Link to={`/client/${client.id}/changedata`}>Muuta asiakkaan tietoja</Link>
+      <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
     </div>
   )
 }
