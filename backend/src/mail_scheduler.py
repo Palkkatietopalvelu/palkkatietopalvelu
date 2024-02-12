@@ -1,4 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
+from utilities import client_methods
 
 def reminder():
     """ Function for test purposes. """

@@ -12,11 +12,11 @@ CREATE TABLE clients (
   email TEXT,
   phonenumber TEXT,
   bi_code TEXT,
-  deadline DATE,
   payperiod TEXT
 );
 
 CREATE TABLE deadlines (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
+  deadline DATE
 );
