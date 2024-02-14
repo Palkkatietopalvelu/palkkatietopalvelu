@@ -5,7 +5,6 @@ from flask import Flask
 from flask_cors import CORS
 from db import init_db
 from config import DATABASE_URL, TEST_DATABASE_URL, ENV
-from mail_scheduler import start_scheduler
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -22,7 +21,10 @@ init_db(app)
 
 # pylint: disable=unused-import,wrong-import-position
 from controllers import users, clients, login, mail
+from mail_scheduler import start_scheduler
 # pylint: enable=unused-import,wrong-import-position
+
+start_scheduler()
 
 if __name__ == '__main__':
     #db.init_app(app)

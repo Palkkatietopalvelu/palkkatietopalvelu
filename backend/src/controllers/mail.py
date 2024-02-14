@@ -5,7 +5,6 @@ from flask_mail import Mail, Message
 from app import app
 from utilities.client_methods import get_clients_deadlines, get_email
 
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
 app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
