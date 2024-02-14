@@ -3,6 +3,7 @@ from datetime import date
 import json
 from sqlalchemy.sql import text
 from db import db
+import json
 
 def get_clients():
     sql = text("""SELECT id, company, email, phonenumber,
@@ -132,3 +133,12 @@ def validate_phonenumber(number):
     if not re.match(r"^\+358\d{7,13}$", phonenumber):
         raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
     return phonenumber
+
+def add_deadlines(deadlines, client_id):
+    deadlines = json.loads(deadlines)
+    for d in deadlines:
+        d = date.fromtimestamp(d/1000)
+        sql = text("""INSERT INTO deadlines (deadline, client_id)
+                   VALUES (:d, :client_id)""")
+        db.session.execute(sql, {"d": d, "client_id": client_id})
+    db.session.commit()
