@@ -1,11 +1,18 @@
 import unittest
-from unittest.mock import Mock
+from db import db
+from app import app
 from utilities import client_methods as client
+import controllers.users
+import utilities.client_methods as client_methods
+from initialize_db import initialize_database
 
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
+        initialize_database()
+        controllers.users.create_user(testing="yes", username="pekka", password="pekka123", role=1)
         self.client_id = 1
         self.original_client_data = {
+            "user_id": "1",
             "company": "Testiyritys",
             "email": "testi@gmail.com",
             "phonenumber": "+358 123456789",
@@ -14,6 +21,7 @@ class TestUpdateClient(unittest.TestCase):
             "payperiod": "kuukausi"
         }
         self.updated_client_data = {
+            "user_id": "1",
             "company": "UpdatedTestiyritys",
             "email": "updatedtesti@gmail.com",
             "phonenumber": "+358 987654321",
@@ -23,8 +31,19 @@ class TestUpdateClient(unittest.TestCase):
         }
 
 
-    # Tänne testit jossa validoidaan onnistunut tietojen päivitys
+    def test_edit_client_with_correct_inputs(self):
+        with app.app_context():
+            client_methods.add_client(self.original_client_data)
+            client_methods.update_client(1, self.updated_client_data)
+            client_one = client_methods.get_client_data(1)
+            self.assertEqual(client_one["payperiod"], "vuosi")
 
+    def test_delete_client(self):
+        with app.app_context():
+            client_methods.add_client(self.original_client_data)
+            client_methods.delete_client(1)
+            all_clients = client_methods.get_clients()
+            self.assertEqual(len(all_clients), 0)
 
     def test_validate_client_missing_company(self):
         invalid_company_data = self.updated_client_data.copy()
