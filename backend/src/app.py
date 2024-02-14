@@ -5,7 +5,6 @@ from flask import Flask
 from flask_cors import CORS
 from db import init_db
 from config import DATABASE_URL, TEST_DATABASE_URL, ENV
-from mail_scheduler import start_scheduler
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

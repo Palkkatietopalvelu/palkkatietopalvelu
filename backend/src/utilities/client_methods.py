@@ -142,3 +142,10 @@ def add_deadlines(deadlines, client_id):
                    VALUES (:d, :client_id)""")
         db.session.execute(sql, {"d": d, "client_id": client_id})
     db.session.commit()
+
+def get_next_deadlines():
+    sql = text("""SELECT MIN(deadline) AS next_deadline,
+               client_id FROM deadlines
+               GROUP BY client_id ORDER BY next_deadline""")
+    result = db.session.execute(sql)
+    return result.fetchall()
