@@ -1,7 +1,8 @@
 import re
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy.sql import text
 from db import db
+import json
 
 def get_clients():
     sql = text("""SELECT id, company, email, phonenumber, bi_code, deadline, payperiod, user_id
@@ -30,20 +31,19 @@ def get_client_data(client_id: int):
 
 def add_client(client_data):
     validate_client_data(client_data)
-    deadline_str = client_data.get("deadline")
-    deadline = datetime.strptime(deadline_str, "%Y-%m-%d").date()
     sql = text(
-        """INSERT INTO clients (user_id, company, email, phonenumber,bi_code, deadline, payperiod)
-            VALUES (:user_id, :company, :email, :phonenumber, :bi_code, :deadline, :payperiod)""")
+        """INSERT INTO clients (user_id, company, email, phonenumber,bi_code, payperiod)
+            VALUES (:user_id, :company, :email, :phonenumber, :bi_code, :payperiod) RETURNING id""")
 
-    db.session.execute(sql, {"user_id": client_data.get("user_id"),
-                            "company": client_data.get("company"),
-                            "email": client_data.get("email"),
-                            "phonenumber": client_data.get("phonenumber"),
-                            "bi_code": client_data.get("bi_code"),
-                            "deadline": deadline,
-                            "payperiod": client_data.get("payperiod")})
+    result = db.session.execute(
+        sql, {"user_id": client_data.get("user_id"),
+            "company": client_data.get("company"),
+            "email": client_data.get("email"),
+            "phonenumber": client_data.get("phonenumber"),
+            "bi_code": client_data.get("bi_code"),
+            "payperiod": client_data.get("payperiod")})
     db.session.commit()
+    add_deadlines(client_data.get("deadline"), result.fetchone().id)
 
 def update_client(client_id, client_data):
     validate_client_data(client_data)
@@ -90,6 +90,13 @@ def validate_client_data(client_data):
         )
     if not re.match(r"^\d{7}-\d{1}$", client_data.get("bi_code")):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
-    if not re.match(r"^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
-        raise ValueError('Eräpäivä ei ole oikeassa muodossa (yyyy-mm-dd)')
     return True
+
+def add_deadlines(deadlines, client_id):
+    deadlines = json.loads(deadlines)
+    for d in deadlines:
+        d = date.fromtimestamp(d/1000)
+        sql = text("""INSERT INTO deadlines (deadline, client_id)
+                   VALUES (:d, :client_id)""")
+        db.session.execute(sql, {"d": d, "client_id": client_id})
+    db.session.commit()

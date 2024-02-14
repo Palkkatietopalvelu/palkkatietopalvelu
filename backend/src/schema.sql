@@ -17,6 +17,6 @@ CREATE TABLE clients (
 
 CREATE TABLE deadlines (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users,
+  client_id INTEGER REFERENCES clients,
   deadline DATE
 );

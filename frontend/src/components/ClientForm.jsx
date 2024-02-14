@@ -3,16 +3,17 @@ import { useField } from '../hooks/index'
 import { addClient } from '../reducers/clientsReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
+import { DateSelect } from '../hooks/DatePicker'
+import DatePicker from "react-multi-date-picker"
 
 const ClientForm = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-
   const company = useField()
   const email = useField()
   const phonenumber = useField()
   const bicode = useField()
-  const deadline = useField()
+  const deadline = DateSelect()
   const payperiod = useField()
 
   if (!user) {
@@ -27,7 +28,7 @@ const ClientForm = () => {
       email: email.value,
       phonenumber: phonenumber.value,
       bi_code: bicode.value,
-      deadline: deadline.value,
+      deadline: JSON.stringify(deadline.value),
       payperiod: payperiod.value
     })).then(result => {
       if (result) {
@@ -69,7 +70,7 @@ const ClientForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Eräpäivä:</Form.Label>
-          <Form.Control placeholder="yyyy-mm-dd" {...deadline} required />
+          <DatePicker {...deadline} multiple/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi:</Form.Label>
