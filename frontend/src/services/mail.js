@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/mail'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/mail'
 
 const send = async object => {
   const response = await axios.post(baseUrl, object)

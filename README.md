@@ -5,10 +5,12 @@
 ## Asennus ja käynnistysohjeet
 
 - Kloonaa repo
-- Luo .env-tiedosto ja lisää sinne nämä asiat:
+- Luo .env-tiedosto projektin juureen ja lisää sinne nämä muuttujat:
   >DATABASE_URL="sinun_osoite"
   >
   >SECRET_KEY="sinun_salainen_avain"
+  >
+  >VITE_BACKEND_URL="http://localhost:5000"
 
   .env-tiedosto on henkilökohtainen, älä ikinä jaa sitä mihinkään.
   DATABASE_URLin määrittelemiseen tietoa [täällä](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING)
