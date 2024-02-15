@@ -10,14 +10,12 @@ def get_users():
     return jsonify([user.serialize() for user in users])
 
 @app.route('/api/users', methods=['POST'])
-def create_user(testing="no", username="", password="", role=""):
-    if testing == "no":
+def create_user():
+    try:
         data = request.get_json()
         username = data['username']
         password = data['password']
         role = data['role']
-
-    try:
         validate_credentials(username, password)
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password, role=role)
@@ -52,7 +50,7 @@ def validate_credentials(username, password):
     if len(username) < 3 or len(password) < 3:
         raise ValueError ("Käyttäjätunnus ja salasana täytyy olla ainakin 3 merkkiä pitkiä")
 
-    if len(username) > 15:
+    if len(username) > 15 or len(password) > 15:
         raise ValueError ("Käyttäjätunnus ja salasana ei saa olla yli 15 merkkiä pitkiä")
 
     return True
