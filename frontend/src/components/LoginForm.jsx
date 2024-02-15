@@ -31,11 +31,11 @@ const LoginForm = () => {
         <Form onSubmit={handleLogin}>
           <Form.Group>
             <Form.Label>käyttäjätunnus</Form.Label>
-            <Form.Control id='username' type='text' {...username} />
+            <Form.Control id='username' type='text' {...username} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>salasana</Form.Label>
-            <Form.Control id='password' type='password' {...password} />
+            <Form.Control id='password' type='password' {...password} required />
           </Form.Group>
           <Button id="login" type="submit" variant="primary">kirjaudu</Button>
         </Form>
