@@ -30,6 +30,7 @@ def get_client_data(client_id: int):
 
 def add_client(client_data):
     validate_client_data(client_data)
+    phonenumber = validate_phonenumber(client_data.get("phonenumber"))
     deadline_str = client_data.get("deadline")
     deadline = datetime.strptime(deadline_str, "%Y-%m-%d").date()
     sql = text(
@@ -39,7 +40,7 @@ def add_client(client_data):
     db.session.execute(sql, {"user_id": client_data.get("user_id"),
                             "company": client_data.get("company"),
                             "email": client_data.get("email"),
-                            "phonenumber": client_data.get("phonenumber"),
+                            "phonenumber": phonenumber,
                             "bi_code": client_data.get("bi_code"),
                             "deadline": deadline,
                             "payperiod": client_data.get("payperiod")})
@@ -47,6 +48,7 @@ def add_client(client_data):
 
 def update_client(client_id, client_data):
     validate_client_data(client_data)
+    client_data["phonenumber"] = validate_phonenumber(client_data.get("phonenumber"))
     deadline_str = client_data.get("deadline")
     client_data["deadline"] = datetime.strptime(deadline_str, "%Y-%m-%d").date()
     sql = text("""UPDATE clients
@@ -83,13 +85,16 @@ def validate_client_data(client_data):
         raise ValueError('Tietoja puuttuu')
     if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", client_data.get("email")):
         raise ValueError('Sähköposti ei ole oikeassa muodossa')
-    if not re.match(r"^\+\d{1,3}\s\d{8,12}$", client_data.get("phonenumber")):
-        raise ValueError(
-            'Puhelinnumero ei ole oikeassa muodossa '
-            '(plusmerkki suuntakoodi välilyönti puhelinnumero)'
-        )
     if not re.match(r"^\d{7}-\d{1}$", client_data.get("bi_code")):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
     if not re.match(r"^\d{4}-\d{2}-\d{2}$", client_data.get("deadline")):
         raise ValueError('Eräpäivä ei ole oikeassa muodossa (yyyy-mm-dd)')
     return True
+
+def validate_phonenumber(number):
+    phonenumber=number.replace(" ", "").replace("-", "")
+    if phonenumber[0]=="0":
+        phonenumber = "+358" + phonenumber[1:]
+    if not re.match(r"^\+358\d{7,13}$", phonenumber):
+            raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
+    return phonenumber
