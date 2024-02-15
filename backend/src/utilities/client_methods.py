@@ -45,6 +45,7 @@ def get_client_data(client_id: int):
 
 def add_client(client_data):
     validate_client_data(client_data)
+    phonenumber = validate_phonenumber(client_data.get("phonenumber"))
     sql = text(
         """INSERT INTO clients (user_id, company, email, phonenumber,bi_code, payperiod)
             VALUES (:user_id, :company, :email, :phonenumber, :bi_code, :payperiod) RETURNING id""")
@@ -61,6 +62,7 @@ def add_client(client_data):
 
 def update_client(client_id, client_data):
     validate_client_data(client_data)
+    client_data["phonenumber"] = validate_phonenumber(client_data.get("phonenumber"))
     sql = text("""UPDATE clients
                   SET company=:company, email=:email, phonenumber=:phonenumber, bi_code=:bi_code, 
                     payperiod=:payperiod WHERE id=:id""")
@@ -98,11 +100,6 @@ def validate_client_data(client_data):
         raise ValueError('Tietoja puuttuu')
     if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", client_data.get("email")):
         raise ValueError('Sähköposti ei ole oikeassa muodossa')
-    if not re.match(r"^\+\d{1,3}\s\d{8,12}$", client_data.get("phonenumber")):
-        raise ValueError(
-            'Puhelinnumero ei ole oikeassa muodossa '
-            '(plusmerkki suuntakoodi välilyönti puhelinnumero)'
-        )
     if not re.match(r"^\d{7}-\d{1}$", client_data.get("bi_code")):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
     return True
@@ -128,3 +125,10 @@ def get_next_deadlines():
                GROUP BY client_id ORDER BY next_deadline""")
     result = db.session.execute(sql)
     return result.fetchall()
+def validate_phonenumber(number):
+    phonenumber=number.replace(" ", "").replace("-", "")
+    if phonenumber[0]=="0":
+        phonenumber = "+358" + phonenumber[1:]
+    if not re.match(r"^\+358\d{7,13}$", phonenumber):
+            raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
+    return phonenumber
