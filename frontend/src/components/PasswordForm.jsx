@@ -23,12 +23,12 @@ const PasswordChange = () => {
       user_id: user.id,
       oldPassword: oldPassword.value,
       newPassword: newPassword.value,
-      confirmPassword: confirmPassword.value})).then(result => {
-        if (result) {
-          formRef.current.toggleVisibility()
-          resetFields(event)
-        }
-      })
+      confirmPassword: confirmPassword.value })).then(result => {
+      if (result) {
+        formRef.current.toggleVisibility()
+        resetFields(event)
+      }
+    })
   }
 
   const resetFields = () => {
@@ -55,7 +55,7 @@ const PasswordChange = () => {
           </Form.Group>
           <Button type="submit" variant="primary">vaihda</Button>
         </Form>
-        </Togglable>
+      </Togglable>
     </div>
   )
 }
