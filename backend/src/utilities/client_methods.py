@@ -130,5 +130,5 @@ def validate_phonenumber(number):
     if phonenumber[0]=="0":
         phonenumber = "+358" + phonenumber[1:]
     if not re.match(r"^\+358\d{7,13}$", phonenumber):
-            raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
+        raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
     return phonenumber
