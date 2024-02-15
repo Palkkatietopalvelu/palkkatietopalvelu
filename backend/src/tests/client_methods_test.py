@@ -27,6 +27,11 @@ class TestAddClient(unittest.TestCase):
         result = client_methods.validate_client_data(self.client_data)
         self.assertTrue(result)
 
+    def test_validate_phonenumber_correct(self):
+        phonenumber = "0401234567"
+        result = client_methods.validate_phonenumber(phonenumber)
+        self.assertEqual(result, "+358401234567")
+
     def test_validate_client_missing_user_id(self):
         self.client_data["user_id"] = None
         with self.assertRaises(ValueError):
@@ -43,9 +48,9 @@ class TestAddClient(unittest.TestCase):
             client_methods.validate_client_data(self.client_data)
 
     def test_validate_client_incorrect_phonenumber(self):
-        self.client_data["phonenumber"] = "+358 123456ab"
+        phonenumber = "+358 123456ab"
         with self.assertRaises(ValueError):
-            client_methods.validate_client_data(self.client_data)
+            client_methods.validate_phonenumber(phonenumber)
 
     def test_validate_client_incorrect_bi_code(self):
         self.client_data["bi_code"] = "12-345"

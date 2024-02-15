@@ -61,7 +61,7 @@ const ClientForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Puhelinnumero:</Form.Label>
-          <Form.Control placeholder="+358 451234567" {...phonenumber} required />
+          <Form.Control placeholder="0451234567" {...phonenumber} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Y-tunnus:</Form.Label>

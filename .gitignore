@@ -19,8 +19,6 @@ dist-ssr
 .env.test
 venv
 __pycache__/
-.coverage
-.coveragerc
 htmlcov
 
 # Editor directories and files
