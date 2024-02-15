@@ -1,15 +1,14 @@
 import unittest
-from db import db
+from datetime import date
 from app import app
-from datetime import datetime, date
-import controllers.users
-import utilities.client_methods as client_methods
+from utilities import client_methods
 from initialize_db import initialize_database
 
 class TestAddClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        controllers.users.create_user(testing="yes", username="pekka", password="pekka123", role=1)
+        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        app.test_client().post("/api/users", json=data)
         self.client_data = { "user_id": "1",
                         "company": "Testiyritys",
                         "email": "testi@gmail.com",
@@ -17,19 +16,19 @@ class TestAddClient(unittest.TestCase):
                         "bi_code": "1234567-8",
                         "deadline": "2024-10-04",
                         "payperiod": "kuukausi"}
-    
+
     def test_add_client_with_correct_inputs(self):
         with app.app_context():
             client_methods.add_client(self.client_data)
             all_clients = client_methods.get_clients()
             self.assertEqual(len(all_clients), 1)
-        
+
     def test_validate_client_data_correct(self):
         result = client_methods.validate_client_data(self.client_data)
         self.assertTrue(result)
 
-    def test_validate_client_missing_company(self):
-        self.client_data["id"] = None
+    def test_validate_client_missing_user_id(self):
+        self.client_data["user_id"] = None
         with self.assertRaises(ValueError):
             client_methods.validate_client_data(self.client_data)
 
@@ -63,12 +62,13 @@ class TestAddClient(unittest.TestCase):
         with self.assertRaises(ValueError):
             client_methods.validate_client_data(self.client_data)
 
- 
+
 class TestClientMethods(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        controllers.users.create_user(testing="yes", username="pekka", password="pekka123", role=1)
-        
+        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        app.test_client().post("/api/users", json=data)
+
         self.client_data = {"user_id": "1",
                             "company": "Testiyritys",
                             "email": "testi@gmail.com",

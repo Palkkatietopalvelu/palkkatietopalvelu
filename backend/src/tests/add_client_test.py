@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import Mock
 from utilities import client_methods as client
 
 class TestAddClient(unittest.TestCase):

@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import Mock
 from utilities import client_methods as client
 
 class TestUpdateClient(unittest.TestCase):
@@ -37,7 +36,6 @@ class TestUpdateClient(unittest.TestCase):
         # Assuming update_client validates email format
         invalid_email_data = self.updated_client_data.copy()
         invalid_email_data['email'] = "invalidemail"  # Invalid email format
-        
         with self.assertRaises(ValueError):
             client.update_client(self.client_id, invalid_email_data)
 
@@ -45,7 +43,7 @@ class TestUpdateClient(unittest.TestCase):
         # Assuming update_client validates phone number format
         invalid_phone_data = self.updated_client_data.copy()
         invalid_phone_data['phonenumber'] = "123456"  # Invalid phone format
-        
+
         with self.assertRaises(ValueError):
             client.update_client(self.client_id, invalid_phone_data)
 
@@ -53,7 +51,6 @@ class TestUpdateClient(unittest.TestCase):
         # Assuming update_client validates BI code format
         invalid_bi_code_data = self.updated_client_data.copy()
         invalid_bi_code_data['bi_code'] = "123-4567"  # Invalid BI code format
-        
         with self.assertRaises(ValueError):
             client.update_client(self.client_id, invalid_bi_code_data)
 
@@ -61,6 +58,6 @@ class TestUpdateClient(unittest.TestCase):
         # Assuming update_client validates deadline format
         invalid_deadline_data = self.updated_client_data.copy()
         invalid_deadline_data['deadline'] = "10/04/2025"  # Invalid deadline format
-        
+
         with self.assertRaises(ValueError):
             client.update_client(self.client_id, invalid_deadline_data)

@@ -1,11 +1,7 @@
 import unittest
-from db import db
+from werkzeug.security import generate_password_hash
 from app import app
 from models.user import User
-import controllers.users
-from flask import request, jsonify
-from werkzeug.security import generate_password_hash
-from models.user import User, db
 from initialize_db import initialize_database
 
 class TestUsersController(unittest.TestCase):
@@ -14,35 +10,47 @@ class TestUsersController(unittest.TestCase):
 
     def test_get_users(self):
         with app.app_context():
-            all_users = controllers.users.get_users()
-            self.assertEqual(all_users.status, "200 OK")
+            all_users = app.test_client().get("/api/users")
+            self.assertEqual(all_users.status_code, 200)
 
     def test_create_user_with_valid_credentials(self):
         with app.test_request_context():
-            username = "pekka"
-            password = "pekkaspass"
-            role = 1
-            new_user = controllers.users.create_user(testing="yes", username=username, 
-                        password=password, role=role)
-            self.assertEqual(new_user[0].status, "200 OK")
-            self.assertEqual(new_user[1], 201)
+            data = {"username": "pekka", "password": "pekkaspass", "role": 1}
+            response = app.test_client().post("/api/users", json=data)
+            self.assertEqual(response.status_code, 201)
 
     def test_create_user_that_already_exists(self):
         with app.test_request_context():
-            username = "maija"
-            password = "maijaspass"
-            role = 1
-            new_user = controllers.users.create_user(testing="yes", username=username, 
-                        password=password, role=role)
-            self.assertEqual(new_user[0].status, "200 OK")
-            self.assertEqual(new_user[1], 201)
-            new_user_again = controllers.users.create_user(testing="yes", username=username, 
-                        password=password, role=role)
-            self.assertEqual(new_user_again[1], 400)
+            data = {"username": "maija", "password": "maijaspass", "role": 1}
+            new_user = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user.status_code, 201)
 
-    # to be added:
-        # short username and password
-        # long username and password
+            new_user_again = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user_again.status_code, 400)
+
+    def test_create_user_with_too_short_username(self):
+        with app.test_request_context():
+            data = {"username": "ab", "password": "abc", "role": 1}
+            new_user = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user.status_code, 400)
+
+    def test_create_user_with_too_short_password(self):
+        with app.test_request_context():
+            data = {"username": "abc", "password": "ab", "role": 1}
+            new_user = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user.status_code, 400)
+
+    def test_create_user_with_too_long_username(self):
+        with app.test_request_context():
+            data = {"username": "waytoolongusername", "password": "ok123", "role": 1}
+            new_user = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user.status_code, 400)
+
+    def test_create_user_with_too_long_password(self):
+        with app.test_request_context():
+            data = {"username": "pekka123", "password": "waytoolongusername", "role": 1}
+            new_user = app.test_client().post("/api/users", json=data)
+            self.assertEqual(new_user.status_code, 400)
 
 class TestUserModel(unittest.TestCase):
     def setUp(self):
@@ -59,4 +67,3 @@ class TestUserModel(unittest.TestCase):
             self.assertNotEqual(new_user.password, "mypass")
             self.assertEqual(len(new_user.password), 162)
             self.assertEqual(new_user.role, role)
-
