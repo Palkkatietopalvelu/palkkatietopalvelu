@@ -48,8 +48,8 @@ jobs:
           - name: Build and push Docker image
             uses: docker/build-push-action@v2
             with:
-              context: "{{defaultContext}}"
-              file: ./frontend/Dockerfile
+              context: ./frontend/
+              file: Dockerfile
               push: true
               tags: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}:staging
               labels: ${{ steps.meta1.outputs.labels }}
@@ -63,8 +63,8 @@ jobs:
           - name: Build and push Docker image
             uses: docker/build-push-action@v2
             with:
-              context: "{{defaultContext}}"
-              file: ./backend/Dockerfile
+              context: ./backend/
+              file: Dockerfile
               push: true
               tags: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_BACK }}:staging
               labels: ${{ steps.meta2.outputs.labels }}
