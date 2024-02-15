@@ -5,7 +5,10 @@ on:
         branches: ["deployment"]
 
 env:
-    docker_user: ${{ secrets.DOCKER_USERNAME }}
+    DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+    REGISTRY: docker.io
+    IMAGE_NAME_FRONT: palkkatieto-front
+    IMAGE_NAME_BACK: palkkatieto-back
 
 jobs:
 
@@ -25,14 +28,6 @@ jobs:
     push_to_registry:
         name: Push Docker image to Docker Hub
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                include:
-                    - dockerfile: ./backend/Dockerfile
-                      image: docker.io/$docker_user/palkkatieto-back
-                    - dockerfile: ./frontend/Dockerfile
-                      image: docker.io/$docker_user/palkkatieto-front
 
         steps:
           - name: Checkout repo
@@ -45,16 +40,32 @@ jobs:
               password: ${{ secrets.DOCKER_PASSWORD }}
     
           - name: Extract metadata (tags, labels) for Docker
-            id: meta
+            id: meta1
             uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
             with:
-              images: ${{  matrix.image  }}
+              images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}
     
           - name: Build and push Docker image
             uses: docker/build-push-action@v2
             with:
               context: "{{defaultContext}}"
-              file: ${{  matrix.dockerfile  }}
+              file: ./frontend/Dockerfile
               push: true
-              tags: ${{ matrix.image }}:staging
-              labels: ${{ steps.meta.outputs.labels }}
+              tags: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}:staging
+              labels: ${{ steps.meta1.outputs.labels }}
+
+          - name: Extract metadata (tags, labels) for Docker
+            id: meta2
+            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            with:
+              images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_BACK }}
+    
+          - name: Build and push Docker image
+            uses: docker/build-push-action@v2
+            with:
+              context: "{{defaultContext}}"
+              file: ./backend/Dockerfile
+              push: true
+              tags: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_BACK }}:staging
+              labels: ${{ steps.meta2.outputs.labels }}
+
