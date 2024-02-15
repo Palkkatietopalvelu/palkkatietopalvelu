@@ -26,7 +26,7 @@ CORS(app)
 init_db(app)
 
 # pylint: disable=unused-import,wrong-import-position
-from controllers import users, clients, login, mail
+from controllers import users, clients, login, mail, pdfs
 from mail_scheduler import start_scheduler
 # pylint: enable=unused-import,wrong-import-position
 

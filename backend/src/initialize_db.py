@@ -35,7 +35,15 @@ def create_tables():
             id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients,
             deadline DATE,
-            delivered BOOLEAN      
+            delivered BOOLEAN   
+        """))
+    db.session.execute(text("""  
+        CREATE TABLE pdfs (
+            id SERIAL PRIMARY KEY,
+            owner INTEGER REFERENCES clients,
+            name TEXT,
+            path TEXT,
+            date TIMESTAMP
         );
     """))
 
@@ -50,6 +58,10 @@ def drop_tables():
 
     db.session.execute(text("""
         DROP TABLE IF EXISTS clients CASCADE;
+    """))
+
+    db.session.execute(text("""
+        DROP TABLE IF EXISTS pdfs CASCADE;
     """))
 
     db.session.execute(text("""
