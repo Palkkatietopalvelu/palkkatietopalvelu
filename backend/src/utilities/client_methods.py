@@ -96,9 +96,9 @@ def add_deadlines(deadlines, client_id):
     deadlines = json.loads(deadlines)
     for d in deadlines:
         d = date.fromtimestamp(d/1000)
-        sql = text("""INSERT INTO deadlines (deadline, client_id)
-                   VALUES (:d, :client_id)""")
-        db.session.execute(sql, {"d": d, "client_id": client_id})
+        sql = text("""INSERT INTO deadlines (deadline, client_id, delivered)
+                   VALUES (:d, :client_id, :delivered)""")
+        db.session.execute(sql, {"d": d, "client_id": client_id, "delivered": False})
     db.session.commit()
 
 def get_next_deadlines():

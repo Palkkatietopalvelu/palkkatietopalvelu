@@ -12,18 +12,17 @@ def send_reminders():
     with app.app_context():
         deadlines, emails = get_reminder_data()
         for deadline, email in zip(deadlines, emails):
+            recipient = email
+            msg = Message('Muistutus',
+                        sender = app.config['MAIL_USERNAME'],
+                        recipients = [recipient])
+            msg.body = '''Hei! Tämä on automaattinen muistutus
+            palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'''
+            #mail.send(msg)
+            print(msg)
             print(deadline)
-        print(email)
-    """
-        recipient = "placeholdermaili@gmail.com"
-        msg = Message('Muistutus',
-                    sender = app.config['MAIL_USERNAME'],
-                    recipients = [recipient])
-        msg.body = '''Hei! Tämä on automaattinen muistutus
-        palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'''
-        #mail.send(msg)
-        print(msg)
-    """
+            print(email)
+
 def start_scheduler(
     hour,
     days: list = 'mon-fri',
@@ -43,9 +42,10 @@ def start_scheduler(
         minute = str(minute),
         second = str(second)
     )
-    sched.add_job(send_reminders,trigger = trigger)
+    sched.add_job(send_reminders, trigger = trigger, id = 'reminders')
     sched.start()
     return True
+
 
 def get_reminder_data():
     deadlines, client_ids = get_deadline_data()
@@ -57,7 +57,7 @@ def get_deadline_data():
     deadlines = []
     client_ids = []
     for deadline in deadlines_with_ids:
-        if deadline.next_deadline - date.today() <= timedelta(days=100):
+        if deadline.next_deadline - date.today() <= timedelta(days=5):
             deadlines.append(deadline.next_deadline)
             client_ids.append(deadline.client_id)
     return deadlines, client_ids

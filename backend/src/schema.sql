@@ -18,5 +18,6 @@ CREATE TABLE clients (
 CREATE TABLE deadlines (
   id SERIAL PRIMARY KEY,
   client_id INTEGER REFERENCES clients,
-  deadline DATE
+  deadline DATE,
+  delivered BOOLEAN
 );

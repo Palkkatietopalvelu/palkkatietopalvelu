@@ -5,14 +5,6 @@ from flask_mail import Mail, Message
 from app import app
 from utilities.client_methods import get_clients_deadlines, get_email
 
-app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-mail = Mail(app)
-
 @app.route('/api/mail', methods = ['GET', 'POST'])
 def reminder():
     if request.method == 'GET':
