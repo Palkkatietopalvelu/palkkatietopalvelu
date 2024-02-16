@@ -46,6 +46,13 @@ def create_tables():
             name TEXT,
             path TEXT,
             date TIMESTAMP WITH TIME ZONE
+        """))
+
+    db.session.execute(text("""
+        CREATE TABLE deadlines (
+            id SERIAL PRIMARY KEY,
+            client_id INTEGER REFERENCES clients,
+            deadline DATE
         );
     """))
 

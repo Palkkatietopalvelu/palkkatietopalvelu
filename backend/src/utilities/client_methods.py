@@ -3,7 +3,6 @@ from datetime import date
 import json
 from sqlalchemy.sql import text
 from db import db
-import json
 
 def get_clients():
     sql = text("""SELECT id, company, email, phonenumber,
@@ -142,6 +141,12 @@ def add_deadlines(deadlines, client_id):
                    VALUES (:d, :client_id)""")
         db.session.execute(sql, {"d": d, "client_id": client_id})
     db.session.commit()
+
+def delete_deadlines(client_id):
+    sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
+    db.session.execute(sql, {"client_id": client_id})
+    db.session.commit()
+
 
 def get_next_deadlines():
     sql = text("""SELECT MIN(deadline) AS next_deadline,
