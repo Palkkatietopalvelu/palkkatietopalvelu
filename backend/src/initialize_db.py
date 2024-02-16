@@ -30,6 +30,8 @@ def create_tables():
         );
     """))
 
+    db.session.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
+
     db.session.execute(text("""
         CREATE TABLE deadlines (
             id SERIAL PRIMARY KEY,
@@ -43,7 +45,7 @@ def create_tables():
             owner INTEGER REFERENCES clients,
             name TEXT,
             path TEXT,
-            date TIMESTAMP
+            date TIMESTAMP WITH TIME ZONE
         );
     """))
 

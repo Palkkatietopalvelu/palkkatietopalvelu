@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-import pytz
 from flask import request, jsonify, send_file
 from werkzeug.utils import secure_filename
 from app import app
@@ -29,8 +28,7 @@ def upload_pdf():
         return 'Invalid file type', 400
     base_name = os.path.splitext(secure_filename(file.filename))[0]
     extension = os.path.splitext(secure_filename(file.filename))[1]
-    timezone = pytz.timezone('Etc/GMT+2')
-    timestamp = datetime.now(timezone).strftime("%Y%m%d%H%M%S")
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     unique_name = f"{base_name}_{timestamp}{extension}"
     path = os.path.join(UPLOAD_FOLDER, unique_name)
     try:
@@ -39,7 +37,7 @@ def upload_pdf():
             "owner": request.form.get("owner"),
             "name": unique_name,
             "path": path,
-            "date": datetime.now(timezone),
+            "date": datetime.now(),
         })
         return "PDF uploaded successfully", 200
     except Exception as e:
