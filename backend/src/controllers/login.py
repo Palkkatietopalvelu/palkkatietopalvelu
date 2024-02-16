@@ -6,11 +6,10 @@ from models.user import User
 from app import app
 
 @app.route('/api/login', methods=['POST'])
-def login(testing="no", username="", password=""):
-    if testing == "no":
-        data = request.get_json()
-        username = data['username']
-        password = data['password']
+def login():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
 
     user = User.query.filter_by(username=username).first()
 

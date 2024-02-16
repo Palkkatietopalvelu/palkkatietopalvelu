@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { format } from 'date-fns'
+import PasswordChange from './PasswordForm'
+import Notification from './Notification'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
@@ -17,7 +19,8 @@ const MyPage = () => {
       <br /><h2 style={{ marginBottom: '20px' }}>Omat sivut</h2>
       <h4 style={{ marginTop: '20px' }}>Käyttäjätilin asetukset</h4>
       <p>Käyttäjätunnus: {user.username}</p>
-      <p>Salasanan vaihto</p>
+      <Notification />
+      <PasswordChange />
       <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4>
       <Table striped>
         <thead>
