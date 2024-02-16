@@ -54,27 +54,27 @@ const ClientForm = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Yritys:</Form.Label>
-          <Form.Control {...company} required />
+          <Form.Control id='company' {...company} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Sähköposti:</Form.Label>
-          <Form.Control {...email} required />
+          <Form.Control id='email' {...email} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Puhelinnumero:</Form.Label>
-          <Form.Control placeholder="+358 451234567" {...phonenumber} required />
+          <Form.Control id='phonenumber' placeholder="+358 451234567" {...phonenumber} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Y-tunnus:</Form.Label>
-          <Form.Control placeholder="1234567-8" {...bicode} required />
+          <Form.Control id='bicode' placeholder="1234567-8" {...bicode} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Eräpäivät:</Form.Label>
-          <DatePicker {...deadlines} multiple/>
+          <DatePicker id='deadlines' {...deadlines} multiple/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi:</Form.Label>
-          <Form.Control {...payperiod} required />
+          <Form.Control id='payperiod' {...payperiod} required />
         </Form.Group>
         <Button variant="primary" type="submit">Lisää</Button>
       </Form>

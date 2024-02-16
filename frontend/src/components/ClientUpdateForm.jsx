@@ -80,7 +80,7 @@ const UpdateClient = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Eräpäivät</Form.Label>
-          <DatePicker {...deadlines} multiple/>
+          <DatePicker id='deadlines' {...deadlines} multiple/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi</Form.Label>

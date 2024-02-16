@@ -6,6 +6,7 @@ from app import app
 import controllers.users
 import utilities.client_methods as client_methods
 from initialize_db import initialize_database
+import json
 
 class TestClient(unittest.TestCase):
     def setUp(self):
@@ -16,7 +17,7 @@ class TestClient(unittest.TestCase):
                         "email": "testi@gmail.com",
                         "phonenumber": "+358 123456789",
                         "bi_code": "1234567-8",
-                        "deadline": "2024-10-04",
+                        "deadlines": json.dumps([1731196800000, 1594876800000]),
                         "payperiod": "kuukausi"}
         self.token = jwt.encode({"username": "pekka", "id": "1"}, os.environ.get('SECRET_KEY'), algorithm='HS256')
 

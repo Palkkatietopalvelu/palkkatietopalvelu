@@ -8,42 +8,35 @@ Suite Teardown  Close Browser
 Login Succeeds
     Initialize Database
     Create User And Login
-    Page Should Contain  kirjautunut sisään
+    Home Page Should Be Open
 
 Add Client Succeeds With Correct Credentials
-    Page Should Contain  kirjautunut sisään
+    Home Page Should Be Open
     Click Link  lisää asiakas
-    Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024-11-20  kk
-    Click Button  lisää
+    Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2025/02/12, 2024/12/04, 2024/05/07  kk
+    Click Button  Lisää
     Page Should Contain  Asiakas lisätty onnistuneesti
 
 Add Client Fails With Wrong Email Format
-    Page Should Contain  kirjautunut sisään
+    Home Page Should Be Open
     Click Link  lisää asiakas
-    Add New Client  test oy  wrongemail  +358 123456789  1234567-8  2024-12-12  kk
-    Click Button  lisää
+    Add New Client  test oy  wrongemail  +358 123456789  1234567-8  2024/12/12  kk
+    Click Button  Lisää
     Page Should Contain  Sähköposti ei ole oikeassa muodossa
 
 Add Client Fails With Wrong Phonenumber Format
-    Page Should Contain  kirjautunut sisään
+    Home Page Should Be Open
     Click Link  lisää asiakas
-    Add New Client  test oy  test@email.com  123 123456789  1234567-8  2024-12-12  kk
-    Click Button  lisää
+    Add New Client  test oy  test@email.com  123 123456789  1234567-8  2024/12/12  kk
+    Click Button  Lisää
     Page Should Contain  Puhelinnumero ei ole oikeassa muodossa
 
 Add Client Fails With Wrong BIcode Format
-    Page Should Contain  kirjautunut sisään
+    Home Page Should Be Open
     Click Link  lisää asiakas
-    Add New Client  test oy  test@email.com  +358 123456789  12345678  2024-12-12  kk
-    Click Button  lisää
+    Add New Client  test oy  test@email.com  +358 123456789  12345678  2024/12/12  kk
+    Click Button  Lisää
     Page Should Contain  Y-tunnus ei ole oikeassa muodossa
-
-Add Client Fails With Wrong Deadline Format
-    Page Should Contain  kirjautunut sisään
-    Click Link  lisää asiakas
-    Add New Client  test oy  test@email.com  +358 123456789  1234567-8  12/12/2024  kk
-    Click Button  lisää
-    Page Should Contain  Eräpäivä ei ole oikeassa muodossa
 
 *** Keywords ***
 Create User And Login
@@ -72,10 +65,10 @@ Set Password
     Input Password  password  ${password}
 
 Add New Client
-    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
+    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadlines}  ${payperiod}
     Input Text  company  ${company}
     Input Text  email  ${email}
     Input Text  phonenumber  ${phonenumber}
     Input Text  bicode  ${bicode}
-    Input Text  deadline  ${deadline}
+    Input Text  deadlines  ${deadlines}
     Input Text  payperiod  ${payperiod}
