@@ -26,8 +26,15 @@ def create_tables():
             email TEXT,
             phonenumber TEXT,
             bi_code TEXT,
-            deadline DATE,
             payperiod TEXT
+        );
+    """))
+
+    db.session.execute(text("""
+        CREATE TABLE deadlines (
+            id SERIAL PRIMARY KEY,
+            client_id INTEGER REFERENCES clients,
+            deadline DATE
         );
     """))
 
@@ -42,6 +49,10 @@ def drop_tables():
 
     db.session.execute(text("""
         DROP TABLE IF EXISTS clients CASCADE;
+    """))
+
+    db.session.execute(text("""
+        DROP TABLE IF EXISTS deadlines CASCADE;
     """))
 
     db.session.commit()

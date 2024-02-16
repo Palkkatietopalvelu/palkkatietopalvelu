@@ -36,7 +36,7 @@ const MyPage = () => {
                       {client.company}
                     </Link>
                   </td>
-                  <td>{format(client.deadline, 'dd.MM.yyyy')}</td>
+                  <td>{format(client.deadlines[0], 'dd.MM.yyyy')}</td>
                 </tr>
               )}
             )}

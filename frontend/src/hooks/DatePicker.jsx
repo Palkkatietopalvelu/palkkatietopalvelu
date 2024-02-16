@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 
-export const DateSelect = () => {
-  const [value, setValue] = useState(new Date())
+export const DateSelect = (initialValue = new Date()) => {
+  const [value, setValue] = useState(initialValue)
 
   const onChange = setValue
 
