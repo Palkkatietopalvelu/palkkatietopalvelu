@@ -70,7 +70,7 @@ const ClientForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Puhelinnumero:</Form.Label>
-          <Form.Control placeholder="0451234567" {...phonenumber} required />
+          <Form.Control id='phonenumber' placeholder="0451234567" {...phonenumber} required />
         </Form.Group>
         <Form.Group>
           <Form.Label>Y-tunnus:</Form.Label>
@@ -86,7 +86,7 @@ const ClientForm = () => {
           <Form.Label>Palkkakausi:</Form.Label>
           <Form.Control id='payperiod' {...payperiod} required />
         </Form.Group>
-        <Button variant="primary" type="submit">Lisää</Button>
+        <Button id='lisää' variant="primary" type="submit">Lisää</Button>
       </Form>
     </div>
   )

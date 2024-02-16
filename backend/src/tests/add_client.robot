@@ -56,6 +56,9 @@ Register User
 Login
     Click Button  login
 
+Logout
+    Click Link  kirjaudu ulos
+
 Set Username
     [Arguments]  ${username}
     Input Text  username  ${username}
