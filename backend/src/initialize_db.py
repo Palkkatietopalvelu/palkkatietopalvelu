@@ -31,13 +31,15 @@ def create_tables():
         );
     """))
 
+    db.session.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
+
     db.session.execute(text("""
         CREATE TABLE pdfs (
             id SERIAL PRIMARY KEY,
             owner INTEGER REFERENCES clients,
             name TEXT,
             path TEXT,
-            date TIMESTAMP
+            date TIMESTAMP WITH TIME ZONE
         );
     """))
 
