@@ -19,7 +19,7 @@ const UpdateClient = () => {
   const email = useField(client ? client.email : '')
   const phonenumber = useField(client ? client.phonenumber : '')
   const bicode = useField(client ? client.bi_code : '')
-  const deadlines = DateSelect(client ? client.deadlines.map(deadline => new Date(deadline)) : new Date())
+  const deadlines = DateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
   const payperiod = useField(client ? client.payperiod : '')
 
   if (!user) {
