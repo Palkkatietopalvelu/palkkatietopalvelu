@@ -57,6 +57,14 @@ const UpdateClient = () => {
     }
   }
 
+  const style = {
+    width: '90vw',
+    padding: '0rem',
+    color: '#495057',
+    border: 0,
+    boxShadow: 'none'
+  }
+
   return (
     <div>
       <br /><h2>{client.company}:n tietojen muuttaminen</h2>
@@ -80,7 +88,9 @@ const UpdateClient = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Eräpäivät</Form.Label>
-          <DatePicker id='deadlines' {...deadlines} multiple/>
+          <div className="form-control">
+            <DatePicker id='deadlines' {...deadlines} style={style} multiple/>
+          </div>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi</Form.Label>
