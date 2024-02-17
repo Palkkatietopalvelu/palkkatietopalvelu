@@ -1,4 +1,3 @@
-import os
 from flask import request, jsonify
 from app import app
 from utilities import client_methods as clients
