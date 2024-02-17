@@ -13,8 +13,7 @@ from initialize_db import initialize_database
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
-        app.test_client().post("/api/users", json=data)
+        controllers.users.create_user(username="pekka", password="pekka123", role=1)
         self.client_id = 1
         self.client_data = {
             "user_id": "1",
