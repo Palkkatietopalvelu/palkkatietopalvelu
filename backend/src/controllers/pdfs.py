@@ -13,7 +13,7 @@ def get_all_pdfs():
     try:
         all_pdfs = pdfs.get_all_pdfs()
         return jsonify(all_pdfs)
-    except Exception as e:
+    except Exception as e: # pylint: disable=broad-except
         return str(e), 400
 
 @app.route('/api/pdfs', methods=['POST'])
@@ -40,7 +40,7 @@ def upload_pdf():
             "date": datetime.now(),
         })
         return "PDF uploaded successfully", 200
-    except Exception as e:
+    except Exception as e: # pylint: disable=broad-except
         return str(e), 400
 
 @app.route('/api/pdfs/<int:pdf_id>/download', methods=['GET'])
@@ -58,5 +58,5 @@ def delete_pdf(pdf_id):
     try:
         pdfs.delete_pdf(pdf_id)
         return "PDF deleted successfully", 200
-    except Exception as e:
+    except Exception as e: # pylint: disable=broad-except
         return str(e), 400
