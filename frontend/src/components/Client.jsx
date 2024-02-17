@@ -1,13 +1,24 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Table } from 'react-bootstrap'
+import { getPdf } from '../reducers/pdfReducer'
 import Notification from './Notification'
+import { Table } from 'react-bootstrap'
+import PdfHandler from './PdfHandler'
 
 const Client = () => {
+  const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getPdf())}
+  }, [dispatch, id, user])
+
+  const pdfs = useSelector(({ pdf }) => pdf).filter(c => c.owner === id)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -35,6 +46,7 @@ const Client = () => {
         </tbody>
       </Table>
       <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
+      <PdfHandler client={client} pdfs={pdfs} />
     </div>
   )
 }

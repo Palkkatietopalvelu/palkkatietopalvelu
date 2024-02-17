@@ -31,6 +31,18 @@ def create_tables():
         );
     """))
 
+    db.session.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
+
+    db.session.execute(text("""
+        CREATE TABLE pdfs (
+            id SERIAL PRIMARY KEY,
+            owner INTEGER REFERENCES clients,
+            name TEXT,
+            path TEXT,
+            date TIMESTAMP WITH TIME ZONE
+        );
+    """))
+
     db.session.commit()
 
 def drop_tables():
@@ -42,6 +54,10 @@ def drop_tables():
 
     db.session.execute(text("""
         DROP TABLE IF EXISTS clients CASCADE;
+    """))
+
+    db.session.execute(text("""
+        DROP TABLE IF EXISTS pdfs CASCADE;
     """))
 
     db.session.commit()
