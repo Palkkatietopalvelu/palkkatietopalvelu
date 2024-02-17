@@ -15,3 +15,13 @@ CREATE TABLE clients (
   deadline DATE,
   payperiod TEXT
 );
+
+SET TIME ZONE 'Europe/Helsinki';
+
+CREATE TABLE pdfs (
+  id SERIAL PRIMARY KEY,
+  owner INTEGER REFERENCES clients,
+  name TEXT,
+  path TEXT,
+  date TIMESTAMP WITH TIME ZONE
+);
