@@ -16,7 +16,6 @@ import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import MyPage from './components/MyPage'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = () => {
   const dispatch = useDispatch()

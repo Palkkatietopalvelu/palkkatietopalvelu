@@ -9,6 +9,7 @@ import utilities.client_methods as client_methods
 import utilities.pdf_methods as pdf_methods
 import controllers.pdfs as pdfs
 from initialize_db import initialize_database
+import json
 
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
@@ -22,7 +23,7 @@ class TestUpdateClient(unittest.TestCase):
             "email": "testi@gmail.com",
             "phonenumber": "+358 123456789",
             "bi_code": "1234567-8",
-            "deadline": "2024-10-04",
+            "deadlines": json.dumps([1731196800000, 1594876800000]),
             "payperiod": "kuukausi"
         }
         client_methods.add_client(self.client_data)

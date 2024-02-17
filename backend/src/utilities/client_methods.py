@@ -74,6 +74,7 @@ def update_client(client_id, client_data):
     return get_client_data(client_id)
 
 def delete_client(client_id):
+    delete_deadlines(client_id)
     sql = text("""DELETE FROM clients WHERE id=:id""")
     db.session.execute(sql, {"id": client_id})
     db.session.commit()

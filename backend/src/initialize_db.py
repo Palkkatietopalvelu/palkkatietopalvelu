@@ -37,7 +37,8 @@ def create_tables():
             id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients,
             deadline DATE,
-            delivered BOOLEAN   
+            delivered BOOLEAN
+        );
         """))
     db.session.execute(text("""  
         CREATE TABLE pdfs (
@@ -46,16 +47,8 @@ def create_tables():
             name TEXT,
             path TEXT,
             date TIMESTAMP WITH TIME ZONE
-        """))
-
-    db.session.execute(text("""
-        CREATE TABLE deadlines (
-            id SERIAL PRIMARY KEY,
-            client_id INTEGER REFERENCES clients,
-            deadline DATE,
-            delivered BOOLEAN      
         );
-    """))
+        """))
 
     db.session.commit()
 
