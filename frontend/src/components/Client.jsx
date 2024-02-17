@@ -14,7 +14,8 @@ const Client = () => {
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
 
   useEffect(() => {
-    dispatch(getPdf())
+    if (user) {
+    dispatch(getPdf())}
   }, [dispatch, id, user])
 
   const pdfs = useSelector(({ pdf }) => pdf).filter(c => c.owner === id)
