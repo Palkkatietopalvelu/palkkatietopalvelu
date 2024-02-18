@@ -57,7 +57,7 @@ def validate_credentials(username, password):
 
 def validate_password(old_password, password, confirm_password, user):
     if not check_password_hash(user.password, old_password):
-        raise ValueError ("Nykyinen salasana on väärin")
+        raise ValueError ("Väärä nykyinen salasana")
 
     if len(password) < 3:
         raise ValueError ("Salasanan täytyy olla ainakin 3 merkkiä pitkiä")
