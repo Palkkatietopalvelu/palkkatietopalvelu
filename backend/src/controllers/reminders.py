@@ -6,7 +6,6 @@ from utilities.sched_setting_methods import get_readable_settings, save_settings
 from app import app
 
 @app.route('/api/reminders', methods = ['GET', 'POST'])
-@require_login
 def reminder_settings():
     if request.method == 'GET':
         return get_readable_settings()
