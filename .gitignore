@@ -34,3 +34,6 @@ htmlcov
 *.sw?
 requests
 **/migrations/
+
+# Custom scheduler settings
+backend/src/sched_settings/custom.json

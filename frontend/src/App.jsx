@@ -16,6 +16,8 @@ import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import MyPage from './components/MyPage'
+import ReminderSettings from './components/ReminderSettings'
+import ReminderSettingsForm from './components/ReminderSettingsForm'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -42,6 +44,8 @@ const App = () => {
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/reminders" element={<ClientReminder />} />
+          <Route path="/remindersettings" element={<ReminderSettings />}/>
+          <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
         </Routes>
       </Router>
     </div>

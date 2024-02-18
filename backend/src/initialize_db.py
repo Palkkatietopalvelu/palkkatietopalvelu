@@ -40,7 +40,7 @@ def create_tables():
             delivered BOOLEAN
         );
         """))
-    db.session.execute(text("""  
+    db.session.execute(text("""
         CREATE TABLE pdfs (
             id SERIAL PRIMARY KEY,
             owner INTEGER REFERENCES clients,

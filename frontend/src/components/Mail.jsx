@@ -5,25 +5,7 @@ import Notification from './Notification'
 import { format } from 'date-fns'
 import { notify } from '../reducers/notificationReducer'
 import { Table, Form, Button } from 'react-bootstrap'
-
-const CheckBox = ({ name, inputs, setInputs }) => {
-  const handleCheckChange = () => {
-    if (inputs.includes(name)) {
-      setInputs(inputs.filter((input) => input !== name))
-    }
-    else {
-      setInputs(inputs.concat(name))
-    }
-  }
-
-  return (
-    <input
-      type='checkbox'
-      name={name}
-      onChange={handleCheckChange}
-    />
-  )
-}
+import CheckBox from './CheckBox'
 
 const ClientReminder = () => {
   const dispatch = useDispatch()

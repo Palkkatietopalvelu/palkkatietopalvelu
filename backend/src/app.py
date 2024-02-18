@@ -26,11 +26,11 @@ CORS(app)
 init_db(app)
 
 # pylint: disable=unused-import,wrong-import-position
-from controllers import users, clients, login, mail, pdfs
-from mail_scheduler import start_scheduler
+from controllers import users, clients, login, mail, pdfs, reminders
+from mail_scheduler import update_scheduler
 # pylint: enable=unused-import,wrong-import-position
 
-start_scheduler('9')
+update_scheduler()
 
 if __name__ == '__main__':
     #db.init_app(app)
