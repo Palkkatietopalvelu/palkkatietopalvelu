@@ -1,15 +1,10 @@
 *** Settings ***
 Resource  resource.robot
 Library  ../AppLibrary.py
-Suite Setup  Open And Configure Browser
+Suite Setup  Setup With Existing User
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Login Succeeds
-    Initialize Database
-    Create User And Login
-    Home Page Should Be Open
-
 Add Client Succeeds With Correct Credentials
     Home Page Should Be Open
     Click Link  lisää asiakas
@@ -39,34 +34,6 @@ Add Client Fails With Wrong BIcode Format
     Page Should Contain  Y-tunnus ei ole oikeassa muodossa
 
 *** Keywords ***
-Create User And Login
-    Go To Register Page
-    Set Username  testuser
-    Set Password  123
-    Register User
-    Go To Login Page
-    Set Username  testuser
-    Set Password  123
-    Login
-    Logged In Page Should Be Open
-
-Register User
-    Click Button  create
-
-Login
-    Click Button  login
-
-Logout
-    Click Link  kirjaudu ulos
-
-Set Username
-    [Arguments]  ${username}
-    Input Text  username  ${username}
-
-Set Password
-    [Arguments]  ${password}
-    Input Password  password  ${password}
-
 Add New Client
     [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadlines}  ${payperiod}
     Input Text  company  ${company}

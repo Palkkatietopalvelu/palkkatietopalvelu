@@ -67,7 +67,7 @@ const PdfHandler = ({ client, pdfs }) => {
             {pdf.name}, {format(new Date(pdf.date), 'yyyy-MM-dd HH:mm')}{' '}
             <Button variant="primary" size="sm" onClick={() => handlePdfDownload(pdf.id)}>Download</Button>
             {' '}
-            <Button variant="danger" size="sm" onClick={() => handlePdfDelete(pdf.id, pdf.name)}>Delete</Button>
+            <Button id={pdf.id} variant="danger" size="sm" onClick={() => handlePdfDelete(pdf.id, pdf.name)}>Delete</Button>
           </li>
         ))}
       </ul>

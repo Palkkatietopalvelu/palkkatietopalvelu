@@ -1,25 +1,10 @@
 *** Settings ***
 Resource  resource.robot
 Library  ../AppLibrary.py
-Suite Setup  Open And Configure Browser
+Suite Setup  Setup With Existing User And Client
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Login And Logout Succeeds
-    Initialize Database
-    Go To Register Page
-    Create User And Login
-    Logged In Page Should Be Open
-    Logout
-    Page Should Contain  kirjaudu sisään
-
-Add Client Succeeds
-    Testuser Login
-    Click Link  lisää asiakas
-    Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024-11-20  kk
-    Click Button  lisää
-    Page Should Contain  Asiakas lisätty onnistuneesti
-
 Change Client Company Succeeds
     Click Link  omat sivut
     Click Link  testi oy
@@ -100,34 +85,15 @@ Change Client Payperiod Succeeds
     Click Button  Tallenna tiedot
     Page Should Contain  Asiakkaan tiedot päivitetty onnistuneesti
 
+Delete Client Succeeds
+    Click Link  omat sivut
+    Click Link  eiku oy
+    Click Link  Muuta asiakkaan tietoja
+    Click Button  Poista asiakas
+    Alert Should Be Present  Haluatko varmasti poistaa asiakkaan eiku oy?
+    Page Should Contain  Asiakkaan tiedot poistettu onnistuneesti
+
 *** Keywords ***
-Create User And Login
-    Go To Register Page
-    Set Username  testuser
-    Set Password  123
-    Register User
-    Go To Login Page
-    Set Username  testuser
-    Set Password  123
-    Login
-    Logged In Page Should Be Open
-
-Testuser Login
-    Go To Login Page
-    Set Username  testuser
-    Set Password  123
-    Login
-    Logged In Page Should Be Open
-
-Register User
-    Click Button  create
-
-Login
-    Click Button  login
-
-Logout
-    Click Link  kirjaudu ulos
-
 Change Company Name
     [Arguments]  ${company}
     Input Text  company  ${company}
@@ -150,21 +116,4 @@ Change Deadline
 
 Change Payperiod
     [Arguments]  ${payperiod}
-    Input Text  payperiod  ${payperiod}
-
-Set Username
-    [Arguments]  ${username}
-    Input Text  username  ${username}
-
-Set Password
-    [Arguments]  ${password}
-    Input Password  password  ${password}
-
-Add New Client
-    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
-    Input Text  company  ${company}
-    Input Text  email  ${email}
-    Input Text  phonenumber  ${phonenumber}
-    Input Text  bicode  ${bicode}
-    Input Text  deadline  ${deadline}
     Input Text  payperiod  ${payperiod}
