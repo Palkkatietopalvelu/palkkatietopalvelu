@@ -11,20 +11,6 @@ env:
     IMAGE_NAME_BACK: palkkatieto-back
 
 jobs:
-
-    build:
-
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
-        - name: Build the Docker image
-          run: docker-compose build --no-cache --force-rm 
-    test:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - name: Test the Docker image
-            run: docker-compose up -d 
     push_to_registry:
         name: Push Docker image to Docker Hub
         runs-on: ubuntu-latest
@@ -46,7 +32,7 @@ jobs:
               images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}
     
           - name: Set backend url for OpenShift
-            run: RUN echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }} > ./frontend/.env
+            run: RUN echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" > ./frontend/.env
           
           - name: Build and push Docker image frontend
             uses: docker/build-push-action@v2
