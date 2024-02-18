@@ -32,7 +32,7 @@ jobs:
               images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}
     
           - name: Set backend url for OpenShift
-            run: RUN echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" > ./frontend/.env
+            run: echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" > ./frontend/.env
           
           - name: Build and push Docker image frontend
             uses: docker/build-push-action@v2
