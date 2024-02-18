@@ -63,7 +63,7 @@ def validate_password(old_password, password, confirm_password, user):
         raise ValueError ("Salasanan täytyy olla ainakin 3 merkkiä pitkiä")
 
     if len(password) > 15:
-        raise ValueError ("Salasanan ei saa olla yli 15 merkkiä pitkä")
+        raise ValueError ("Salasana ei saa olla yli 15 merkkiä pitkä")
 
     if password != confirm_password:
         raise ValueError ("Salasanat eivät täsmää")
