@@ -133,25 +133,3 @@ def validate_phonenumber(number):
     if not re.match(r"^\+358\d{7,13}$", phonenumber):
         raise ValueError('Puhelinnumero ei ole oikeassa muodossa')
     return phonenumber
-
-def add_deadlines(deadlines, client_id):
-    deadlines = json.loads(deadlines)
-    for d in deadlines:
-        d = date.fromtimestamp(d/1000)
-        sql = text("""INSERT INTO deadlines (deadline, client_id)
-                   VALUES (:d, :client_id)""")
-        db.session.execute(sql, {"d": d, "client_id": client_id})
-    db.session.commit()
-
-def delete_deadlines(client_id):
-    sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
-    db.session.execute(sql, {"client_id": client_id})
-    db.session.commit()
-
-
-def get_next_deadlines():
-    sql = text("""SELECT MIN(deadline) AS next_deadline,
-               client_id FROM deadlines
-               GROUP BY client_id ORDER BY next_deadline""")
-    result = db.session.execute(sql)
-    return result.fetchall()
