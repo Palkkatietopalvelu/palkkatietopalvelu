@@ -85,6 +85,14 @@ Change Client Payperiod Succeeds
     Click Button  Tallenna tiedot
     Page Should Contain  Asiakkaan tiedot päivitetty onnistuneesti
 
+Delete Client Succeeds
+    Click Link  omat sivut
+    Click Link  eiku oy
+    Click Link  Muuta asiakkaan tietoja
+    Click Button  Poista asiakas
+    Alert Should Be Present  Haluatko varmasti poistaa asiakkaan eiku oy?
+    Page Should Contain  Asiakkaan tiedot poistettu onnistuneesti
+
 *** Keywords ***
 Change Company Name
     [Arguments]  ${company}
