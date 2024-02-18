@@ -11,16 +11,16 @@ weekdays = [
 
 def load_settings():
     try:
-        with open('src/sched_settings/custom.json') as setting_file:
+        with open('src/sched_settings/custom.json', encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
     except FileNotFoundError:
-        with open('src/sched_settings/default.json') as setting_file:
+        with open('src/sched_settings/default.json', encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
     return settings
 
 def save_settings(data):
     old_settings = load_settings()
-    days = ','.join(map(lambda day: str(day), data[0]))
+    days = ','.join(map(lambda day: str(day), data[0]))# pylint: disable=undefined-variable, unnecessary-lambda
     hour = data[1]['value']
     print(hour)
     enabled = not (len(days) == 0 and hour == '')
@@ -29,9 +29,9 @@ def save_settings(data):
     if hour == '':
         hour = old_settings['hour']
     data = {'days': days , 'hour': hour, 'enabled': enabled}
-    with open('src/sched_settings/custom.json', 'w') as setting_file:
+    with open('src/sched_settings/custom.json', 'w', encoding='utf-8') as setting_file:
         json.dump(data, setting_file)
-    
+
 
 def get_readable_settings():
     settings = load_settings()

@@ -1,4 +1,3 @@
-from os import getenv
 from flask import jsonify, request
 from flask_mail import Message
 
