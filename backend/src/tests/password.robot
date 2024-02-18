@@ -5,7 +5,7 @@ Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Login And Logout Succeeds
+Create User With Initial Password Succeeds
     Initialize Database
     Go To Register Page
     Create User  pekka  pekka123
@@ -27,6 +27,7 @@ Change Password Fails With Invalid Current Password
     Set Old Password  notMyPassword
     Set New Password  new123
     Set New Password Again  new123
+    Wait Until Page Does Not Contain  Salasanat eivät täsmää
     Change Password
     Page Should Contain  Väärä nykyinen salasana
 
@@ -34,6 +35,7 @@ Change Password Fails With Too Short New Password
     Set Old Password  pekka123
     Set New Password  no
     Set New Password Again  no
+    Wait Until Page Does Not Contain  Väärä nykyinen salasana
     Change Password
     Page Should Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkiä
 
@@ -41,13 +43,15 @@ Change Password Fails With Too Long New Password
     Set Old Password  pekka123
     Set New Password  waytoolongpassword
     Set New Password Again  waytoolongpassword
+    Wait Until Page Does Not Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkiä
     Change Password
-    Page Should Contain  Salasanan ei saa olla yli 15 merkkiä pitkä
+    Page Should Contain  Salasana ei saa olla yli 15 merkkiä pitkä
 
 Change Password Succeeds With Valid Info
     Set Old Password  pekka123
     Set New Password  new123
     Set New Password Again  new123
+    Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
     Page Should Contain  Salasana vaihdettu onnistuneesti
     Logout
