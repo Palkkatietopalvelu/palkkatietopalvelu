@@ -3,9 +3,11 @@ from flask_mail import Message
 
 from app import app
 from utilities.client_methods import get_clients_deadlines, get_email
+from utilities.require_login import require_login
 from mail_scheduler import mail
 
 @app.route('/api/mail', methods = ['GET', 'POST'])
+@require_login
 def manual_reminders():
     if request.method == 'GET':
         clients = get_clients_deadlines()

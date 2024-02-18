@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import mailService from '../services/mail'
 import Notification from './Notification'
 import { format } from 'date-fns'
@@ -9,14 +9,20 @@ import CheckBox from './CheckBox'
 
 const ClientReminder = () => {
   const dispatch = useDispatch()
+  const user = useSelector(({ user }) => user)
   const [clients, setClients] = useState([])
   const [inputs, setInputs] = useState([])
 
   useEffect(() => {
+    if (user) {
     mailService.get().then(clients => {
       setClients(clients)
     })
-  }, [])
+  }}, [])
+
+  if (!user) {
+    return ('Et ole kirjautunut sisään')
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -40,7 +46,7 @@ const ClientReminder = () => {
             </thead>
             <tbody>
               {clients.map((client) => (
-                <tr key={client.id}>
+                <tr key={client.deadline}>
                   <td><CheckBox name={client.id}
                     inputs={inputs}
                     setInputs={setInputs}
