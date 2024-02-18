@@ -32,7 +32,7 @@ export const addPdf = (pdf) => {
     try {
       const data = await pdfService.add(pdf)
       dispatch(add(data))
-      dispatch(notify('pdf lisätty onnistuneesti'))
+      dispatch(notify('PDF-tiedosto lisätty onnistuneesti'))
       dispatch(getPdf())
       return true
     } catch (e) {
@@ -56,7 +56,7 @@ export const downloadPdf = (id) => {
       window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Download PDF failed:', error)
-      dispatch(notify('Failed to download PDF'))
+      dispatch(notify('PDF-tiedoston lataus epäonnistui'))
     }
   }
 }
@@ -66,7 +66,7 @@ export const deletePdf = (pdf) => {
     try {
       await pdfService.remove(pdf.id)
       dispatch(remove(pdf.id))
-      dispatch(notify('pdf poistettu onnistuneesti'))
+      dispatch(notify('PDF-tiedosto poistettu onnistuneesti'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe'))

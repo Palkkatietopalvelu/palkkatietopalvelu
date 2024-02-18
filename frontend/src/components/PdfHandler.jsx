@@ -15,7 +15,7 @@ const PdfHandler = ({ client, pdfs }) => {
     const file = event.target.files[0]
     if (file) {
       if (file.type !== 'application/pdf') {
-        alert('Please upload only PDF files.')
+        alert('Lataathan vain PDF-tiedostoja.')
         return
       }
       const formData = new FormData()
@@ -49,10 +49,10 @@ const PdfHandler = ({ client, pdfs }) => {
   }
 
   return (
-    <>
+    <div><br />
       <Form>
         <Form.Group controlId="file-upload">
-          <Form.Label>Upload PDF</Form.Label>
+          <Form.Label><h4>Lataa PDF-tiedosto</h4></Form.Label>
           <Form.Control
             type="file"
             onChange={handlePdfSubmit}
@@ -60,7 +60,7 @@ const PdfHandler = ({ client, pdfs }) => {
           />
         </Form.Group>
       </Form>
-      <h4>Uploaded PDFs</h4>
+      <br /><h4>Ladatut PDF-tiedostot</h4>
       <ul>
         {pdfs.map((pdf) => (
           <li key={pdf.id}>
@@ -71,7 +71,7 @@ const PdfHandler = ({ client, pdfs }) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 
