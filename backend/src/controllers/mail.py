@@ -1,24 +1,16 @@
-from os import getenv
 from flask import jsonify, request
-from flask_mail import Mail, Message
+from flask_mail import Message
 
 from app import app
 from utilities.client_methods import get_clients_deadlines, get_email
-
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-mail = Mail(app)
+from utilities.require_login import require_login
+from mail_scheduler import mail
 
 @app.route('/api/mail', methods = ['GET', 'POST'])
-def reminder():
+@require_login
+def manual_reminders():
     if request.method == 'GET':
         clients = get_clients_deadlines()
-        print(clients[0]['deadline'])
         return jsonify(clients), 200
 
     if request.method == 'POST':

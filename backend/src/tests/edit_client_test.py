@@ -3,6 +3,7 @@ from app import app
 from utilities import client_methods as client
 import utilities.client_methods as client_methods
 from initialize_db import initialize_database
+import json
 
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
@@ -16,7 +17,7 @@ class TestUpdateClient(unittest.TestCase):
             "email": "testi@gmail.com",
             "phonenumber": "+358 123456789",
             "bi_code": "1234567-8",
-            "deadline": "2024-10-04",
+            "deadlines": json.dumps([1731196800000, 1594876800000]),
             "payperiod": "kuukausi"
         }
         self.updated_client_data = {
@@ -25,7 +26,7 @@ class TestUpdateClient(unittest.TestCase):
             "email": "updatedtesti@gmail.com",
             "phonenumber": "+358 987654321",
             "bi_code": "7654321-8",
-            "deadline": "2025-10-04",
+            "deadlines": json.dumps([1931326800000, 1894895300000]),
             "payperiod": "vuosi"
         }
 
@@ -72,11 +73,3 @@ class TestUpdateClient(unittest.TestCase):
         invalid_bi_code_data['bi_code'] = "123-4567"  # Invalid BI code format
         with self.assertRaises(ValueError):
             client.update_client(self.client_id, invalid_bi_code_data)
-
-    def test_deadline_format_correct(self):
-        # Assuming update_client validates deadline format
-        invalid_deadline_data = self.updated_client_data.copy()
-        invalid_deadline_data['deadline'] = "10/04/2025"  # Invalid deadline format
-
-        with self.assertRaises(ValueError):
-            client.update_client(self.client_id, invalid_deadline_data)

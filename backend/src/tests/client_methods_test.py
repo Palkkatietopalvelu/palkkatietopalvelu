@@ -3,6 +3,7 @@ from datetime import date
 from app import app
 from utilities import client_methods
 from initialize_db import initialize_database
+import json
 
 class TestAddClient(unittest.TestCase):
     def setUp(self):
@@ -14,7 +15,7 @@ class TestAddClient(unittest.TestCase):
                         "email": "testi@gmail.com",
                         "phonenumber": "+358 123456789",
                         "bi_code": "1234567-8",
-                        "deadline": "2024-10-04",
+                        "deadlines": json.dumps([1731196800000, 1594876800000]),
                         "payperiod": "kuukausi"}
 
     def test_add_client_with_correct_inputs(self):
@@ -57,11 +58,6 @@ class TestAddClient(unittest.TestCase):
         with self.assertRaises(ValueError):
             client_methods.validate_client_data(self.client_data)
 
-    def test_validate_client_incorrect_deadline(self):
-        self.client_data["deadline"] = "12.12.2020"
-        with self.assertRaises(ValueError):
-            client_methods.validate_client_data(self.client_data)
-
     def test_validate_client_missing_payperiod(self):
         self.client_data["payperiod"] = None
         with self.assertRaises(ValueError):
@@ -79,7 +75,7 @@ class TestClientMethods(unittest.TestCase):
                             "email": "testi@gmail.com",
                             "phonenumber": "+358 123456789",
                             "bi_code": "1234567-8",
-                            "deadline": "2024-10-04",
+                            "deadlines": json.dumps([1731196800000, 1594876800000]),
                             "payperiod": "kuukausi"}
         client_methods.add_client(self.client_data)
 

@@ -30,6 +30,7 @@ const Menu = () => {
               <Link style={padding} to="/mypage">omat sivut</Link>
               <Link style={padding} to="/client">lisää asiakas</Link>
               <Link style={padding} to="/reminders">muistutukset</Link>
+              <Link style={padding} to="/remindersettings">muistutusasetukset</Link>
               <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
             </span>
               :<span>

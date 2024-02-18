@@ -3,16 +3,17 @@ import { useField } from '../hooks/index'
 import { addClient } from '../reducers/clientsReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
+import { DateSelect } from '../hooks/DatePicker'
+import DatePicker from 'react-multi-date-picker'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-
   const company = useField()
   const email = useField()
   const phonenumber = useField()
   const bicode = useField()
-  const deadline = useField()
+  const deadlines = DateSelect()
   const payperiod = useField()
 
   if (!user) {
@@ -27,7 +28,7 @@ const ClientForm = () => {
       email: email.value,
       phonenumber: phonenumber.value,
       bi_code: bicode.value,
-      deadline: deadline.value,
+      deadlines: JSON.stringify(deadlines.value),
       payperiod: payperiod.value
     })).then(result => {
       if (result) {
@@ -42,8 +43,16 @@ const ClientForm = () => {
     email.onReset()
     phonenumber.onReset()
     bicode.onReset()
-    deadline.onReset()
+    deadlines.onReset()
     payperiod.onReset()
+  }
+
+  const style = {
+    width: '90vw',
+    padding: '0rem',
+    color: '#495057',
+    border: 0,
+    boxShadow: 'none'
   }
 
   return (
@@ -68,8 +77,10 @@ const ClientForm = () => {
           <Form.Control id='bicode' placeholder="1234567-8" {...bicode} required />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Eräpäivä:</Form.Label>
-          <Form.Control id='deadline' placeholder="yyyy-mm-dd" {...deadline} required />
+          <Form.Label>Eräpäivät:</Form.Label>
+          <div className="form-control">
+            <DatePicker id="deadlines" {...deadlines} style={style} multiple />
+          </div>
         </Form.Group>
         <Form.Group>
           <Form.Label>Palkkakausi:</Form.Label>

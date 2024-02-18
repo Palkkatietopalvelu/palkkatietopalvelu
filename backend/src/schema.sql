@@ -12,8 +12,14 @@ CREATE TABLE clients (
   email TEXT,
   phonenumber TEXT,
   bi_code TEXT,
-  deadline DATE,
   payperiod TEXT
+);
+
+CREATE TABLE deadlines (
+  id SERIAL PRIMARY KEY,
+  client_id INTEGER REFERENCES clients,
+  deadline DATE,
+  delivered BOOLEAN
 );
 
 SET TIME ZONE 'Europe/Helsinki';
