@@ -15,10 +15,10 @@ const ClientReminder = () => {
 
   useEffect(() => {
     if (user) {
-    mailService.get().then(clients => {
-      setClients(clients)
-    })
-  }}, [])
+      mailService.get().then(clients => {
+        setClients(clients)
+      })
+    }}, [user])
 
   if (!user) {
     return ('Et ole kirjautunut sisään')

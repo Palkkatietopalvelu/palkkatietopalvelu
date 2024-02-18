@@ -10,11 +10,12 @@ const ReminderSettings = () => {
   const [settings, setSettings] = useState({ days: [], hour: '' })
 
   useEffect(() => {
-    settingsService.get().then(settings => {
-      setSettings(settings)
-    })
-  }, [])
-  
+    if (user) {
+      settingsService.get().then(settings => {
+        setSettings(settings)
+      })
+    }}, [user])
+
   if (!user) {
     return ('Et ole kirjautunut sisään')
   }
