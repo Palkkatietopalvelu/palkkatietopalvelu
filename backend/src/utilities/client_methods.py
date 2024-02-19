@@ -54,9 +54,9 @@ def add_client(client_data):
         sql, {"user_id": client_data.get("user_id"),
             "company": client_data.get("company"),
             "email": client_data.get("email"),
-            "phonenumber": client_data.get("phonenumber"),
+            "phonenumber": phonenumber,
             "bi_code": client_data.get("bi_code"),
-            "payperiod": phonenumber})
+            "payperiod": client_data.get("payperiod")})
     db.session.commit()
     add_deadlines(client_data.get("deadlines"), result.fetchone().id)
 
