@@ -131,3 +131,6 @@ jobs:
 
             - name: Run robot tests
               run: bash run_robot_tests.sh
+              env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  SECRET_KEY: SECRET
