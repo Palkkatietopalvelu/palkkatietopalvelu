@@ -130,7 +130,9 @@ jobs:
                 sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
 
             - name: Run robot tests
-              run: poetry run invoke robottests
+              run: |
+                cd backend
+                poetry run invoke robottests
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
