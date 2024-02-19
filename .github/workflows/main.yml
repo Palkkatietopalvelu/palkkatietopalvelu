@@ -132,6 +132,7 @@ jobs:
             - name: Run robot tests
               run: |
                 cd backend
+                poetry shell
                 poetry run invoke robottests
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
