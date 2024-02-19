@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 cd backend
 poetry run invoke start
