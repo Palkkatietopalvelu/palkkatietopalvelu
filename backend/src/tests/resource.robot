@@ -50,7 +50,9 @@ Add New Client
     Input Text  email  ${email}
     Input Text  phonenumber  ${phonenumber}
     Input Text  bicode  ${bicode}
-    Input Text  deadline  ${deadline}
+    Clear Element Text  deadlines
+    Input Text  deadlines  ${deadline}
+    Click Element  email
     Input Text  payperiod  ${payperiod}
 
 Setup With Existing User
@@ -79,6 +81,6 @@ Setup With Existing User And Client
     Click Button  login
     Logged In Page Should Be Open
     Click Link  lisää asiakas
-    Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024-11-20  kk
+    Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
     Page Should Contain  Asiakas lisätty onnistuneesti

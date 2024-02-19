@@ -61,21 +61,20 @@ Change Client BICode With Incorrect Format Fails
     Click Button  Tallenna tiedot
     Page Should Contain  Y-tunnus ei ole oikeassa muodossa
 
-Change Client Deadline With Correct Format Succeeds
+Change Client Deadlines With Correct Format Succeeds
     Click Link  omat sivut
     Click Link  eiku oy
     Click Link  Muuta asiakkaan tietoja
-    Change Deadline  2023-01-01
+    Change Deadlines  2023/01/01, 2024/01/02
     Click Button  Tallenna tiedot
     Page Should Contain  Asiakkaan tiedot päivitetty onnistuneesti
 
-Change Client Deadline With Incorrect Format Fails
+Change Client Deadlines With Incorrect Format Fails
     Click Link  omat sivut
     Click Link  eiku oy
     Click Link  Muuta asiakkaan tietoja
-    Change Deadline  01-01-2023
-    Click Button  Tallenna tiedot
-    Page Should Contain  Eräpäivä ei ole oikeassa muodossa
+    Change Deadlines  01/01/2023, 23/04/2025
+    Page Should Not Contain  01/01/2023, 23/04/2025
 
 Change Client Payperiod Succeeds
     Click Link  omat sivut
@@ -110,9 +109,11 @@ Change BICode
     [Arguments]  ${bicode}
     Input Text  bicode  ${bicode}
 
-Change Deadline
+Change Deadlines
     [Arguments]  ${deadline}
-    Input Text  deadline  ${deadline}
+    Clear Element Text  deadlines
+    Input Text  deadlines  ${deadline}
+    Click Element  email
 
 Change Payperiod
     [Arguments]  ${payperiod}

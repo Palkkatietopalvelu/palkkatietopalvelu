@@ -35,10 +35,12 @@ Add Client Fails With Wrong BIcode Format
 
 *** Keywords ***
 Add New Client
-    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadlines}  ${payperiod}
+    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
     Input Text  company  ${company}
     Input Text  email  ${email}
     Input Text  phonenumber  ${phonenumber}
     Input Text  bicode  ${bicode}
-    Input Text  deadlines  ${deadlines}
+    Clear Element Text  deadlines
+    Input Text  deadlines  ${deadline}
+    Click Element  id=email
     Input Text  payperiod  ${payperiod}
