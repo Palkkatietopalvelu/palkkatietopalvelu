@@ -16,12 +16,16 @@ const Menu = () => {
 
   const padding = {
     paddingLeft: 20,
-    paddingRight: 5
+    paddingRight: 5,
+    color: 'blue'
+  }
+  const navbar = {
+    backgroundColor: 'rgb(0, 230, 0)'
   }
 
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" style={navbar}>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -40,7 +44,7 @@ const Menu = () => {
         </Navbar.Collapse>
         <div className="logo-container">
           <img
-            src={'../assets/Reilu_logo_green.png'}
+            src={'../assets/Reilu_logo_white.png'}
             id='reilu-logo'
             className="logo img-fluid"
             alt="Logo"
