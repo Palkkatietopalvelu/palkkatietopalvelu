@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from app import app
 from utilities import client_methods as clients
+from utilities import client_user as client_user
 from utilities.require_login import require_login
 
 @app.route("/api/clients")
@@ -30,7 +31,9 @@ def get_client(client_id):
 def add_client():
     try:
         client_data = request.json
+        clients.validate_client_data(client_data)
         clients.add_client(client_data)
+        client_user.create_client_user(client_data.get("email"))
         return "Client added successfully", 201
     # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
     except Exception as error: # pylint: disable=broad-except
