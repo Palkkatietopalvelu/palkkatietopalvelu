@@ -26,7 +26,7 @@ const ClientsList = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.filter(filterBy)
+          {clients.filter(filterBy).sort((a,b) => a.company > b.company)
             .map(client => {
               return (
                 <tr key={client.id}>
