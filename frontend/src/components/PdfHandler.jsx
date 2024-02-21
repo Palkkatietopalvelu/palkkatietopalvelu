@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addPdf, deletePdf, downloadPdf } from '../reducers/pdfReducer'
 import { Button, Form } from 'react-bootstrap'
@@ -8,6 +8,7 @@ import { format } from 'date-fns'
 const PdfHandler = ({ client, pdfs }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const user = useSelector(({ user }) => user)
   const fileInputRef = useRef(null)
 
   const handlePdfSubmit = async (event) => {
@@ -23,7 +24,11 @@ const PdfHandler = ({ client, pdfs }) => {
       formData.append('owner', client.id)
       dispatch(addPdf(formData)).then(result => {
         if (result) {
-          navigate(`/client/${client.id}`)
+          if (user.role === 2) {
+            navigate('/mypage/')
+          } else {
+            navigate(`/client/${client.id}`)
+          }
           if (fileInputRef.current) {
             fileInputRef.current.value = ''
           }
