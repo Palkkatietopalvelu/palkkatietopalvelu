@@ -15,12 +15,13 @@ const Menu = () => {
   }
 
   const padding = {
-    paddingLeft: 20,
-    paddingRight: 5,
-    color: 'blue'
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: 16,
+    color: 'white',
   }
   const navbar = {
-    backgroundColor: 'rgb(0, 230, 0)'
+    backgroundColor: 'rgb(0, 170, 0)'
   }
 
   return (
@@ -30,18 +31,18 @@ const Menu = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             {user ? <span>
-              <Link style={padding} to="/">koti</Link>
-              <Link style={padding} to="/mypage">omat sivut</Link>
+              <Link style={padding} to="/" className="text-decoration-none"><b>KOTI</b></Link>
+              <Link style={padding} to="/mypage" className="text-decoration-none"><b>OMAT SIVUT</b></Link>
               {user.role === 1 && <span>
-                <Link style={padding} to="/client">lisää asiakas</Link>
-                <Link style={padding} to="/reminders">muistutukset</Link>
-                <Link style={padding} to="/remindersettings">muistutusasetukset</Link>
+                <Link style={padding} to="/client" className="text-decoration-none"><b>LISÄÄ ASIAKAS</b></Link>
+                <Link style={padding} to="/reminders" className="text-decoration-none"><b>MUISTUTUKSET</b></Link>
+                <Link style={padding} to="/remindersettings" className="text-decoration-none"><b>MUISTUTUSASETUKSET</b></Link>
               </span>}
-              <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
+              <Link style={padding} onClick={handleLogout} className="text-decoration-none"><b>KIRJAUDU ULOS</b></Link>
             </span>
               :<span>
-                <Link style={padding} to="/login" id='login'>kirjaudu sisään</Link>
-                <Link style={padding} to="/register" id='register'>rekisteröidy</Link></span>}
+                <Link style={padding} to="/login" id='login' className="text-decoration-none"><b>KIRJAUDU SISÄÄN</b></Link>
+                <Link style={padding} to="/register" id='register' className="text-decoration-none"><b>REKISTERÖIDY</b></Link></span>}
           </Nav>
         </Navbar.Collapse>
         <div className="logo-container">
