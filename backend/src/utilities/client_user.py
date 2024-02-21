@@ -5,6 +5,7 @@ from flask_mail import Message
 from utilities.require_login import require_login
 from mail_scheduler import mail
 from app import app
+from config import ENV
 
 @require_login
 def create_client_user(email):
@@ -16,10 +17,11 @@ def create_client_user(email):
         new_user = User(username=username, password=hashed_password, role=role)
         db.session.add(new_user)
         db.session.commit()
-        send_login_email(email, password)
-        return jsonify(new_user.serialize()), 201
     except:
         raise ValueError('Virhe asiakkaan tunnusten luomisessa')
+    if ENV != "development":
+        send_login_email(email, password)
+    return jsonify(new_user.serialize()), 201
 
 def send_login_email(email, password):
     try:

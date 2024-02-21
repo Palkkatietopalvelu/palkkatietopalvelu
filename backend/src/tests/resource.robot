@@ -13,7 +13,7 @@ Open And Configure Browser
     Call Method  ${options}  add_argument  --no-sandbox
     Call Method  ${options}  add_argument  --window-size\=1920,1080
     Call Method  ${options}  add_argument  --start-maximized
-    #Call Method  ${options}  add_argument  --headless
+    Call Method  ${options}  add_argument  --headless
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
 
