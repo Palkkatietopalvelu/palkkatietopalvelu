@@ -41,7 +41,7 @@ def create_tables():
         );
         """))
     db.session.execute(text("""
-        CREATE TABLE pdfs (
+        CREATE TABLE files (
             id SERIAL PRIMARY KEY,
             owner INTEGER REFERENCES clients,
             name TEXT,
@@ -64,7 +64,7 @@ def drop_tables():
     """))
 
     db.session.execute(text("""
-        DROP TABLE IF EXISTS pdfs CASCADE;
+        DROP TABLE IF EXISTS files CASCADE;
     """))
 
     db.session.execute(text("""

@@ -6,6 +6,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
+import { getFile } from './reducers/fileReducer'
 import ClientForm from './components/ClientForm'
 import Client from './components/Client'
 import UpdateClient from './components/ClientUpdateForm'

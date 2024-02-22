@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { getPdf } from '../reducers/pdfReducer'
+import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
-import PdfHandler from './PdfHandler'
+import FileHandler from './FileHandler'
 
 const Client = () => {
   const dispatch = useDispatch()
@@ -15,8 +15,10 @@ const Client = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getPdf())}
+      dispatch(getFile())}
   }, [dispatch, id, user])
+
+  const files = useSelector(({ file }) => file).filter(c => c.owner === id)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -27,27 +29,27 @@ const Client = () => {
   return (
     <div>
       {user.role === 1 &&
-        <div>
-          <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
-          <Notification />
-          <h4 style={{ marginTop: '20px' }}>Yhteystiedot</h4>
-          <Table striped>
-            <tbody>
-              <tr><td>Sähköposti</td><td>{client.email}</td></tr>
-              <tr><td>Puhelinnumero</td><td>{client.phonenumber}</td></tr>
-            </tbody>
-          </Table>
-          <h4>Laskutustiedot</h4>
-          <Table striped>
-            <tbody>
-              <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
-              <tr><td>Eräpäivät</td><td>{client.deadlines.map(date => (<div key={date}> {new Date(date).toLocaleString('fi-FI', { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })} </div>))}</td></tr>
-              <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
-            </tbody>
-          </Table>
-          <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
-          <PdfHandler client={client} />
-        </div>}
+      <div>
+        <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
+        <Notification />
+        <h4 style={{ marginTop: '20px' }}>Yhteystiedot</h4>
+        <Table striped>
+          <tbody>
+            <tr><td>Sähköposti</td><td>{client.email}</td></tr>
+            <tr><td>Puhelinnumero</td><td>{client.phonenumber}</td></tr>
+          </tbody>
+        </Table>
+        <h4>Laskutustiedot</h4>
+        <Table striped>
+          <tbody>
+            <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
+            <tr><td>Eräpäivät</td><td>{client.deadlines.map(date => (<div key={date}> {new Date(date).toLocaleString('fi-FI', { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })} </div>))}</td></tr>
+            <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
+          </tbody>
+        </Table>
+        <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
+        <FileHandler client={client} files={files} />
+      </div>}
     </div>
   )
 }
