@@ -57,8 +57,7 @@ const SetPassword = () => {
       </div>
       }
       {!valid &&
-      <div> Token on vanhentunut tai väärä
-      </div>
+      <div> Token on vanhentunut tai väärä </div>
       }
     </div>
   )
