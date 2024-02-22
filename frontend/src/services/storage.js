@@ -13,7 +13,7 @@ const removeUser = () => {
 }
 
 const setHeaders = () => {
-  return { 'Authorization': loadUser() ? `Bearer ${loadUser().token}` : null }
+  return { 'Authorization': loadUser() ? `Bearer ${loadUser().token}` : null, 'FrontUrl': window.location.origin }
 }
 
 export default {
