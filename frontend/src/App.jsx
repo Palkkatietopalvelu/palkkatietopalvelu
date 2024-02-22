@@ -18,6 +18,7 @@ import RegisterForm from './components/RegisterForm'
 import MyPage from './components/MyPage'
 import ReminderSettings from './components/ReminderSettings'
 import ReminderSettingsForm from './components/ReminderSettingsForm'
+import SalaryForm from './components/SalaryForm'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/client" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
+          <Route path="/client/:id/salaryform" element={<SalaryForm />} />
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
