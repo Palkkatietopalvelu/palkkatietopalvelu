@@ -3,6 +3,7 @@ from app import app
 from utilities import client_methods as clients
 from utilities import client_user
 from utilities.require_login import require_login
+from utilities.require_admin import require_admin
 
 @app.route("/api/clients")
 @require_login
@@ -28,6 +29,7 @@ def get_client(client_id):
 
 @app.route("/api/client", methods=["POST"])
 @require_login
+@require_admin
 def add_client():
     try:
         client_data = request.json
@@ -42,6 +44,7 @@ def add_client():
 
 @app.route("/api/client/<int:client_id>", methods=["POST"])
 @require_login
+@require_admin
 def update_client(client_id):
     try:
         client_data = request.json
@@ -52,6 +55,7 @@ def update_client(client_id):
 
 @app.route("/api/client/<int:client_id>", methods=["DELETE"])
 @require_login
+@require_admin
 def delete_client(client_id):
     try:
         clients.delete_client(client_id)
