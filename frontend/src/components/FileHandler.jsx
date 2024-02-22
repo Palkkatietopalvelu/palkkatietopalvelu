@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { addFile, deleteFile, downloadFile } from '../reducers/fileReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
@@ -68,6 +68,9 @@ const FileHandler = ({ client, files }) => {
           />
         </Form.Group>
       </Form>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`}>täällä</Link>
+      </div>
       <br /><h4>Ladatut tiedostot</h4>
       <ul>
         {files.map((file) => (
