@@ -17,20 +17,26 @@ const MyPage = () => {
     return ('Et ole kirjautunut sisään')
   }
 
-  const handleSearchword = (event) => {
+  const handleCompanySearch = (event) => {
     event.target.value === ""
       ? setFilteredCompanies(clients)
       : setFilteredCompanies(clients.filter(
         client => client.company.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
+  const deadlineChecker = (client, searchword) => {
+    const dlExists = client.deadlines.map(dl => dl.toLowerCase().includes(searchword.toLowerCase()))
+    if(dlExists.includes(true)) {
+      return client
+    }
+    return
+  }
+
   const handleDateSearch = (event) => {
-    console.log("handleDateSearch: ", event.target.value)
     event.target.value === ""
     ? setFilteredCompanies(clients)
-    : //setFilteredCompanies(clients.map(
-      //client => client.deadlines.filter(dl => dl.includes(event.target.value))))
-      console.log(clients.map(client => client.deadlines.filter(dl => dl.includes(event.target.value))))
+    : setFilteredCompanies(clients.filter(
+        client => deadlineChecker(client, event.target.value)))
   }
 
   return (
@@ -40,15 +46,15 @@ const MyPage = () => {
       <p>Käyttäjätunnus: {user.username}</p>
       <Notification />
       <PasswordChange />
-      <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4>
-      <CompanyList filteredCompanies={filteredCompanies} handleSearchword={handleSearchword}
-                    filteredDates={filteredDates} handleDateSearch={handleDateSearch}
-                    filterBy={filterBy} />
+      <hr />
+      <h4 style={{ marginTop: '20px' }}>Asiakkaat</h4>
+      <CompanyList filteredCompanies={filteredCompanies} handleCompanySearch={handleCompanySearch}
+                    handleDateSearch={handleDateSearch} filterBy={filterBy} />
     </div>
   )
 }
 
-const CompanyList = ({ filteredCompanies, handleSearchword, filteredDates, handleDateSearch, filterBy }) => {
+const CompanyList = ({ filteredCompanies, handleCompanySearch, handleDateSearch, filterBy }) => {
   return (
     <Table striped>
       <thead>
@@ -57,7 +63,7 @@ const CompanyList = ({ filteredCompanies, handleSearchword, filteredDates, handl
           <th>Eräpäivä</th>
         </tr>
         <tr>
-          <th><input onChange={handleSearchword} /></th>
+          <th><input onChange={handleCompanySearch} /></th>
           <th><input onChange={handleDateSearch}/></th>
         </tr>
       </thead>

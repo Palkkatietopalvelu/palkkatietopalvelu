@@ -44,4 +44,5 @@ const ClientsList = () => {
     </div>
   )
 }
+
 export default ClientsList
