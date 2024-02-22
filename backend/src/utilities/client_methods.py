@@ -116,7 +116,6 @@ def email_is_user(email):
     result = db.session.execute(sql, {"new_username": email}).fetchone()
     if result is None:
         return False
-    print(result)
     return True
 
 def add_deadlines(deadlines, client_id):

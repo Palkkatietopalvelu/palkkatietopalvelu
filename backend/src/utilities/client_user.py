@@ -21,7 +21,7 @@ def create_client_user(email):
     except Exception as e:
         raise ValueError('Virhe asiakkaan tunnusten luomisessa') from e
     if ENV != "development":
-        send_login_email(email, password)
+        send_login_email(email)
     return jsonify(new_user.serialize()), 201
 
 def send_login_email(email):
