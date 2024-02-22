@@ -5,10 +5,11 @@ import { addPdf, deletePdf, downloadPdf } from '../reducers/pdfReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
 
-const PdfHandler = ({ client, pdfs }) => {
+const PdfHandler = ({ client }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(({ user }) => user)
+  const pdfs = useSelector(({ pdf }) => pdf).filter(c => c.owner === client.id)
   const fileInputRef = useRef(null)
 
   const handlePdfSubmit = async (event) => {
@@ -70,9 +71,8 @@ const PdfHandler = ({ client, pdfs }) => {
         {pdfs.map((pdf) => (
           <li key={pdf.id}>
             {pdf.name}, {format(new Date(pdf.date), 'yyyy-MM-dd HH:mm')}{' '}
-            <Button variant="primary" size="sm" onClick={() => handlePdfDownload(pdf.id)}>Download</Button>
-            {' '}
-            <Button id={pdf.id} variant="danger" size="sm" onClick={() => handlePdfDelete(pdf.id, pdf.name)}>Delete</Button>
+            <Button variant="primary" size="sm" onClick={() => handlePdfDownload(pdf.id)}>Lataa</Button>&nbsp;
+            <Button id={pdf.id} variant="danger" size="sm" onClick={() => handlePdfDelete(pdf.id, pdf.name)}>Poista</Button>
           </li>
         ))}
       </ul>

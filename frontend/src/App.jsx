@@ -6,9 +6,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
-import { getPdf } from './reducers/pdfReducer'
 import ClientForm from './components/ClientForm'
-import ClientsList from './components/ClientsList'
 import Client from './components/Client'
 import UpdateClient from './components/ClientUpdateForm'
 import ClientReminder from './components/Mail'
@@ -19,6 +17,7 @@ import MyPage from './components/MyPage'
 import ReminderSettings from './components/ReminderSettings'
 import ReminderSettingsForm from './components/ReminderSettingsForm'
 import SetPassword from './components/SetPassword'
+import HomePage from './components/HomePage'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -37,7 +36,7 @@ const App = () => {
       <Router>
         <Menu/>
         <Routes>
-          <Route path="/" element={<ClientsList />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/mypage" element={<MyPage />} />

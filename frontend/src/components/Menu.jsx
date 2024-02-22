@@ -28,9 +28,11 @@ const Menu = () => {
             {user ? <span>
               <Link style={padding} to="/">koti</Link>
               <Link style={padding} to="/mypage">omat sivut</Link>
-              <Link style={padding} to="/client">lisää asiakas</Link>
-              <Link style={padding} to="/reminders">muistutukset</Link>
-              <Link style={padding} to="/remindersettings">muistutusasetukset</Link>
+              {user.role === 1 && <span>
+                <Link style={padding} to="/client">lisää asiakas</Link>
+                <Link style={padding} to="/reminders">muistutukset</Link>
+                <Link style={padding} to="/remindersettings">muistutusasetukset</Link>
+              </span>}
               <Link style={padding} onClick={handleLogout}>kirjaudu ulos</Link>
             </span>
               :<span>
