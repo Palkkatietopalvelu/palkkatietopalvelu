@@ -6,8 +6,8 @@ from app import app
 from utilities import client_methods as client
 import controllers.users
 import utilities.client_methods as client_methods
-import utilities.pdf_methods as pdf_methods
-import controllers.pdfs as pdfs
+import utilities.file_methods as file_methods
+import controllers.files as files
 from initialize_db import initialize_database
 import json
 
@@ -27,7 +27,7 @@ class TestUpdateClient(unittest.TestCase):
             "payperiod": "kuukausi"
         }
         client_methods.add_client(self.client_data)
-        self.pdf = {
+        self.file = {
             "id": 1,
             "owner": 1,
             "name": "test.pdf",
@@ -44,31 +44,31 @@ class TestUpdateClient(unittest.TestCase):
     def tearDown(self):
         initialize_database()
 
-    def test_add_pdf_success(self):
+    def test_add_file_success(self):
         with app.app_context():
-            pdf_methods.add_pdf(self.pdf)
-            files = pdf_methods.get_all_pdfs()
-            self.assertEqual(len(files), 1)
+            file_methods.add_file(self.file)
+            all_files = file_methods.get_all_files()
+            self.assertEqual(len(all_files), 1)
 
-    # testing only pdf_methods here, validation normally happens in pdfs.py
+    # testing only file_methods here, validation normally happens in files.py
     def test_add_wrong_filetype(self):
         with app.app_context():
             with self.assertRaises(sqlalchemy.exc.StatementError):
-                pdf_methods.add_pdf(self.odt)
+                file_methods.add_file(self.odt)
 
-    def test_get_single_pdf(self):
+    def test_get_single_file(self):
         with app.app_context():
-            pdf_methods.add_pdf(self.pdf)
-            pdf = pdf_methods.get_pdf(1)
+            file_methods.add_file(self.file)
+            file = file_methods.get_file(1)
             # not checking date because psql handles the timezone specification
             for key in ['id', 'owner', 'name', 'path']:
-                self.assertEqual(pdf[key], self.pdf[key])
+                self.assertEqual(file[key], self.file[key])
 
-    def test_delete_pdf(self):
+    def test_delete_file(self):
         with app.app_context():
-            pdf_methods.add_pdf(self.pdf)
-            files = pdf_methods.get_all_pdfs()
-            self.assertEqual(len(files), 1)
-            pdf_methods.delete_pdf(1, remove_file=False)
-            files = pdf_methods.get_all_pdfs()
-            self.assertEqual(len(files), 0)
+            file_methods.add_file(self.file)
+            all_files = file_methods.get_all_files()
+            self.assertEqual(len(all_files), 1)
+            file_methods.delete_file(1, remove_file=False)
+            all_files = file_methods.get_all_files()
+            self.assertEqual(len(all_files), 0)

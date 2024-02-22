@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { getPdf } from '../reducers/pdfReducer'
+import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
-import PdfHandler from './PdfHandler'
+import FileHandler from './FileHandler'
 
 const Client = () => {
   const dispatch = useDispatch()
@@ -15,10 +15,10 @@ const Client = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getPdf())}
+      dispatch(getFile())}
   }, [dispatch, id, user])
 
-  const pdfs = useSelector(({ pdf }) => pdf).filter(c => c.owner === id)
+  const files = useSelector(({ file }) => file).filter(c => c.owner === id)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -46,7 +46,7 @@ const Client = () => {
         </tbody>
       </Table>
       <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
-      <PdfHandler client={client} pdfs={pdfs} />
+      <FileHandler client={client} files={files} />
     </div>
   )
 }
