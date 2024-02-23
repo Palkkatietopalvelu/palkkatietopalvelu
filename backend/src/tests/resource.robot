@@ -4,7 +4,7 @@ Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
-${DELAY}  0.3 seconds
+${DELAY}  0.1 seconds
 ${HOME_URL}  http://${SERVER}
 
 *** Keywords ***

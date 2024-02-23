@@ -22,8 +22,8 @@ def save_settings(data):
     old_settings = load_settings()
     days = ','.join(map(lambda day: str(day), data[0]))# pylint: disable=undefined-variable, unnecessary-lambda
     hour = data[1]['value']
-    print(hour)
-    enabled = not (len(days) == 0 and hour == '')
+    enabled = data[2]
+    print(enabled)
     if days == '':
         days = old_settings['days']
     if hour == '':

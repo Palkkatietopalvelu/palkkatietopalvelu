@@ -1,4 +1,4 @@
-const CheckBox = ({ name, inputs, setInputs }) => {
+const CheckBox = ({ name, inputs, setInputs, checked }) => {
   const handleCheckChange = () => {
     if (inputs.includes(name)) {
       setInputs(inputs.filter((input) => input !== name))
