@@ -6,6 +6,7 @@ import { useField } from '../hooks'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
+import jsPDF from 'jspdf'
 
 const SalaryForm = ({ clientId }) => {
   const [formType, setFormType] = useState('')
