@@ -63,8 +63,8 @@ const CompanyList = ({ filteredCompanies, handleCompanySearch, handleDateSearch,
           <th>Eräpäivä</th>
         </tr>
         <tr>
-          <th><input onChange={handleCompanySearch} /></th>
-          <th><input onChange={handleDateSearch}/></th>
+          <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
+          <th><input id="dueDateFilter" onChange={handleDateSearch}/></th>
         </tr>
       </thead>
       <tbody>
