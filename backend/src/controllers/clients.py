@@ -35,7 +35,7 @@ def add_client():
     try:
         client_data = request.json
         clients.validate_client_data(client_data)
-        clients.validate_email(client_data)
+        clients.validate_email(client_data.get("email"))
         with db.session.begin_nested():
             clients.add_client(client_data)
             client_user.create_client_user(client_data.get("email"))

@@ -10,6 +10,7 @@ from app import app
 from config import ENV
 from models.user import User
 from db import db
+from utilities import client_methods
 
 def create_client_user(email):
     try:
@@ -49,6 +50,10 @@ def get_setpassword_token(email):
 def verify_setpassword_token(token):
     try:
         user_info = jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'])
+        sql = text("""SELECT username FROM users WHERE username:=username""")
+        result = db.session.execute(sql, {"username": user_info["username"]}).fetchone()
+        if not result:
+            raise PermissionError('Tällä sähköpostilla ei ole enää käyttäjää')
         return user_info
     except jwt.ExpiredSignatureError as e:
         raise PermissionError('Vanhentunut token') from e
@@ -62,6 +67,7 @@ def handle_email_change(client_id, new_email):
         sql = text("""SELECT email FROM clients WHERE id=:id""")
         old_email = db.session.execute(sql, {"id": client_id}).fetchone()[0]
         if old_email!=new_email:
+            client_methods.validate_email(new_email)
             delete_client_user(old_email)
             create_client_user(new_email)
     except Exception as e: # pylint: disable=broad-except

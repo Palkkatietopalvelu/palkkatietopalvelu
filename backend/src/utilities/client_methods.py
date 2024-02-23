@@ -103,8 +103,7 @@ def validate_client_data(client_data):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
     return True
     
-def validate_email(client_data):
-    email = client_data.get("email")   
+def validate_email(email):   
     if email_is_user(email):
         raise ValueError('Tällä sähköpostilla on jo luotu tunnukset, anna toinen sähköposti')
     return True
