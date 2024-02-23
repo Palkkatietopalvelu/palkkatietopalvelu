@@ -17,7 +17,6 @@ def create_client_user(email):
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password, role=role)
         db.session.add(new_user)
-        db.session.commit()
     except Exception as e:
         raise ValueError('Virhe asiakkaan tunnusten luomisessa') from e
     if ENV != "development":

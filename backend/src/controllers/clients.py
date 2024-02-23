@@ -4,6 +4,7 @@ from utilities import client_methods as clients
 from utilities import client_user
 from utilities.require_login import require_login
 from utilities.require_admin import require_admin
+from db import db
 
 @app.route("/api/clients")
 @require_login
@@ -35,11 +36,14 @@ def add_client():
         client_data = request.json
         clients.validate_client_data(client_data)
         clients.validate_email(client_data)
-        clients.add_client(client_data)
-        client_user.create_client_user(client_data.get("email"))
+        with db.session.begin_nested():
+            clients.add_client(client_data)
+            client_user.create_client_user(client_data.get("email"))
+        db.session.commit()
         return "Client added successfully", 201
     # tähän pitäisi ideaalisti antaa tarkemmat tiedot exceptionista
     except Exception as error: # pylint: disable=broad-except
+        db.session.rollback()
         return str(error), 400
 
 @app.route("/api/client/<int:client_id>", methods=["POST"])

@@ -56,7 +56,6 @@ def add_client(client_data):
             "phonenumber": phonenumber,
             "bi_code": client_data.get("bi_code"),
             "payperiod": client_data.get("payperiod")})
-    db.session.commit()
     add_deadlines(client_data.get("deadlines"), result.fetchone().id)
 
 def update_client(client_id, client_data):
@@ -125,7 +124,6 @@ def add_deadlines(deadlines, client_id):
         sql = text("""INSERT INTO deadlines (deadline, client_id, delivered)
                    VALUES (:d, :client_id, :delivered)""")
         db.session.execute(sql, {"d": d, "client_id": client_id, "delivered": False})
-    db.session.commit()
 
 def delete_deadlines(client_id):
     sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
