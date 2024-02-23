@@ -35,7 +35,8 @@ const ClientsList = () => {
                       {client.company}
                     </Link>
                   </td>
-                  <td>{format(client.deadlines[0], 'dd.MM.yyyy')}</td>
+                  <td>{client.deadlines != '' &&
+                  format(client.deadlines[0], 'dd.MM.yyyy')}</td>
                 </tr>
               )}
             )}
