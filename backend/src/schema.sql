@@ -24,7 +24,7 @@ CREATE TABLE deadlines (
 
 SET TIME ZONE 'Europe/Helsinki';
 
-CREATE TABLE pdfs (
+CREATE TABLE files (
   id SERIAL PRIMARY KEY,
   owner INTEGER REFERENCES clients,
   name TEXT,

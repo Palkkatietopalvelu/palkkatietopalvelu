@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/pdfs'
+const baseUrl = 'http://localhost:5000/api/files'
 import storage from './storage'
 
 const get = async () => {

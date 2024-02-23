@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import pdfService from '../services/pdfs'
+import fileService from '../services/files'
 import { notify } from './notificationReducer'
 
 const slice = createSlice({
-  name: 'pdfs',
+  name: 'files',
   initialState: [],
   reducers: {
     set(state, { payload }) {
@@ -20,20 +20,20 @@ const slice = createSlice({
 
 export const { set, add, remove } = slice.actions
 
-export const getPdf = () => {
+export const getFile = () => {
   return async dispatch => {
-    const pdfs = await pdfService.get()
-    dispatch(set(pdfs))
+    const files = await fileService.get()
+    dispatch(set(files))
   }
 }
 
-export const addPdf = (pdf) => {
+export const addFile = (file) => {
   return async dispatch => {
     try {
-      const data = await pdfService.add(pdf)
+      const data = await fileService.add(file)
       dispatch(add(data))
-      dispatch(notify('PDF-tiedosto lisätty onnistuneesti'))
-      dispatch(getPdf())
+      dispatch(notify('Tiedosto lisätty onnistuneesti'))
+      dispatch(getFile())
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe'))
@@ -42,31 +42,31 @@ export const addPdf = (pdf) => {
   }
 }
 
-export const downloadPdf = (id) => {
+export const downloadFile = (id, fileName) => {
   return async (dispatch) => {
     try {
-      const blob = await pdfService.download(id)
+      const blob = await fileService.download(id)
       const url = window.URL.createObjectURL(new Blob([blob]))
       const link = document.createElement('a')
       link.href = url
-      link.setAttribute('download', 'file.pdf')
+      link.setAttribute('download', fileName)
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
       window.URL.revokeObjectURL(url)
     } catch (error) {
-      console.error('Download PDF failed:', error)
-      dispatch(notify('PDF-tiedoston lataus epäonnistui'))
+      console.error('Download document failed:', error)
+      dispatch(notify('Tiedoston lataus epäonnistui'))
     }
   }
 }
 
-export const deletePdf = (pdf) => {
+export const deleteFile = (file) => {
   return async dispatch => {
     try {
-      await pdfService.remove(pdf.id)
-      dispatch(remove(pdf.id))
-      dispatch(notify('PDF-tiedosto poistettu onnistuneesti'))
+      await fileService.remove(file.id)
+      dispatch(remove(file.id))
+      dispatch(notify('Tiedosto poistettu onnistuneesti'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe'))
