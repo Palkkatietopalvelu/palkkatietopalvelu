@@ -50,7 +50,7 @@ def get_setpassword_token(email):
 def verify_setpassword_token(token):
     try:
         user_info = jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'])
-        sql = text("""SELECT username FROM users WHERE username:=username""")
+        sql = text("""SELECT username FROM users WHERE username=:username""")
         result = db.session.execute(sql, {"username": user_info["username"]}).fetchone()
         if not result:
             raise PermissionError('Tällä sähköpostilla ei ole enää käyttäjää')
