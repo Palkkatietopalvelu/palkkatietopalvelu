@@ -7,7 +7,7 @@ Test Setup  Initialize Database
 *** Test Cases ***
 Create Account Page Can Be Opened
     Go To Home Page
-    Click Link  rekisteröidy
+    Click Link  REKISTERÖIDY
     Page Should Contain  Luo uusi käyttäjä
 
 New Account Can Be Created

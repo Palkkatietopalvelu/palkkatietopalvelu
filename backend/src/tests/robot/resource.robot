@@ -1,10 +1,10 @@
 *** Settings ***
 Library  SeleniumLibrary  run_on_failure=NOTHING
-Library  ../AppLibrary.py
+Library  ../../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
-${DELAY}  0.3 seconds
+${DELAY}  0.1 seconds
 ${HOME_URL}  http://${SERVER}
 
 *** Keywords ***
@@ -80,7 +80,7 @@ Setup With Existing User And Client
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
-    Click Link  lisää asiakas
+    Click Link  LISÄÄ ASIAKAS
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
     Page Should Contain  Asiakas lisätty onnistuneesti
