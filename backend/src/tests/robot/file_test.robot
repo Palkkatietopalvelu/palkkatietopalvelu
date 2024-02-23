@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  resource.robot
-Library  ../AppLibrary.py
 Suite Setup  Setup With Existing User And Client
 Suite Teardown  Close Browser
 
