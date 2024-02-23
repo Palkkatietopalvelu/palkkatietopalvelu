@@ -4,6 +4,7 @@ from app import app
 from utilities import client_methods
 from initialize_db import initialize_database
 import json
+from db import db
 
 class TestAddClient(unittest.TestCase):
     def setUp(self):
@@ -78,6 +79,7 @@ class TestClientMethods(unittest.TestCase):
                             "deadlines": json.dumps([1731196800000, 1594876800000]),
                             "payperiod": "kuukausi"}
         client_methods.add_client(self.client_data)
+        db.session.commit()
 
     def test_get_clients_returns_type_list(self):
         with app.app_context():

@@ -27,6 +27,7 @@ class TestUpdateClient(unittest.TestCase):
             "payperiod": "kuukausi"
         }
         client_methods.add_client(self.client_data)
+        db.session.commit()
         self.pdf = {
             "id": 1,
             "owner": 1,
