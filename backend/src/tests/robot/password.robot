@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  resource.robot
-Library  ../AppLibrary.py
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 
@@ -67,7 +66,7 @@ Login With New Password Succeeds
 
 *** Keywords ***
 Go To My Page And Open Change Password Form
-    Click Link  omat sivut
+    Click Link  OMAT SIVUT
     Page Should Contain  Käyttäjätilin asetukset
     Click Button  Vaihda salasana
 
@@ -102,9 +101,8 @@ Login With Credentials
     Click Button  login
 
 Logout
-    Click Link  kirjaudu ulos
-    Page Should Contain  kirjaudu sisään
-
+    Click Link  KIRJAUDU ULOS
+    Page Should Contain  KIRJAUDU SISÄÄN
 Create User
     [Arguments]  ${username}  ${password}
     Set Username  ${username}

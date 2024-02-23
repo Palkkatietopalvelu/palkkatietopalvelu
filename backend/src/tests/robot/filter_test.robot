@@ -1,11 +1,10 @@
 *** Settings ***
 Resource  resource.robot
-Library  ../AppLibrary.py
 Suite Setup  Setup With Existing User
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Search Company With Correct Name Credentials
+Search Company With Correct Name
     Home Page Should Be Open
     Click Link  LISÄÄ ASIAKAS
     Add New Client  Firma Oy  firma@mail.com  +358 123456789  1234567-8  2024/05/07  kk
@@ -18,32 +17,32 @@ Search Company With Correct Name Credentials
     Page Should Contain  07.05.2024
     Page Should Not Contain  Kallen kiska
 
-Search Company With Incorrect Name Credentials
+Search Company With Incorrect Name
     Click Link  OMAT SIVUT
     Search Company  Nokia
     Page Should Not Contain  Nokia
     Page Should Not Contain  Firma
     Page Should Not Contain  Kallen kiska
 
-Search Company With Correct DueDate Credentials
+Search Company With Correct Date
     Click Link  KOTI
     Click Link  OMAT SIVUT
-    Search DueDate  12
+    Search Date  12
     Page Should Contain  Kallen kiska
     Page Should Contain  12.02.2024
     Page Should Not Contain  Firma
     Page Should Not Contain  Nokia
 
-Search Company With Incorrect DueDate Credentials
+Search Company With Incorrect Date
     Click Link  OMAT SIVUT
-    Search DueDate  11
+    Search Date  11
     Page Should Not Contain  Kallen kiska
     Page Should Not Contain  Firma
     Page Should Not Contain  Nokia
 
 Search Company With Correct Month
     Click Link  OMAT SIVUT
-    Search DueDate  may
+    Search Date  may
     Page Should Contain  07.05.2024
     Page Should Contain  Firma
     Page Should Not Contain  Kallen kiska
@@ -51,7 +50,7 @@ Search Company With Correct Month
 
 Search Company With Incorrect Month
     Click Link  OMAT SIVUT
-    Search DueDate  dec
+    Search Date  dec
     Page Should Not Contain  07.05.2024
     Page Should Not Contain  12.02.2024
     Page Should Not Contain  Firma
@@ -74,6 +73,6 @@ Search Company
     [Arguments]  ${companyFilter}
     Input Text  companyFilter  ${companyFilter}
 
-Search DueDate
-    [Arguments]  ${dueDateFilter}
-    Input Text  dueDateFilter  ${dueDateFilter}
+Search Date
+    [Arguments]  ${dateFilter}
+    Input Text  dateFilter  ${dateFilter}
