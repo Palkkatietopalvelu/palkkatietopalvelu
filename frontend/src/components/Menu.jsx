@@ -15,13 +15,13 @@ const Menu = () => {
   }
 
   const padding = {
-    paddingLeft: 8,
+    paddingLeft: 30,
     paddingRight: 8,
     fontSize: 16,
     color: 'white',
   }
   const navbar = {
-    backgroundColor: 'rgb(0, 170, 0)'
+    backgroundColor: 'rgb(13, 177, 13)'
   }
 
   return (
