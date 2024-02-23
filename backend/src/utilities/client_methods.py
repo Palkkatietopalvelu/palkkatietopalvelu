@@ -65,7 +65,6 @@ def update_client(client_id, client_data):
                   SET company=:company, email=:email, phonenumber=:phonenumber, bi_code=:bi_code, 
                     payperiod=:payperiod WHERE id=:id""")
     db.session.execute(sql, {**client_data, "id": client_id})
-    db.session.commit()
     delete_deadlines(client_id)
     add_deadlines(client_data.get("deadlines"), client_id)
 
@@ -128,8 +127,6 @@ def add_deadlines(deadlines, client_id):
 def delete_deadlines(client_id):
     sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
     db.session.execute(sql, {"client_id": client_id})
-    db.session.commit()
-
 
 def get_next_deadlines():
     sql = text("""SELECT MIN(deadline) AS next_deadline,
@@ -137,6 +134,7 @@ def get_next_deadlines():
                GROUP BY client_id ORDER BY next_deadline""")
     result = db.session.execute(sql)
     return result.fetchall()
+
 def validate_phonenumber(number):
     phonenumber=number.replace(" ", "").replace("-", "")
     if phonenumber[0]=="0":

@@ -52,9 +52,13 @@ def add_client():
 def update_client(client_id):
     try:
         client_data = request.json
-        updated_client = clients.update_client(client_id, client_data)
+        with db.session.begin_nested():
+            client_user.handle_email_change(client_id, client_data["email"])
+            updated_client = clients.update_client(client_id, client_data)
+        db.session.commit()
         return jsonify(updated_client), 200
     except Exception as error:  # pylint: disable=broad-except
+        db.session.rollback()
         return str(error), 400
 
 @app.route("/api/client/<int:client_id>", methods=["DELETE"])
