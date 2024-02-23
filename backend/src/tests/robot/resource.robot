@@ -21,7 +21,7 @@ Initialize Database
     Initialize Db
 
 Logged In Page Should Be Open
-    Title Should Be  Vite + React
+    Title Should Be  Palkkatietopalvelu
     Page Should Contain  Asiakkaat
 
 Go To Home Page
