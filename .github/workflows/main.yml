@@ -53,6 +53,7 @@ jobs:
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
+                  FLASK_ENV: development
     
     build_frontend:
         runs-on: ubuntu-latest
