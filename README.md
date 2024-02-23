@@ -1,3 +1,5 @@
+[![GHA_workflow_badge](https://github.com/Palkkatietopalvelu/palkkatietopalvelu/workflows/CI/badge.svg)](https://github.com/Palkkatietopalvelu/palkkatietopalvelu/actions/workflows/main.yml)
+
 # Palkkatietopalvelu
 * Palvelu, jolla tilitoimisto voi vastaanottaa palkkatietoja asiakkailtaan.
 * Tilitoimisto voi määrittää eräpäivät tietojen toimittamiselle.
