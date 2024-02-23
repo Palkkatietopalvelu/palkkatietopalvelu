@@ -18,8 +18,6 @@ const Client = () => {
       dispatch(getPdf())}
   }, [dispatch, id, user])
 
-  const pdfs = useSelector(({ pdf }) => pdf).filter(c => c.owner === id)
-
   if (!user) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
@@ -48,7 +46,7 @@ const Client = () => {
             </tbody>
           </Table>
           <Link to={`/client/${client.id}/update`}>Muuta asiakkaan tietoja</Link>
-          <PdfHandler client={client} pdfs={pdfs} />
+          <PdfHandler client={client} />
         </div>}
     </div>
   )
