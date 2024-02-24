@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate} from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 import { logoutUser } from '../reducers/userReducer'
 
@@ -14,14 +14,25 @@ const Menu = () => {
     navigate('/')
   }
 
+  const navbar = {
+    backgroundColor: 'rgb(13, 177, 13)'
+  }
+
+  const navLinkStyles = ({ isActive }) => {
+    return {
+      paddingLeft: 30,
+      paddingRight: 8,
+      fontWeight: 'bold',
+      textDecoration: isActive ? 'underline' : 'none',
+      color: isActive ? 'rgb(160, 32, 240)' : 'white'
+    }
+  }
+
   const padding = {
     paddingLeft: 30,
     paddingRight: 8,
     fontSize: 16,
     color: 'white',
-  }
-  const navbar = {
-    backgroundColor: 'rgb(13, 177, 13)'
   }
 
   return (
@@ -31,18 +42,18 @@ const Menu = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             {user ? <span>
-              <Link style={padding} to="/" className="text-decoration-none"><b>KOTI</b></Link>
-              <Link style={padding} to="/mypage" className="text-decoration-none"><b>OMAT SIVUT</b></Link>
+              <NavLink style={navLinkStyles} to="/">KOTI</NavLink>
+              <NavLink style={navLinkStyles} to="/mypage">OMAT SIVUT</NavLink>
               {user.role === 1 && <span>
-                <Link style={padding} to="/client" className="text-decoration-none"><b>LISÄÄ ASIAKAS</b></Link>
-                <Link style={padding} to="/reminders" className="text-decoration-none"><b>MUISTUTUKSET</b></Link>
-                <Link style={padding} to="/remindersettings" className="text-decoration-none"><b>MUISTUTUSASETUKSET</b></Link>
+                <NavLink style={navLinkStyles} to="/client">LISÄÄ ASIAKAS</NavLink>
+                <NavLink style={navLinkStyles} to="/reminders">MUISTUTUKSET</NavLink>
+                <NavLink style={navLinkStyles} to="/remindersettings">MUISTUTUSASETUKSET</NavLink>
               </span>}
-              <Link style={padding} onClick={handleLogout} className="text-decoration-none"><b>KIRJAUDU ULOS</b></Link>
+              <NavLink style={padding} onClick={handleLogout} className="text-decoration-none"><b>KIRJAUDU ULOS</b></NavLink>
             </span>
               :<span>
-                <Link style={padding} to="/login" id='login' className="text-decoration-none"><b>KIRJAUDU SISÄÄN</b></Link>
-                <Link style={padding} to="/register" id='register' className="text-decoration-none"><b>REKISTERÖIDY</b></Link></span>}
+                <NavLink style={navLinkStyles} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
+                <NavLink style={navLinkStyles} to="/register" id='register'>REKISTERÖIDY</NavLink></span>}
           </Nav>
         </Navbar.Collapse>
         <div className="logo-container">
