@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 import { logoutUser } from '../reducers/userReducer'
 
