@@ -56,6 +56,15 @@ const FileHandler = ({ client, files }) => {
     }
   }
 
+  const linkState = {
+    clientId: client.id,
+    clientName: client.company,
+    clientEmail: client.email,
+    clientNumber: client.phonenumber,
+    clientCode: client.bi_code,
+    clientPeriod: client.payperiod,
+  }
+
   return (
     <div><br />
       <Form>
@@ -69,7 +78,7 @@ const FileHandler = ({ client, files }) => {
         </Form.Group>
       </Form>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`}>täällä</Link>
+        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
       </div>
       <br /><h4>Ladatut tiedostot</h4>
       <ul>
