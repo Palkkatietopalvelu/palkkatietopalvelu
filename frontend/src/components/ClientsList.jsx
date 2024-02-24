@@ -26,7 +26,7 @@ const ClientsList = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.filter(filterBy)
+          {clients.filter(filterBy).sort((a,b) => a.company > b.company)
             .map(client => {
               return (
                 <tr key={client.id}>
@@ -35,7 +35,8 @@ const ClientsList = () => {
                       {client.company}
                     </Link>
                   </td>
-                  <td>{format(client.deadlines[0], 'dd.MM.yyyy')}</td>
+                  <td>{client.deadlines != '' &&
+                  format(client.deadlines[0], 'dd.MM.yyyy')}</td>
                 </tr>
               )}
             )}
@@ -44,4 +45,5 @@ const ClientsList = () => {
     </div>
   )
 }
+
 export default ClientsList

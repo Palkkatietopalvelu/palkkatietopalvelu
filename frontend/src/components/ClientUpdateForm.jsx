@@ -96,7 +96,7 @@ const UpdateClient = () => {
           <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
         </Form.Group>
         <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
-        <Button variant="primary" onClick={remove}>Poista asiakas</Button>
+        <Button variant="danger" onClick={remove}>Poista asiakas</Button>
       </Form>
     </div>
   )
