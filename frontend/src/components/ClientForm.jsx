@@ -79,7 +79,7 @@ const ClientForm = () => {
         <Form.Group>
           <Form.Label>Eräpäivät:</Form.Label>
           <div className="form-control">
-            <DatePicker id="deadlines" {...deadlines} required style={style} multiple />
+            <DatePicker id="deadlines" {...deadlines} style={style} multiple />
           </div>
         </Form.Group>
         <Form.Group>

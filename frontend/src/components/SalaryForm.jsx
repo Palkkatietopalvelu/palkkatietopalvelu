@@ -1,18 +1,28 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useField } from '../hooks'
 import { DateSelect } from '../hooks/DatePicker'
-import DatePicker from 'react-multi-date-picker'
-import Notification from './Notification'
-import jsPDF from 'jspdf'
+import SalaryFormContent from './SalaryFormContent'
+import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 
-const SalaryForm = ({ clientId }) => {
-  const [formType, setFormType] = useState('')
+const SalaryForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const location = useLocation()
   const user = useSelector(({ user }) => user)
+  const {
+    clientId,
+    clientName,
+    clientEmail,
+    clientNumber,
+    clientCode,
+    clientPeriod,
+  } = location.state || {}
+  const [employees, setEmployees] = useState([])
+  const [formType, setFormType] = useState('monthly')
+
+  const employee_name = useField()
   const absences = DateSelect()
   const provisions = useField()
   const lunch_allowance = useField()
@@ -26,122 +36,80 @@ const SalaryForm = ({ clientId }) => {
     return ('Et ole kirjautunut sisään')
   }
 
-  const generatePDF = (formData) => {
-    const doc = new jsPDF()
-    // Add text to PDF based on formData
-    doc.text('Some text here', 10, 10)
-    // More text based on the form data
-    // Save the PDF
-    doc.save('salary-information.pdf')
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const formData = {
-      formType,
-      // Collect other form inputs here
+    if (employees.length === 0) {
+      alert('Lisää vähintään yhden työntekijän tiedot ennen lähettämistä.')
+      return
     }
-    generatePDF(formData)
-    navigate(`/client/${clientId}`)
+    const formData = {
+      employees,
+    }
+    try {
+      const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
+      uploadGeneratedPDF(dispatch, pdfBlob, clientId, clientName)
+      navigate(`/client/${clientId}`)
+    } catch (error) {
+      console.error('Error generating or uploading PDF:', error)
+    }
   }
 
-  const style = {
-    width: '90vw',
-    padding: '0rem',
-    color: '#495057',
-    border: 0,
-    boxShadow: 'none'
+  const addEmployee = () => {
+    if (!employee_name.value.trim()) {
+      alert('Työntekijän nimi on pakollinen tieto.')
+      return
+    }
+    let employeeData = {
+      employee_name: employee_name.value,
+      salary_type: formType === 'monthly' ? 'Kuukausipalkkalainen' : 'Tuntipalkkalainen',
+    }
+    if (absences.value) employeeData.absences = absences.value
+    if (formType === 'monthly' && provisions.value) employeeData.provisions = provisions.value
+    if (lunch_allowance.value) employeeData.lunch_allowance = lunch_allowance.value
+    if (formType === 'monthly' && overtime.value) employeeData.overtime = overtime.value
+    if (daily_allowance.value) employeeData.daily_allowance = daily_allowance.value
+    if (mileage_allowance.value) employeeData.mileage_allowance = mileage_allowance.value
+    if (formType === 'hourly' && total_hours.value) employeeData.total_hours = total_hours.value
+    if (extra.value) employeeData.extra = extra.value
+    setEmployees([...employees, employeeData])
+    employee_name.onReset()
+    absences.onReset()
+    provisions.onReset()
+    lunch_allowance.onReset()
+    overtime.onReset()
+    daily_allowance.onReset()
+    mileage_allowance.onReset()
+    total_hours.onReset()
+    extra.onReset()
   }
 
-  const radioStyle = { margin: '20px 0' }
-  const buttonStyle = { margin: '10px 5px 0px' }
+  const deleteEmployee = (index) => {
+    const newEmployees = [...employees]
+    newEmployees.splice(index, 1)
+    setEmployees(newEmployees)
+  }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <div style={radioStyle}>
-        <Form.Check
-          type="radio"
-          label="Kuukausipalkkalainen"
-          name="formType"
-          id="monthly"
-          onChange={() => setFormType('monthly')}
-        />
-        <Form.Check
-          type="radio"
-          label="Tuntipalkkalainen"
-          name="formType"
-          id="hourly"
-          onChange={() => setFormType('hourly')}
-        />
-      </div>
-      <div><Notification /></div>
-      {formType === 'monthly' && (
-        <div>
-          <Form.Group>
-            <Form.Label>Poissaolot (pidetyt lomat, sairaslomat, palkattomat vapaat)</Form.Label>
-            <div className="form-control">
-              <DatePicker id='absences' {...absences} required style={style} multiple/>
-            </div>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Provisiot</Form.Label>
-            <Form.Control id='provisions' {...provisions} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Lounasetu (kappalemäärä ja kokonaisarvo)</Form.Label>
-            <Form.Control id='lunch_allowance' {...lunch_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Ylityöt</Form.Label>
-            <Form.Control id='overtime' {...overtime} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Päivärahat</Form.Label>
-            <Form.Control id='daily_allowance' {...daily_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Km-korvaukset</Form.Label>
-            <Form.Control id='mileage_allowance' {...mileage_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Lisätiedot</Form.Label>
-            <Form.Control as="textarea" rows={5} id='extra' {...extra} required />
-          </Form.Group>
-        </div>
-      )}
-      {formType === 'hourly' && (
-        <div>
-          <Form.Group>
-            <Form.Label>Poissaolot (pidetyt lomat, sairaslomat, palkattomat vapaat)</Form.Label>
-            <div className="form-control">
-              <DatePicker id='absences' {...absences} required style={style} multiple/>
-            </div>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Lounasetu (kappalemäärä ja kokonaisarvo)</Form.Label>
-            <Form.Control id='lunch_allowance' {...lunch_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Päivärahat</Form.Label>
-            <Form.Control id='daily_allowance' {...daily_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Km-korvaukset</Form.Label>
-            <Form.Control id='mileage_allowance' {...mileage_allowance} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Kokonaistuntimäärä</Form.Label>
-            <Form.Control id='total_hours' {...total_hours} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Lisätiedot</Form.Label>
-            <Form.Control as="textarea" rows={5} id='extra' {...extra} required />
-          </Form.Group>
-        </div>
-      )}
-      <Button variant="secondary" style={buttonStyle} onClick={() => navigate(-1)}>Takaisin</Button>
-      <Button type="submit" style={buttonStyle} variant="primary">Tallenna tiedot</Button>
-    </Form>
+    <>
+      <SalaryFormContent
+        formType={formType}
+        setFormType={setFormType}
+        employee_name={employee_name}
+        absences={absences}
+        provisions={provisions}
+        lunch_allowance={lunch_allowance}
+        overtime={overtime}
+        daily_allowance={daily_allowance}
+        mileage_allowance={mileage_allowance}
+        total_hours={total_hours}
+        extra={extra}
+        addEmployee={addEmployee}
+        employees={employees}
+        deleteEmployee={deleteEmployee}
+        handleSubmit={handleSubmit}
+        navigate={navigate}
+      />
+    </>
   )
 }
 

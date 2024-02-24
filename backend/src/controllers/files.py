@@ -42,7 +42,7 @@ def upload_file():
         })
         return "Document uploaded successfully", 200
     except Exception as e: # pylint: disable=broad-except
-        return str(e), 400
+        return str(e), 403
 
 @app.route('/api/files/<int:file_id>/download', methods=['GET'])
 @require_login
