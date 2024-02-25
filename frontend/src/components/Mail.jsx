@@ -32,34 +32,36 @@ const ClientReminder = () => {
 
   return (
     <div>
-      <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2>
-      <Notification />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Table striped>
-            <thead>
-              <tr>
-                <th>Valitse</th>
-                <th>Yritys</th>
-                <th>Eräpäivä</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr key={client.deadline}>
-                  <td><CheckBox name={client.id}
-                    inputs={inputs}
-                    setInputs={setInputs}
-                  /></td>
-                  <td>{client.company}</td>
-                  <td>{format(client.deadline, 'dd.MM.yyyy')}</td>
+      {user.role === 1 && <div>
+        <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2>
+        <Notification />
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Table striped>
+              <thead>
+                <tr>
+                  <th>Valitse</th>
+                  <th>Yritys</th>
+                  <th>Eräpäivä</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Button type="submit">Lähetä</Button>
-        </Form.Group>
-      </Form>
+              </thead>
+              <tbody>
+                {clients.map((client) => (
+                  <tr key={client.deadline}>
+                    <td><CheckBox name={client.id}
+                      inputs={inputs}
+                      setInputs={setInputs}
+                    /></td>
+                    <td>{client.company}</td>
+                    <td>{format(client.deadline, 'dd.MM.yyyy')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Button type="submit">Lähetä</Button>
+          </Form.Group>
+        </Form>
+      </div>}
     </div>
   )
 }

@@ -34,26 +34,28 @@ const ReminderSettingsForm = () => {
 
   return (
     <div>
-      <br /><h2>Muistutusasetukset</h2>
-      <Notification />
-      <br /><p>Muistutuspäivät</p>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          {days.map((day, index) => (
-            <div key={index}>
-              <CheckBox name={index}
-                inputs={inputs}
-                setInputs={setInputs}
-              />
-              {' '}{day}
-              <br />
-            </div>
-          ))}
-          <Form.Label>Kellonaika (tasatunti)</Form.Label>
-          <Form.Control id='hour' placeholder='14' {...hour} />
-          <Button type="submit">Tallenna</Button>
-        </Form.Group>
-      </Form>
+      {user.role === 1 && <div>
+        <br /><h2>Muistutusasetukset</h2>
+        <Notification />
+        <br /><p>Muistutuspäivät</p>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            {days.map((day, index) => (
+              <div key={index}>
+                <CheckBox name={index}
+                  inputs={inputs}
+                  setInputs={setInputs}
+                />
+                {' '}{day}
+                <br />
+              </div>
+            ))}
+            <Form.Label>Kellonaika (tasatunti)</Form.Label>
+            <Form.Control id='hour' placeholder='14' {...hour} />
+            <Button type="submit">Tallenna</Button>
+          </Form.Group>
+        </Form>
+      </div>}
     </div>
   )
 }

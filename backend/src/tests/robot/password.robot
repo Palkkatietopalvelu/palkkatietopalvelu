@@ -52,8 +52,8 @@ Change Password Succeeds With Valid Info
     Set New Password Again  new123
     Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
-    Page Should Contain  Salasana vaihdettu onnistuneesti
-    Logout
+    Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
+    Log Out
 
 Login With Old Password Fails
     Login With Credentials  pekka  pekka123
@@ -71,7 +71,7 @@ Go To My Page And Open Change Password Form
     Click Button  Vaihda salasana
 
 Change Password
-    Click Button  vaihda
+    Click Button  change-password
   
 Set Username
     [Arguments]  ${username}
@@ -100,9 +100,6 @@ Login With Credentials
     Set Password  ${password}
     Click Button  login
 
-Logout
-    Click Link  KIRJAUDU ULOS
-    Page Should Contain  KIRJAUDU SISÄÄN
 Create User
     [Arguments]  ${username}  ${password}
     Set Username  ${username}

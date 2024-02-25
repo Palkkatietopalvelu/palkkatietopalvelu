@@ -53,7 +53,7 @@ const PasswordChange = () => {
             <Form.Label>Uusi salasana uudelleen</Form.Label>
             <Form.Control id='confirmPassword' type='password' {...confirmPassword} required />
           </Form.Group> <br />
-          <Button type="submit" variant="primary">Vaihda salasana</Button>
+          <Button id="change-password" type="submit" variant="primary">Vaihda salasana</Button>
         </Form>
       </Togglable>
     </div>

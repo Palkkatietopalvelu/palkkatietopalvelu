@@ -44,7 +44,6 @@ def get_client_data(client_id: int):
     return None
 
 def add_client(client_data):
-    validate_client_data(client_data)
     phonenumber = validate_phonenumber(client_data.get("phonenumber"))
     sql = text(
         """INSERT INTO clients (user_id, company, email, phonenumber,bi_code, payperiod)
@@ -57,7 +56,6 @@ def add_client(client_data):
             "phonenumber": phonenumber,
             "bi_code": client_data.get("bi_code"),
             "payperiod": client_data.get("payperiod")})
-    db.session.commit()
     add_deadlines(client_data.get("deadlines"), result.fetchone().id)
 
 def update_client(client_id, client_data):
@@ -67,7 +65,6 @@ def update_client(client_id, client_data):
                   SET company=:company, email=:email, phonenumber=:phonenumber, bi_code=:bi_code, 
                     payperiod=:payperiod WHERE id=:id""")
     db.session.execute(sql, {**client_data, "id": client_id})
-    db.session.commit()
     delete_deadlines(client_id)
     add_deadlines(client_data.get("deadlines"), client_id)
 
@@ -97,12 +94,25 @@ def validate_client_data(client_data):
     company = client_data.get("company")
     payperiod = client_data.get("payperiod")
     user_id = client_data.get("user_id")
+    email = client_data.get("email")
     if not company or not payperiod or not user_id:
         raise ValueError('Tietoja puuttuu')
-    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", client_data.get("email")):
+    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", email):
         raise ValueError('Sähköposti ei ole oikeassa muodossa')
     if not re.match(r"^\d{7}-\d{1}$", client_data.get("bi_code")):
         raise ValueError('Y-tunnus ei ole oikeassa muodossa (1234567-1)')
+    return True
+
+def validate_email(email):
+    if email_is_user(email):
+        raise ValueError('Tällä sähköpostilla on jo luotu tunnukset, anna toinen sähköposti')
+    return True
+
+def email_is_user(email):
+    sql = text("""SELECT id FROM users WHERE username=:new_username""")
+    result = db.session.execute(sql, {"new_username": email}).fetchone()
+    if result is None:
+        return False
     return True
 
 def add_deadlines(deadlines, client_id):
@@ -112,13 +122,10 @@ def add_deadlines(deadlines, client_id):
         sql = text("""INSERT INTO deadlines (deadline, client_id, delivered)
                    VALUES (:d, :client_id, :delivered)""")
         db.session.execute(sql, {"d": d, "client_id": client_id, "delivered": False})
-    db.session.commit()
 
 def delete_deadlines(client_id):
     sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
     db.session.execute(sql, {"client_id": client_id})
-    db.session.commit()
-
 
 def get_next_deadlines():
     sql = text("""SELECT MIN(deadline) AS next_deadline,
@@ -126,6 +133,7 @@ def get_next_deadlines():
                GROUP BY client_id ORDER BY next_deadline""")
     result = db.session.execute(sql)
     return result.fetchall()
+
 def validate_phonenumber(number):
     phonenumber=number.replace(" ", "").replace("-", "")
     if phonenumber[0]=="0":

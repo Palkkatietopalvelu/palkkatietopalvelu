@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 
-const MyPageAdmin = ({ clients }) => {
+const MyPageAdmin = () => {
   const user = useSelector(({ user }) => user)
   const filterByUser = (c => c.user_id === user.id)
+  const clients = useSelector(({ clients }) => clients)
   const [filteredCompanies, setFilteredCompanies] = useState([])
 
   useEffect(() => {
@@ -45,37 +46,39 @@ const MyPageAdmin = ({ clients }) => {
 
   return (
     <div>
-      <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4>
-      <Table striped>
-        <thead>
-          <tr>
-            <th>Yritys</th>
-            <th>Eräpäivä</th>
-          </tr>
-          <tr>
-            <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
-            <th><input id="dateFilter" onChange={handleDateSearch} /></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCompanies
-            .filter(filterByUser)
-            .sort((a,b) => a.company > b.company)
-            .map(client => {
-              return (
-                <tr key={client.id}>
-                  <td>
-                    <Link to={`/client/${client.id}`}>
-                      {client.company}
-                    </Link>
-                  </td>
-                  <td>{client.deadlines != '' &&
+      {user.role === 1 && <div>
+        <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Yritys</th>
+              <th>Eräpäivä</th>
+            </tr>
+            <tr>
+              <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
+              <th><input id="dateFilter" onChange={handleDateSearch} /></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredCompanies
+              .filter(filterByUser)
+              .sort((a,b) => a.company > b.company)
+              .map(client => {
+                return (
+                  <tr key={client.id}>
+                    <td>
+                      <Link to={`/client/${client.id}`}>
+                        {client.company}
+                      </Link>
+                    </td>
+                    <td>{client.deadlines != '' &&
                     format(client.deadlines[0], 'dd.MM.yyyy')}</td>
-                </tr>
+                  </tr>
+                )}
               )}
-            )}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>}
     </div>
   )
 }

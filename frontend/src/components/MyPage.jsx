@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
 import PasswordChange from './PasswordForm'
 import Notification from './Notification'
+import MyPageClient from './MyPageClient'
 import MyPageAdmin from './MyPageAdmin'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
-  const clients = useSelector(({ clients }) => clients)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -18,8 +18,9 @@ const MyPage = () => {
       <p>Käyttäjätunnus: {user.username}</p>
       <Notification />
       <PasswordChange />
-      <hr />
-      <MyPageAdmin clients={clients} />
+      {user.role === 1
+        ? <MyPageAdmin />
+        : <MyPageClient />}
     </div>
   )
 }

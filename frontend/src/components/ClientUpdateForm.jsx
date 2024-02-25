@@ -66,38 +66,40 @@ const UpdateClient = () => {
 
   return (
     <div>
-      <br /><h2>{client.company}:n tietojen muuttaminen</h2>
-      <Notification />
-      <Form onSubmit={updateData}>
-        <Form.Group>
-          <Form.Label>Yritys</Form.Label>
-          <Form.Control id='company' {...company} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Sähköposti</Form.Label>
-          <Form.Control id='email' {...email} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Puhelinnumero</Form.Label>
-          <Form.Control id='phonenumber' {...phonenumber} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Y-tunnus</Form.Label>
-          <Form.Control id='bicode' {...bicode} required/>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Eräpäivät</Form.Label>
-          <div className="form-control">
-            <DatePicker id='deadlines' {...deadlines} required style={style} multiple/>
-          </div>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Palkkakausi</Form.Label>
-          <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
-        </Form.Group>
-        <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
-        <Button variant="danger" onClick={remove}>Poista asiakas</Button>
-      </Form>
+      {user.role === 1 && <div>
+        <br /><h2>{client.company}:n tietojen muuttaminen</h2>
+        <Notification />
+        <Form onSubmit={updateData}>
+          <Form.Group>
+            <Form.Label>Yritys</Form.Label>
+            <Form.Control id='company' {...company} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Sähköposti</Form.Label>
+            <Form.Control id='email' {...email} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Puhelinnumero</Form.Label>
+            <Form.Control id='phonenumber' {...phonenumber} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Y-tunnus</Form.Label>
+            <Form.Control id='bicode' {...bicode} required/>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Eräpäivät</Form.Label>
+            <div className="form-control">
+              <DatePicker id='deadlines' {...deadlines} style={style} multiple/>
+            </div>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Palkkakausi</Form.Label>
+            <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
+          </Form.Group>
+          <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
+          <Button variant="danger" onClick={remove}>Poista asiakas</Button>
+        </Form>
+      </div>}
     </div>
   )
 }

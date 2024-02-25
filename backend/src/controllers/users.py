@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User, db
 from app import app
 from utilities.require_login import require_login
+from utilities import client_user
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -42,6 +43,31 @@ def change_password(user_id):
     except ValueError as error:
         return str(error), 400
 
+@app.route('/api/setpassword/<token>', methods = ['GET', 'POST'])
+def setpassword(token):
+    if request.method == 'GET':
+        try:
+            user_info = client_user.verify_setpassword_token(token)
+            return "Token on oikea", 200
+        except PermissionError as error:
+            return str(error), 401
+    if request.method == 'POST':
+        try:
+            data = request.json
+            user_info = client_user.verify_setpassword_token(token)
+            data = request.get_json()
+            user = User.query.filter_by(username=user_info['username']).first()
+            new_password = data["password"]
+            confirm_password = data["confirmPassword"]
+            check_new_passwords(new_password, confirm_password)
+            user.password = generate_password_hash(new_password)
+            db.session.add(user)
+            db.session.commit()
+            return "Salasana vaihdettu", 200
+        except PermissionError as error:
+            return str(error), 401
+    return 400
+
 def validate_credentials(username, password):
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:
@@ -58,7 +84,10 @@ def validate_credentials(username, password):
 def validate_password(old_password, password, confirm_password, user):
     if not check_password_hash(user.password, old_password):
         raise ValueError ("Väärä nykyinen salasana")
+    check_new_passwords(password, confirm_password)
+    return True
 
+def check_new_passwords(password, confirm_password):
     if len(password) < 3:
         raise ValueError ("Salasanan täytyy olla ainakin 3 merkkiä pitkiä")
 
@@ -67,5 +96,3 @@ def validate_password(old_password, password, confirm_password, user):
 
     if password != confirm_password:
         raise ValueError ("Salasanat eivät täsmää")
-
-    return True

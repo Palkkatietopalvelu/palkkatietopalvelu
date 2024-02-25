@@ -9,6 +9,7 @@ Add Client Succeeds With Correct Credentials
     Click Link  LISÄÄ ASIAKAS
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2025/02/12, 2024/12/04, 2024/05/07  kk
     Click Button  Lisää
+    Sleep  3s
     Page Should Contain  Asiakas lisätty onnistuneesti
 
 Add Client Fails With Wrong Email Format
