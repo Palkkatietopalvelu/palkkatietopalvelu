@@ -1,19 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Table } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
-import { getPdf } from '../reducers/pdfReducer'
 
 const MyPageClient = () => {
-  const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-  const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
-
-  useEffect(() => {
-    if (user) {
-      dispatch(getPdf())}
-  }, [dispatch, id, user])
 
   if (!user) {
     return ('Et ole kirjautunut sisään')

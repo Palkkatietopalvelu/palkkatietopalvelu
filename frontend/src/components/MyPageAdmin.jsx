@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 
-const MyPageAdmin = ({ clients }) => {
+const MyPageAdmin = () => {
   const user = useSelector(({ user }) => user)
   const filterByUser = (c => c.user_id === user.id)
+  const clients = useSelector(({ clients }) => clients)
   const [filteredCompanies, setFilteredCompanies] = useState([])
 
   useEffect(() => {

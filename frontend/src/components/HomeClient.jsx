@@ -2,19 +2,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
-import PdfHandler from './PdfHandler'
-import { getPdf } from '../reducers/pdfReducer'
+import { getFile } from '../reducers/fileReducer'
+import FileHandler from './FileHandler'
 
 const HomeClient = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
+  const files = useSelector(({ file }) => file).filter(c => c.owner === client.id)
 
   useEffect(() => {
-    if (user) {
-      dispatch(getPdf())}
-  }, [dispatch, user])
-
+    if (user && client) {
+      dispatch(getFile())}
+  }, [dispatch, user, client])
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -44,7 +44,7 @@ const HomeClient = () => {
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
-          <PdfHandler client={client} />
+          <FileHandler client={client} files={files} />
         </div>
       }
     </div>

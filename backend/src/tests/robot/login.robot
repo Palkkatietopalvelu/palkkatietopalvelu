@@ -59,10 +59,10 @@ Logout Should Succeed
     Page Should Contain  KIRJAUDU
 
 Register User
-    Click Button  create
+    Click Button  Luo käyttäjä
 
 Submit Credentials
-    Click Button  kirjaudu
+    Click Button  Kirjaudu
 
 Log Out
     Click Link  KIRJAUDU ULOS

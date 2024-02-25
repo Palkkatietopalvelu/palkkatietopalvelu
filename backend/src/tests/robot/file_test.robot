@@ -5,8 +5,8 @@ Suite Teardown  Close Browser
 
 *** Test Cases ***
 Adding File Succeeds
-    Click Link  OMAT SIVUT
-    Click Link  testi oy
+    Log Out
+    Login As Client
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
     Page Should Contain  Tiedosto lisätty onnistuneesti
 

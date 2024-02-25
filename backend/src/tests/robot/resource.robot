@@ -44,6 +44,9 @@ Set Password
     [Arguments]  ${password}
     Input Text  password  ${password}
 
+Log Out
+    Click Link  KIRJAUDU ULOS
+
 Add New Client
     [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
     Input Text  company  ${company}
@@ -85,3 +88,10 @@ Setup With Existing User And Client
     Click Button  lisää
     Sleep  3s
     Page Should Contain  Asiakas lisätty onnistuneesti
+
+Login As Client
+    Go To Login Page
+    Set Username  testi@email.com
+    Set Password  asiakas123
+    Click Button  login
+    Page Should Contain  Tervetuloa palkkatietopalveluun!
