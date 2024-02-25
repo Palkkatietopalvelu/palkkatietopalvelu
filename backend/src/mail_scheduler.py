@@ -39,7 +39,7 @@ def update_scheduler():
 
 def create_trigger(
     hour,
-    days: list = 'mon-fri',
+    days: list = '*',
     minute = '0',
     second = '0'):
     '''

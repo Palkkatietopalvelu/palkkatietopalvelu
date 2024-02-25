@@ -123,9 +123,11 @@ def delete_deadlines(client_id):
 def get_next_deadlines():
     sql = text("""SELECT MIN(deadline) AS next_deadline,
                client_id FROM deadlines
+               WHERE NOT delivered
                GROUP BY client_id ORDER BY next_deadline""")
     result = db.session.execute(sql)
     return result.fetchall()
+
 def validate_phonenumber(number):
     phonenumber=number.replace(" ", "").replace("-", "")
     if phonenumber[0]=="0":
