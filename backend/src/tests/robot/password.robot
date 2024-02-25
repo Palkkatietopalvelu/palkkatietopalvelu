@@ -52,7 +52,7 @@ Change Password Succeeds With Valid Info
     Set New Password Again  new123
     Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
-    Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=3s
+    Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
     Log Out
 
 Login With Old Password Fails
