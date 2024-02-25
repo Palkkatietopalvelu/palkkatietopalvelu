@@ -45,7 +45,7 @@ def create_trigger(
     '''
     Args:
         hour: hour for sending e-mails
-        days (list): Abbrevations of weekdays
+        days (list): numbers of weekdays (0-7)
         minute: minute for sending e-mails
         second: second for senging e-mails
     '''
