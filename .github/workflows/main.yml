@@ -51,6 +51,7 @@ jobs:
                 cd backend
                 poetry run pytest src/tests
               env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
@@ -141,6 +142,7 @@ jobs:
                 cd backend
                 poetry run invoke start &
               env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
@@ -151,6 +153,7 @@ jobs:
                 cd backend
                 poetry run invoke robottests
               env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
