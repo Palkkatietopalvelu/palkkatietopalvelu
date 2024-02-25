@@ -25,13 +25,15 @@ def send_reminders():
 
 def update_scheduler():
     settings = load_settings()
-    trigger = create_trigger(
-        hour = settings['hour'],
-        days = settings['days']
-    )
+
     if len(sched.get_jobs()) != 0:
         sched.remove_job('reminders')
+
     if settings['enabled']:
+        trigger = create_trigger(
+            hour = settings['hour'],
+            days = settings['days']
+        )
         sched.add_job(send_reminders, trigger = trigger, id = 'reminders', max_instances = 1)
     return True
 

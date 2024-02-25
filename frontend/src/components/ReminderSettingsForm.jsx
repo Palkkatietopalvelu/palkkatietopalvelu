@@ -7,6 +7,7 @@ import CheckBox from './CheckBox'
 import settingsService from '../services/reminderSettings'
 import { useField } from '../hooks/index'
 import Switch from 'react-switch'
+import days from './Days'
 
 const ReminderSettingsForm = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ const ReminderSettingsForm = () => {
     if (user) {
       settingsService.get().then(settings => {
         setChecked(settings.enabled)
+        setInputs(settings.days)
       })
     }}, [user])
 
@@ -26,24 +28,18 @@ const ReminderSettingsForm = () => {
     setChecked(nextChecked);
   };
 
-  const days = [
-    'ma',
-    'ti',
-    'ke',
-    'to',
-    'pe',
-    'la',
-    'su'
-  ]
-
   if (!user) {
     return ('Et ole kirjautunut sisään')
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    settingsService.send([inputs, hour, checked])
-    dispatch(notify('Asetukset tallennettu'))
+    try {
+      event.preventDefault()
+      const data = await settingsService.send([inputs, hour, checked])
+      dispatch(notify('Asetukset tallennettu'))
+    } catch(e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen'))
+    }
   }
 
   return (
@@ -51,7 +47,7 @@ const ReminderSettingsForm = () => {
       <br /><h2>Muistutusasetukset</h2>
       <Notification />
       <div className="switch">
-      <p>Muistutukset <span>{checked ? "käytössä" : "ei käytössä"}</span>.</p>
+      <p>Muistutukset <span>{checked ? "käytössä" : "pois käytöstä"}</span>.</p>
       <label>
         <Switch
           onChange={handleChange}
@@ -68,12 +64,13 @@ const ReminderSettingsForm = () => {
               <CheckBox name={index}
                 inputs={inputs}
                 setInputs={setInputs}
+                checked={inputs.includes(index)}
               />
               {' '}{day}
               <br />
             </div>
           ))}
-          <Form.Label>Kellonaika (tasatunti)</Form.Label>
+          <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
           <Form.Control id='hour' placeholder='14' {...hour} />
           <Button type="submit">Tallenna</Button>
         </Form.Group>

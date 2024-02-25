@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import settingsService from '../services/reminderSettings'
+import days from './Days'
 
 const ReminderSettings = () => {
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const ReminderSettings = () => {
         <div>
           <ul>
             {settings.days.map(day =>
-              <li key={day}>{day} klo: {settings.hour}:00</li>)}
+              <li key={day}>{days[day]} klo: {settings.hour}:00</li>)}
           </ul>
         </div>
       </div>}
