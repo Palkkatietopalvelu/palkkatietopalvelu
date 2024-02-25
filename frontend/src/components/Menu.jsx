@@ -2,11 +2,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 import { logoutUser } from '../reducers/userReducer'
+import { useState } from 'react'
 
 const Menu = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(({ user }) => user)
+  const [linkColor, setLinkColor] = useState('white')
 
   const handleLogout = async (event) => {
     event.preventDefault()
@@ -24,15 +26,33 @@ const Menu = () => {
       paddingRight: 8,
       fontWeight: 'bold',
       textDecoration: isActive ? 'underline' : 'none',
-      color: isActive ? 'rgb(160, 32, 240)' : 'white'
+      color: isActive ? 'black' : 'white',
     }
   }
 
-  const padding = {
+  const logoutLinkStyle = {
     paddingLeft: 30,
     paddingRight: 8,
     fontSize: 16,
+    fontWeight: 'bold',
     color: 'white',
+    textDecoration: 'none',
+  }
+
+  const handleMouseOver = (event) => {
+    event.persist()
+    setLinkColor(event.target.style.color)
+    event.target.style.color = 'purple'
+  }
+
+  const handleMouseOut = (event) => {
+    event.persist()
+    event.target.style.color = linkColor
+  }
+
+  const handleActiveLinkChange = (event) => {
+    event.persist()
+    setLinkColor('black')
   }
 
   return (
@@ -42,16 +62,17 @@ const Menu = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             {user ? <span>
-              <NavLink style={navLinkStyles} to="/">KOTI</NavLink>
-              <NavLink style={navLinkStyles} to="/mypage">OMAT SIVUT</NavLink>
-              <NavLink style={navLinkStyles} to="/client">LISÄÄ ASIAKAS</NavLink>
-              <NavLink style={navLinkStyles} to="/reminders">MUISTUTUKSET</NavLink>
-              <NavLink style={navLinkStyles} to="/remindersettings">MUISTUTUSASETUKSET</NavLink>
-              <NavLink style={padding} onClick={handleLogout} className="text-decoration-none"><b>KIRJAUDU ULOS</b></NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/client">LISÄÄ ASIAKAS</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/reminders">MUISTUTUKSET</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/remindersettings">MUISTUTUSASETUKSET</NavLink>
+              <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>
-              :<span>
-                <NavLink style={navLinkStyles} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
-                <NavLink style={navLinkStyles} to="/register" id='register'>REKISTERÖIDY</NavLink></span>}
+            :<span>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/register" id='register'>REKISTERÖIDY</NavLink>
+            </span>}
           </Nav>
         </Navbar.Collapse>
         <div className="logo-container">
