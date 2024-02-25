@@ -9,6 +9,7 @@ import FileHandler from './FileHandler'
 
 const Client = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
