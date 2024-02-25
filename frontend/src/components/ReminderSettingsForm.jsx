@@ -14,7 +14,8 @@ const ReminderSettingsForm = () => {
   const user = useSelector(({ user }) => user)
   const [inputs, setInputs] = useState([])
   const hour = useField()
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false)
+  const deltas = useField()
 
   useEffect(() => {
     if (user) {
@@ -35,7 +36,7 @@ const ReminderSettingsForm = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault()
-      const data = await settingsService.send([inputs, hour, checked])
+      const data = await settingsService.send([inputs, hour, checked, deltas])
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen'))
@@ -72,6 +73,11 @@ const ReminderSettingsForm = () => {
           ))}
           <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
           <Form.Control id='hour' placeholder='14' {...hour} />
+          <Form.Label>
+            Listaa, milloin muistutukset viimeistään
+            lähetetään suhteessa eräpäivään.
+          </Form.Label>
+          <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} />
           <Button type="submit">Tallenna</Button>
         </Form.Group>
       </Form>

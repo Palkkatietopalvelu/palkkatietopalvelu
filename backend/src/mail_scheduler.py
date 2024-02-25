@@ -1,10 +1,10 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_mail import Mail, Message
 from utilities import client_methods as clients
-from utilities.sched_setting_methods import load_settings
+from utilities.sched_setting_methods import load_settings, get_readable_settings
 from app import app
 
 mail = Mail(app)
@@ -63,13 +63,17 @@ def get_reminder_data():
     return deadlines, emails
 
 def get_deadline_data():
+    settings = get_readable_settings()
+    deltas = [timedelta(days=delta) for delta in settings['deltas']]
     deadlines_with_ids = clients.get_next_deadlines()
-    deadlines = []
-    client_ids = []
+    deadlines = ()
+    client_ids = ()
+    to_next_run = timedelta(days=days_to_next_run(settings['days']))
     for deadline in deadlines_with_ids:
-        if deadline.next_deadline - date.today() <= timedelta(days=3):
-            deadlines.append(deadline.next_deadline)
-            client_ids.append(deadline.client_id)
+        time_left = deadline.next_deadline - date.today()
+        if include_in_run(time_left, to_next_run, deltas):
+            deadlines.add(deadline.next_deadline)
+            client_ids.add(deadline.client_id)
     return deadlines, client_ids
 
 def get_emails(client_ids):
@@ -80,3 +84,15 @@ def get_emails(client_ids):
 
 def list_jobs():
     return sched.print_jobs()
+
+def days_to_next_run(run_days):
+    today = timedelta.today.weekday()
+    for i, day in enumerate(run_days):
+        if day == today and i < len(run_days)-1:
+            return run_days[i+1]
+    return run_days[0]
+
+def include_in_run(time_left, to_next_run, deltas):
+    for delta in deltas:
+        if time_left <= delta <= time_left + to_next_run:
+            return True
