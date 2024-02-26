@@ -94,9 +94,9 @@ const FileHandler = ({ client, files }) => {
           {files.map((file) => (
             <li key={file.id}>
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Download</Button>
+              <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Delete</Button>
+              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
             </li>
           ))}
         </ul>

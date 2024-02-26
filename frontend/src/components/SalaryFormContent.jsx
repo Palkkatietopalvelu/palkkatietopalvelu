@@ -137,7 +137,7 @@ const SalaryFormContent = ({
           </Card>
         ))}
       </Accordion>
-      <Button variant="secondary" style={buttonStyle2} onClick={() => navigate(-1)}>
+      <Button variant="danger" style={buttonStyle2} onClick={() => navigate(-1)}>
         Takaisin
       </Button>
       <Button type="submit" style={buttonStyle2} variant="primary" disabled={employees.length === 0}>

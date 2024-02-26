@@ -48,7 +48,7 @@ const SalaryForm = () => {
     try {
       const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
       uploadGeneratedPDF(dispatch, pdfBlob, clientId, clientName)
-      navigate(`/client/${clientId}`)
+      navigate('/')
     } catch (error) {
       console.error('Error generating or uploading PDF:', error)
     }
