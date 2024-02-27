@@ -147,6 +147,7 @@ jobs:
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
+                  BACKEND_URL: BACKEND_URL="http://localhost:5000"
 
 
             - name: Run robot tests
@@ -158,3 +159,4 @@ jobs:
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
+                  BACKEND_URL: BACKEND_URL="http://localhost:5000"
