@@ -72,12 +72,12 @@ const ReminderSettingsForm = () => {
             </div>
           ))}
           <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
-          <Form.Control id='hour' placeholder='14' {...hour} />
+          <Form.Control id='hour' placeholder='14' {...hour} required/>
           <Form.Label>
             Listaa, milloin muistutukset viimeistään
             lähetetään suhteessa eräpäivään.
           </Form.Label>
-          <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} />
+          <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} required/>
           <Button type="submit">Tallenna</Button>
         </Form.Group>
       </Form>

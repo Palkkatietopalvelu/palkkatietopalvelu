@@ -51,8 +51,6 @@ def validate_settings(settings):
     if settings['enabled']:
         if not settings['days']:
             raise ValueError('Valitse ainakin yksi päivä')
-        if not settings['hour']:
-            raise ValueError('Valitse kellonaika')
         try:
             if not 0 <= int(settings['hour']) <= 23:
                 raise ValueError('Virheellinen kellonaika')

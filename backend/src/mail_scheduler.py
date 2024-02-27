@@ -20,10 +20,9 @@ def send_reminders():
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
             msg.body = '''Eräpäiväsi lähestyy'''
-            print(deadline)
             mail.send(msg)
 
-def update_scheduler():
+def update_scheduler(minute = 0, second = 0):
     settings = load_settings()
 
     if len(sched.get_jobs()) != 0:
@@ -32,7 +31,9 @@ def update_scheduler():
     if settings['enabled']:
         trigger = create_trigger(
             hour = settings['hour'],
-            days = settings['days']
+            days = settings['days'],
+            minute = minute,
+            second = second
         )
         sched.add_job(send_reminders, trigger = trigger, id = 'reminders', max_instances = 1)
     return True
@@ -62,18 +63,18 @@ def get_reminder_data():
     emails = get_emails(client_ids)
     return deadlines, emails
 
-def get_deadline_data():
+def get_deadline_data(client_service = clients):
     settings = get_readable_settings()
     deltas = [timedelta(days=delta) for delta in settings['deltas']]
-    deadlines_with_ids = clients.get_next_deadlines()
-    deadlines = ()
-    client_ids = ()
+    deadlines_with_ids = client_service.get_next_deadlines()
+    deadlines = []
+    client_ids = []
     to_next_run = timedelta(days=days_to_next_run(settings['days']))
     for deadline in deadlines_with_ids:
         time_left = deadline.next_deadline - date.today()
         if include_in_run(time_left, to_next_run, deltas):
-            deadlines.add(deadline.next_deadline)
-            client_ids.add(deadline.client_id)
+            deadlines.append(deadline.next_deadline)
+            client_ids.append(deadline.client_id)
     return deadlines, client_ids
 
 def get_emails(client_ids):
@@ -86,13 +87,14 @@ def list_jobs():
     return sched.print_jobs()
 
 def days_to_next_run(run_days):
-    today = timedelta.today.weekday()
+    today = datetime.today().weekday()
     for i, day in enumerate(run_days):
-        if day == today and i < len(run_days)-1:
-            return run_days[i+1]
-    return run_days[0]
+        if day == today and i < len(run_days) - 1:
+            return run_days[i+1]-  today
+    return run_days[0] + 6 - today
 
 def include_in_run(time_left, to_next_run, deltas):
     for delta in deltas:
-        if time_left <= delta <= time_left + to_next_run:
+        if time_left - to_next_run < delta <= time_left:
             return True
+    return False
