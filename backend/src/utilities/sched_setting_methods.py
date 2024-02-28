@@ -56,11 +56,10 @@ def validate_settings(settings):
                 raise ValueError('Virheellinen kellonaika')
         except Exception as exc:
             raise ValueError('Virheellinen kellonaika') from exc
-        try:
-            deltas = sorted([int(i) for i in settings['deltas'].split()], reverse=True)
-            settings['deltas'] = deltas
-            return settings
-        except Exception as exc:
-            raise ValueError('Virheellinen lista lähetyspäivistä') from exc
+    try:
+        deltas = sorted([int(i) for i in settings['deltas'].split()], reverse=True)
+        settings['deltas'] = deltas
+    except Exception as exc:
+        raise ValueError('Virheellinen lista lähetyspäivistä') from exc
 
-    return False
+    return settings
