@@ -15,10 +15,7 @@ from utilities import client_methods
 def create_client_user(email):
     try:
         username = email
-        if ENV == "development":
-            password = "asiakas123"
-        else:
-            password = secrets.token_hex(16)
+        password = secrets.token_hex(16)
         role = 2
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password, role=role)
