@@ -89,9 +89,15 @@ Setup With Existing User And Client
     Sleep  3s
     Page Should Contain  Asiakas lisätty onnistuneesti
 
-Login As Client
+Login As New Client
+    ${Link}=  Set Password Link  testi@email.com
+    Go To  ${Link}
+    Set Password  123
+    Set Confirm Password  123
+    Click Button  setpassword
+    Page Should Contain  Salasana asetettu onnistuneesti
     Go To Login Page
     Set Username  testi@email.com
-    Set Password  asiakas123
+    Set Password  123
     Click Button  login
     Page Should Contain  Tervetuloa palkkatietopalveluun!

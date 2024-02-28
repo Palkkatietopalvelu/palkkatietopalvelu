@@ -9,7 +9,7 @@ Go To Home Page
     Go To Home Page
     Home Page Should Be Open
 
-Login With Correct Credentials
+Login With Correct Admin Credentials
     Create User And Go To Login Page
     Set Username  masa
     Set Password  masa123

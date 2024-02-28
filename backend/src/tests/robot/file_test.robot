@@ -6,7 +6,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Adding File Succeeds
     Log Out
-    Login As Client
+    Login As New Client
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
     Page Should Contain  Tiedosto lisätty onnistuneesti
 
@@ -18,3 +18,9 @@ Deleting File Succeeds
 Adding Wrong Filetype Fails
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/not_a_pdf.txt
     Alert Should Be Present  Lataathan vain PDF, Word, Excel, tai CSV tiedostoja.
+
+*** Keywords ***
+Set Confirm Password
+    [Arguments]  ${confirmPassword}
+    Input Password  confirmPassword  ${confirmPassword}
+
