@@ -2,6 +2,7 @@ from flask import request, jsonify
 from app import app
 from utilities import client_methods as clients
 from utilities import client_user
+from sqlalchemy.sql import text
 from utilities.require_login import require_login
 from utilities.require_admin import require_admin
 from db import db
@@ -66,7 +67,14 @@ def update_client(client_id):
 @require_admin
 def delete_client(client_id):
     try:
-        clients.delete_client(client_id)
+        with db.session.begin_nested():
+            sql = text("""SELECT email FROM clients WHERE id=:id""")
+            result = db.session.execute(sql, {"id": client_id})
+            username = result.fetchone()[0]
+            client_user.delete_client_user(username)
+            clients.delete_client(client_id)
+        db.session.commit()
         return "Asiakas poistettu", 200
     except Exception as error:  # pylint: disable=broad-except
+        db.session.rollback()
         return str(error), 400
