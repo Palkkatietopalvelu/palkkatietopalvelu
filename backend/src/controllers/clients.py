@@ -1,8 +1,8 @@
 from flask import request, jsonify
+from sqlalchemy.sql import text
 from app import app
 from utilities import client_methods as clients
 from utilities import client_user
-from sqlalchemy.sql import text
 from utilities.require_login import require_login
 from utilities.require_admin import require_admin
 from db import db
