@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  resource.robot
-Library  ../AppLibrary.py
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 
@@ -53,8 +52,8 @@ Change Password Succeeds With Valid Info
     Set New Password Again  new123
     Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
-    Page Should Contain  Salasana vaihdettu onnistuneesti
-    Logout
+    Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
+    Log Out
 
 Login With Old Password Fails
     Login With Credentials  pekka  pekka123
@@ -67,12 +66,12 @@ Login With New Password Succeeds
 
 *** Keywords ***
 Go To My Page And Open Change Password Form
-    Click Link  omat sivut
+    Click Link  OMAT SIVUT
     Page Should Contain  Käyttäjätilin asetukset
     Click Button  Vaihda salasana
 
 Change Password
-    Click Button  vaihda
+    Click Button  change-password
   
 Set Username
     [Arguments]  ${username}
@@ -100,10 +99,6 @@ Login With Credentials
     Set Username  ${username}
     Set Password  ${password}
     Click Button  login
-
-Logout
-    Click Link  kirjaudu ulos
-    Page Should Contain  kirjaudu sisään
 
 Create User
     [Arguments]  ${username}  ${password}

@@ -57,37 +57,39 @@ const ClientForm = () => {
 
   return (
     <div>
-      <br /><h2>Lisää asiakas</h2>
-      <Notification />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Yritys:</Form.Label>
-          <Form.Control id='company' {...company} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Sähköposti:</Form.Label>
-          <Form.Control id='email' {...email} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Puhelinnumero:</Form.Label>
-          <Form.Control id='phonenumber' placeholder="0451234567" {...phonenumber} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Y-tunnus:</Form.Label>
-          <Form.Control id='bicode' placeholder="1234567-8" {...bicode} required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Eräpäivät:</Form.Label>
-          <div className="form-control">
-            <DatePicker id="deadlines" {...deadlines} required style={style} multiple />
-          </div>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Palkkakausi:</Form.Label>
-          <Form.Control id='payperiod' {...payperiod} required />
-        </Form.Group>
-        <Button id='lisää' variant="primary" type="submit">Lisää</Button>
-      </Form>
+      {user.role === 1 && <div>
+        <br /><h2>Lisää asiakas</h2>
+        <Notification />
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Yritys:</Form.Label>
+            <Form.Control id='company' {...company} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Sähköposti:</Form.Label>
+            <Form.Control id='email' {...email} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Puhelinnumero:</Form.Label>
+            <Form.Control id='phonenumber' placeholder="0451234567" {...phonenumber} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Y-tunnus:</Form.Label>
+            <Form.Control id='bicode' placeholder="1234567-8" {...bicode} required />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Eräpäivät:</Form.Label>
+            <div className="form-control">
+              <DatePicker id="deadlines" {...deadlines} style={style} multiple />
+            </div>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Palkkakausi:</Form.Label>
+            <Form.Control id='payperiod' {...payperiod} required />
+          </Form.Group><br />
+          <Button id='lisää' variant="primary" type="submit">Lisää</Button>
+        </Form>
+      </div>}
     </div>
   )
 }

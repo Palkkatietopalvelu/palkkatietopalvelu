@@ -14,7 +14,8 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and check_password_hash(user.password, password):
-        user_info = {"username": user.username, "id": user.id}
+        user_info = {"username": user.username, "id": user.id, "role": user.role}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
-        return jsonify({"token": token, "username": user.username, "id": user.id}), 200
+        return jsonify({"token": token, "username": user.username,
+                        "id": user.id, "role": user.role}), 200
     return jsonify({"error": "väärä käyttäjätunnus tai salasana"}), 401

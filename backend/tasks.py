@@ -22,4 +22,4 @@ def coverage_report(ctx):
 
 @task
 def robottests(ctx):
-    ctx.run("robot src/tests", pty=True)
+    ctx.run("robot src/tests/robot", pty=True)

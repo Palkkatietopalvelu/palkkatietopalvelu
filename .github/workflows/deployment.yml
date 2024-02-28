@@ -1,0 +1,60 @@
+name: Push Docker images
+
+on:
+    push:
+        branches: ["deployment"]
+
+env:
+    DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+    REGISTRY: docker.io
+    IMAGE_NAME_FRONT: palkkatieto-front
+    IMAGE_NAME_BACK: palkkatieto-back
+
+jobs:
+    push_to_registry:
+        name: Push Docker image to Docker Hub
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+    
+          - name: Log in to Docker Hub
+            uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+            with:
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+    
+          - name: Extract metadata (tags, labels) for Docker frontend
+            id: meta1
+            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            with:
+              images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}
+    
+          - name: Set backend url for OpenShift
+            run: echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" > ./frontend/.env
+          
+          - name: Build and push Docker image frontend
+            uses: docker/build-push-action@v2
+            with:
+              context: ./frontend/
+              file: frontend/Dockerfile
+              push: true
+              tags: ${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_FRONT }}:staging
+              labels: ${{ steps.meta1.outputs.labels }}
+
+          - name: Extract metadata (tags, labels) for Docker backend
+            id: meta2
+            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            with:
+              images: ${{ env.REGISTRY }}/${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_BACK }}
+    
+          - name: Build and push Docker image backend
+            uses: docker/build-push-action@v2
+            with:
+              context: ./backend/
+              file: backend/Dockerfile
+              push: true
+              tags: ${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME_BACK }}:staging
+              labels: ${{ steps.meta2.outputs.labels }}
+

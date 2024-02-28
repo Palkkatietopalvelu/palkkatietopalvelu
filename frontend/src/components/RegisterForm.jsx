@@ -36,14 +36,14 @@ const RegisterForm = () => {
         <Notification />
         <Form onSubmit={handleRegistration}>
           <Form.Group>
-            <Form.Label>käyttäjätunnus</Form.Label>
+            <Form.Label>Käyttäjätunnus</Form.Label>
             <Form.Control id='username' type='text' {...username} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>salasana</Form.Label>
+            <Form.Label>Salasana</Form.Label>
             <Form.Control id='password' type='password' {...password} required />
-          </Form.Group>
-          <Button id='create' type="submit" variant="primary">luo käyttäjä</Button>
+          </Form.Group> <br />
+          <Button id='create' type="submit" variant="primary">Luo käyttäjä</Button>
         </Form>
       </div>}
     </div>

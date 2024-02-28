@@ -1,6 +1,7 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/mail'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/mail'
 import storage from './storage'
+
 
 const send = async object => {
   const response = await axios.post(baseUrl, object, { headers: storage.setHeaders() })

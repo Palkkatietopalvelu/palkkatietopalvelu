@@ -52,7 +52,10 @@ jobs:
                 poetry run pytest src/tests
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
+                  FLASK_ENV: development
+                  BACKEND_URL: http://localhost:5000
     
     build_frontend:
         runs-on: ubuntu-latest
@@ -134,14 +137,20 @@ jobs:
               run: |
                 cd frontend
                 npm run dev &
+              env:
+                VITE_BACKEND_URL: http://localhost:5000
+                  
 
             - name: Start Backend
               run: |
                 cd backend
                 poetry run invoke start &
               env:
-                DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
-                SECRET_KEY: SECRET
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  SECRET_KEY: SECRET
+                  FLASK_ENV: development
+                  VITE_BACKEND_URL: http://localhost:5000
 
 
             - name: Run robot tests
@@ -150,4 +159,7 @@ jobs:
                 poetry run invoke robottests
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
+                  FLASK_ENV: development
+                  VITE_BACKEND_URL: http://localhost:5000

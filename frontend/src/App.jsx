@@ -8,7 +8,6 @@ import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
 import { getFile } from './reducers/fileReducer'
 import ClientForm from './components/ClientForm'
-import ClientsList from './components/ClientsList'
 import Client from './components/Client'
 import UpdateClient from './components/ClientUpdateForm'
 import ClientReminder from './components/Mail'
@@ -18,6 +17,8 @@ import RegisterForm from './components/RegisterForm'
 import MyPage from './components/MyPage'
 import ReminderSettings from './components/ReminderSettings'
 import ReminderSettingsForm from './components/ReminderSettingsForm'
+import SetPassword from './components/SetPassword'
+import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
 
 const App = () => {
@@ -37,7 +38,7 @@ const App = () => {
       <Router>
         <Menu/>
         <Routes>
-          <Route path="/" element={<ClientsList />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/mypage" element={<MyPage />} />
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
+          <Route path="/setpassword/:token" element={<SetPassword />}/>
         </Routes>
       </Router>
     </div>

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import userService from '../services/user'
+import clientUserService from '../services/client_user'
 import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
@@ -79,4 +80,27 @@ export const changePassword = (data) => {
   }
 }
 
+export const setClientPassword = (data) => {
+  return async dispatch => {
+    try {
+      await clientUserService.setpassword(data)
+      dispatch(notify('Salasana asetettu onnistuneesti'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Virhe salasanan asettamisessa'))
+      return false
+    }
+  }
+}
+
+export const validateToken = (token) => {
+  return async dispatch => {
+    try {
+      await clientUserService.get(token)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+}
 export default slice.reducer

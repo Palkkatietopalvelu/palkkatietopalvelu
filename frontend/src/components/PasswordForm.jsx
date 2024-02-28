@@ -42,18 +42,18 @@ const PasswordChange = () => {
       <Togglable buttonLabel='Vaihda salasana' ref={formRef}>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>nykyinen salasana</Form.Label>
+            <Form.Label>Nykyinen salasana</Form.Label>
             <Form.Control id='oldPassword' type='password' {...oldPassword} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>uusi salasana</Form.Label>
+            <Form.Label>Uusi salasana</Form.Label>
             <Form.Control id='newPassword' type='password' {...newPassword} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>uusi salasana uudelleen</Form.Label>
+            <Form.Label>Uusi salasana uudelleen</Form.Label>
             <Form.Control id='confirmPassword' type='password' {...confirmPassword} required />
-          </Form.Group>
-          <Button type="submit" variant="primary">vaihda</Button>
+          </Form.Group> <br />
+          <Button id="change-password" type="submit" variant="primary">Vaihda salasana</Button>
         </Form>
       </Togglable>
     </div>

@@ -45,42 +45,44 @@ const ReminderSettingsForm = () => {
 
   return (
     <div>
-      <br /><h2>Muistutusasetukset</h2>
-      <Notification />
-      <div className="switch">
-        <p>Muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
-        <label>
-          <Switch
-            onChange={handleChange}
-            checked={checked}
-            className="react-switch"
-          />
-        </label>
-      </div>
-      <br /><p>Muistutuspäivät</p>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          {days.map((day, index) => (
-            <div key={index}>
-              <CheckBox name={index}
-                inputs={inputs}
-                setInputs={setInputs}
-                checked={inputs.includes(index)}
-              />
-              {' '}{day}
-              <br />
-            </div>
-          ))}
-          <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
-          <Form.Control id='hour' placeholder='14' {...hour} required/>
-          <Form.Label>
+      {user.role === 1 && <div>
+        <br /><h2>Muistutusasetukset</h2>
+        <Notification />
+        <div className="switch">
+          <p>Muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
+          <label>
+            <Switch
+              onChange={handleChange}
+              checked={checked}
+              className="react-switch"
+            />
+          </label>
+        </div>
+        <br /><p>Muistutuspäivät</p>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            {days.map((day, index) => (
+              <div key={index}>
+                <CheckBox name={index}
+                  inputs={inputs}
+                  setInputs={setInputs}
+                  checked={inputs.includes(index)}
+                />
+                {' '}{day}
+                <br />
+              </div>
+            ))}
+            <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
+            <Form.Control id='hour' placeholder='14' {...hour} required/>
+            <Form.Label>
             Listaa, milloin muistutukset viimeistään
             lähetetään suhteessa eräpäivään.
-          </Form.Label>
-          <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} required/>
-          <Button type="submit">Tallenna</Button>
-        </Form.Group>
-      </Form>
+            </Form.Label>
+            <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} required/>
+            <Button type="submit">Tallenna</Button>
+          </Form.Group>
+        </Form>
+      </div>}
     </div>
   )
 }

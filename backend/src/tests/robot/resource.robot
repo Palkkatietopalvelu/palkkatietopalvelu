@@ -1,6 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary  run_on_failure=NOTHING
-Library  ../AppLibrary.py
+Library  ../../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
@@ -21,7 +21,7 @@ Initialize Database
     Initialize Db
 
 Logged In Page Should Be Open
-    Title Should Be  Vite + React
+    Title Should Be  Palkkatietopalvelu
     Page Should Contain  Asiakkaat
 
 Go To Home Page
@@ -43,6 +43,9 @@ Set Username
 Set Password
     [Arguments]  ${password}
     Input Text  password  ${password}
+
+Log Out
+    Click Link  KIRJAUDU ULOS
 
 Add New Client
     [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
@@ -80,7 +83,15 @@ Setup With Existing User And Client
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
-    Click Link  lisää asiakas
+    Click Link  LISÄÄ ASIAKAS
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
+    Sleep  3s
     Page Should Contain  Asiakas lisätty onnistuneesti
+
+Login As Client
+    Go To Login Page
+    Set Username  testi@email.com
+    Set Password  asiakas123
+    Click Button  login
+    Page Should Contain  Tervetuloa palkkatietopalveluun!

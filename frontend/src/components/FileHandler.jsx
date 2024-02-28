@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 import { addFile, deleteFile, downloadFile } from '../reducers/fileReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
 
 const FileHandler = ({ client, files }) => {
+  const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
@@ -31,7 +32,7 @@ const FileHandler = ({ client, files }) => {
       formData.append('owner', client.id)
       dispatch(addFile(formData)).then(result => {
         if (result) {
-          navigate(`/client/${client.id}`)
+          navigate('/')
           if (fileInputRef.current) {
             fileInputRef.current.value = ''
           }
@@ -50,13 +51,28 @@ const FileHandler = ({ client, files }) => {
     if (window.confirm(`Haluatko varmasti poistaa tiedoston ${fileName}?`)) {
       dispatch(deleteFile({ id: fileId })).then(result => {
         if (result) {
-          navigate(`/client/${client.id}`)
+          if (user.role===2){
+            navigate('/')}
+          else {
+            navigate(`/client/${client.id}`)
+          }
         }
       })
     }
   }
 
+  const linkState = {
+    clientId: client.id,
+    clientName: client.company,
+    clientEmail: client.email,
+    clientNumber: client.phonenumber,
+    clientCode: client.bi_code,
+    clientPeriod: client.payperiod,
+  }
+
   return (
+    <div>
+      {user.role === 2 &&
     <div><br />
       <Form>
         <Form.Group controlId="file-upload">
@@ -69,19 +85,22 @@ const FileHandler = ({ client, files }) => {
         </Form.Group>
       </Form>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`}>täällä</Link>
+        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
       </div>
-      <br /><h4>Ladatut tiedostot</h4>
-      <ul>
-        {files.map((file) => (
-          <li key={file.id}>
-            {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-            <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Download</Button>
-            {' '}
-            <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Delete</Button>
-          </li>
-        ))}
-      </ul>
+    </div>}
+      <div>
+        <br /><h4>Ladatut tiedostot</h4>
+        <ul>
+          {files.map((file) => (
+            <li key={file.id}>
+              {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
+              <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
+              {' '}
+              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
