@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/client'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/client'
 import storage from './storage'
 
 const add = async object => {
