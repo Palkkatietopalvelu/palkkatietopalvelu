@@ -62,3 +62,5 @@ def validate_settings(settings):
             return settings
         except Exception as exc:
             raise ValueError('Virheellinen lista lähetyspäivistä') from exc
+
+    return False

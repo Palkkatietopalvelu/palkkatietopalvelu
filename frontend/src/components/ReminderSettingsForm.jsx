@@ -26,8 +26,8 @@ const ReminderSettingsForm = () => {
     }}, [user])
 
   const handleChange = nextChecked => {
-    setChecked(nextChecked);
-  };
+    setChecked(nextChecked)
+  }
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -48,15 +48,15 @@ const ReminderSettingsForm = () => {
       <br /><h2>Muistutusasetukset</h2>
       <Notification />
       <div className="switch">
-      <p>Muistutukset <span>{checked ? "käytössä" : "pois käytöstä"}</span>.</p>
-      <label>
-        <Switch
-          onChange={handleChange}
-          checked={checked}
-          className="react-switch"
-        />
-      </label>
-    </div>
+        <p>Muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
+        <label>
+          <Switch
+            onChange={handleChange}
+            checked={checked}
+            className="react-switch"
+          />
+        </label>
+      </div>
       <br /><p>Muistutuspäivät</p>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
