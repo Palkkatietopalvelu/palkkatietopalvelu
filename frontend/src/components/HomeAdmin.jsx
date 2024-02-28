@@ -28,20 +28,20 @@ const HomeAdmin = () => {
             </thead>
             <tbody>
               {clients
-              .sort((a,b) => a.company > b.company ? 1 : -1)
-              .map(client => {
-                return (
-                  <tr key={client.id}>
-                    <td>
-                      <Link to={`/client/${client.id}`}>
-                        {client.company}
-                      </Link>
-                    </td>
-                    <td>{client.deadlines != '' &&
+                .sort((a,b) => a.company > b.company ? 1 : -1)
+                .map(client => {
+                  return (
+                    <tr key={client.id}>
+                      <td>
+                        <Link to={`/client/${client.id}`}>
+                          {client.company}
+                        </Link>
+                      </td>
+                      <td>{client.deadlines != '' &&
                       format(client.deadlines[0], 'dd.MM.yyyy')}</td>
-                  </tr>
+                    </tr>
+                  )}
                 )}
-              )}
             </tbody>
           </Table>
         </div>
