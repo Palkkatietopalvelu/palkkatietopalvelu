@@ -31,6 +31,9 @@ Deleting Files Succeeds
     Page Should Contain  Tiedosto poistettu onnistuneesti
 
 *** Keywords ***
+Set Confirm Password
+    [Arguments]  ${confirmPassword}
+    Input Password  confirmPassword  ${confirmPassword}
 
 Add New Monthly Employee
     [Arguments]  ${employee_name}  ${absences}  ${provisions}  ${overtime}  ${lunch_allowance}  ${daily_allowance}  ${mileage_allowance}  ${extra}
