@@ -86,7 +86,7 @@ const ClientForm = () => {
           <Form.Group>
             <Form.Label>Palkkakausi:</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required />
-          </Form.Group>
+          </Form.Group><br />
           <Button id='lisää' variant="primary" type="submit">Lisää</Button>
         </Form>
       </div>}

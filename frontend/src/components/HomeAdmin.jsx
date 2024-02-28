@@ -27,7 +27,9 @@ const HomeAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map(client => {
+              {clients
+              .sort((a,b) => a.company > b.company ? 1 : -1)
+              .map(client => {
                 return (
                   <tr key={client.id}>
                     <td>
