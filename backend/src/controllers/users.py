@@ -53,9 +53,8 @@ def setpassword(token):
             return str(error), 401
     if request.method == 'POST':
         try:
-            data = request.json
-            user_info = client_user.verify_setpassword_token(token)
             data = request.get_json()
+            user_info = client_user.verify_setpassword_token(token)
             user = User.query.filter_by(username=user_info['username']).first()
             new_password = data["password"]
             confirm_password = data["confirmPassword"]
