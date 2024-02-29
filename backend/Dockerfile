@@ -35,4 +35,4 @@ EXPOSE 5000
 
 WORKDIR /app/src
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "app:app", "--chdir", "/app"]
