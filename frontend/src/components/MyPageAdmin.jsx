@@ -60,9 +60,9 @@ const MyPageAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredCompanies
+            {[...filteredCompanies]
               .filter(filterByUser)
-              .sort((a,b) => a.company > b.company)
+              .sort((a,b) => a.company > b.company ? 1 : -1)
               .map(client => {
                 return (
                   <tr key={client.id}>

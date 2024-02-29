@@ -1,10 +1,10 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_mail import Mail, Message
 from utilities import client_methods as clients
-from utilities.sched_setting_methods import load_settings
+from utilities.sched_setting_methods import load_settings, get_readable_settings
 from app import app
 
 mail = Mail(app)
@@ -14,36 +14,39 @@ sched.start()
 def send_reminders():
     with app.app_context():
         deadlines, emails = get_reminder_data()
-        for deadline, email in zip(deadlines, emails):
+        for deadline, email in zip(deadlines, emails): # pylint: disable=unused-variable
             recipient = email
             msg = Message('Muistutus lähestyvästä eräpäivästä',
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
             msg.body = '''Eräpäiväsi lähestyy'''
-            print(deadline)
             mail.send(msg)
 
-def update_scheduler():
+def update_scheduler(minute = 0, second = 0):
     settings = load_settings()
-    trigger = create_trigger(
-        hour = settings['hour'],
-        days = settings['days']
-    )
+
     if len(sched.get_jobs()) != 0:
         sched.remove_job('reminders')
+
     if settings['enabled']:
+        trigger = create_trigger(
+            hour = settings['hour'],
+            days = settings['days'],
+            minute = minute,
+            second = second
+        )
         sched.add_job(send_reminders, trigger = trigger, id = 'reminders', max_instances = 1)
     return True
 
 def create_trigger(
     hour,
-    days: list = 'mon-fri',
+    days: list = '*',
     minute = '0',
     second = '0'):
     '''
     Args:
         hour: hour for sending e-mails
-        days (list): Abbrevations of weekdays
+        days (list): numbers of weekdays (0-7)
         minute: minute for sending e-mails
         second: second for senging e-mails
     '''
@@ -60,12 +63,16 @@ def get_reminder_data():
     emails = get_emails(client_ids)
     return deadlines, emails
 
-def get_deadline_data():
-    deadlines_with_ids = clients.get_next_deadlines()
+def get_deadline_data(client_service = clients):
+    settings = get_readable_settings()
+    deltas = [timedelta(days=delta) for delta in settings['deltas']]
+    deadlines_with_ids = client_service.get_next_deadlines()
     deadlines = []
     client_ids = []
+    to_next_run = timedelta(days=days_to_next_run(settings['days']))
     for deadline in deadlines_with_ids:
-        if deadline.next_deadline - date.today() <= timedelta(days=3):
+        time_left = deadline.next_deadline - date.today()
+        if include_in_run(time_left, to_next_run, deltas):
             deadlines.append(deadline.next_deadline)
             client_ids.append(deadline.client_id)
     return deadlines, client_ids
@@ -78,3 +85,16 @@ def get_emails(client_ids):
 
 def list_jobs():
     return sched.print_jobs()
+
+def days_to_next_run(run_days):
+    today = datetime.today().weekday()
+    for i, day in enumerate(run_days):
+        if day == today and i < len(run_days) - 1:
+            return run_days[i+1]-  today
+    return run_days[0] + 6 - today
+
+def include_in_run(time_left, to_next_run, deltas):
+    for delta in deltas:
+        if time_left - to_next_run < delta <= time_left:
+            return True
+    return False

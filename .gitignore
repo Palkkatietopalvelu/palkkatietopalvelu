@@ -20,7 +20,7 @@ dist-ssr
 venv
 __pycache__/
 htmlcov
-.coverage
+*.coverage
 
 # Editor directories and files
 .vscode/*
