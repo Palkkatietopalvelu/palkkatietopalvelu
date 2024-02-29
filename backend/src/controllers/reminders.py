@@ -13,9 +13,12 @@ def reminder_settings():
         return get_readable_settings()
 
     if request.method == 'POST':
-        data = request.json
-        save_settings(data)
-        update_scheduler()
-        return get_readable_settings()
+        try:
+            data = request.json
+            save_settings(data)
+            update_scheduler()
+            return get_readable_settings()
+        except ValueError as error:
+            return str(error), 400
 
     return 400
