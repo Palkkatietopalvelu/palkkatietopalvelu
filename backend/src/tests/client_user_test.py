@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 class TestUsersController(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         self.client_data = { "user_id": 1,
                         "company": "Testiyritys",
@@ -23,7 +23,7 @@ class TestUsersController(unittest.TestCase):
                         "deadlines": json.dumps([1731196800000, 1594876800000]),
                         "payperiod": "kuukausi"}
         self.token = jwt.encode({
-            "username": "pekka", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
+            "username": "pekka@mail.com", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"}
         app.test_client().post("/api/client", headers=self.headers, json=self.client_data)
         self.setpassword_token = client_user.get_setpassword_token(self.client_data["email"])
@@ -50,6 +50,13 @@ class TestUsersController(unittest.TestCase):
         with app.test_request_context():
             response = app.test_client().post(f"/api/setpassword/sfdjsfj3243kfljew", headers={"Content-Type": "application/json"}, json=self.passwords)
             self.assertEqual(response.status_code, 401)
+
+    def test_setpassword_post_with_invalid_password(self):
+        passwords = { "password": "testi",
+                           "confirmPassword": "testi123"}
+        with app.test_request_context():
+            response = app.test_client().post(f"/api/setpassword/{self.setpassword_token}", headers={"Content-Type": "application/json"}, json=passwords)
+            self.assertEqual(response.status_code, 400)
 
     def test_handle_email_change_with_valid_email(self):
         client_id = 1

@@ -62,11 +62,11 @@ Setup With Existing User
     Open And Configure Browser
     Initialize Database
     Go To Register Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  create
     Go To Login Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
@@ -75,11 +75,11 @@ Setup With Existing User And Client
     Open And Configure Browser
     Initialize Database
     Go To Register Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  create
     Go To Login Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open

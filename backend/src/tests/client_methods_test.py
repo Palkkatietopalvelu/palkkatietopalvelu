@@ -9,7 +9,7 @@ from db import db
 class TestAddClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         self.client_data = { "user_id": "1",
                         "company": "Testiyritys",
@@ -77,7 +77,7 @@ class TestAddClient(unittest.TestCase):
 class TestClientMethods(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
 
         self.client_data = {"user_id": "1",

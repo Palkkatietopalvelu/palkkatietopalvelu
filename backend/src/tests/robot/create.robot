@@ -12,7 +12,7 @@ Create Account Page Can Be Opened
 
 New Account Can Be Created
     Go To Register Page
-    Set Username  antti56
+    Set Username  antti56@mail.com
     Set Password  antti123
     Submit Credentials
     Create Account Should Succeed
@@ -22,46 +22,52 @@ Create New Account Fails With One Letter Username
     Set Username  a
     Set Password  pass123
     Submit Credentials
-    Create Account Should Fail With Short Username And Password
+    Create Account Should Fail With Incorrect Username
 
 Create New Account Fails With One Letter Password
     Go To Register Page
-    Set Username  bertta
+    Set Username  bertta@mail.com
     Set Password  p
     Submit Credentials
-    Create Account Should Fail With Short Username And Password
+    Create Account Should Fail With Short Password
 
 Create New Account Fails With One Letter Username And Password
     Go To Register Page
     Set Username  x
     Set Password  y
     Submit Credentials
-    Create Account Should Fail With Short Username And Password
+    Create Account Should Fail With Incorrect Username
 
 Create New Account Fails With Username Too Long
     Go To Register Page
-    Set Username  thisusernameisverylong
+    Set Username  thisusernameisverylong@mail.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
     Set Password  pass123
     Submit Credentials
-    Create Account Should Fail With Long Username And Password
+    Create Account Should Fail With Long Username
 
 Create New Account Fails With Password Too Long
     Go To Register Page
-    Set Username  cecilia
+    Set Username  cecilia@mail.com
     Set Password  thispasswordisverylong123
     Submit Credentials
-    Create Account Should Fail With Long Username And Password
+    Create Account Should Fail With Long Password
 
 
 *** Keywords ***
 Create Account Should Succeed
     Page Should Contain  Käyttäjä luotu onnistuneesti
 
-Create Account Should Fail With Short Username And Password
-    Page Should Contain  Käyttäjätunnus ja salasana täytyy olla ainakin 3 merkkiä pitkiä
+Create Account Should Fail With Short Password
+    Page Should Contain  Salasana täytyy olla ainakin 3 merkkiä pitkä
 
-Create Account Should Fail With Long Username And Password
-    Page Should Contain  Käyttäjätunnus ja salasana ei saa olla yli 15 merkkiä pitkiä
+Create Account Should Fail With Long Password
+    Page Should Contain  Salasana ei saa olla yli 15 merkkiä pitkä
+
+Create Account Should Fail With Incorrect Username
+    Page Should Contain  Sähköposti ei ole oikeassa muodossa
+
+Create Account Should Fail With Long Username
+    Page Should Contain  Sähköposti ei saa olla yli 50 merkkiä pitkä
 
 Click Create Account Button
     Click Button  luo käyttäjä
