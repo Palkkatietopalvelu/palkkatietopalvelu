@@ -1,9 +1,10 @@
 from flask import request, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from models.user import User, db
 from app import app
 from utilities.require_login import require_login
 from utilities import client_user
+from utilities import user_methods
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -17,7 +18,7 @@ def create_user():
         username = data['username']
         password = data['password']
         role = data['role']
-        validate_credentials(username, password)
+        user_methods.validate_credentials(username, password)
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password, role=role)
         db.session.add(new_user)
@@ -35,7 +36,7 @@ def change_password(user_id):
         old_password = data["oldPassword"]
         new_password = data["newPassword"]
         confirm_password = data["confirmPassword"]
-        validate_password(old_password, new_password, confirm_password, user)
+        user_methods.validate_password(old_password, new_password, confirm_password, user)
         user.password = generate_password_hash(new_password)
         db.session.add(user)
         db.session.commit()
@@ -58,40 +59,25 @@ def setpassword(token):
             user = User.query.filter_by(username=user_info['username']).first()
             new_password = data["password"]
             confirm_password = data["confirmPassword"]
-            check_new_passwords(new_password, confirm_password)
+            user_methods.check_new_passwords(new_password, confirm_password)
             user.password = generate_password_hash(new_password)
             db.session.add(user)
             db.session.commit()
             return "Salasana vaihdettu", 200
         except PermissionError as error:
             return str(error), 401
+        except ValueError as error:
+            return str(error), 400
     return 400
 
-def validate_credentials(username, password):
-    existing_user = User.query.filter_by(username=username).first()
-    if existing_user:
-        raise ValueError ("Käyttäjätunnus on jo olemassa")
-
-    if len(username) < 3 or len(password) < 3:
-        raise ValueError ("Käyttäjätunnus ja salasana täytyy olla ainakin 3 merkkiä pitkiä")
-
-    if len(username) > 15 or len(password) > 15:
-        raise ValueError ("Käyttäjätunnus ja salasana ei saa olla yli 15 merkkiä pitkiä")
-
-    return True
-
-def validate_password(old_password, password, confirm_password, user):
-    if not check_password_hash(user.password, old_password):
-        raise ValueError ("Väärä nykyinen salasana")
-    check_new_passwords(password, confirm_password)
-    return True
-
-def check_new_passwords(password, confirm_password):
-    if len(password) < 3:
-        raise ValueError ("Salasanan täytyy olla ainakin 3 merkkiä pitkiä")
-
-    if len(password) > 15:
-        raise ValueError ("Salasana ei saa olla yli 15 merkkiä pitkä")
-
-    if password != confirm_password:
-        raise ValueError ("Salasanat eivät täsmää")
+@app.route('/api/resetpassword', methods = ['POST'])
+def resetpassword():
+    try:
+        data = request.get_json()
+        email = data["email"]
+        if not user_methods.existing_user(email):
+            raise ValueError ("Sähköpostilla ei löytynyt käyttäjää")
+        user_methods.send_password_reset_email(email)
+        return "Salasanan vaihtolinkki lähetetty sähköpostiin", 200
+    except ValueError as error:
+        return str(error), 400

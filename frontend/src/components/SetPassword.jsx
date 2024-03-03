@@ -40,19 +40,19 @@ const SetPassword = () => {
   return (
     <div>
       {valid &&
-      <div>
-        <h2>Aseta salasana</h2>
+      <div><br/>
+        <h2>Aseta uusi salasana</h2>
         <Notification />
         <Form onSubmit={handleSetPassword}>
           <Form.Group>
-            <Form.Label>salasana</Form.Label>
+            <Form.Label>Salasana</Form.Label>
             <Form.Control id='password' type='password' {...password} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>salasana uudelleen</Form.Label>
+            <Form.Label>Salasana uudelleen</Form.Label>
             <Form.Control id='confirmPassword' type='password' {...confirmPassword} required />
-          </Form.Group>
-          <Button id="setpassword" type="submit" variant="primary">aseta salasana</Button>
+          </Form.Group><br/>
+          <Button id="setpassword" type="submit" variant="primary">Aseta salasana</Button>
         </Form>
       </div>
       }

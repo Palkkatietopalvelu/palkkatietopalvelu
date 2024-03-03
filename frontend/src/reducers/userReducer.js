@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import userService from '../services/user'
-import clientUserService from '../services/client_user'
+import setpasswordService from '../services/setpassword'
+import resetpasswordService from '../services/resetpassword'
 import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
@@ -80,10 +81,23 @@ export const changePassword = (data) => {
   }
 }
 
+export const resetClientPassword = (email) => {
+  return async dispatch => {
+    try {
+      await resetpasswordService.resetpassword(email)
+      dispatch(notify('Sähköposti lähetettiin onnistuneesti'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tällä sähköpostilla ei löytynyt tunnuksia'))
+      return false
+    }
+  }
+}
+
 export const setClientPassword = (data) => {
   return async dispatch => {
     try {
-      await clientUserService.setpassword(data)
+      await setpasswordService.setpassword(data)
       dispatch(notify('Salasana asetettu onnistuneesti'))
       return true
     } catch (e) {
@@ -96,7 +110,7 @@ export const setClientPassword = (data) => {
 export const validateToken = (token) => {
   return async dispatch => {
     try {
-      await clientUserService.get(token)
+      await setpasswordService.get(token)
       return true
     } catch (e) {
       return false
