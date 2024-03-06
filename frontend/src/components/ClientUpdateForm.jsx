@@ -6,6 +6,8 @@ import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
 import { DateSelect } from '../hooks/DatePicker'
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 const UpdateClient = () => {
   const navigate = useNavigate()
@@ -97,10 +99,42 @@ const UpdateClient = () => {
             <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
           </Form.Group>
           <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
+          <DeleteClientModal client={client} />
           <Button variant="danger" onClick={remove}>Poista asiakas</Button>
         </Form>
       </div>}
     </div>
+  )
+}
+
+const DeleteClientModal = ({ client }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false)
+  
+  const handleDeleteClient = () => {
+    dispatch(deleteClient(client)).then(result => {
+      if (result) {
+        navigate('/')
+      }
+    })
+    setShowModal(false)
+  }
+
+  return (
+    <>
+      <Button variant="danger" onClick={() => setShowModal(true)}>Poista asiakas</Button>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Asiakkaan poistaminen</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+          <Button variant="danger" onClick={handleDeleteClient}>Poista asiakas</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   )
 }
 
