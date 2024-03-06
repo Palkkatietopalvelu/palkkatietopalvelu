@@ -14,7 +14,7 @@ import json
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         self.client_id = 1
         self.client_data = {

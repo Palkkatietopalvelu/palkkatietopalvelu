@@ -74,7 +74,6 @@ def delete_client(client_id):
     delete_deadlines(client_id)
     sql = text("""DELETE FROM clients WHERE id=:id""")
     db.session.execute(sql, {"id": client_id})
-    db.session.commit()
 
 def get_email(client_id):
     sql = text("SELECT email FROM clients WHERE id=:id")

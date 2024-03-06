@@ -15,20 +15,20 @@ class TestUsersController(unittest.TestCase):
 
     def test_create_user_with_valid_credentials(self):
         with app.test_request_context():
-            data = {"username": "pekka", "password": "pekkaspass", "role": 1}
+            data = {"username": "pekka@mail.com", "password": "pekkaspass", "role": 1}
             response = app.test_client().post("/api/users", json=data)
             self.assertEqual(response.status_code, 201)
 
     def test_create_user_that_already_exists(self):
         with app.test_request_context():
-            data = {"username": "maija", "password": "maijaspass", "role": 1}
+            data = {"username": "maija@mail.com", "password": "maijaspass", "role": 1}
             new_user = app.test_client().post("/api/users", json=data)
             self.assertEqual(new_user.status_code, 201)
 
             new_user_again = app.test_client().post("/api/users", json=data)
             self.assertEqual(new_user_again.status_code, 400)
 
-    def test_create_user_with_too_short_username(self):
+    def test_create_user_with_incorrect_username(self):
         with app.test_request_context():
             data = {"username": "ab", "password": "abc", "role": 1}
             new_user = app.test_client().post("/api/users", json=data)
@@ -36,19 +36,19 @@ class TestUsersController(unittest.TestCase):
 
     def test_create_user_with_too_short_password(self):
         with app.test_request_context():
-            data = {"username": "abc", "password": "ab", "role": 1}
+            data = {"username": "abc@mail.com", "password": "ab", "role": 1}
             new_user = app.test_client().post("/api/users", json=data)
             self.assertEqual(new_user.status_code, 400)
 
     def test_create_user_with_too_long_username(self):
         with app.test_request_context():
-            data = {"username": "waytoolongusername", "password": "ok123", "role": 1}
+            data = {"username": "waytoolongusername@mail.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "password": "ok123", "role": 1}
             new_user = app.test_client().post("/api/users", json=data)
             self.assertEqual(new_user.status_code, 400)
 
     def test_create_user_with_too_long_password(self):
         with app.test_request_context():
-            data = {"username": "pekka123", "password": "waytoolongusername", "role": 1}
+            data = {"username": "pekka@mail.com", "password": "waytoolongusername", "role": 1}
             new_user = app.test_client().post("/api/users", json=data)
             self.assertEqual(new_user.status_code, 400)
 
@@ -58,12 +58,12 @@ class TestUserModel(unittest.TestCase):
 
     def test_create_user_with_valid_credentials(self):
         with app.app_context():
-            username = "masa"
+            username = "masa@mail.com"
             password = "mypass"
             role = 1
             hashed_password = generate_password_hash(password)
             new_user = User(username=username, password=hashed_password, role=role)
-            self.assertEqual(new_user.username, "masa")
+            self.assertEqual(new_user.username, "masa@mail.com")
             self.assertNotEqual(new_user.password, "mypass")
             self.assertEqual(len(new_user.password), 162)
             self.assertEqual(new_user.role, role)

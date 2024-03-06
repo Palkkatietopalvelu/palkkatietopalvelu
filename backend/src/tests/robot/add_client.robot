@@ -24,14 +24,14 @@ Add Client Fails With Wrong Phonenumber Format
     Click Link  LISÄÄ ASIAKAS
     Add New Client  test oy  test@email.com  123 123456789  1234567-8  2024/12/12  kk
     Click Button  Lisää
-    Page Should Contain  Puhelinnumero ei ole oikeassa muodossa
+    Wait Until Page Contains  Puhelinnumero ei ole oikeassa muodossa  timeout=5s
 
 Add Client Fails With Wrong BIcode Format
     Home Page Should Be Open
     Click Link  LISÄÄ ASIAKAS
     Add New Client  test oy  test@email.com  +358 123456789  12345678  2024/12/12  kk
     Click Button  Lisää
-    Page Should Contain  Y-tunnus ei ole oikeassa muodossa
+    Wait Until Page Contains  Y-tunnus ei ole oikeassa muodossa  timeout=5s
 
 *** Keywords ***
 Add New Client

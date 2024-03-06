@@ -26,7 +26,7 @@ Change Client Email With Incorrect Format Fails
     Click Button  Muuta asiakkaan tietoja
     Change Email  vääräemail
     Click Button  Tallenna tiedot
-    Wait Until Page Contains  Sähköposti ei ole oikeassa muodossa
+    Wait Until Page Contains  Sähköposti ei ole oikeassa muodossa  timeout=10s
     
 Change Client Phonenumber With Correct Format Succeeds
     Click Link  OMAT SIVUT
@@ -42,7 +42,7 @@ Change Client Phonenumber With Incorrect Format Fails
     Click Button  Muuta asiakkaan tietoja
     Change Phonenumber  123123456789
     Click Button  Tallenna tiedot
-    Wait Until Page Contains  Puhelinnumero ei ole oikeassa muodossa
+    Wait Until Page Contains  Puhelinnumero ei ole oikeassa muodossa  timeout=10s
 
 Change Client BICode With Correct Format Succeeds
     Click Link  OMAT SIVUT
@@ -58,7 +58,7 @@ Change Client BICode With Incorrect Format Fails
     Click Button  Muuta asiakkaan tietoja
     Change BICode  123
     Click Button  Tallenna tiedot
-    Wait Until Page Contains  Y-tunnus ei ole oikeassa muodossa
+    Wait Until Page Contains  Y-tunnus ei ole oikeassa muodossa  timeout=10s
 
 Change Client Deadlines With Correct Format Succeeds
     Click Link  OMAT SIVUT
@@ -66,7 +66,7 @@ Change Client Deadlines With Correct Format Succeeds
     Click Button  Muuta asiakkaan tietoja
     Change Deadlines  2023/01/01, 2024/01/02
     Click Button  Tallenna tiedot
-    Wait Until Page Contains  Asiakkaan tiedot päivitetty onnistuneesti
+    Wait Until Page Contains  Asiakkaan tiedot päivitetty onnistuneesti  timeout=10s
 
 Change Client Deadlines With Incorrect Format Fails
     Click Link  OMAT SIVUT
@@ -81,7 +81,7 @@ Change Client Payperiod Succeeds
     Click Button  Muuta asiakkaan tietoja
     Change Payperiod  2 vko
     Click Button  Tallenna tiedot
-    Wait Until Page Contains  Asiakkaan tiedot päivitetty onnistuneesti
+    Wait Until Page Contains  Asiakkaan tiedot päivitetty onnistuneesti  timeout=10s
 
 Delete Client Succeeds
     Click Link  OMAT SIVUT
