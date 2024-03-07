@@ -12,6 +12,7 @@ const ClientForm = () => {
   const dispatch = useDispatch()
   const [showAlert, setShowAlert] = useState('')
   const [alertType, setAlertType] = useState('')
+  const [addButtonText, setAddButtonText] = useState('Lisää')
 
   const user = useSelector(({ user }) => user)
   const company = useField()
@@ -27,6 +28,7 @@ const ClientForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setAddButtonText('Lisätään...')
     dispatch(addClient({
       user_id: user.id,
       company: company.value,
@@ -40,6 +42,7 @@ const ClientForm = () => {
         resetFields(event)
         setAlertType('success')
         setShowAlert('Asiakas lisätty onnistuneesti')
+        setAddButtonText('Lisää')
         setTimeout(() => {
           setAlertType('')
           setShowAlert('')
@@ -98,7 +101,7 @@ const ClientForm = () => {
             <Form.Label>Palkkakausi:</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required />
           </Form.Group><br />
-          <Button id='lisää' variant="primary" type="submit">Lisää</Button> <br /><br />
+          <Button id='lisää' variant="primary" type="submit">{addButtonText}</Button> <br /><br />
           <Alert variant={alertType}>{showAlert}</Alert>
         </Form>
       </div>}

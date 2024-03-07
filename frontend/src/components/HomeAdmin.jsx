@@ -2,7 +2,8 @@ import { useSelector } from 'react-redux'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
+import { format, formatDistanceToNow, endOfDay, isPast } from 'date-fns'
+import Badge from 'react-bootstrap/Badge';
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
@@ -38,7 +39,9 @@ const HomeAdmin = () => {
                         </Link>
                       </td>
                       <td>{client.deadlines != '' &&
-                      format(client.deadlines[0], 'dd.MM.yyyy')}</td>
+                        format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
+                        <DueDateStatus client={client} />
+                      </td>
                     </tr>
                   )}
                 )}
@@ -47,6 +50,27 @@ const HomeAdmin = () => {
         </div>
       }
     </div>
+  )
+}
+
+const DueDateStatus = ({ client }) => {
+  const now = endOfDay(new Date())
+  const late = isPast(client.deadlines[0])
+  
+  if (late) {
+    return (
+      <Badge bg="danger" pill>myöhässä</Badge>
+    )
+  }
+
+  let days_left = formatDistanceToNow(client.deadlines[0], now).split(" ")
+  if (days_left[0] === "about") 
+    days_left = "1 päivä"
+  else
+    days_left = days_left[0] + " päivää"
+
+  return (
+    <Badge bg="primary" pill>{days_left}</Badge>
   )
 }
 
