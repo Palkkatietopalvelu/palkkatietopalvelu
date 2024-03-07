@@ -5,9 +5,14 @@ import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
+import Alert from 'react-bootstrap/Alert'
+import { useState } from 'react'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
+  const [showAlert, setShowAlert] = useState('')
+  const [alertType, setAlertType] = useState('')
+
   const user = useSelector(({ user }) => user)
   const company = useField()
   const email = useField()
@@ -33,6 +38,12 @@ const ClientForm = () => {
     })).then(result => {
       if (result) {
         resetFields(event)
+        setAlertType('success')
+        setShowAlert('Asiakas lisätty onnistuneesti')
+        setTimeout(() => {
+          setAlertType('')
+          setShowAlert('')
+        }, 3000)
       }
     })
   }
@@ -87,7 +98,8 @@ const ClientForm = () => {
             <Form.Label>Palkkakausi:</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required />
           </Form.Group><br />
-          <Button id='lisää' variant="primary" type="submit">Lisää</Button>
+          <Button id='lisää' variant="primary" type="submit">Lisää</Button> <br /><br />
+          <Alert variant={alertType}>{showAlert}</Alert>
         </Form>
       </div>}
     </div>
