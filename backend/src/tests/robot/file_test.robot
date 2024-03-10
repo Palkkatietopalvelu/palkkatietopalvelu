@@ -8,7 +8,7 @@ Adding File Succeeds
     Log Out
     Login As New Client
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
-    Page Should Contain  Tiedosto lisätty onnistuneesti
+    Wait For  Tiedosto lisätty onnistuneesti
 
 Adding Wrong Filetype Fails
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/not_a_pdf.txt
@@ -21,14 +21,14 @@ Adding File Succesfully With Salary Form
     Add New Hourly Employee    employee_name2    2025/02/12, 2024/12/04, 2024/05/07    120    3    50    20
     Click Button  Lisää työntekijän tiedot lomakkeelle
     Click Button  Tallenna lomake
-    Page Should Contain  Tiedosto lisätty onnistuneesti
+    Wait For  Tiedosto lisätty onnistuneesti
 
 Deleting Files Succeeds
     Click Button  1              
     Alert Should Be Present
     Click Button  2              
     Alert Should Be Present
-    Page Should Contain  Tiedosto poistettu onnistuneesti
+    Wait For  Tiedosto poistettu onnistuneesti
 
 *** Keywords ***
 Set Confirm Password

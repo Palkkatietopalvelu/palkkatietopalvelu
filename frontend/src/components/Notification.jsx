@@ -1,15 +1,15 @@
 import { useSelector } from 'react-redux'
 
 const Notification = () => {
-  const message = useSelector(({ notification }) => notification)
+  const messages = useSelector(({ notification }) => notification)
 
-  if (!message.content) {
+  if (messages.length === 0) {
     return
   }
 
   return (
     <div>
-      {message.content}
+      {messages.slice(-1)[0].content}
     </div>
   )
 }

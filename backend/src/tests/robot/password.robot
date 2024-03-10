@@ -20,44 +20,40 @@ Change Password Fails With Differing New Passwords
     Set New Password  new123
     Set New Password Again  notSame123
     Change Password
-    Page Should Contain  Salasanat eivät täsmää
+    Wait For  Salasanat eivät täsmää
 
 Change Password Fails With Invalid Current Password
     Set Old Password  notMyPassword
     Set New Password  new123
     Set New Password Again  new123
-    Wait Until Page Does Not Contain  Salasanat eivät täsmää
     Change Password
-    Page Should Contain  Väärä nykyinen salasana
+    Wait For  Väärä nykyinen salasana
 
 Change Password Fails With Too Short New Password
     Set Old Password  pekka123
     Set New Password  no
     Set New Password Again  no
-    Wait Until Page Does Not Contain  Väärä nykyinen salasana
     Change Password
-    Page Should Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkä
+    Wait For  Salasanan täytyy olla ainakin 3 merkkiä pitkä
 
 Change Password Fails With Too Long New Password
     Set Old Password  pekka123
     Set New Password  waytoolongpassword
     Set New Password Again  waytoolongpassword
-    Wait Until Page Does Not Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkä
     Change Password
-    Page Should Contain  Salasana ei saa olla yli 15 merkkiä pitkä
+    Wait For  Salasana ei saa olla yli 15 merkkiä pitkä
 
 Change Password Succeeds With Valid Info
     Set Old Password  pekka123
     Set New Password  new123
     Set New Password Again  new123
-    Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
     Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
     Log Out
 
 Login With Old Password Fails
     Login With Credentials  pekka@mail.com  pekka123
-    Page Should Contain  Väärä käyttäjätunnus tai salasana
+    Wait For  Väärä käyttäjätunnus tai salasana
 
 Login With New Password Succeeds
     Login With Credentials  pekka@mail.com  new123
@@ -67,7 +63,7 @@ Login With New Password Succeeds
 *** Keywords ***
 Go To My Page And Open Change Password Form
     Click Link  OMAT SIVUT
-    Page Should Contain  Käyttäjätilin asetukset
+    Wait For  Käyttäjätilin asetukset
     Click Button  Vaihda salasana
 
 Change Password
