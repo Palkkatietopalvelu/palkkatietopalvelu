@@ -8,7 +8,7 @@ Test Setup  Initialize Database
 Create Account Page Can Be Opened
     Go To Home Page
     Click Link  REKISTERÖIDY
-    Wait Until Page Contains  Luo uusi käyttäjä
+    Wait For  Luo uusi käyttäjä
 
 New Account Can Be Created
     Go To Register Page
