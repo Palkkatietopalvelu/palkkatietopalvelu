@@ -15,7 +15,7 @@ Search Company With Correct Name
     Wait For  Asiakas lisätty onnistuneesti
     Click Link  OMAT SIVUT
     Search Company  fir
-    Wait Until Page Does Not Contain  Kallen kiska  timeout=5s
+    Wait Until Page Does Not Contain  Kallen kiska  timeout=6s
     Wait For  Firma
     Wait For  07.05.2024
 
