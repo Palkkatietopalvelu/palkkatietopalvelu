@@ -6,12 +6,14 @@ import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
 import { DateSelect } from '../hooks/DatePicker'
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
 const UpdateClient = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false)
+
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
@@ -48,14 +50,13 @@ const UpdateClient = () => {
     })
   }
 
-  const remove = () => {
-    if (window.confirm(`Haluatko varmasti poistaa asiakkaan ${client.company}?`)) {
-      dispatch(deleteClient(client)).then(result => {
-        if (result) {
-          navigate('/')
-        }
-      })
-    }
+  const handleDeleteClient = () => {
+    dispatch(deleteClient(client)).then(result => {
+      if (result) {
+        navigate('/')
+      }
+    })
+    setShowModal(false)
   }
 
   const style = {
@@ -70,7 +71,6 @@ const UpdateClient = () => {
     <div>
       {user.role === 1 && <div>
         <br /><h2>{client.company}:n tietojen muuttaminen</h2>
-        <Notification />
         <Form onSubmit={updateData}>
           <Form.Group>
             <Form.Label>Yritys</Form.Label>
@@ -99,28 +99,16 @@ const UpdateClient = () => {
             <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
           </Form.Group>
           <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
-          <DeleteClientModal client={client} />
-          <Button variant="danger" onClick={remove}>Poista asiakas</Button>
+          <DeleteClientModal client={client} handleDeleteClient={handleDeleteClient}
+            showModal={showModal} setShowModal={setShowModal} /> <br /><br />
         </Form>
+        <Notification />
       </div>}
     </div>
   )
 }
 
-const DeleteClientModal = ({ client }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [showModal, setShowModal] = useState(false)
-  
-  const handleDeleteClient = () => {
-    dispatch(deleteClient(client)).then(result => {
-      if (result) {
-        navigate('/')
-      }
-    })
-    setShowModal(false)
-  }
-
+const DeleteClientModal = ({ client, handleDeleteClient, showModal, setShowModal }) => {
   return (
     <>
       <Button variant="danger" onClick={() => setShowModal(true)}>Poista asiakas</Button>

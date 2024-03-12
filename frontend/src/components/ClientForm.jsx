@@ -5,13 +5,12 @@ import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
-import Alert from 'react-bootstrap/Alert'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
-  const [showAlert, setShowAlert] = useState('')
-  const [alertType, setAlertType] = useState('')
+  const navigate = useNavigate()
   const [addButtonText, setAddButtonText] = useState('Lisää')
 
   const user = useSelector(({ user }) => user)
@@ -40,13 +39,8 @@ const ClientForm = () => {
     })).then(result => {
       if (result) {
         resetFields(event)
-        setAlertType('success')
-        setShowAlert('Asiakas lisätty onnistuneesti')
         setAddButtonText('Lisää')
-        setTimeout(() => {
-          setAlertType('')
-          setShowAlert('')
-        }, 3000)
+        navigate(`/`)
       }
     })
   }
@@ -102,7 +96,6 @@ const ClientForm = () => {
             <Form.Control id='payperiod' {...payperiod} required />
           </Form.Group><br />
           <Button id='lisää' variant="primary" type="submit">{addButtonText}</Button> <br /><br />
-          <Alert variant={alertType}>{showAlert}</Alert>
         </Form>
       </div>}
     </div>
