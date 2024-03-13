@@ -94,7 +94,6 @@ Delete Client Succeeds
     Click Button  Poista asiakas
     Wait For  Asiakkaan poistaminen
     Click Button  Poista
-    #Alert Should Be Present  Asiakkaan poistaminen
     Wait For  Asiakkaan tiedot poistettu onnistuneesti
 
 *** Keywords ***
