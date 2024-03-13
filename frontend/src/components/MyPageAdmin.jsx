@@ -2,13 +2,15 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
-import { format } from 'date-fns'
+import { format, endOfDay } from 'date-fns'
+import DueDateBadge from './DueDateBadge'
 
 const MyPageAdmin = () => {
   const user = useSelector(({ user }) => user)
   const filterByUser = (c => c.user_id === user.id)
   const clients = useSelector(({ clients }) => clients)
   const [filteredCompanies, setFilteredCompanies] = useState([])
+  const now = endOfDay(new Date())
 
   useEffect(() => {
     if (!clients) {
@@ -72,7 +74,9 @@ const MyPageAdmin = () => {
                       </Link>
                     </td>
                     <td>{client.deadlines != '' &&
-                    format(client.deadlines[0], 'dd.MM.yyyy')}</td>
+                      format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
+                    <DueDateBadge client={client} now={now} />
+                    </td>
                   </tr>
                 )}
               )}
