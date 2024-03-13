@@ -75,7 +75,7 @@ const MyPageAdmin = () => {
                     </td>
                     <td>{client.deadlines != '' &&
                       format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge client={client} now={now} />
+                    <DueDateBadge client={client} now={now} />
                     </td>
                   </tr>
                 )}
