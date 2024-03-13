@@ -6,11 +6,9 @@ import { Form, Button } from 'react-bootstrap'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [addButtonText, setAddButtonText] = useState('Lisää')
 
   const user = useSelector(({ user }) => user)
@@ -40,7 +38,6 @@ const ClientForm = () => {
       if (result) {
         resetFields(event)
         setAddButtonText('Lisää')
-        navigate(`/`)
       }
     })
   }
