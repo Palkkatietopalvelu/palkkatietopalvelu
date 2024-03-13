@@ -119,7 +119,7 @@ const DeleteClientModal = ({ client, handleDeleteClient, showModal, setShowModal
         <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-          <Button variant="danger" onClick={handleDeleteClient}>Poista asiakas</Button>
+          <Button variant="danger" onClick={handleDeleteClient}>Poista</Button>
         </Modal.Footer>
       </Modal>
     </>
