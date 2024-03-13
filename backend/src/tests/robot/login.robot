@@ -53,7 +53,7 @@ Login Should Succeed
     Logged In Page Should Be Open
 
 Login Should Fail
-    Page Should Contain  Väärä käyttäjätunnus tai salasana
+    Wait For  Väärä käyttäjätunnus tai salasana
 
 Logout Should Succeed
     Page Should Contain  KIRJAUDU

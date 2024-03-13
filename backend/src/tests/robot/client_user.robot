@@ -11,14 +11,14 @@ Login With Client User Link Succeeds
     Set Password  123
     Set Confirm Password  123
     Click Button  setpassword
-    Page Should Contain  Salasana asetettu onnistuneesti
+    Wait For  Salasana asetettu onnistuneesti
 
 Login With Correct Client User Credentials Succeeds
     Go To Login Page
     Set Username  testi@email.com
     Set Password  123
     Click Button  login
-    Page Should Contain  Tervetuloa palkkatietopalveluun!
+    Wait For  Tervetuloa palkkatietopalveluun!
 
 Client User View Is Correct
     Page Should Not Contain  MUISTUTUKSET
@@ -35,7 +35,7 @@ Change Client User Password Succeeds With Valid Info
     Set New Password Again  eiku123
     Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
-    Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
+    Wait For  Salasana vaihdettu onnistuneesti
     Log Out
 
 *** Keywords ***
