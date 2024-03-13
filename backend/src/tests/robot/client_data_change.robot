@@ -92,7 +92,9 @@ Delete Client Succeeds
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Click Button  Poista asiakas
-    Alert Should Be Present  Haluatko varmasti poistaa asiakkaan eiku oy?
+    Wait For  Asiakkaan poistaminen
+    Click Button  Poista
+    #Alert Should Be Present  Asiakkaan poistaminen
     Wait For  Asiakkaan tiedot poistettu onnistuneesti
 
 *** Keywords ***

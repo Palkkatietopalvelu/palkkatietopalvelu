@@ -15,6 +15,7 @@ Adding Wrong Filetype Fails
     Alert Should Be Present  Lataathan vain PDF, Word, Excel, tai CSV tiedostoja.
 
 Adding File Succesfully With Salary Form
+    Go To Home Page
     Click Link    täällä
     Add New Monthly Employee    employee_name1    2025/02/12, 2024/12/04, 2024/05/07    123    2    1, 2,50€    50    20    ei valkosipulia
     Click Button  Lisää työntekijän tiedot lomakkeelle
