@@ -10,7 +10,7 @@ const Notification = () => {
 
   return (
     <div>
-      <Alert variant={'success'}>{messages.slice(-1)[0].content}</Alert>
+      <Alert variant={messages.slice(-1)[0].type}>{messages.slice(-1)[0].content}</Alert>
     </div>
   )
 }
