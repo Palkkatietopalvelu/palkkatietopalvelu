@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import Notification from './Notification'
-import { updateClient, deleteClient } from '../reducers/clientsReducer'
+import { updateClient, deleteClient, updateStatus } from '../reducers/clientsReducer'
 import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
@@ -50,6 +50,12 @@ const UpdateClient = () => {
     })
   }
 
+  const statusUpdate = () => {
+    /* Here you can set the client's status to either active or inactive.
+    If the status is currently active, we set it to false, and vice versa. */
+    dispatch(updateStatus({ id, status: client.active ? false : true }))
+  }
+
   const handleDeleteClient = () => {
     dispatch(deleteClient(client)).then(result => {
       if (result) {
@@ -69,8 +75,12 @@ const UpdateClient = () => {
 
   return (
     <div>
-      {user.role === 1 && <div>
-        <br /><h2>{client.company}:n tietojen muuttaminen</h2>
+      {user.role === 1 && <div><br />
+        <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
+          style={{ marginBottom: '20px' }}>
+          Takaisin asiakkaan tietoihin</Button>
+        <Notification />
+        <h2>{client.company}:n tietojen muuttaminen</h2>
         <Form onSubmit={updateData}>
           <Form.Group>
             <Form.Label>Yritys</Form.Label>
@@ -100,9 +110,10 @@ const UpdateClient = () => {
           </Form.Group>
           <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
           <DeleteClientModal client={client} handleDeleteClient={handleDeleteClient}
-            showModal={showModal} setShowModal={setShowModal} /> <br /><br />
+            showModal={showModal} setShowModal={setShowModal} />
+          <Button variant={client.active ? 'warning' : 'success'} onClick={statusUpdate}
+            style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi asiakas' : 'Aktivoi asiakas'}</Button> <br /><br />
         </Form>
-        <Notification />
       </div>}
     </div>
   )

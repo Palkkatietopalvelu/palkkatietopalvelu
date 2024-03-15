@@ -21,4 +21,10 @@ const remove = async id => {
   await axios.delete(`${baseUrl}/${id}`, { headers: storage.setHeaders() })
 }
 
-export default { add, get, update, remove }
+const status = async object => {
+  const response = await axios.post(`${baseUrl}/${object.id}/status`,
+    object, { headers: storage.setHeaders() })
+  return response.data
+}
+
+export default { add, get, update, remove, status }
