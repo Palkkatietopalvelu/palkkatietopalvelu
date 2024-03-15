@@ -1,1 +1,7 @@
-{"enabled":false, "hour":"12", "days":"0,1,2,3,4", "deltas": [2, 0, -3]}
+{
+  "days": "0,2,4",
+  "hour": "10",
+  "enabled": false,
+  "deltas": [
+  ]
+}

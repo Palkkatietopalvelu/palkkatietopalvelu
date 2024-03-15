@@ -54,7 +54,7 @@ const MyPageAdmin = () => {
           <thead>
             <tr>
               <th>Yritys</th>
-              <th>Eräpäivä</th>
+              <th>Seuraava eräpäivä</th>
             </tr>
             <tr>
               <th><input id="companyFilter" onChange={handleCompanySearch} /></th>

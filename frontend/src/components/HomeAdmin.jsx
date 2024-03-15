@@ -25,7 +25,7 @@ const HomeAdmin = () => {
             <thead>
               <tr>
                 <th>Yritys</th>
-                <th>Eräpäivä</th>
+                <th>Seuraava eräpäivä</th>
               </tr>
             </thead>
             <tbody>
