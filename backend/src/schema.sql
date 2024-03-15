@@ -12,7 +12,8 @@ CREATE TABLE clients (
   email TEXT,
   phonenumber TEXT,
   bi_code TEXT,
-  payperiod TEXT
+  payperiod TEXT,
+  active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE deadlines (

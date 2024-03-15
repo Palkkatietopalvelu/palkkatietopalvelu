@@ -34,7 +34,7 @@ export const loginUser = (credentials) => {
       dispatch(getClients())
       return true
     } catch (e) {
-      dispatch(notify('Väärä käyttäjätunnus tai salasana'))
+      dispatch(notify('Väärä käyttäjätunnus tai salasana', 'danger'))
       return false
     }
   }
@@ -62,7 +62,7 @@ export const registerUser = (credentials) => {
       dispatch(notify('Käyttäjä luotu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe käyttäjän luonnissa'))
+      dispatch(notify(e.response?.data || 'Virhe käyttäjän luonnissa', 'danger'))
       return false
     }
   }
@@ -75,7 +75,7 @@ export const changePassword = (data) => {
       dispatch(notify('Salasana vaihdettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe tietojen päivittämisessä'))
+      dispatch(notify(e.response?.data || 'Virhe tietojen päivittämisessä', 'danger'))
       return false
     }
   }
@@ -88,7 +88,7 @@ export const resetClientPassword = (email) => {
       dispatch(notify('Sähköposti lähetettiin onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tällä sähköpostilla ei löytynyt tunnuksia'))
+      dispatch(notify(e.response?.data || 'Tällä sähköpostilla ei löytynyt tunnuksia', 'danger'))
       return false
     }
   }
@@ -101,7 +101,7 @@ export const setClientPassword = (data) => {
       dispatch(notify('Salasana asetettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe salasanan asettamisessa'))
+      dispatch(notify(e.response?.data || 'Virhe salasanan asettamisessa', 'danger'))
       return false
     }
   }

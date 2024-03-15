@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import Notification from './Notification'
-import { Table } from 'react-bootstrap'
+import { Table, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { format, endOfDay } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
@@ -41,7 +41,9 @@ const HomeAdmin = () => {
                       </td>
                       <td>{client.deadlines != '' &&
                         format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge client={client} now={now} />
+                      <DueDateBadge client={client} now={now} />{' '}
+                      <Badge bg={client.active ? 'success' : 'warning'} pill>
+                        {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge>
                       </td>
                     </tr>
                   )}
