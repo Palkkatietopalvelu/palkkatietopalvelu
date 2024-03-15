@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import mailService from '../services/mail'
+import smsService from '../services/sms'
 import Notification from './Notification'
 import { format } from 'date-fns'
 import { notify } from '../reducers/notificationReducer'
@@ -11,7 +12,8 @@ const ClientReminder = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const [clients, setClients] = useState([])
-  const [inputs, setInputs] = useState([])
+  const [emailinputs, setEmailinputs] = useState([])
+  const [smsinputs, setSmsinputs] = useState([])
 
   useEffect(() => {
     if (user) {
@@ -47,8 +49,13 @@ const ClientReminder = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    mailService.send(inputs)
-    dispatch(notify('Muistutukset lähetetty'))
+    try {
+      await mailService.send(emailinputs)
+      await smsService.send(smsinputs)
+      dispatch(notify('Muistutukset lähetetty'))
+    } catch (error) {
+      console.error('An error occurred:', error)
+    }
   }
 
   return (
@@ -61,7 +68,8 @@ const ClientReminder = () => {
             <Table striped>
               <thead>
                 <tr>
-                  <th>Valitse</th>
+                  <th>Sähköpostimuistustus</th>
+                  <th>Tekstiviestimuistustus</th>
                   <th>Yritys</th>
                   <th>Seuraava eräpäivä</th>
                 </tr>
@@ -70,8 +78,12 @@ const ClientReminder = () => {
                 {clients.map((client) => (
                   <tr key={client.id}>
                     <td><CheckBox name={client.id}
-                      inputs={inputs}
-                      setInputs={setInputs}
+                      inputs={emailinputs}
+                      setInputs={setEmailinputs}
+                    /></td>
+                    <td><CheckBox name={client.id}
+                      inputs={smsinputs}
+                      setInputs={setSmsinputs}
                     /></td>
                     <td>{client.company}</td>
                     <td>{format(new Date(client.deadline), 'dd.MM.yyyy')}</td>
