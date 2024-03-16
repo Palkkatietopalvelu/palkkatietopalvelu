@@ -41,7 +41,7 @@ export const addClient = (client) => {
       dispatch(getClients())
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen', 'danger'))
       return false
     }
   }
@@ -56,7 +56,7 @@ export const updateClient = (client) => {
       dispatch(getClients())
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen', 'danger'))
       return false
     }
   }
@@ -70,7 +70,26 @@ export const deleteClient = (client) => {
       dispatch(notify('Asiakkaan tiedot poistettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen', 'danger'))
+      return false
+    }
+  }
+}
+
+export const updateStatus = (client) => {
+  return async dispatch => {
+    try {
+      const data = await clientService.status(client)
+      if (client.status === false) {
+        dispatch(notify('Asiakas deaktivoitu'))
+      } else {
+        dispatch(notify('Asiakas aktivoitu'))
+      }
+      dispatch(update(data))
+      dispatch(getClients())
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, tarkistathan tiedot uudelleen', 'danger'))
       return false
     }
   }

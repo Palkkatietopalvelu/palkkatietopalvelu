@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux'
+import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
-  const message = useSelector(({ notification }) => notification)
+  const messages = useSelector(({ notification }) => notification)
 
-  if (!message.content) {
+  if (messages.length === 0) {
     return
   }
 
   return (
     <div>
-      {message.content}
+      <Alert variant={messages.slice(-1)[0].type}>{messages.slice(-1)[0].content}</Alert>
     </div>
   )
 }

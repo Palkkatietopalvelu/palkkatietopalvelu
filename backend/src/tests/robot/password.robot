@@ -7,67 +7,63 @@ Suite Teardown  Close Browser
 Create User With Initial Password Succeeds
     Initialize Database
     Go To Register Page
-    Create User  pekka  pekka123
-    Login With Credentials  pekka  pekka123
+    Create User  pekka@mail.com  pekka123
+    Login With Credentials  pekka@mail.com  pekka123
     Logged In Page Should Be Open
     Logout
 
 Change Password Fails With Differing New Passwords
-    Login With Credentials  pekka  pekka123
+    Login With Credentials  pekka@mail.com  pekka123
     Logged In Page Should Be Open
     Go To My Page And Open Change Password Form
     Set Old Password  pekka123
     Set New Password  new123
     Set New Password Again  notSame123
     Change Password
-    Page Should Contain  Salasanat eivät täsmää
+    Wait For  Salasanat eivät täsmää
 
 Change Password Fails With Invalid Current Password
     Set Old Password  notMyPassword
     Set New Password  new123
     Set New Password Again  new123
-    Wait Until Page Does Not Contain  Salasanat eivät täsmää
     Change Password
-    Page Should Contain  Väärä nykyinen salasana
+    Wait For  Väärä nykyinen salasana
 
 Change Password Fails With Too Short New Password
     Set Old Password  pekka123
     Set New Password  no
     Set New Password Again  no
-    Wait Until Page Does Not Contain  Väärä nykyinen salasana
     Change Password
-    Page Should Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkiä
+    Wait For  Salasanan täytyy olla ainakin 3 merkkiä pitkä
 
 Change Password Fails With Too Long New Password
     Set Old Password  pekka123
     Set New Password  waytoolongpassword
     Set New Password Again  waytoolongpassword
-    Wait Until Page Does Not Contain  Salasanan täytyy olla ainakin 3 merkkiä pitkiä
     Change Password
-    Page Should Contain  Salasana ei saa olla yli 15 merkkiä pitkä
+    Wait For  Salasana ei saa olla yli 15 merkkiä pitkä
 
 Change Password Succeeds With Valid Info
     Set Old Password  pekka123
     Set New Password  new123
     Set New Password Again  new123
-    Wait Until Page Does Not Contain  Salasana ei saa olla yli 15 merkkiä pitkä
     Change Password
     Wait Until Page Contains  Salasana vaihdettu onnistuneesti  timeout=15s
     Log Out
 
 Login With Old Password Fails
-    Login With Credentials  pekka  pekka123
-    Page Should Contain  Väärä käyttäjätunnus tai salasana
+    Login With Credentials  pekka@mail.com  pekka123
+    Wait For  Väärä käyttäjätunnus tai salasana
 
 Login With New Password Succeeds
-    Login With Credentials  pekka  new123
+    Login With Credentials  pekka@mail.com  new123
     Logged In Page Should Be Open
 
 
 *** Keywords ***
 Go To My Page And Open Change Password Form
     Click Link  OMAT SIVUT
-    Page Should Contain  Käyttäjätilin asetukset
+    Wait For  Käyttäjätilin asetukset
     Click Button  Vaihda salasana
 
 Change Password

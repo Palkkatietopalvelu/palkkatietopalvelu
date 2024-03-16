@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux'
 import Notification from './Notification'
-import { Table } from 'react-bootstrap'
+import { Table, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
+import { format, endOfDay } from 'date-fns'
+import DueDateBadge from './DueDateBadge'
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
   const clients = useSelector(({ clients }) =>
     clients).filter(c => c.user_id === user.id)
+  const now = endOfDay(new Date())
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -23,7 +25,7 @@ const HomeAdmin = () => {
             <thead>
               <tr>
                 <th>Yritys</th>
-                <th>Eräpäivä</th>
+                <th>Seuraava eräpäivä</th>
               </tr>
             </thead>
             <tbody>
@@ -38,7 +40,11 @@ const HomeAdmin = () => {
                         </Link>
                       </td>
                       <td>{client.deadlines != '' &&
-                      format(client.deadlines[0], 'dd.MM.yyyy')}</td>
+                        format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
+                      <DueDateBadge client={client} now={now} />{' '}
+                      <Badge bg={client.active ? 'success' : 'warning'} pill>
+                        {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge>
+                      </td>
                     </tr>
                   )}
                 )}

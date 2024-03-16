@@ -5,9 +5,12 @@ import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
+import { useState } from 'react'
 
 const ClientForm = () => {
   const dispatch = useDispatch()
+  const [addButtonText, setAddButtonText] = useState('Lisää')
+
   const user = useSelector(({ user }) => user)
   const company = useField()
   const email = useField()
@@ -22,6 +25,7 @@ const ClientForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setAddButtonText('Lisätään...')
     dispatch(addClient({
       user_id: user.id,
       company: company.value,
@@ -33,6 +37,7 @@ const ClientForm = () => {
     })).then(result => {
       if (result) {
         resetFields(event)
+        setAddButtonText('Lisää')
       }
     })
   }
@@ -87,7 +92,7 @@ const ClientForm = () => {
             <Form.Label>Palkkakausi:</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required />
           </Form.Group><br />
-          <Button id='lisää' variant="primary" type="submit">Lisää</Button>
+          <Button id='lisää' variant="primary" type="submit">{addButtonText}</Button> <br /><br />
         </Form>
       </div>}
     </div>

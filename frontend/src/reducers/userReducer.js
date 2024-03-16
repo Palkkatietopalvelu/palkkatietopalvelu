@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import userService from '../services/user'
-import clientUserService from '../services/client_user'
+import setpasswordService from '../services/setpassword'
+import resetpasswordService from '../services/resetpassword'
 import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
@@ -33,7 +34,7 @@ export const loginUser = (credentials) => {
       dispatch(getClients())
       return true
     } catch (e) {
-      dispatch(notify('Väärä käyttäjätunnus tai salasana'))
+      dispatch(notify('Väärä käyttäjätunnus tai salasana', 'danger'))
       return false
     }
   }
@@ -61,7 +62,7 @@ export const registerUser = (credentials) => {
       dispatch(notify('Käyttäjä luotu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe käyttäjän luonnissa'))
+      dispatch(notify(e.response?.data || 'Virhe käyttäjän luonnissa', 'danger'))
       return false
     }
   }
@@ -74,7 +75,20 @@ export const changePassword = (data) => {
       dispatch(notify('Salasana vaihdettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe tietojen päivittämisessä'))
+      dispatch(notify(e.response?.data || 'Virhe tietojen päivittämisessä', 'danger'))
+      return false
+    }
+  }
+}
+
+export const resetClientPassword = (email) => {
+  return async dispatch => {
+    try {
+      await resetpasswordService.resetpassword(email)
+      dispatch(notify('Sähköposti lähetettiin onnistuneesti'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tällä sähköpostilla ei löytynyt tunnuksia', 'danger'))
       return false
     }
   }
@@ -83,11 +97,11 @@ export const changePassword = (data) => {
 export const setClientPassword = (data) => {
   return async dispatch => {
     try {
-      await clientUserService.setpassword(data)
+      await setpasswordService.setpassword(data)
       dispatch(notify('Salasana asetettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Virhe salasanan asettamisessa'))
+      dispatch(notify(e.response?.data || 'Virhe salasanan asettamisessa', 'danger'))
       return false
     }
   }
@@ -96,7 +110,7 @@ export const setClientPassword = (data) => {
 export const validateToken = (token) => {
   return async dispatch => {
     try {
-      await clientUserService.get(token)
+      await setpasswordService.get(token)
       return true
     } catch (e) {
       return false

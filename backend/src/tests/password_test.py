@@ -7,7 +7,7 @@ from initialize_db import initialize_database
 class TestPasswordChange(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         token = jwt.encode(
             {"username": "pekka", "id": "1"}, os.environ.get('SECRET_KEY'), algorithm='HS256')
@@ -15,7 +15,7 @@ class TestPasswordChange(unittest.TestCase):
 
     def test_login_works_with_initial_password(self):
         with app.test_request_context():
-            data = {"username": "pekka", "password": "pekka123"}
+            data = {"username": "pekka@mail.com", "password": "pekka123"}
             response = app.test_client().post("/api/login", json=data)
             self.assertEqual(response.status_code, 200)
 
@@ -30,7 +30,7 @@ class TestPasswordChange(unittest.TestCase):
     def test_login_after_password_change(self):
         with app.test_request_context():
             self.test_change_password_with_valid_data()
-            data = {"username": "pekka", "password": "okPwd"}
+            data = {"username": "pekka@mail.com", "password": "okPwd"}
             response = app.test_client().post("/api/login", json=data)
             self.assertEqual(response.status_code, 200)
 
@@ -65,4 +65,23 @@ class TestPasswordChange(unittest.TestCase):
                     "newPassword": "waytoolongpassword",
                     "confirmPassword": "waytoolongpassword"}
             response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            self.assertEqual(response.status_code, 400)
+
+class TestResetPassword(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
+        app.test_client().post("/api/users", json=data)
+        self.headers = {"Content-Type": "application/json"}
+
+    def test_reset_password_with_not_existing_user(self):
+        with app.test_request_context():
+            data = {"email": "maija@mail.com"}
+            response = app.test_client().post("/api/resetpassword", json=data)
+            self.assertEqual(response.status_code, 400)
+
+    def test_reset_password_with_invalid_usermane_form(self):
+        with app.test_request_context():
+            data = {"email": "maija"}
+            response = app.test_client().post("/api/resetpassword", json=data)
             self.assertEqual(response.status_code, 400)

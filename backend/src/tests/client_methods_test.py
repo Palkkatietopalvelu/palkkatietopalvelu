@@ -9,7 +9,7 @@ from db import db
 class TestAddClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         self.client_data = { "user_id": "1",
                         "company": "Testiyritys",
@@ -63,12 +63,21 @@ class TestAddClient(unittest.TestCase):
         self.client_data["payperiod"] = None
         with self.assertRaises(ValueError):
             client_methods.validate_client_data(self.client_data)
+        
+    def test_validate_existing_email(self):
+        with app.app_context():
+            data = {"username": "testi@gmail.com", "password": "testipass", "role": 2}
+            app.test_client().post("/api/users", json=data)
+            with self.assertRaises(ValueError):
+                client_methods.validate_email(self.client_data["email"])
+
+
 
 
 class TestClientMethods(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
 
         self.client_data = {"user_id": "1",

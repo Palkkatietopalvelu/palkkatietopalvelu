@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import Notification from './Notification'
-import { updateClient, deleteClient } from '../reducers/clientsReducer'
+import { updateClient, deleteClient, updateStatus } from '../reducers/clientsReducer'
 import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
 import { DateSelect } from '../hooks/DatePicker'
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
 const UpdateClient = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false)
+
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
@@ -46,14 +50,19 @@ const UpdateClient = () => {
     })
   }
 
-  const remove = () => {
-    if (window.confirm(`Haluatko varmasti poistaa asiakkaan ${client.company}?`)) {
-      dispatch(deleteClient(client)).then(result => {
-        if (result) {
-          navigate('/')
-        }
-      })
-    }
+  const statusUpdate = () => {
+    /* Here you can set the client's status to either active or inactive.
+    If the status is currently active, we set it to false, and vice versa. */
+    dispatch(updateStatus({ id, status: client.active ? false : true }))
+  }
+
+  const handleDeleteClient = () => {
+    dispatch(deleteClient(client)).then(result => {
+      if (result) {
+        navigate('/')
+      }
+    })
+    setShowModal(false)
   }
 
   const style = {
@@ -66,9 +75,12 @@ const UpdateClient = () => {
 
   return (
     <div>
-      {user.role === 1 && <div>
-        <br /><h2>{client.company}:n tietojen muuttaminen</h2>
+      {user.role === 1 && <div><br />
+        <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
+          style={{ marginBottom: '20px' }}>
+          Takaisin asiakkaan tietoihin</Button>
         <Notification />
+        <h2>{client.company}:n tietojen muuttaminen</h2>
         <Form onSubmit={updateData}>
           <Form.Group>
             <Form.Label>Yritys</Form.Label>
@@ -97,10 +109,31 @@ const UpdateClient = () => {
             <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
           </Form.Group>
           <Button variant="primary" onClick={updateData} style={{ marginRight: '10px' }}>Tallenna tiedot</Button>
-          <Button variant="danger" onClick={remove}>Poista asiakas</Button>
+          <DeleteClientModal client={client} handleDeleteClient={handleDeleteClient}
+            showModal={showModal} setShowModal={setShowModal} />
+          <Button variant={client.active ? 'warning' : 'success'} onClick={statusUpdate}
+            style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi asiakas' : 'Aktivoi asiakas'}</Button> <br /><br />
         </Form>
       </div>}
     </div>
+  )
+}
+
+const DeleteClientModal = ({ client, handleDeleteClient, showModal, setShowModal }) => {
+  return (
+    <>
+      <Button variant="danger" onClick={() => setShowModal(true)}>Poista asiakas</Button>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Asiakkaan poistaminen</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+          <Button variant="danger" onClick={handleDeleteClient}>Poista</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   )
 }
 

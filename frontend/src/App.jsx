@@ -20,6 +20,7 @@ import ReminderSettingsForm from './components/ReminderSettingsForm'
 import SetPassword from './components/SetPassword'
 import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
+import ResetPassword from './components/ResetPassword'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
           <Route path="/setpassword/:token" element={<SetPassword />}/>
+          <Route path="/resetpassword" element={<ResetPassword />}/>
         </Routes>
       </Router>
     </div>

@@ -36,7 +36,7 @@ const RegisterForm = () => {
         <Notification />
         <Form onSubmit={handleRegistration}>
           <Form.Group>
-            <Form.Label>Käyttäjätunnus</Form.Label>
+            <Form.Label>Sähköposti</Form.Label>
             <Form.Control id='username' type='text' {...username} required />
           </Form.Group>
           <Form.Group>

@@ -10,7 +10,7 @@ from db import db
 class TestClient(unittest.TestCase):
     def setUp(self):
         initialize_database()
-        data = {"username": "pekka", "password": "pekka123", "role": 1}
+        data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
         self.client_data = { "user_id": 1,
                         "company": "Testiyritys",
@@ -20,7 +20,7 @@ class TestClient(unittest.TestCase):
                         "deadlines": json.dumps([1731196800000, 1594876800000]),
                         "payperiod": "kuukausi"}
         token = jwt.encode({
-            "username": "pekka", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
+            "username": "pekka@mail.com", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
     def test_get_clients_with_valid_token(self):

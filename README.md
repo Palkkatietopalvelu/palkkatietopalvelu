@@ -9,12 +9,19 @@
 ## Asennus ja käynnistysohjeet
 
 - Kloonaa repo
-- Luo .env-tiedosto projektin juureen ja lisää sinne nämä muuttujat:
-  >DATABASE_URL="sinun_osoite"
-  >
-  >SECRET_KEY="sinun_salainen_avain"
-  >
-  >VITE_BACKEND_URL="http://localhost:5000"
+- Luo .env-tiedostot backend ja frontend kansioihin.
+    - Lisää backendin .env tiedostoon nämä muuttujat:
+      >DATABASE_URL="sinun_osoite"
+      >
+      >SECRET_KEY="sinun_salainen_avain"
+      >
+      >MAIL_USERNAME="sinun_mailtrap_username"
+      >
+      >MAIL_PASSWORD="sinun_mailtrap_salasana"
+      
+    - Lisää frontendin .env tiedostoon tämä muuttuja:
+      >VITE_BACKEND_URL="http://localhost:5000"
+      >
 
   .env-tiedosto on henkilökohtainen, älä ikinä jaa sitä mihinkään.
   DATABASE_URLin määrittelemiseen tietoa [täällä](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING)
@@ -45,6 +52,12 @@ Frontendin lint-virheet voi korjata näin:
 > npm run lint -- --fix
 
 ### Testit
+Lisää testien ajon ajaksi backendin .env tiedostoon myös seuraavat:
+  >TEST_DATABASE_URL="sinun_osoite"
+  >
+  >FLASK_ENV="development"
+
+Muista ottaa FLASK_ENV muuttuja pois .env tiedostosta testien ajon jälkeen. Kun FLASK_ENV="development" on määritelty, ohjelma käyttää tietokantana TEST_DATABASE_URL määriteltyä tietokantaa eikä asiakkaita lisätessä lähetetä sähköposteja.
 
 robot-testit:
 > poetry run invoke robottests

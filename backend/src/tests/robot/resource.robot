@@ -4,7 +4,7 @@ Library  ../../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
-${DELAY}  0.1 seconds
+${DELAY}  0 seconds
 ${HOME_URL}  http://${SERVER}
 
 *** Keywords ***
@@ -22,7 +22,7 @@ Initialize Database
 
 Logged In Page Should Be Open
     Title Should Be  Palkkatietopalvelu
-    Page Should Contain  Asiakkaat
+    Wait For  Asiakkaat
 
 Go To Home Page
     Go To  ${HOME_URL}
@@ -62,11 +62,11 @@ Setup With Existing User
     Open And Configure Browser
     Initialize Database
     Go To Register Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  create
     Go To Login Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
@@ -75,23 +75,32 @@ Setup With Existing User And Client
     Open And Configure Browser
     Initialize Database
     Go To Register Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  create
     Go To Login Page
-    Set Username  testuser
+    Set Username  testuser@mail.com
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
     Click Link  LISÄÄ ASIAKAS
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
-    Sleep  3s
-    Page Should Contain  Asiakas lisätty onnistuneesti
+    Wait For  Asiakas lisätty onnistuneesti
 
-Login As Client
+Login As New Client
+    ${Link}=  Set Password Link  testi@email.com
+    Go To  ${Link}
+    Set Password  123
+    Set Confirm Password  123
+    Click Button  setpassword
+    Wait For  Salasana asetettu onnistuneesti
     Go To Login Page
     Set Username  testi@email.com
-    Set Password  asiakas123
+    Set Password  123
     Click Button  login
-    Page Should Contain  Tervetuloa palkkatietopalveluun!
+    Wait For  Tervetuloa palkkatietopalveluun!
+
+Wait For
+    [Arguments]  ${text}
+    Wait Until Page Contains  ${text}  timeout=10s

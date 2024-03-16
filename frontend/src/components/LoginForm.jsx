@@ -4,6 +4,7 @@ import { useField } from '../hooks'
 import { loginUser } from '../reducers/userReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const LoginForm = () => {
         <Notification />
         <Form onSubmit={handleLogin}>
           <Form.Group>
-            <Form.Label>Käyttäjätunnus</Form.Label>
+            <Form.Label>Sähköposti</Form.Label>
             <Form.Control id='username' type='text' {...username} required />
           </Form.Group>
           <Form.Group>
@@ -39,6 +40,8 @@ const LoginForm = () => {
           </Form.Group> <br />
           <Button id="login" type="submit" variant="primary">Kirjaudu</Button>
         </Form>
+        <br/>
+        <Link to={'/resetpassword'}>Unohditko salasanasi?</Link>
       </div>}
     </div>
   )

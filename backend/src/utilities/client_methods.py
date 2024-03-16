@@ -6,7 +6,7 @@ from db import db
 
 def get_clients():
     sql = text("""SELECT id, company, email, phonenumber,
-               bi_code, payperiod, user_id FROM clients""")
+               bi_code, payperiod, user_id, active FROM clients""")
     result = db.session.execute(sql)
     all_clients = [{"id": row[0],
                     "company": row[1],
@@ -14,7 +14,8 @@ def get_clients():
                     "phonenumber": row[3],
                     "bi_code": row[4],
                     "payperiod": row[5],
-                    "user_id": row[6]
+                    "user_id": row[6],
+                    "active": row[7]
                     } for row in result.fetchall()]
 
     for i, client in enumerate(all_clients):
@@ -74,7 +75,11 @@ def delete_client(client_id):
     delete_deadlines(client_id)
     sql = text("""DELETE FROM clients WHERE id=:id""")
     db.session.execute(sql, {"id": client_id})
-    db.session.commit()
+
+def update_status(client_id, status):
+    sql = text("""UPDATE clients SET active=:active WHERE id=:id""")
+    db.session.execute(sql, {"id": client_id, "active": status})
+    return get_client_data(client_id)
 
 def get_email(client_id):
     sql = text("SELECT email FROM clients WHERE id=:id")

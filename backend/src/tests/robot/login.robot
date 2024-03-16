@@ -9,9 +9,9 @@ Go To Home Page
     Go To Home Page
     Home Page Should Be Open
 
-Login With Correct Credentials
+Login With Correct Admin Credentials
     Create User And Go To Login Page
-    Set Username  masa
+    Set Username  masa@mail.com
     Set Password  masa123
     Submit Credentials
     Login Should Succeed
@@ -19,21 +19,21 @@ Login With Correct Credentials
 
 Login Should Fail With Incorrect Username
     Go To Login Page
-    Set Username  pekka
+    Set Username  pekka@mail.com
     Set Password  masa123
     Submit Credentials
     Login Should Fail
 
 Login Should Fail With Incorrect Password
     Go To Login Page
-    Set Username  masa
+    Set Username  masa@mail.com
     Set Password  wrong
     Submit Credentials
     Login Should Fail
 
 Logout Should Succeed After Login
     Go To Login Page
-    Set Username  masa
+    Set Username  masa@mail.com
     Set Password  masa123
     Submit Credentials
     Login Should Succeed
@@ -44,7 +44,7 @@ Logout Should Succeed After Login
 *** Keywords ***
 Create User And Go To Login Page
     Go To Register Page
-    Set Username  masa
+    Set Username  masa@mail.com
     Set Password  masa123
     Register User
     Go To Login Page
@@ -53,7 +53,7 @@ Login Should Succeed
     Logged In Page Should Be Open
 
 Login Should Fail
-    Page Should Contain  Väärä käyttäjätunnus tai salasana
+    Wait For  Väärä käyttäjätunnus tai salasana
 
 Logout Should Succeed
     Page Should Contain  KIRJAUDU

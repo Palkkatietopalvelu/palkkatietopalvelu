@@ -1,5 +1,6 @@
 import os
 import secrets
+from datetime import datetime, timedelta
 import jwt
 from flask import jsonify, request
 from flask_mail import Message
@@ -14,14 +15,10 @@ from utilities import client_methods
 
 def create_client_user(email):
     try:
-        username = email
-        if ENV == "development":
-            password = "asiakas123"
-        else:
-            password = secrets.token_hex(16)
+        password = secrets.token_hex(16)
         role = 2
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password, role=role)
+        new_user = User(username=email, password=hashed_password, role=role)
         db.session.add(new_user)
     except Exception as e: # pylint: disable=broad-except
         raise ValueError('Virhe asiakkaan tunnusten luomisessa') from e
@@ -32,22 +29,28 @@ def create_client_user(email):
 def send_login_email(email):
     try:
         token = get_setpassword_token(email)
-        link = request.headers['FrontUrl'] + '/setpassword/' + token
+        link = setpassword_link(token)
         recipient = email
         msg = Message('Tunnukset',
                     sender = app.config['MAIL_USERNAME'],
                     recipients = [recipient])
         msg.body = f'''Hei! Tässä linkki, josta pääset asettamaan salasanan palkkatietopalveluun.
-        Sähköpostisi toimii käyttäjänimenä. 
-        {link}'''
+{link}
+Linkki on voimassa 1 vuorokauden. 
+Jos linkki on vanhentunut voit tilata uuden linkin kirjautumissivulta
+"Unohditko salananasi?" kohdasta.'''
         mail.send(msg)
         return 'Asiakkaan tunnukset lähetetty', 200
     except Exception as e: # pylint: disable=broad-except
         raise ValueError('Virhe tunnusten lähetyksessä asiakkaan sähköpostiin') from e
 
+def setpassword_link(token):
+    return request.headers['FrontUrl'] + '/setpassword/' + token
+
 def get_setpassword_token(email):
-    user_info = {"username": email}
-    token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
+    expiration_time = datetime.utcnow() + timedelta(days=1)
+    data = {"username": email, "exp": expiration_time}
+    token = jwt.encode(data, os.environ.get('SECRET_KEY'), algorithm='HS256')
     return token
 
 def verify_setpassword_token(token):
