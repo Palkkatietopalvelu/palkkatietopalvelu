@@ -3,9 +3,9 @@ from pathlib import Path
 #Pathlib mahdollistaa suhteellisen tiedostopolun käyttämisen tiedostoja avatessa
 
 
-def load_settings():
+def load_settings(filename = 'custom.json'):
     try:
-        path = Path(__file__).parent / '../sched_settings/custom.json'
+        path = Path(__file__).parent / f'../sched_settings/{filename}'
         with path.open(encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
     except FileNotFoundError:
@@ -54,3 +54,7 @@ def validate_settings(settings):
             raise ValueError('Virheellisiä delta-arvoja')
 
     return settings
+
+def delete_custom(filename = 'custom.json'):
+    path = Path(__file__).parent / f'../sched_settings/{filename}'
+    path.unlink()
