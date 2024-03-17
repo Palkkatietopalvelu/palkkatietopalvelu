@@ -21,6 +21,7 @@ import SetPassword from './components/SetPassword'
 import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
 import ResetPassword from './components/ResetPassword'
+import Trash from './components/Trash'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
+          <Route path="/client/:id/trash" element={<Trash />}/>
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { Table, Button } from 'react-bootstrap'
 import FileHandler from './FileHandler'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const Client = () => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const Client = () => {
       dispatch(getFile())}
   }, [dispatch, id, user])
 
-  const files = useSelector(({ file }) => file).filter(c => c.owner === id)
+  const files = useSelector(({ file }) => file).filter(f => f.owner === id && f.delete_date === null)
 
   if (!user) {
     return ('Et ole kirjautunut sisään')

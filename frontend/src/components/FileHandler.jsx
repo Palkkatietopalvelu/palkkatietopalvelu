@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
-import { addFile, deleteFile, downloadFile } from '../reducers/fileReducer'
+import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
 
@@ -44,12 +44,14 @@ const FileHandler = ({ client, files }) => {
   }
 
   const handleFileDownload = (fileId, fileName) => {
-    dispatch(downloadFile(fileId, fileName))
+    dispatch(downloadFile(fileId, fileName)).then(() => {
+      dispatch(moveFileToTrash({ id: fileId }))
+    })
   }
 
-  const handleFileDelete = (fileId, fileName) => {
-    if (window.confirm(`Haluatko varmasti poistaa tiedoston ${fileName}?`)) {
-      dispatch(deleteFile({ id: fileId })).then(result => {
+  const handleFileToTrash = (fileId, fileName) => {
+    if (window.confirm(`Haluatko varmasti siirtää tiedoston ${fileName} roskakoriin?`)) {
+      dispatch(moveFileToTrash({ id: fileId })).then(result => {
         if (result) {
           if (user.role===2){
             navigate('/')}
@@ -89,14 +91,18 @@ const FileHandler = ({ client, files }) => {
       </div>
     </div>}
       <div>
-        <br /><h4>Ladatut tiedostot</h4>
+        <br /><h4>Ladatut tiedostot {' '}
+          <Link to={`/client/${client.id}/trash`} id='trash'
+            style={{ color: 'black' }} className="bi bi-trash"
+            onMouseOver={(e) => e.target.style.color = 'purple'} onMouseOut={(e) => e.target.style.color = 'black'} alt="Siirry roskakoriin"
+          ></Link></h4>
         <ul>
           {files.map((file) => (
             <li key={file.id}>
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
+              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileToTrash(file.id, file.name)}>Poista</Button>
             </li>
           ))}
         </ul>

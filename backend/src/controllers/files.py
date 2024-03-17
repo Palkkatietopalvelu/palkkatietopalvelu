@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+import jwt
 from flask import request, jsonify, send_file
 from werkzeug.utils import secure_filename
 from app import app
@@ -52,6 +53,26 @@ def download_file(file_id):
         file_path = file['path']
         return send_file(file_path, as_attachment=True, download_name=file['name'])
     return 'File not found', 404
+
+@app.route('/api/files/<int:file_id>', methods=['POST'])
+@require_login
+def move_to_trash(file_id):
+    try:
+        token = request.headers['Authorization'].split()[1]
+        user_data = jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'])
+        files.move_file_to_trash(file_id, user_data["id"])
+        return "File moved to trash", 200
+    except Exception as e: # pylint: disable=broad-except
+        return str(e), 400
+
+@app.route('/api/files/<int:file_id>/restore', methods=['POST'])
+@require_login
+def restore(file_id):
+    try:
+        files.restore_file(file_id)
+        return "File restored successfully", 200
+    except Exception as e: # pylint: disable=broad-except
+        return str(e), 400
 
 @app.route('/api/files/<int:file_id>', methods=['DELETE'])
 @require_login
