@@ -11,6 +11,8 @@ const MyPageAdmin = () => {
   const clients = useSelector(({ clients }) => clients)
   const [filteredCompanies, setFilteredCompanies] = useState([])
   const now = endOfDay(new Date())
+  const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
+    'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12' }
 
   useEffect(() => {
     if (!clients) {
@@ -39,11 +41,18 @@ const MyPageAdmin = () => {
   }
 
   const deadlineChecker = (client, searchword) => {
-    const dlExists = client.deadlines.map(dl => dl.toLowerCase().includes(searchword.toLowerCase()))
+    //const dlExists = client.deadlines.map(dl => dl.toLowerCase().includes(searchword.toLowerCase()))
+    const dlExists = client.deadlines.map(dl => duedateFormater(dl.toLowerCase()).includes(searchword.toLowerCase()))
     if(dlExists.includes(true)) {
       return client
     }
     return
+  }
+
+  const duedateFormater = (duedate) => {
+    const parts = duedate.split(' ')
+    const duedateFinnish = parts[1] + '.' + englishToDigitsMonths[parts[2]] + '.' + parts[3]
+    return duedateFinnish
   }
 
   return (
