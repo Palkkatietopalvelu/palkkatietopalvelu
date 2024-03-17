@@ -1,11 +1,16 @@
 import json
+from pathlib import Path
+#Pathlib mahdollistaa suhteellisen tiedostopolun käyttämisen tiedostoja avatessa
+
 
 def load_settings():
     try:
-        with open('src/sched_settings/custom.json', encoding='utf-8') as setting_file:
+        path = Path(__file__).parent / '../sched_settings/custom.json'
+        with path.open(encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
     except FileNotFoundError:
-        with open('src/sched_settings/default.json', encoding='utf-8') as setting_file:
+        path = Path(__file__).parent / '../sched_settings/default.json'
+        with path.open(encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
     return settings
 
