@@ -34,7 +34,7 @@ Search Company With Correct Date
     Search Date  12
     Wait For  Kallen kiska
     Wait For  12.02.2024
-    #Page Should Not Contain  Firma
+    Page Should Not Contain  Firma
     Page Should Not Contain  Nokia
 
 Search Company With Incorrect Date
