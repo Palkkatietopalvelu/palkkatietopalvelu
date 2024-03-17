@@ -11,8 +11,8 @@ const MyPageAdmin = () => {
   const clients = useSelector(({ clients }) => clients)
   const [filteredCompanies, setFilteredCompanies] = useState([])
   const now = endOfDay(new Date())
-  const englishToDigitsMonths = {"jan": "01", "feb": "02", "mar": "03", "apr": "04", "may": "05", "jun": "06",
-    "jul": "07", "aug": "08", "sep": "09", "oct": "10", "nov": "11", "dec": "12"}
+  const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
+    'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12' }
 
   useEffect(() => {
     if (!clients) {
@@ -50,8 +50,8 @@ const MyPageAdmin = () => {
   }
 
   const duedateFormater = (duedate) => {
-    const parts = duedate.split(" ")
-    const duedateFinnish = parts[1] + "." + englishToDigitsMonths[parts[2]] + "." + parts[3]
+    const parts = duedate.split(' ')
+    const duedateFinnish = parts[1] + '.' + englishToDigitsMonths[parts[2]] + '.' + parts[3]
     return duedateFinnish
   }
 
@@ -83,8 +83,7 @@ const MyPageAdmin = () => {
                       </Link>
                     </td>
                     <td>{client.deadlines != '' &&
-                      format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge client={client} now={now} />
+                      format(client.deadlines[0], 'dd.MM.yyyy')} {' '} <DueDateBadge client={client} now={now} />
                     </td>
                   </tr>
                 )}
