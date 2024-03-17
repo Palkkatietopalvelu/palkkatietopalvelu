@@ -15,10 +15,31 @@ const ClientReminder = () => {
 
   useEffect(() => {
     if (user) {
-      mailService.get().then(clients => {
-        setClients(clients)
+      mailService.get().then(fetchedClients => {
+        const aggregatedClients = aggregateClients(fetchedClients)
+        setClients(aggregatedClients)
       })
-    }}, [user])
+    }
+  }, [user])
+
+  const aggregateClients = (fetchedClients) => {
+    const groupedByCompany = {}
+
+    fetchedClients.forEach((client) => {
+      const deadlineDate = new Date(client.deadline)
+      if (!groupedByCompany[client.company] || deadlineDate < new Date(groupedByCompany[client.company].deadline)) {
+        groupedByCompany[client.company] = {
+          ...client,
+          deadline: deadlineDate,
+        }
+      }
+    })
+
+    return Object.values(groupedByCompany).map(client => ({
+      ...client,
+      deadline: client.deadline.toISOString(),
+    }))
+  }
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -42,18 +63,18 @@ const ClientReminder = () => {
                 <tr>
                   <th>Valitse</th>
                   <th>Yritys</th>
-                  <th>Eräpäivä</th>
+                  <th>Seuraava eräpäivä</th>
                 </tr>
               </thead>
               <tbody>
                 {clients.map((client) => (
-                  <tr key={client.deadline}>
+                  <tr key={client.id}>
                     <td><CheckBox name={client.id}
                       inputs={inputs}
                       setInputs={setInputs}
                     /></td>
                     <td>{client.company}</td>
-                    <td>{format(client.deadline, 'dd.MM.yyyy')}</td>
+                    <td>{format(new Date(client.deadline), 'dd.MM.yyyy')}</td>
                   </tr>
                 ))}
               </tbody>

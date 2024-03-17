@@ -26,7 +26,8 @@ def create_tables():
             email TEXT,
             phonenumber TEXT,
             bi_code TEXT,
-            payperiod TEXT
+            payperiod TEXT,
+            active BOOLEAN NOT NULL DEFAULT true              
         );
     """))
 

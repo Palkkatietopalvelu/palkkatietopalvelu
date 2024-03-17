@@ -7,21 +7,24 @@ import CheckBox from './CheckBox'
 import settingsService from '../services/reminderSettings'
 import { useField } from '../hooks/index'
 import Switch from 'react-switch'
-import days from './Days'
+import daysModule from './Days'
+
+const { weekDays, relativeDays } = daysModule
 
 const ReminderSettingsForm = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-  const [inputs, setInputs] = useState([])
-  const hour = useField()
+  const hour = useField('')
   const [checked, setChecked] = useState(false)
-  const deltas = useField()
+  const [days, setDays] = useState('')
+  const [deltas, setDeltas] = useState([])
 
   useEffect(() => {
     if (user) {
       settingsService.get().then(settings => {
         setChecked(settings.enabled)
-        setInputs(settings.days)
+        setDays(settings.days.split(',').map(day => `day-${day}`))
+        setDeltas(settings.deltas.map(delta => `delta-${delta}`))
       })
     }}, [user])
 
@@ -34,22 +37,35 @@ const ReminderSettingsForm = () => {
   }
 
   const handleSubmit = async (event) => {
+    event.preventDefault()
     try {
-      event.preventDefault()
-      const data = await settingsService.send([inputs, hour, checked, deltas])
+      const formattedDays = days.map(day => day.replace('day-', '')).join(',')
+      const formattedDeltas = deltas.map(delta => parseInt(delta.replace('delta-', ''), 10))
+      const settingsToSave = {
+        days: formattedDays,
+        hour: hour.value,
+        enabled: checked,
+        deltas: formattedDeltas,
+      }
+      const response = await settingsService.send(settingsToSave)
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen'))
+      console.error(e)
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'error'))
     }
   }
+
+  const half = Math.ceil(relativeDays.length / 2)
+  const firstHalf = relativeDays.slice(0, half)
+  const secondHalf = relativeDays.slice(half)
 
   return (
     <div>
       {user.role === 1 && <div>
-        <br /><h2>Muistutusasetukset</h2>
+        <br /><h2>Automaattiset muistutukset</h2>
         <Notification />
         <div className="switch">
-          <p>Muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
+          <p>Automaattiset muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
           <label>
             <Switch
               onChange={handleChange}
@@ -61,25 +77,54 @@ const ReminderSettingsForm = () => {
         <br /><p>Muistutuspäivät</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            {days.map((day, index) => (
-              <div key={index}>
-                <CheckBox name={index}
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  checked={inputs.includes(index)}
+            {weekDays.map((day, index) => (
+              <div key={`day-${index}`}>
+                <CheckBox
+                  name={`day-${index}`}
+                  inputs={days}
+                  setInputs={setDays}
+                  checked={days.includes(`day-${index}`)}
                 />
                 {' '}{day}
                 <br />
               </div>
             ))}
-            <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
+            <Form.Label style={{ marginTop: '20px' }}>Kellonaika (tasatunti 0-23)</Form.Label>
             <Form.Control id='hour' placeholder='14' {...hour} required = {checked}/>
-            <Form.Label>
-            Listaa, milloin muistutukset viimeistään
-            lähetetään suhteessa eräpäivään.
+            <Form.Label style={{ marginTop: '20px' }}>
+            Valitse, milloin muistutukset lähetetään suhteessa eräpäivään.
             </Form.Label>
-            <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} required = {checked}/>
-            <Button type="submit">Tallenna</Button>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+              <div>
+                {firstHalf.map((day, index) => (
+                  <div key={`first-${index}`}>
+                    <CheckBox
+                      name={`delta-${index}`}
+                      inputs={deltas}
+                      setInputs={setDeltas}
+                      checked={deltas.includes(`delta-${index}`)}
+                    />
+                    {' '}{day}
+                    <br />
+                  </div>
+                ))}
+              </div>
+              <div>
+                {secondHalf.map((day, index) => (
+                  <div key={`second-${index}`}>
+                    <CheckBox
+                      name={`delta-${index + half}`}
+                      inputs={deltas}
+                      setInputs={setDeltas}
+                      checked={deltas.includes(`delta-${index + half}`)}
+                    />
+                    {' '}{day}
+                    <br />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Button type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
           </Form.Group>
         </Form>
       </div>}

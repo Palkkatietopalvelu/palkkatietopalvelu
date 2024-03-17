@@ -78,3 +78,16 @@ def delete_client(client_id):
     except Exception as error:  # pylint: disable=broad-except
         db.session.rollback()
         return str(error), 400
+
+@app.route("/api/client/<int:client_id>/status", methods=["POST"])
+@require_login
+@require_admin
+def update_status(client_id):
+    try:
+        client = request.json
+        clients.update_status(client_id, client["status"])
+        db.session.commit()
+        return "Status päivitetty", 200
+    except Exception as error:  # pylint: disable=broad-except
+        db.session.rollback()
+        return str(error), 400

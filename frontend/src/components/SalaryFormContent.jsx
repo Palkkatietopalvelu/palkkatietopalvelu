@@ -34,7 +34,8 @@ const SalaryFormContent = ({
   const buttonStyle = { margin: '10px 5px 20px' }
   const buttonStyle2 = { margin: '60px 5px 0px' }
 
-  return (
+  return (<div><br />
+    <h3>Palkkatietolomake</h3>
     <Form onSubmit={handleSubmit}>
       <div style={radioStyle}>
         <Form.Check
@@ -144,6 +145,7 @@ const SalaryFormContent = ({
         Tallenna lomake
       </Button>
     </Form>
+  </div>
   )
 }
 
