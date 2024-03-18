@@ -109,6 +109,8 @@ def validate_client_data(client_data):
     return True
 
 def validate_email(email):
+    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", email):
+        raise ValueError('Sähköposti ei ole oikeassa muodossa')
     if email_is_user(email):
         raise ValueError('Tällä sähköpostilla on jo luotu tunnukset, anna toinen sähköposti')
     return True

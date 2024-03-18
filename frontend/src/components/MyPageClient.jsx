@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Table } from 'react-bootstrap'
+import DueDateBadge from './DueDateBadge'
 
 const MyPageClient = () => {
   const user = useSelector(({ user }) => user)
@@ -26,10 +27,10 @@ const MyPageClient = () => {
           <tbody key={client.email}>
             <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
             <tr><td>Eräpäivät</td><td>{client.deadlines.map(date =>
-              (<div key={date}>
+              <div key={date}>
                 {new Date(date).toLocaleString('fi-FI',
                   { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-              </div>))}</td></tr>
+              </div>)} <DueDateBadge client={client} /> </td></tr>
             <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
           </tbody>
         </Table>
