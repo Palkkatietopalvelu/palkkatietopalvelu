@@ -91,11 +91,7 @@ const FileHandler = ({ client, files }) => {
       </div>
     </div>}
       <div>
-        <br /><h4>Ladatut tiedostot {' '}
-          <Link to={`/client/${client.id}/trash`} id='trash'
-            style={{ color: 'black' }} className="bi bi-trash"
-            onMouseOver={(e) => e.target.style.color = 'purple'} onMouseOut={(e) => e.target.style.color = 'black'} alt="Siirry roskakoriin"
-          ></Link></h4>
+        <br /><h4>Ladatut tiedostot</h4>
         <ul>
           {files.map((file) => (
             <li key={file.id}>
@@ -107,6 +103,7 @@ const FileHandler = ({ client, files }) => {
           ))}
         </ul>
       </div>
+      <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
     </div>
   )
 }
