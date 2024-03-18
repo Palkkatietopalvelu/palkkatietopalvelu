@@ -8,6 +8,7 @@ import utilities.file_methods as file_methods
 from initialize_db import initialize_database
 import json
 import jwt
+import sqlalchemy.exc
 
 class TestFile(unittest.TestCase):
     def setUp(self):
@@ -31,6 +32,12 @@ class TestFile(unittest.TestCase):
             "id": 1,
             "owner": 1,
             "name": "test.pdf",
+            "path": "test/path",
+            "date": datetime.now()
+        }
+        self.odt = {
+            "id": 1,
+            "owner": 1,
             "path": "test/path",
             "date": datetime.now()
         }
@@ -58,3 +65,22 @@ class TestFile(unittest.TestCase):
             self.assertEqual(file["delete_date"], None)
             self.assertEqual(file["deleted_by"], None)
 
+    def test_get_all_files_with_valid_token(self):
+        with app.app_context():
+            file_methods.add_file(self.file)
+            response = app.test_client().get("/api/files", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.get_json()), 1)
+
+    def test_upload_odt_file(self):
+        with app.app_context():
+            with self.assertRaises(sqlalchemy.exc.StatementError):
+                file_methods.add_file(self.odt)
+            response = app.test_client().post("/api/files", headers=self.headers)
+            self.assertEqual(response.status_code, 400)
+
+    def test_upload_pdf_file(self):
+        with app.app_context():
+            file_methods.add_file(self.file)
+            response = app.test_client().post("/api/files/1", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
