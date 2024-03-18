@@ -6,7 +6,6 @@ import {
 import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
-import { getFile } from './reducers/fileReducer'
 import ClientForm from './components/ClientForm'
 import Client from './components/Client'
 import UpdateClient from './components/ClientUpdateForm'
@@ -21,6 +20,7 @@ import SetPassword from './components/SetPassword'
 import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
 import ResetPassword from './components/ResetPassword'
+import InactiveClients from './components/ClientsInactive'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -47,6 +47,7 @@ const App = () => {
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
+          <Route path="/deactivated" element={<InactiveClients />} />
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
