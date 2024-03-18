@@ -14,7 +14,7 @@ sched.start()
 def send_reminders():
     with app.app_context():
         deadlines, emails = get_reminder_data()
-        for deadline, email in zip(deadlines, emails): # pylint: disable=unused-variable
+        for deadline, email in zip(deadlines, emails):
             recipient = email
             msg = Message('Muistutus lähestyvästä eräpäivästä',
                         sender = app.config['MAIL_USERNAME'],

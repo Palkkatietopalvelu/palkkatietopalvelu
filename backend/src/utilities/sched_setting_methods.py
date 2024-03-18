@@ -14,7 +14,7 @@ def load_settings(filename = 'custom.json'):
             settings = json.load(setting_file)
     return settings
 
-def save_settings(data):
+def save_settings(data, filename = 'custom.json'):
     settings_data = {
         'days': data['days'],
         'hour': data['hour'],
@@ -22,8 +22,8 @@ def save_settings(data):
         'deltas': data['deltas']
     }
     validated_data = validate_settings(settings_data)
-
-    with open('src/sched_settings/custom.json', 'w', encoding='utf-8') as setting_file:
+    path = Path(__file__).parent / f'../sched_settings/{filename}'
+    with open(path, 'w', encoding='utf-8') as setting_file:
         json.dump(validated_data, setting_file, indent=4)
 
     return True
