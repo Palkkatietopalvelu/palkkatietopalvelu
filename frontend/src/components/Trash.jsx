@@ -44,9 +44,9 @@ const Trash = () => {
           {files.map((file) => (
             <li key={file.id}>
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button id={file.id} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
+              <Button id={file.id+'palauta'} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
               {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
+              <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
             </li>
           ))}
         </ul>
