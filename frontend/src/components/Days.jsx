@@ -9,21 +9,23 @@ const weekDays = [
 ]
 
 const relativeDays = [
-  '7 päivää ennen eräpäivää',
-  '6 päivää ennen eräpäivää',
-  '5 päivää ennen eräpäivää',
-  '4 päivää ennen eräpäivää',
-  '3 päivää ennen eräpäivää',
-  '2 päivää ennen eräpäivää',
-  '1 päivä ennen eräpäivää',
+  '7',
+  '6',
+  '5',
+  '4',
+  '3',
+  '2',
+  '1',
   'eräpäivänä',
-  '1 päivä eräpäivän jälkeen',
-  '2 päivää eräpäivän jälkeen',
-  '3 päivää eräpäivän jälkeen',
-  '4 päivää eräpäivän jälkeen',
-  '5 päivää eräpäivän jälkeen',
-  '6 päivää eräpäivän jälkeen',
-  '7 päivää eräpäivän jälkeen'
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
 ]
 
-export default { weekDays, relativeDays }
+const defaultremindertext = 'Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto'
+
+export default { weekDays, relativeDays, defaultremindertext }

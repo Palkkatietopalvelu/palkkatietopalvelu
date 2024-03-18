@@ -7,6 +7,9 @@ import { format } from 'date-fns'
 import { notify } from '../reducers/notificationReducer'
 import { Table, Form, Button } from 'react-bootstrap'
 import CheckBox from './CheckBox'
+import daysModule from './Days'
+
+const { defaultremindertext } = daysModule
 
 const ClientReminder = () => {
   const dispatch = useDispatch()
@@ -14,6 +17,8 @@ const ClientReminder = () => {
   const [clients, setClients] = useState([])
   const [emailinputs, setEmailinputs] = useState([])
   const [smsinputs, setSmsinputs] = useState([])
+  const [remindertext, setRemindertext] = useState(defaultremindertext)
+  const [isSending, setIsSending] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -49,13 +54,21 @@ const ClientReminder = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setIsSending(true)
+    if (emailinputs.length === 0 && smsinputs.length === 0) {
+      dispatch(notify('Valitse vähintään yksi vastaanottaja'))
+      setIsSending(false)
+      return
+    }
     try {
-      await mailService.send(emailinputs)
-      await smsService.send(smsinputs)
+      await mailService.send({ recipients: emailinputs, message: remindertext })
+      await smsService.send({ recipients: smsinputs, message: remindertext })
       dispatch(notify('Muistutukset lähetetty'))
     } catch (error) {
       console.error('An error occurred:', error)
+      dispatch(notify('Muistutusten lähetys epäonnistui'))
     }
+    setIsSending(false)
   }
 
   return (
@@ -65,6 +78,17 @@ const ClientReminder = () => {
         <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutusviestin teksti (Max. 160 merkkiä)</Form.Label>
+            <Form.Control
+              id='remindertext'
+              as="textarea"
+              rows={5}
+              required
+              value={remindertext}
+              maxLength={160}
+              onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
+            />
+            <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
             <Table striped>
               <thead>
                 <tr>
@@ -91,7 +115,7 @@ const ClientReminder = () => {
                 ))}
               </tbody>
             </Table>
-            <Button type="submit">Lähetä</Button>
+            <Button type="submit" disabled={isSending}>{isSending ? 'Lähetetään...' : 'Lähetä'}</Button>
           </Form.Group>
         </Form>
       </div>}

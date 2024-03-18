@@ -13,11 +13,12 @@ from utilities.require_admin import require_admin
 def send_sms():
     sms_username = 'reilu'
     sms_password = app.config['SMS_PASSWORD']
-    clients = request.json
-    for client_id in clients:
+    request_data = request.get_json()
+    recipients = request_data.get('recipients', [])
+    message = request_data.get('message', '')
+    for client_id in recipients:
         sms_dest = get_phonenumber(client_id)
-        sms_text = """Hei! Tämä on automaattinen muistutus palkka-ainestojen
-toimituksen lähestyvästä eräpäivästä."""
+        sms_text = message
 
         params = urllib.parse.urlencode({
             'sms_username': sms_username,
@@ -32,9 +33,9 @@ toimituksen lähestyvästä eräpäivästä."""
             response = requests.get(url)
             response.raise_for_status()
             if response.text.startswith('ERROR'):
-                print(f"Error from tekstari.fi API for {sms_dest}: {response.text}")
+                print(f"Virhe lähettäessä viestiä osoitteeseen {sms_dest}: {response.text}")
         except requests.RequestException as e:
-            print(f"Error sending SMS to {sms_dest}: {e}")
-            return jsonify({'error': 'Failed to send some SMS reminders'}), 500
+            print(f"Virhe lähettäessä viestiä osoitteeseen {sms_dest}: {e}")
+            return jsonify({'error': 'Virhe viestin lähetyksessä'}), 500
 
-    return jsonify({'message': 'SMS reminders sent successfully'}), 200
+    return jsonify({'message': 'Tekstiviestimuistutukset lähetetty onnistuneesti'}), 200

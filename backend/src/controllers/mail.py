@@ -16,14 +16,15 @@ def manual_reminders():
         return jsonify(clients), 200
 
     if request.method == 'POST':
-        data = request.json
-        for client_id in data:
-            recipient = get_email(client_id)
+        request_data = request.get_json()
+        recipients = request_data.get('recipients', [])
+        message = request_data.get('message', '')
+        for client_id in recipients:
+            receiver = get_email(client_id)
             msg = Message('Muistutus',
                         sender = app.config['MAIL_USERNAME'],
-                        recipients = [recipient])
-            msg.body = '''Hei! Tämä on automaattinen muistutus
-            palkka-ainestojen toimituksen lähestyvästä eräpäivästä.'''
+                        recipients = [receiver])
+            msg.body = str(message)
             mail.send(msg)
         return 'Reminders sent', 200
     return 400
