@@ -53,6 +53,8 @@ def run_new_job(trigger):
 
     sched.add_job(send_reminders, trigger = trigger, id = 'reminders', max_instances = 1)
 
+    return sched
+
 def create_trigger(
     hour,
     days: list = '*',
@@ -78,13 +80,15 @@ def get_reminder_data():
     emails = get_emails(client_ids)
     return deadlines, emails
 
-def get_deadline_data(client_service = clients):
-    settings = get_readable_settings()
+def get_deadline_data(client_service = clients, settings = None):
+    if not settings:
+        settings = get_readable_settings()
     deltas = [timedelta(days=delta) for delta in settings['deltas']]
     deadlines_with_ids = client_service.get_next_deadlines()
     deadlines = []
     client_ids = []
-    to_next_run = timedelta(days=days_to_next_run(settings['days']))
+    today = datetime.today().weekday()
+    to_next_run = timedelta(days=days_to_next_run(settings['days'], today))
     for deadline in deadlines_with_ids:
         time_left = deadline.next_deadline - date.today()
         if include_in_run(time_left, to_next_run, deltas):
@@ -98,15 +102,12 @@ def get_emails(client_ids):
         emails.append(clients.get_email(c_id))
     return emails
 
-def list_jobs():
-    return sched.print_jobs()
+def days_to_next_run(run_days, from_day):
+    for day in run_days:
+        if day > from_day:
+            return day - from_day
 
-def days_to_next_run(run_days):
-    today = datetime.today().weekday()
-    for i, day in enumerate(run_days):
-        if day == today and i < len(run_days) - 1:
-            return run_days[i+1]-  today
-    return run_days[0] + 6 - today
+    return run_days[0] + 7 - from_day
 
 def include_in_run(time_left, to_next_run, deltas):
     for delta in deltas:
