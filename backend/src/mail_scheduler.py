@@ -19,7 +19,7 @@ def send_reminders():
             msg = Message('Muistutus lähestyvästä eräpäivästä',
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
-            msg.body = '''Eräpäiväsi lähestyy'''
+            msg.body = f'Palkka-aineistojen toimituksen eräpäivä on {deadline}'
             mail.send(msg)
 
 def update_scheduler(minute = 0, second = 0):
@@ -80,9 +80,8 @@ def get_reminder_data():
     emails = get_emails(client_ids)
     return deadlines, emails
 
-def get_deadline_data(client_service = clients, settings = None):
-    if not settings:
-        settings = get_readable_settings()
+def get_deadline_data(client_service = clients):
+    settings = get_readable_settings()
     deltas = [timedelta(days=delta) for delta in settings['deltas']]
     deadlines_with_ids = client_service.get_next_deadlines()
     deadlines = []
