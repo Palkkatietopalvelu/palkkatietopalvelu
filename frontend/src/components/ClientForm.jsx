@@ -6,6 +6,10 @@ import { Form, Button } from 'react-bootstrap'
 import { DateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
 import { useState } from 'react'
+import days from './Days'
+
+const { weekDays, relativeDays } = days
+const months = ['Tammi', 'Helmi', 'Maalis', 'Huhti', 'Touko', 'Kesä', 'Heinä', 'Eloä', 'Syys', 'Loka', 'Marras', 'Joulu']
 
 const ClientForm = () => {
   const dispatch = useDispatch()
@@ -85,7 +89,7 @@ const ClientForm = () => {
           <Form.Group>
             <Form.Label>Eräpäivät:</Form.Label>
             <div className="form-control">
-              <DatePicker id="deadlines" {...deadlines} style={style} multiple />
+              <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDays}/>
             </div>
           </Form.Group>
           <Form.Group>
