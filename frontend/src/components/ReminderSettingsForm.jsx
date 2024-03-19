@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
 import settingsService from '../services/reminderSettings'
-import daysModule from './Days'
+import reminderInfoModule from './ReminderInfo'
 import ReminderFormFields from './ReminderSettingsFormFields'
 
-const { weekDays, relativeDays } = daysModule
+const { weekDays, relativeDays } = reminderInfoModule
 
 const ReminderSettingsForm = () => {
   const dispatch = useDispatch()

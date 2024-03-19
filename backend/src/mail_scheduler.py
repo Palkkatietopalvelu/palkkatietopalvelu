@@ -1,11 +1,10 @@
 from datetime import date, timedelta, datetime
-import urllib.parse
-import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_mail import Mail, Message
 from utilities import client_methods as clients
 from utilities.sched_setting_methods import load_settings, get_readable_settings
+from controllers.sms import send_sms_message
 from app import app
 
 mail = Mail(app)
@@ -25,24 +24,11 @@ def send_email_reminders(remindertext):
 
 def send_sms_reminders(remindertext):
     with app.app_context():
-        sms_username = 'reilu'
-        sms_password = app.config['SMS_PASSWORD']
         _, _, phonenumbers = get_reminder_data()
         for phonenumber in phonenumbers:
-            sms_text = remindertext
-            params = urllib.parse.urlencode({
-                'sms_username': sms_username,
-                'sms_password': sms_password,
-                'sms_dest': phonenumber,
-                'sms_text': sms_text,
-                'encoding': 'utf-8'
-            })
-            url = f'https://tekstari.fi/send?{params}'
-            try:
-                response = requests.get(url, timeout=5)
-                response.raise_for_status()
-            except requests.RequestException as e:
-                print(f"Error sending SMS: {e}")
+            success = send_sms_message(phonenumber, remindertext, auto=True)
+            if not success:
+                print(f"Failed to send SMS to {phonenumber}")
 
 def update_scheduler(minute = 0, second = 0):
     settings = load_settings()

@@ -7,9 +7,9 @@ import { format } from 'date-fns'
 import { notify } from '../reducers/notificationReducer'
 import { Table, Form, Button } from 'react-bootstrap'
 import CheckBox from './CheckBox'
-import daysModule from './Days'
+import reminderInfoModule from './ReminderInfo'
 
-const { defaultremindertext } = daysModule
+const { defaultremindertext } = reminderInfoModule
 
 const ClientReminder = () => {
   const dispatch = useDispatch()
