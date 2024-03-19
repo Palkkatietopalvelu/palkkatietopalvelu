@@ -4,12 +4,15 @@ import { useNavigate, Link } from 'react-router-dom'
 import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
 const FileHandler = ({ client, files }) => {
   const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
+  const [showModal, setShowModal] = useState(false)
 
   const handleFileSubmit = async (event) => {
     event.preventDefault()
@@ -49,18 +52,16 @@ const FileHandler = ({ client, files }) => {
     })
   }
 
-  const handleFileToTrash = (fileId, fileName) => {
-    if (window.confirm(`Haluatko varmasti siirtää tiedoston ${fileName} roskakoriin?`)) {
-      dispatch(moveFileToTrash({ id: fileId })).then(result => {
-        if (result) {
-          if (user.role===2){
-            navigate('/')}
-          else {
-            navigate(`/client/${client.id}`)
-          }
+  const handleFileToTrash = (fileId) => {
+    dispatch(moveFileToTrash({ id: fileId })).then(result => {
+      if (result) {
+        if (user.role===2){
+          navigate('/')}
+        else {
+          navigate(`/client/${client.id}`)
         }
-      })
-    }
+      }
+    })
   }
 
   const linkState = {
@@ -98,7 +99,8 @@ const FileHandler = ({ client, files }) => {
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileToTrash(file.id, file.name)}>Poista</Button>
+              <FileToTrashModal file={file} handleFileToTrash={handleFileToTrash}
+                showModal={showModal} setShowModal={setShowModal} />
             </li>
           ))}
         </ul>
@@ -107,5 +109,24 @@ const FileHandler = ({ client, files }) => {
     </div>
   )
 }
+
+const FileToTrashModal = ({ file, handleFileToTrash, showModal, setShowModal }) => {
+  return (
+    <>
+      <Button id={file.id} variant="danger" size="sm" onClick={() => setShowModal(true)}>Poista</Button>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Tiedoston siirtäminen roskakoriin</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Haluatko varmasti siirtää tiedoston {file.name} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+          <Button variant="danger" onClick={() => handleFileToTrash(file.id)}>Siirrä roskakoriin</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  )
+}
+
 
 export default FileHandler

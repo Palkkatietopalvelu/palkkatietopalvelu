@@ -6,6 +6,8 @@ import { Button } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -13,10 +15,10 @@ const Trash = () => {
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
   const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (user && client) {
-      console.log(client)
       dispatch(getFile())}
   }, [dispatch, user, client])
 
@@ -24,10 +26,9 @@ const Trash = () => {
     dispatch(restoreFile({ id: fileId }))
   }
 
-  const handleFileDelete = (fileId, fileName) => {
-    if (window.confirm(`Haluatko varmasti poistaa tiedoston ${fileName}?`)) {
-      dispatch(deleteFile({ id: fileId }))
-    }
+  const handleFileDelete = (fileId) => {
+    dispatch(deleteFile({ id: fileId }))
+    setShowModal(false)
   }
 
   if (!user) {
@@ -46,7 +47,8 @@ const Trash = () => {
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button id={file.id+'palauta'} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
               {' '}
-              <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
+              <DeleteFileModal file={file} handleFileDelete={handleFileDelete}
+                showModal={showModal} setShowModal={setShowModal} />
             </li>
           ))}
         </ul>
@@ -55,6 +57,24 @@ const Trash = () => {
   else {
     return ('Sinulla ei ole oikeuksia tälle sivulle')
   }
+}
+
+const DeleteFileModal = ({ file, handleFileDelete, showModal, setShowModal }) => {
+  return (
+    <>
+      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => setShowModal(true)}>Poista</Button>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Tiedoston poistaminen</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Haluatko varmasti poistaa tiedoston {file.name}?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+          <Button variant="danger" onClick={() => handleFileDelete(file.id)}>Poista</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  )
 }
 
 export default Trash
