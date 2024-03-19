@@ -13,11 +13,14 @@ from utilities.require_admin import require_admin
 def send_sms():
     request_data = request.get_json()
     recipients = request_data.get('recipients', [])
+    if len(recipients) == 0:
+        return jsonify({'message': 'OK'}), 200
     message = request_data.get('message', '')
     for client_id in recipients:
         sms_dest = get_phonenumber(client_id)
         sms_text = message
         send_sms_message(sms_dest, sms_text)
+    return jsonify({'message': 'Tekstiviestimuistutukset lähetetty onnistuneesti'}), 200
 
 def send_sms_message(sms_dest, sms_text, auto=False):
     sms_username = 'reilu'
