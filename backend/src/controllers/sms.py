@@ -30,7 +30,7 @@ def send_sms():
 
         url = f'https://tekstari.fi/send?{params}'
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=5)
             response.raise_for_status()
             if response.text.startswith('ERROR'):
                 print(f"Virhe lähettäessä viestiä osoitteeseen {sms_dest}: {response.text}")

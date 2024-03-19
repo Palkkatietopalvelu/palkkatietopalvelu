@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
-import { Button } from 'react-bootstrap'
 import settingsService from '../services/reminderSettings'
 import daysModule from './Days'
 import ReminderFormFields from './ReminderSettingsFormFields'
@@ -74,6 +73,7 @@ const ReminderSettingsForm = () => {
           <ReminderFormFields
             user={user}
             handleChange={handleChange}
+            handleSubmit={handleSubmit}
             checked={checked}
             emailinputs={emailinputs}
             setEmailinputs={setEmailinputs}

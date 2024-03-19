@@ -1,5 +1,6 @@
 from datetime import date, timedelta, datetime
-
+import urllib.parse
+import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_mail import Mail, Message
@@ -11,31 +12,69 @@ mail = Mail(app)
 sched = BackgroundScheduler(daemon=True)
 sched.start()
 
-def send_reminders():
+def send_email_reminders(remindertext):
     with app.app_context():
-        deadlines, emails = get_reminder_data()
+        deadlines, emails = get_reminder_data()[:2]
         for deadline, email in zip(deadlines, emails): # pylint: disable=unused-variable
             recipient = email
             msg = Message('Muistutus lähestyvästä eräpäivästä',
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
-            msg.body = '''Eräpäiväsi lähestyy'''
+            msg.body = remindertext
             mail.send(msg)
+
+def send_sms_reminders(remindertext):
+    with app.app_context():
+        sms_username = 'reilu'
+        sms_password = app.config['SMS_PASSWORD']
+        _, _, phonenumbers = get_reminder_data()
+        for phonenumber in phonenumbers:
+            sms_text = remindertext
+            params = urllib.parse.urlencode({
+                'sms_username': sms_username,
+                'sms_password': sms_password,
+                'sms_dest': phonenumber,
+                'sms_text': sms_text,
+                'encoding': 'utf-8'
+            })
+            url = f'https://tekstari.fi/send?{params}'
+            try:
+                response = requests.get(url, timeout=5)
+                response.raise_for_status()
+            except requests.RequestException as e:
+                print(f"Error sending SMS: {e}")
 
 def update_scheduler(minute = 0, second = 0):
     settings = load_settings()
 
-    if len(sched.get_jobs()) != 0:
-        sched.remove_job('reminders')
+    existing_jobs = sched.get_jobs()
+    for job in existing_jobs:
+        if job.id in ['email_reminders', 'sms_reminders']:
+            sched.remove_job(job.id)
 
     if settings['enabled']:
         trigger = create_trigger(
-            hour = settings['hour'],
-            days = settings['days'],
-            minute = minute,
-            second = second
+            hour=settings['hour'],
+            days=settings['days'],
+            minute=minute,
+            second=second,
         )
-        sched.add_job(send_reminders, trigger = trigger, id = 'reminders', max_instances = 1)
+        if settings['email']:
+            sched.add_job(
+                send_email_reminders,
+                args=[settings['remindertext']],
+                trigger=trigger,
+                id='email_reminders',
+                max_instances=1
+            )
+        if settings['sms']:
+            sched.add_job(
+                send_sms_reminders,
+                args=[settings['remindertext']],
+                trigger=trigger,
+                id='sms_reminders',
+                max_instances=1
+            )
     return True
 
 def create_trigger(
@@ -61,7 +100,8 @@ def create_trigger(
 def get_reminder_data():
     deadlines, client_ids = get_deadline_data()
     emails = get_emails(client_ids)
-    return deadlines, emails
+    phonenumbers = get_phonenumbers(client_ids)
+    return deadlines, emails, phonenumbers
 
 def get_deadline_data(client_service = clients):
     settings = get_readable_settings()
@@ -82,6 +122,12 @@ def get_emails(client_ids):
     for c_id in client_ids:
         emails.append(clients.get_email(c_id))
     return emails
+
+def get_phonenumbers(client_ids):
+    numbers = []
+    for c_id in client_ids:
+        numbers.append(clients.get_phonenumber(c_id))
+    return numbers
 
 def list_jobs():
     return sched.print_jobs()
