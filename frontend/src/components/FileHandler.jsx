@@ -2,15 +2,20 @@
 import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
-import { addFile, deleteFile, downloadFile } from '../reducers/fileReducer'
+import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
 import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
 const FileHandler = ({ client, files }) => {
   const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
+  const [showModal, setShowModal] = useState(false)
+  const [varyingFileName, setVaryingFileName] = useState('')
+  const [varyingFileId, setVaryingFileId] = useState(0)
 
   const handleFileSubmit = async (event) => {
     event.preventDefault()
@@ -45,21 +50,22 @@ const FileHandler = ({ client, files }) => {
   }
 
   const handleFileDownload = (fileId, fileName) => {
-    dispatch(downloadFile(fileId, fileName))
+    dispatch(downloadFile(fileId, fileName)).then(() => {
+      dispatch(moveFileToTrash({ id: fileId }))
+    })
   }
 
-  const handleFileDelete = (fileId, fileName) => {
-    if (window.confirm(`Haluatko varmasti poistaa tiedoston ${fileName}?`)) {
-      dispatch(deleteFile({ id: fileId })).then(result => {
-        if (result) {
-          if (user.role===2){
-            navigate('/')}
-          else {
-            navigate(`/client/${client.id}`)
-          }
+  const handleFileToTrash = (fileId) => {
+    dispatch(moveFileToTrash({ id: fileId })).then(result => {
+      if (result) {
+        if (user.role===2){
+          navigate('/')}
+        else {
+          navigate(`/client/${client.id}`)
         }
-      })
-    }
+      }
+    })
+    setShowModal(false)
   }
 
   const linkState = {
@@ -97,13 +103,34 @@ const FileHandler = ({ client, files }) => {
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => handleFileDelete(file.id, file.name)}>Poista</Button>
+              <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
             </li>
           ))}
+          <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
+            showModal={showModal} setShowModal={setShowModal} />
         </ul>
       </div>
+      <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
     </div>
   )
 }
+
+const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, showModal, setShowModal  }) => {
+  return (
+    <>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header>
+          <Modal.Title>Tiedoston siirtäminen roskakoriin</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Haluatko varmasti siirtää tiedoston {varyingFileName} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+          <Button variant="danger" onClick={() => handleFileToTrash(varyingFileId)}>Siirrä roskakoriin</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  )
+}
+
 
 export default FileHandler

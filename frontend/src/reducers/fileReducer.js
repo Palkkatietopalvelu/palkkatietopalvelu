@@ -61,6 +61,34 @@ export const downloadFile = (id, fileName) => {
   }
 }
 
+export const moveFileToTrash = (file) => {
+  return async dispatch => {
+    try {
+      await fileService.move_to_trash(file.id)
+      dispatch(remove(file.id))
+      dispatch(notify('Tiedosto siirretty roskakoriin'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
+      return false
+    }
+  }
+}
+
+export const restoreFile = (file) => {
+  return async dispatch => {
+    try {
+      await fileService.restore(file.id)
+      dispatch(remove(file.id))
+      dispatch(notify('Tiedosto palautettu onnistuneesti'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
+      return false
+    }
+  }
+}
+
 export const deleteFile = (file) => {
   return async dispatch => {
     try {

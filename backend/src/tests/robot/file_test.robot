@@ -24,12 +24,40 @@ Adding File Succesfully With Salary Form
     Click Button  Tallenna lomake
     Wait For  Tiedosto lisätty onnistuneesti
 
-Deleting Files Succeeds
-    Click Button  1              
-    Alert Should Be Present
-    Click Button  2              
-    Alert Should Be Present
+Moving File To Trash Succeeds
+    Go To Home Page
+    Click Button  1
+    Wait For  Tiedoston siirtäminen roskakoriin
+    Click Button  Siirrä roskakoriin
+    Wait For  Tiedosto siirretty roskakoriin
+    Click Button  2
+    Wait For  Tiedoston siirtäminen roskakoriin
+    Click Button  Siirrä roskakoriin
+    Wait For  Tiedosto siirretty roskakoriin
+
+Deleting File From Trash Succeeds
+    Click Link  trash
+    Click Button  1poista                          
+    Wait For  Tiedoston poistaminen
+    Click Button  Poista tiedosto
     Wait For  Tiedosto poistettu onnistuneesti
+
+Restoring File Succeeds
+    Click Button  2palauta 
+    Wait For  Tiedosto palautettu onnistuneesti
+
+File Moved To Trash By Client Is Not Visible To Admin
+    Go To Home Page
+    Click Button  2              
+    Wait For  Tiedoston siirtäminen roskakoriin
+    Click Button  Siirrä roskakoriin
+    Wait For  Tiedosto siirretty roskakoriin
+    Log Out
+    Login As Admin
+    Click Link  OMAT SIVUT
+    Click Link  testi oy
+    Click Link  trash
+    Page Should Not Contain Element  2palauta
 
 *** Keywords ***
 Set Confirm Password
