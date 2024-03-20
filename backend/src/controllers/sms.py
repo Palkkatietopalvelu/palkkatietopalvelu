@@ -42,11 +42,6 @@ def send_sms_message(sms_dest, sms_text, auto=False):
     try:
         response = requests.get(url, timeout=5)
         response.raise_for_status()
-        if response.text.startswith('ERROR'):
-            print(f"Virhe lähettäessä viestiä osoitteeseen {sms_dest}: {response.text}")
-            if auto:
-                return False
-            return jsonify({'error': f"Virhe viestin lähetyksessä: {response.text}"}), 500
     except requests.RequestException as e:
         print(f"Virhe lähettäessä viestiä osoitteeseen {sms_dest}: {e}")
         if auto:
