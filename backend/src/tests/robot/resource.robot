@@ -103,6 +103,13 @@ Login As New Client
     Click Button  login
     Wait For  Tervetuloa palkkatietopalveluun!
 
+Login As Admin
+    Go To Login Page
+    Set Username  testuser@mail.com
+    Set Password  123
+    Click Button  login
+    Logged In Page Should Be Open
+
 Wait For
     [Arguments]  ${text}
     Wait Until Page Contains  ${text}  timeout=10s
