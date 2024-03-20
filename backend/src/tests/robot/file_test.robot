@@ -52,18 +52,18 @@ File Moved To Trash By Client Is Not Visible To Admin
     Click Link  testi oy
     Click Link  trash
     Page Should Not Contain Element  2palauta
+    Log Out
 
 Deleting File From Trash Succeeds
-    Log Out
     Login As New Client
     Click Link  trash
     Click Button  1poista
     Wait For  Tiedoston poistaminen
-    Click Button  Poista roskakorista
+    Click Button  Poista tiedosto
     Wait For  Tiedosto poistettu onnistuneesti
     Click Button  2poista
     Wait For  Tiedoston poistaminen
-    Click Button  Poista roskakorista
+    Click Button  Poista tiedosto
     Wait For  Tiedosto poistettu onnistuneesti
 
 *** Keywords ***
