@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Notification from './Notification'
 import { notify } from '../reducers/notificationReducer'
-import { Form, Button } from 'react-bootstrap'
-import CheckBox from './CheckBox'
 import settingsService from '../services/reminderSettings'
-import { useField } from '../hooks/index'
-import Switch from 'react-switch'
-import days from './Days'
+import reminderInfoModule from './ReminderInfo'
+import ReminderFormFields from './ReminderSettingsFormFields'
+
+const { weekDays, relativeDays } = reminderInfoModule
 
 const ReminderSettingsForm = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-  const [inputs, setInputs] = useState([])
-  const hour = useField()
+  const [hour, setHour] = useState('')
   const [checked, setChecked] = useState(false)
-  const deltas = useField()
+  const [days, setDays] = useState('')
+  const [deltas, setDeltas] = useState([])
+  const [emailinputs, setEmailinputs] = useState(false)
+  const [smsinputs, setSmsinputs] = useState(false)
+  const [remindertext, setRemindertext] = useState('')
 
   useEffect(() => {
     if (user) {
       settingsService.get().then(settings => {
+        setHour(settings.hour)
         setChecked(settings.enabled)
-        setInputs(settings.days)
+        setDays(settings.days.split(',').map(day => `day-${day}`))
+        setDeltas(settings.deltas.map(delta => `delta-${delta}`))
+        setEmailinputs(settings.email === 'True' || settings.email === true)
+        setSmsinputs(settings.sms === 'True' || settings.sms === true)
+        setRemindertext(settings.remindertext)
       })
     }}, [user])
 
@@ -34,55 +40,58 @@ const ReminderSettingsForm = () => {
   }
 
   const handleSubmit = async (event) => {
+    event.preventDefault()
+    const parsedHour = parseInt(hour, 10)
+    if (isNaN(parsedHour) || parsedHour < 0 || parsedHour > 23) {
+      dispatch(notify('Tuntiarvon tulee olla numero välillä 0-23', 'error'))
+      return
+    }
     try {
-      event.preventDefault()
-      const data = await settingsService.send([inputs, hour, checked, deltas])
+      const formattedDays = days.map(day => day.replace('day-', '')).join(',')
+      const formattedDeltas = deltas.map(delta => parseInt(delta.replace('delta-', ''), 10))
+      const settingsToSave = {
+        days: formattedDays,
+        hour: String(parsedHour),
+        enabled: checked,
+        deltas: formattedDeltas,
+        email: emailinputs,
+        sms: smsinputs,
+        remindertext: remindertext
+      }
+      const response = await settingsService.send(settingsToSave)
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen'))
+      console.error(e)
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'error'))
     }
   }
 
   return (
     <div>
-      {user.role === 1 && <div>
-        <br /><h2>Muistutusasetukset</h2>
-        <Notification />
-        <div className="switch">
-          <p>Muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>
-          <label>
-            <Switch
-              onChange={handleChange}
-              checked={checked}
-              className="react-switch"
-            />
-          </label>
+      {user.role === 1 && (
+        <div>
+          <ReminderFormFields
+            user={user}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            checked={checked}
+            emailinputs={emailinputs}
+            setEmailinputs={setEmailinputs}
+            smsinputs={smsinputs}
+            setSmsinputs={setSmsinputs}
+            remindertext={remindertext}
+            setRemindertext={setRemindertext}
+            days={days}
+            setDays={setDays}
+            weekDays={weekDays}
+            hour={hour}
+            setHour={setHour}
+            deltas={deltas}
+            setDeltas={setDeltas}
+            relativeDays={relativeDays}
+          />
         </div>
-        <br /><p>Muistutuspäivät</p>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            {days.map((day, index) => (
-              <div key={index}>
-                <CheckBox name={index}
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  checked={inputs.includes(index)}
-                />
-                {' '}{day}
-                <br />
-              </div>
-            ))}
-            <Form.Label>Kellonaika (tasatunti 0-23)</Form.Label>
-            <Form.Control id='hour' placeholder='14' {...hour} required = {checked}/>
-            <Form.Label>
-            Listaa, milloin muistutukset viimeistään
-            lähetetään suhteessa eräpäivään.
-            </Form.Label>
-            <Form.Control id='deltas' placeholder='3 0 -2' {...deltas} required = {checked}/>
-            <Button type="submit">Tallenna</Button>
-          </Form.Group>
-        </Form>
-      </div>}
+      )}
     </div>
   )
 }

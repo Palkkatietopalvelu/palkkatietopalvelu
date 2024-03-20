@@ -6,7 +6,9 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Search Company With Correct Name
     Home Page Should Be Open
-    Click Link  LISÄÄ ASIAKAS
+    Click Element  Dropdown_Asiakkaat
+    Mouse over  Lisää uusi
+    Click Element  Lisää uusi
     Add New Client  Firma Oy  firma@mail.com  +358 123456789  1234567-8  2024/05/07  kk
     Click Button  Lisää
     Wait For  Asiakas lisätty onnistuneesti
@@ -44,7 +46,7 @@ Search Company With Incorrect Date
 
 Search Company With Correct Month
     Click Link  OMAT SIVUT
-    Search Date  may
+    Search Date  .05.
     Wait For  07.05.2024
     Wait For  Firma
     Page Should Not Contain  Kallen kiska

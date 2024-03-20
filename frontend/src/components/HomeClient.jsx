@@ -5,6 +5,7 @@ import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
 import FileHandler from './FileHandler'
+import DueDateBadge from './DueDateBadge'
 
 const HomeClient = () => {
   const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const HomeClient = () => {
                 (<div key={date}>
                   {new Date(date).toLocaleString('fi-FI',
                     { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-                </div>))}</td></tr>
+                  {' '} <DueDateBadge client={client} /> </div>))}</td></tr>
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
