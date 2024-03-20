@@ -39,7 +39,7 @@ Deleting File From Trash Succeeds
     Click Link  trash
     Click Button  1poista                          
     Wait For  Tiedoston poistaminen
-    Click Button  Poista roskakorista
+    Click Button  Poista tiedosto
     Wait For  Tiedosto poistettu onnistuneesti
 
 Restoring File Succeeds

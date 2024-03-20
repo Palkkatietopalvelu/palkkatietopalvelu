@@ -53,7 +53,7 @@ const Trash = () => {
             </li>
           ))}
           <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
-          showModal={showModal} setShowModal={setShowModal} />
+            showModal={showModal} setShowModal={setShowModal} />
         </ul>
       </div>
     )}
@@ -72,7 +72,7 @@ const DeleteFileModal = ({ varyingFileId, varyingFileName, handleFileDelete, sho
         <Modal.Body>Haluatko varmasti poistaa tiedoston {varyingFileName}?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-          <Button variant="danger" onClick={() => handleFileDelete(varyingFileId)}>Poista roskakorista</Button>
+          <Button variant="danger" onClick={() => handleFileDelete(varyingFileId)}>Poista tiedosto</Button>
         </Modal.Footer>
       </Modal>
     </>

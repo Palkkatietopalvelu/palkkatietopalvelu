@@ -105,8 +105,8 @@ const FileHandler = ({ client, files }) => {
               <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
             </li>
           ))}
-        <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
-        showModal={showModal} setShowModal={setShowModal} />
+          <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
+            showModal={showModal} setShowModal={setShowModal} />
         </ul>
       </div>
       <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
