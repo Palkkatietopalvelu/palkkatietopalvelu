@@ -16,6 +16,8 @@ const Trash = () => {
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
   const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
   const [showModal, setShowModal] = useState(false)
+  const [varyingFileId, setVaryingFileId] = useState(0)
+  const [varyingFileName, setVaryingFileName] = useState('')
 
   useEffect(() => {
     if (user && client) {
@@ -47,10 +49,11 @@ const Trash = () => {
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button id={file.id+'palauta'} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
               {' '}
-              <DeleteFileModal file={file} handleFileDelete={handleFileDelete}
-                showModal={showModal} setShowModal={setShowModal} />
+              <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
             </li>
           ))}
+          <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
+          showModal={showModal} setShowModal={setShowModal} />
         </ul>
       </div>
     )}
@@ -59,18 +62,17 @@ const Trash = () => {
   }
 }
 
-const DeleteFileModal = ({ file, handleFileDelete, showModal, setShowModal }) => {
+const DeleteFileModal = ({ varyingFileId, varyingFileName, handleFileDelete, showModal, setShowModal }) => {
   return (
     <>
-      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => setShowModal(true)}>Poista</Button>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Tiedoston poistaminen</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Haluatko varmasti poistaa tiedoston {file.name}?</Modal.Body>
+        <Modal.Body>Haluatko varmasti poistaa tiedoston {varyingFileName}?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-          <Button variant="danger" onClick={() => handleFileDelete(file.id)}>Poista</Button>
+          <Button variant="danger" onClick={() => handleFileDelete(varyingFileId)}>Poista roskakorista</Button>
         </Modal.Footer>
       </Modal>
     </>
