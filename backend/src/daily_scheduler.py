@@ -1,13 +1,17 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy.sql import text
 from db import db
 from utilities.file_methods import delete_file
 from app import app
 
-trash_scheduler = BackgroundScheduler(daemon=True)
+daily_scheduler = BackgroundScheduler(daemon=True)
 
-def delete_old_files():
+def daily_tasks():
+    delete_old_files_from_trash()
+    delete_old_expired_tokens()
+
+def delete_old_files_from_trash():
     with app.app_context():
         date = datetime.now().date()
         sql = text("SELECT id FROM files WHERE delete_date=:date")
@@ -19,5 +23,12 @@ def delete_old_files():
             except: # pylint: disable=bare-except
                 print("Error: automatically deleting file from trash failed")
 
-trash_scheduler.add_job(delete_old_files, 'cron', hour=0, minute=1)
-trash_scheduler.start()
+def delete_old_expired_tokens():
+    with app.app_context():
+        check_date = datetime.now().date() + timedelta(days=1)
+        sql = text("DELETE FROM expired_tokens WHERE date<:date")
+        db.session.execute(sql, {"date": check_date})
+        db.session.commit()
+
+daily_scheduler.add_job(daily_tasks, 'cron', hour=21, minute=28)
+daily_scheduler.start()
