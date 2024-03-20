@@ -1,3 +1,4 @@
+// ./reminders (Manuaaliset muistutukset)
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import mailService from '../services/mail'
@@ -56,17 +57,29 @@ const ClientReminder = () => {
     event.preventDefault()
     setIsSending(true)
     if (emailinputs.length === 0 && smsinputs.length === 0) {
-      dispatch(notify('Valitse vähintään yksi vastaanottaja'))
+      dispatch(notify('Valitse vähintään yksi vastaanottaja', 'danger'))
       setIsSending(false)
       return
     }
-    try {
-      await mailService.send({ recipients: emailinputs, message: remindertext })
-      await smsService.send({ recipients: smsinputs, message: remindertext })
-      dispatch(notify('Muistutukset lähetetty'))
-    } catch (error) {
-      console.error('An error occurred:', error)
-      dispatch(notify('Muistutusten lähetys epäonnistui'))
+    if (emailinputs.length > 0) {
+      try {
+        await mailService.send({ recipients: emailinputs, message: remindertext })
+        dispatch(notify('Sähköpostimuistutukset lähetetty'))
+      } catch (error) {
+        console.error('An error occurred while sending emails:', error)
+        const errorMessage = error.response?.data?.error || 'Sähköpostimuistutusten lähetys epäonnistui'
+        dispatch(notify(errorMessage, 'danger'))
+      }
+    }
+    if (smsinputs.length > 0) {
+      try {
+        await smsService.send({ recipients: smsinputs, message: remindertext })
+        dispatch(notify('Tekstiviestimuistutukset lähetetty'))
+      } catch (error) {
+        console.error('An error occurred while sending SMS messages:', error)
+        const errorMessage = error.response?.data?.error || 'Tekstiviestimuistutusten lähetys epäonnistui'
+        dispatch(notify(errorMessage, 'danger'))
+      }
     }
     setIsSending(false)
   }

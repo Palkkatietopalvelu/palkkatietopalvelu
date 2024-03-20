@@ -1,3 +1,4 @@
+// ./mypage (Omat sivut, admin)
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import React from 'react'

@@ -1,3 +1,4 @@
+// ./register (Luo uusi käyttäjä)
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks'
 import { registerUser } from '../reducers/userReducer'

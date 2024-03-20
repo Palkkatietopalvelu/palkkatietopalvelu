@@ -1,3 +1,4 @@
+// ./mypage (Omat sivut, asiakas)
 import { useSelector } from 'react-redux'
 import { Table } from 'react-bootstrap'
 import DueDateBadge from './DueDateBadge'

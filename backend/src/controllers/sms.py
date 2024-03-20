@@ -11,10 +11,12 @@ from utilities.require_admin import require_admin
 @require_login
 @require_admin
 def send_sms():
+    if app.config['SMS_PASSWORD'] is None:
+        return jsonify({'error': "API salasanaa ei ole asetettu"}), 400
     request_data = request.get_json()
     recipients = request_data.get('recipients', [])
     if len(recipients) == 0:
-        return jsonify({'message': 'OK'}), 200
+        return jsonify({'Valitse vähintään yksi vastaanottaja', 'danger'}), 400
     message = request_data.get('message', '')
     for client_id in recipients:
         sms_dest = get_phonenumber(client_id)
@@ -25,6 +27,9 @@ def send_sms():
 def send_sms_message(sms_dest, sms_text, auto=False):
     sms_username = 'reilu'
     sms_password = app.config['SMS_PASSWORD']
+    if sms_password is None:
+        if auto:
+            return False
     params = urllib.parse.urlencode({
         'sms_username': sms_username,
         'sms_password': sms_password,

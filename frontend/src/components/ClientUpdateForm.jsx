@@ -1,3 +1,4 @@
+// ./client/{client.id}/update (Asiakkaan tietojen muuttaminen)
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import Notification from './Notification'

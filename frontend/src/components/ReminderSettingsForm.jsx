@@ -1,3 +1,4 @@
+// ./remindersettingsform (Automaattiset muistutukset, asetussivu)
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'

@@ -1,3 +1,4 @@
+// ./mypage (Omat sivut, admin ja asiakas)
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { useField } from '../hooks'

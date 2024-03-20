@@ -27,4 +27,4 @@ def manual_reminders():
             msg.body = str(message)
             mail.send(msg)
         return 'Reminders sent', 200
-    return 400
+    return jsonify({'error': 'Virhe sähköpostiviestin lähetyksessä'}), 500

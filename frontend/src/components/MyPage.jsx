@@ -1,3 +1,4 @@
+// ./mypage (Omat sivut, admin ja asiakas)
 import { useSelector } from 'react-redux'
 import PasswordChange from './PasswordForm'
 import Notification from './Notification'
