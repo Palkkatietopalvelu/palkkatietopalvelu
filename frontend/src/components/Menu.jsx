@@ -66,6 +66,8 @@ const Menu = () => {
     setLinkColor('black')
   }
 
+  // <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/client">LISÄÄ ASIAKAS</NavLink>
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" style={navbar}>
@@ -86,8 +88,13 @@ const Menu = () => {
                     <Dropdown.Item href="/deactivated">Deaktivoidut</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/reminders">MUISTUTUKSET</NavLink>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/remindersettings">MUISTUTUSASETUKSET</NavLink>
+                <Dropdown id="Dropdown_Muistutukset" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>MUISTUTUKSET</b></Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item id="Automatic" href="/remindersettings">Automaattiset muistutukset</Dropdown.Item>
+                    <Dropdown.Item id="Manual" href="/reminders">Manuaaliset muistutukset</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </span>}
               <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>

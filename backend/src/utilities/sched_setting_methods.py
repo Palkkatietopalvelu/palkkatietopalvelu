@@ -19,7 +19,10 @@ def save_settings(data, filename = 'custom.json'):
         'days': data['days'],
         'hour': data['hour'],
         'enabled': data['enabled'],
-        'deltas': data['deltas']
+        'deltas': data['deltas'],
+        'email': data['email'],
+        'sms': data['sms'],
+        'remindertext': data['remindertext']
     }
     validated_data = validate_settings(settings_data)
     path = Path(__file__).parent / f'../sched_settings/{filename}'
@@ -35,6 +38,9 @@ def get_readable_settings():
         'hour': settings['hour'],
         'enabled': settings['enabled'],
         'deltas': settings['deltas'],
+        'email': settings['email'],
+        'sms': settings['sms'],
+        'remindertext': settings['remindertext']
     }
     return readable_settings
 
@@ -52,6 +58,10 @@ def validate_settings(settings):
             raise ValueError('Virheellinen arvo') from exc
         if not all(isinstance(delta, int) for delta in settings['deltas']):
             raise ValueError('Virheellisiä delta-arvoja')
+        if settings['email'] == 'false' and settings['sms'] == 'false':
+            raise ValueError('Valitse ainakin yksi lähetystapa')
+        if len(settings['remindertext']) < 2:
+            raise ValueError('Muistutusviesti puuttuu')
 
     return settings
 

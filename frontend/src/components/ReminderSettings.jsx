@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import settingsService from '../services/reminderSettings'
-import daysModule from './Days'
+import reminderInfoModule from './ReminderInfo'
 
-const { weekDays } = daysModule
+const { weekDays } = reminderInfoModule
 
 const ReminderSettings = () => {
   const navigate = useNavigate()
