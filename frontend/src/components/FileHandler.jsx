@@ -13,6 +13,8 @@ const FileHandler = ({ client, files }) => {
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
   const [showModal, setShowModal] = useState(false)
+  const [varyingFileName, setVaryingFileName] = useState('')
+  const [varyingFileId, setVaryingFileId] = useState(0)
 
   const handleFileSubmit = async (event) => {
     event.preventDefault()
@@ -62,6 +64,7 @@ const FileHandler = ({ client, files }) => {
         }
       }
     })
+    setShowModal(false)
   }
 
   const linkState = {
@@ -99,7 +102,8 @@ const FileHandler = ({ client, files }) => {
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
               <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
-              <FileToTrashModal file={file} handleFileToTrash={handleFileToTrash}
+              <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
+              <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
                 showModal={showModal} setShowModal={setShowModal} />
             </li>
           ))}
@@ -110,18 +114,17 @@ const FileHandler = ({ client, files }) => {
   )
 }
 
-const FileToTrashModal = ({ file, handleFileToTrash, showModal, setShowModal }) => {
+const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, showModal, setShowModal  }) => {
   return (
     <>
-      <Button id={file.id} variant="danger" size="sm" onClick={() => setShowModal(true)}>Poista</Button>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Tiedoston siirtäminen roskakoriin</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Haluatko varmasti siirtää tiedoston {file.name} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
+        <Modal.Body>Haluatko varmasti siirtää tiedoston {varyingFileName} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-          <Button variant="danger" onClick={() => handleFileToTrash(file.id)}>Siirrä roskakoriin</Button>
+          <Button variant="danger" onClick={() => handleFileToTrash(varyingFileId)}>Siirrä roskakoriin</Button>
         </Modal.Footer>
       </Modal>
     </>
