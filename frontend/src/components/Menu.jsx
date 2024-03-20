@@ -37,6 +37,7 @@ const Menu = () => {
     paddingRight: 8,
     paddingTop: user && user.role === 1 ? 7 : 0,
     color: dropdownColor,
+    border: 0
   }
 
   const logoutLinkStyle = {
@@ -73,33 +74,29 @@ const Menu = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            {user ? <span>
-              {user.role === 1 && <span>
-                <div className="d-flex" style={{ fontWeight: 'b' }}>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
-                  <Dropdown id="Dropdown_Asiakkaat" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                    <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
-                      <Dropdown.Item href="#">Omat</Dropdown.Item>
-                      <Dropdown.Item href="#">Kaikki</Dropdown.Item>
-                      <Dropdown.Item href="#">Aktiiviset</Dropdown.Item>
-                      <Dropdown.Item href="#">Deaktivoidut</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/reminders">MUISTUTUKSET</NavLink>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/remindersettings">MUISTUTUSASETUKSET</NavLink>
-                  <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
-                </div>
+            {user ? <span className="d-flex" style={{ fontWeight: 'b' }}>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
+              {user.role === 1 && <span className="d-flex" style={{ fontWeight: 'b' }}>
+                <Dropdown id="Dropdown_Asiakkaat" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
+                    <Dropdown.Item href="#">Omat</Dropdown.Item>
+                    <Dropdown.Item href="#">Kaikki</Dropdown.Item>
+                    <Dropdown.Item href="#">Aktiiviset</Dropdown.Item>
+                    <Dropdown.Item href="/deactivated">Deaktivoidut</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown id="Dropdown_Muistutukset" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>MUISTUTUKSET</b></Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item id="Automatic" href="/remindersettings">Automaattiset muistutukset</Dropdown.Item>
+                    <Dropdown.Item id="Manual" href="/reminders">Manuaaliset muistutukset</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </span>}
-              {user.role === 2 && <span>
-                <div className="d-flex" style={{ fontWeight: 'b' }}>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
-                  <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
-                  <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
-                </div>
-              </span>}
+              <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>
               :<span>
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>

@@ -88,6 +88,13 @@ def get_email(client_id):
         return result.email
     return None
 
+def get_phonenumber(client_id):
+    sql = text("SELECT phonenumber FROM clients WHERE id=:id")
+    result = db.session.execute(sql, {"id":client_id}).fetchone()
+    if result:
+        return result.phonenumber
+    return None
+
 def get_clients_deadlines():
     sql = text("""SELECT c.id, c.company, d.deadline FROM clients c
                JOIN deadlines d ON c.id = d.client_id ORDER BY d.deadline""")
@@ -109,6 +116,8 @@ def validate_client_data(client_data):
     return True
 
 def validate_email(email):
+    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", email):
+        raise ValueError('Sähköposti ei ole oikeassa muodossa')
     if email_is_user(email):
         raise ValueError('Tällä sähköpostilla on jo luotu tunnukset, anna toinen sähköposti')
     return True

@@ -1,10 +1,15 @@
-const CheckBox = ({ name, inputs, setInputs, checked = inputs.includes(name) }) => {
+const CheckBox = ({ name, inputs, setInputs, checked }) => {
   const handleCheckChange = () => {
-    if (inputs.includes(name)) {
-      setInputs(inputs.filter((input) => input !== name))
-    }
-    else {
-      setInputs(inputs.concat(name))
+    if (Array.isArray(inputs)) {
+      // for array inputs
+      if (inputs.includes(name)) {
+        setInputs(inputs.filter((input) => input !== name))
+      } else {
+        setInputs(inputs.concat(name))
+      }
+    } else {
+      // for boolean inputs
+      setInputs(!inputs)
     }
   }
 

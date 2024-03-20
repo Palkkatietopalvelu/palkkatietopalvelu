@@ -2,6 +2,8 @@
   "days": "0,2,4",
   "hour": "10",
   "enabled": false,
-  "deltas": [
-  ]
+  "deltas": [0],
+  "email": false,
+  "sms": false,
+  "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto"
 }
