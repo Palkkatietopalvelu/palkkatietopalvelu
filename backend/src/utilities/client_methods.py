@@ -6,7 +6,7 @@ from db import db
 
 def get_clients():
     sql = text("""SELECT id, company, email, phonenumber,
-               bi_code, payperiod, user_id FROM clients""")
+               bi_code, payperiod, user_id, active FROM clients""")
     result = db.session.execute(sql)
     all_clients = [{"id": row[0],
                     "company": row[1],
@@ -14,7 +14,8 @@ def get_clients():
                     "phonenumber": row[3],
                     "bi_code": row[4],
                     "payperiod": row[5],
-                    "user_id": row[6]
+                    "user_id": row[6],
+                    "active": row[7]
                     } for row in result.fetchall()]
 
     for i, client in enumerate(all_clients):
@@ -75,11 +76,23 @@ def delete_client(client_id):
     sql = text("""DELETE FROM clients WHERE id=:id""")
     db.session.execute(sql, {"id": client_id})
 
+def update_status(client_id, status):
+    sql = text("""UPDATE clients SET active=:active WHERE id=:id""")
+    db.session.execute(sql, {"id": client_id, "active": status})
+    return get_client_data(client_id)
+
 def get_email(client_id):
     sql = text("SELECT email FROM clients WHERE id=:id")
     result = db.session.execute(sql, {"id":client_id}).fetchone()
     if result:
         return result.email
+    return None
+
+def get_phonenumber(client_id):
+    sql = text("SELECT phonenumber FROM clients WHERE id=:id")
+    result = db.session.execute(sql, {"id":client_id}).fetchone()
+    if result:
+        return result.phonenumber
     return None
 
 def get_clients_deadlines():
@@ -103,6 +116,8 @@ def validate_client_data(client_data):
     return True
 
 def validate_email(email):
+    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", email):
+        raise ValueError('Sähköposti ei ole oikeassa muodossa')
     if email_is_user(email):
         raise ValueError('Tällä sähköpostilla on jo luotu tunnukset, anna toinen sähköposti')
     return True

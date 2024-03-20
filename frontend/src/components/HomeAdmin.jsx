@@ -1,15 +1,26 @@
 import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 import Notification from './Notification'
-import { Table } from 'react-bootstrap'
+import { Table, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { format, endOfDay } from 'date-fns'
+import { format } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
+import OrderBy from './OrderBy'
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
-  const clients = useSelector(({ clients }) =>
-    clients).filter(c => c.user_id === user.id)
-  const now = endOfDay(new Date())
+  const clients = useSelector(({ clients }) => clients)
+  const filterByUser = (c => c.user_id === user.id)
+  const [filteredCompanies, setFilteredCompanies] = useState([])
+  const [sortingCriteria, setSortingCriteria] = useState('company')  // company, due date, status
+
+  useEffect(() => {
+    if (!clients) {
+      return
+    } else {
+      setFilteredCompanies(clients.filter(c => c.active))
+    }
+  }, [clients])
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -19,18 +30,24 @@ const HomeAdmin = () => {
     <div>
       {user.role === 1 &&
         <div>
-          <br /><h2>Asiakkaat</h2>
+          <br /><h2>Asiakkaat</h2><br />
           <Notification />
+          <OrderBy clients={clients} setFilteredCompanies={setFilteredCompanies}
+            setSortingCriteria={setSortingCriteria} />
           <Table striped>
             <thead>
               <tr>
                 <th>Yritys</th>
-                <th>Eräpäivä</th>
+                <th>Seuraava eräpäivä</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {clients
-                .sort((a,b) => a.company > b.company ? 1 : -1)
+              {[...filteredCompanies]
+                .filter(filterByUser)
+                .sort(sortingCriteria === 'company'
+                  ? ((a,b) => a.company > b.company ? 1 : -1) // alphabetical order
+                  : ((a,b) => a.deadlines[0] - b.deadlines[0] ? 1 : -1)) // order by due date, earlier first
                 .map(client => {
                   return (
                     <tr key={client.id}>
@@ -41,8 +58,9 @@ const HomeAdmin = () => {
                       </td>
                       <td>{client.deadlines != '' &&
                         format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge client={client} now={now} />
-                      </td>
+                      <DueDateBadge client={client} /></td>
+                      <td><Badge bg={client.active ? 'success' : 'warning'} pill>
+                        {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
                     </tr>
                   )}
                 )}

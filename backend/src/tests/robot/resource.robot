@@ -83,7 +83,9 @@ Setup With Existing User And Client
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
-    Click Link  LISÄÄ ASIAKAS
+    Click Element  Dropdown_Asiakkaat
+    Mouse over  Lisää uusi
+    Click Element  Lisää uusi
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
     Wait For  Asiakas lisätty onnistuneesti
