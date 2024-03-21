@@ -1,16 +1,27 @@
-""" alustaa tietokannan """
+"""initial migration
 
+Revision ID: ed2ed6b66b9a
+Revises: 
+Create Date: 2024-03-20 15:43:46.217322
+
+"""
+from alembic import op
+#import sqlalchemy as sa
+#from sqlalchemy.dialects import postgresql
 from sqlalchemy.sql import text
-from db import db
-from app import app
-from config import ENV
+from sqlalchemy.orm.session import Session
 
-app.app_context().push()
+# revision identifiers, used by Alembic.
+revision = 'ed2ed6b66b9a'
+down_revision = None
+branch_labels = None
+depends_on = None
 
-def create_tables():
-    """ Luo sql taulut """
 
-    db.session.execute(text("""
+def upgrade():
+    conn = Session(bind=op.get_bind())
+
+    conn.execute(text("""
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
@@ -19,7 +30,7 @@ def create_tables():
         );
     """))
 
-    db.session.execute(text("""
+    conn.execute(text("""
         CREATE TABLE IF NOT EXISTS clients (
             id SERIAL PRIMARY KEY,
             user_id INTEGER REFERENCES users,
@@ -32,17 +43,18 @@ def create_tables():
         );
     """))
 
-    db.session.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
+    conn.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
 
-    db.session.execute(text("""
+    conn.execute(text("""
         CREATE TABLE IF NOT EXISTS deadlines (
             id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients,
             deadline DATE,
             delivered BOOLEAN
         );
-        """))
-    db.session.execute(text("""
+    """))
+
+    conn.execute(text("""
         CREATE TABLE IF NOT EXISTS files (
             id SERIAL PRIMARY KEY,
             owner INTEGER REFERENCES clients,
@@ -50,47 +62,28 @@ def create_tables():
             path TEXT,
             date TIMESTAMP WITH TIME ZONE
         );
-        """))
+    """))
 
-    db.session.commit()
+    conn.commit()
 
-def drop_tables():
-    """ Poistaa sql taulut """
 
-    db.session.execute(text("""
+def downgrade():
+    conn = Session(bind=op.get_bind())
+
+    conn.execute(text("""
         DROP TABLE IF EXISTS users CASCADE;
     """))
 
-    db.session.execute(text("""
+    conn.execute(text("""
         DROP TABLE IF EXISTS clients CASCADE;
     """))
 
-    db.session.execute(text("""
+    conn.execute(text("""
         DROP TABLE IF EXISTS files CASCADE;
     """))
 
-    db.session.execute(text("""
+    conn.execute(text("""
         DROP TABLE IF EXISTS deadlines CASCADE;
     """))
 
-    db.session.commit()
-
-def update_tables():
-    """ Päivittää taulut, jos tarvetta"""
-
-    db.session.execute(text("""
-        ALTER TABLE files ADD COLUMN IF NOT EXISTS delete_date DATE;
-    """))
-
-def initialize_database():
-    """   alustaa tietokannan """
-
-    if ENV == "development":
-        drop_tables()
-        create_tables()
-    else:
-        create_tables()
-        update_tables()
-
-if __name__ == "__main__":
-    initialize_database()
+    conn.commit()
