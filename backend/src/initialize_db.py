@@ -3,6 +3,7 @@
 from sqlalchemy.sql import text
 from db import db
 from app import app
+from config import ENV
 
 app.app_context().push()
 
@@ -10,7 +11,7 @@ def create_tables():
     """ Luo sql taulut """
 
     db.session.execute(text("""
-        CREATE TABLE users (
+        CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
@@ -19,7 +20,7 @@ def create_tables():
     """))
 
     db.session.execute(text("""
-        CREATE TABLE clients (
+        CREATE TABLE IF NOT EXISTS clients (
             id SERIAL PRIMARY KEY,
             user_id INTEGER REFERENCES users,
             company TEXT,
@@ -34,7 +35,7 @@ def create_tables():
     db.session.execute(text("SET TIME ZONE 'Europe/Helsinki';"))
 
     db.session.execute(text("""
-        CREATE TABLE deadlines (
+        CREATE TABLE IF NOT EXISTS deadlines (
             id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients,
             deadline DATE,
@@ -43,7 +44,7 @@ def create_tables():
         """))
 
     db.session.execute(text("""
-        CREATE TABLE files (
+        CREATE TABLE IF NOT EXISTS files (
             id SERIAL PRIMARY KEY,
             owner INTEGER REFERENCES clients,
             name TEXT,
@@ -89,11 +90,22 @@ def drop_tables():
 
     db.session.commit()
 
+def update_tables():
+    """ Päivittää taulut, jos tarvetta"""
+
+    db.session.execute(text("""
+        ALTER TABLE files ADD COLUMN IF NOT EXISTS delete_date DATE;
+    """))
+
 def initialize_database():
     """   alustaa tietokannan """
 
-    drop_tables()
-    create_tables()
+    if ENV == "development":
+        drop_tables()
+        create_tables()
+    else:
+        create_tables()
+        update_tables()
 
 if __name__ == "__main__":
     initialize_database()
