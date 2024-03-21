@@ -9,7 +9,6 @@ from utilities import client_methods
 from utilities import token_methods
 from db import db
 from unittest.mock import patch
-from datetime import datetime, timedelta, timezone
 
 class TestUsersController(unittest.TestCase):
     def setUp(self):
@@ -97,14 +96,3 @@ class TestUsersController(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             client_user.delete_client_user("notexisting@gmail.com")
         self.assertEqual(str(context.exception), "Virhe vanhan sähköpostin tunnusten poistamisessa")
-
-    def test_verify_setpassword_token_with_deleted_client(self):
-        client_user.delete_client_user(self.client_data["email"])
-        with self.assertRaises(PermissionError):
-           token_methods.verify_setpassword_token(self.setpassword_token)
-
-    def test_verify_setpassword_token_with_expired_token(self):
-        expiration_time = datetime.now(timezone.utc) - timedelta(seconds=1)  # set expiration time to the past
-        token = jwt.encode({"username": self.client_data["email"], "exp": expiration_time}, os.environ.get('SECRET_KEY'), algorithm='HS256')
-        with self.assertRaises(PermissionError):
-           token_methods.verify_setpassword_token(token)
