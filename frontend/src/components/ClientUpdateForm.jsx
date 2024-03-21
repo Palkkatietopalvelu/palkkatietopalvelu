@@ -55,6 +55,7 @@ const UpdateClient = () => {
     /* Here you can set the client's status to either active or inactive.
     If the status is currently active, we set it to false, and vice versa. */
     dispatch(updateStatus({ id, status: client.active ? false : true }))
+    setShowModal(false)
   }
 
   const handleDeleteClient = () => {
@@ -116,6 +117,7 @@ const UpdateClient = () => {
             showModal={showModal} setShowModal={setShowModal} />
         </Form>
       </div>}
+      <br />
     </div>
   )
 }
@@ -148,15 +150,26 @@ const DeactivateModal = ({ client, statusUpdate, showModal, setShowModal }) => {
         style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi asiakas' : 'Aktivoi asiakas'}</Button>
       {showModal == 'deactivate' && <span>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Asiakkaan deaktivoiminen</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Haluatko varmasti deaktivoida asiakkaan {client.company}?<br />
-          Deaktivoiminen nollaa asiakkaan eräpäivätiedot, asiakkaalle ei lähetetä eräpäivämuistutuksia
-          ja asiakkaan tunnus jäädytetään. </Modal.Body>
+          {client.active ? <div>
+            <Modal.Header closeButton>
+              <Modal.Title>Asiakkaan deaktivoiminen</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Haluatko varmasti deaktivoida asiakkaan {client.company}?<br />
+              Deaktivoiminen nollaa asiakkaan eräpäivätiedot, asiakkaalle ei lähetetä eräpäivämuistutuksia
+              ja asiakkaan tunnus jäädytetään. </Modal.Body>
+          </div>
+            : <div>
+              <Modal.Header closeButton>
+                <Modal.Title>Asiakkaan aktivoiminen</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Haluatko varmasti aktivoida asiakkaan {client.company}?<br />
+              Aktivoiminen palauttaa asiakkaan tunnuksen takaisin käyttöön.
+              Lisääthän eräpäivätiedot asiakkaalle. </Modal.Body>
+            </div>}
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-            <Button variant="danger" onClick={statusUpdate}>Deaktivoi</Button>
+            <Button variant={client.active ? 'warning' : 'success'} onClick={statusUpdate}
+              style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi asiakas' : 'Aktivoi asiakas'}</Button>
           </Modal.Footer>
         </Modal>
       </span>}

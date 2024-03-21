@@ -47,8 +47,8 @@ const HomeAdmin = () => {
               {[...filteredCompanies]
                 .filter(filterByUser)
                 .sort(sortingCriteria === 'company'
-                ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1) // alphabetical order
-                : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0]))) // order by due date, earlier first
+                  ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1) // alphabetical order
+                  : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0]))) // order by due date, earlier first
                 .map(client => {
                   return (
                     <tr key={client.id}>
