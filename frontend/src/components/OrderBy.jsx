@@ -19,20 +19,23 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   const showLate = () => {
     setSortingCriteria('date') // order by the due date
     setSortedBy('Myöhässä')
-    setFilteredCompanies(clients.filter(client => isPast(client.deadlines[0])))
+    setFilteredCompanies(clients.filter(client => 
+      client.deadlines[0] && isPast(client.deadlines[0])))
   }
 
   const showNotLate = () => {
     setSortingCriteria('date')
     setSortedBy('Ei myöhässä')
-    setFilteredCompanies(clients.filter(client => !isPast(client.deadlines[0]) &&
+    setFilteredCompanies(clients.filter(client => 
+      client.deadlines[0] && !isPast(client.deadlines[0]) &&
       client.active))
   }
 
   const orderByDate = () => {
     setSortingCriteria('date')
     setSortedBy('Eräpäivä')
-    setFilteredCompanies(clients.filter(client => client.active))
+    setFilteredCompanies(clients.filter(client => client.active &&
+      client.deadlines[0]))
   }
 
   const showAllCompanies = () => {
