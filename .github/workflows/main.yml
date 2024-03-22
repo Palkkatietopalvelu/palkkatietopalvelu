@@ -2,7 +2,7 @@ name: CI
 
 on:
     push:
-        branches: [ main ]
+        branches: [ main, codecov ]
     pull_request:
         branches: [ main ]
 
@@ -56,6 +56,10 @@ jobs:
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
                   BACKEND_URL: http://localhost:5000
+            - name: Coverage report
+              run: poetry run coverage xml
+            - name: Coverage report to Codecov
+              run: bash <(curl -s https://codecov.io/bash)
     
     build_frontend:
         runs-on: ubuntu-latest
