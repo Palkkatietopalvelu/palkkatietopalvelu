@@ -1,3 +1,4 @@
+// ./remindersettingsform (Automaattiset muistutukset, asetussivu)
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { notify } from '../reducers/notificationReducer'
@@ -62,7 +63,7 @@ const ReminderSettingsForm = () => {
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
       console.error(e)
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'error'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'danger'))
     }
   }
 

@@ -1,3 +1,4 @@
+// Ladatut tiedostot -alanäkymä
 import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'

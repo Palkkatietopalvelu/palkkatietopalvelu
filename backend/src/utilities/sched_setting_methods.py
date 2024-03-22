@@ -58,7 +58,7 @@ def validate_settings(settings):
             raise ValueError('Virheellinen arvo') from exc
         if not all(isinstance(delta, int) for delta in settings['deltas']):
             raise ValueError('Virheellisiä delta-arvoja')
-        if settings['email'] == 'false' and settings['sms'] == 'false':
+        if settings['email'] is False and settings['sms'] is False:
             raise ValueError('Valitse ainakin yksi lähetystapa')
         if len(settings['remindertext']) < 2:
             raise ValueError('Muistutusviesti puuttuu')

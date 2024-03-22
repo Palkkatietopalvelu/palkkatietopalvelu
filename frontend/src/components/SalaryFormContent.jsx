@@ -1,3 +1,4 @@
+// ./client/{client.id}/salaryform (Palkkatietolomake, vain asiakkaille, lomakeosa)
 import React from 'react'
 import { Form, Button, Accordion, Card } from 'react-bootstrap'
 import DatePicker from 'react-multi-date-picker'

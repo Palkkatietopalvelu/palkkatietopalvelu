@@ -1,8 +1,6 @@
 import { jsPDF } from 'jspdf'
-import { useDispatch } from 'react-redux'
 import { addFile } from '../reducers/fileReducer'
 
-// Assuming client-related variables are passed as parameters or managed differently
 const generatePDF = (formData, clientDetails) => {
   return new Promise((resolve, reject) => {
     const { clientName, clientEmail, clientNumber, clientCode, clientPeriod } = clientDetails

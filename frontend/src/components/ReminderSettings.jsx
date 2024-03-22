@@ -1,3 +1,4 @@
+// ./remindersettings (Automaattiset muistutukset)
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'

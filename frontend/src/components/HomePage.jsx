@@ -1,3 +1,4 @@
+// ./ (admin ja asiakas)
 import { useSelector } from 'react-redux'
 import HomeAdmin from './HomeAdmin'
 import HomeClient from './HomeClient'

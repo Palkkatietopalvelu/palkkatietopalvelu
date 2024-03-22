@@ -34,7 +34,8 @@ export const loginUser = (credentials) => {
       dispatch(getClients())
       return true
     } catch (e) {
-      dispatch(notify('Väärä käyttäjätunnus tai salasana', 'danger'))
+      dispatch(notify(e.response?.data.error ||
+        'Väärä käyttäjätunnus tai salasana', 'danger'))
       return false
     }
   }

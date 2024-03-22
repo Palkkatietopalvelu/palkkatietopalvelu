@@ -134,10 +134,10 @@ def list_jobs():
     return sched.print_jobs()
 def days_to_next_run(run_days, from_day):
     for day in run_days:
-        if day > from_day:
-            return day - from_day
+        if int(day) > int(from_day):
+            return int(day) - int(from_day)
 
-    return run_days[0] + 7 - from_day
+    return int(run_days[0]) + 7 - int(from_day)
 
 def include_in_run(time_left, to_next_run, deltas):
     for delta in deltas:

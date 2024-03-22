@@ -80,7 +80,7 @@ export const updateStatus = (client) => {
   return async dispatch => {
     try {
       const data = await clientService.status(client)
-      if (client.status === false) {
+      if (!client.status) {
         dispatch(notify('Asiakas deaktivoitu'))
       } else {
         dispatch(notify('Asiakas aktivoitu'))
