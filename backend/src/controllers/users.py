@@ -3,8 +3,8 @@ from werkzeug.security import generate_password_hash
 from models.user import User, db
 from app import app
 from utilities.require_login import require_login
-from utilities import client_user
 from utilities import user_methods
+from utilities import token_methods
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -48,14 +48,14 @@ def change_password(user_id):
 def setpassword(token):
     if request.method == 'GET':
         try:
-            user_info = client_user.verify_setpassword_token(token)
+            user_info = token_methods.verify_setpassword_token(token)
             return "Token on oikea", 200
         except PermissionError as error:
             return str(error), 401
     if request.method == 'POST':
         try:
             data = request.get_json()
-            user_info = client_user.verify_setpassword_token(token)
+            user_info = token_methods.verify_setpassword_token(token)
             user = User.query.filter_by(username=user_info['username']).first()
             new_password = data["password"]
             confirm_password = data["confirmPassword"]
@@ -63,6 +63,7 @@ def setpassword(token):
             user.password = generate_password_hash(new_password)
             db.session.add(user)
             db.session.commit()
+            token_methods.expire_token(token)
             return "Salasana vaihdettu", 200
         except PermissionError as error:
             return str(error), 401

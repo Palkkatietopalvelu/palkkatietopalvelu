@@ -29,7 +29,7 @@ init_db(app)
 # pylint: disable=unused-import,wrong-import-position
 from controllers import files, users, clients, login, mail, sms, reminders
 from mail_scheduler import update_scheduler
-import trash_scheduler
+import daily_scheduler
 # pylint: enable=unused-import,wrong-import-position
 
 update_scheduler()

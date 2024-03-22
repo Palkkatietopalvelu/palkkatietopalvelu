@@ -4,14 +4,17 @@ Suite Setup  Setup With Existing User And Client
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Login With Client User Link Succeeds
+Login With Client User Link Succeeds And Link Expires After Use
     Log Out
-    ${Link}=  Set Password Link  testi@email.com
+    ${Link}  Set Password Link  testi@email.com
     Go To  ${Link}
     Set Password  123
     Set Confirm Password  123
     Click Button  setpassword
     Wait For  Salasana asetettu onnistuneesti
+    Wait Until Page Does Not Contain  Salasana asetettu onnistuneesti
+    Go To  ${Link}
+    Page Should Contain  Token on vanhentunut tai väärä
 
 Login With Correct Client User Credentials Succeeds
     Go To Login Page
