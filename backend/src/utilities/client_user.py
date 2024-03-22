@@ -1,7 +1,4 @@
-import os
 import secrets
-from datetime import datetime, timedelta
-import jwt
 from flask import jsonify, request
 from flask_mail import Message
 from werkzeug.security import generate_password_hash
@@ -12,6 +9,7 @@ from config import ENV
 from models.user import User
 from db import db
 from utilities import client_methods
+from utilities import token_methods
 
 def create_client_user(email):
     try:
@@ -28,7 +26,7 @@ def create_client_user(email):
 
 def send_login_email(email):
     try:
-        token = get_setpassword_token(email)
+        token = token_methods.generate_setpassword_token(email)
         link = setpassword_link(token)
         recipient = email
         msg = Message('Tunnukset',
@@ -46,27 +44,6 @@ Jos linkki on vanhentunut voit tilata uuden linkin kirjautumissivulta
 
 def setpassword_link(token):
     return request.headers['FrontUrl'] + '/setpassword/' + token
-
-def get_setpassword_token(email):
-    expiration_time = datetime.utcnow() + timedelta(days=1)
-    data = {"username": email, "exp": expiration_time}
-    token = jwt.encode(data, os.environ.get('SECRET_KEY'), algorithm='HS256')
-    return token
-
-def verify_setpassword_token(token):
-    try:
-        user_info = jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'])
-        sql = text("""SELECT username FROM users WHERE username=:username""")
-        result = db.session.execute(sql, {"username": user_info["username"]}).fetchone()
-        if not result:
-            raise PermissionError('Tällä sähköpostilla ei ole enää käyttäjää')
-        return user_info
-    except jwt.ExpiredSignatureError as e:
-        raise PermissionError('Vanhentunut token') from e
-    except jwt.InvalidTokenError as e:
-        raise PermissionError('Väärä token') from e
-    except Exception as e: # pylint: disable=broad-except
-        raise PermissionError(str(e)) from e
 
 def handle_email_change(client_id, new_email):
     try:
