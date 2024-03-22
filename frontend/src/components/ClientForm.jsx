@@ -9,8 +9,8 @@ import DatePicker from 'react-multi-date-picker'
 import { useState } from 'react'
 import days from './ReminderInfo'
 
-const { weekDays, relativeDays } = days
-const months = ['Tammi', 'Helmi', 'Maalis', 'Huhti', 'Touko', 'Kesä', 'Heinä', 'Eloä', 'Syys', 'Loka', 'Marras', 'Joulu']
+const { weekDays, months } = days
+const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
 
 const ClientForm = () => {
   const dispatch = useDispatch()
@@ -90,7 +90,7 @@ const ClientForm = () => {
           <Form.Group>
             <Form.Label>Eräpäivät:</Form.Label>
             <div className="form-control">
-              <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDays}/>
+              <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
             </div>
           </Form.Group>
           <Form.Group>
