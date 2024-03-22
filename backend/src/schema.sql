@@ -34,3 +34,9 @@ CREATE TABLE files (
   delete_date DATE,
   deleted_by INTEGER REFERENCES users
 );
+
+CREATE TABLE expired_tokens (
+  id SERIAL PRIMARY KEY,
+  token TEXT,
+  date DATE
+);

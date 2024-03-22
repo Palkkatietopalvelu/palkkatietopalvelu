@@ -41,6 +41,7 @@ def create_tables():
             delivered BOOLEAN
         );
         """))
+
     db.session.execute(text("""
         CREATE TABLE files (
             id SERIAL PRIMARY KEY,
@@ -50,6 +51,14 @@ def create_tables():
             date TIMESTAMP WITH TIME ZONE,
             delete_date DATE,
             deleted_by INTEGER REFERENCES users
+        );
+        """))
+
+    db.session.execute(text("""
+        CREATE TABLE expired_tokens (
+            id SERIAL PRIMARY KEY,
+            token TEXT,
+            date DATE
         );
         """))
 
@@ -72,6 +81,10 @@ def drop_tables():
 
     db.session.execute(text("""
         DROP TABLE IF EXISTS deadlines CASCADE;
+    """))
+
+    db.session.execute(text("""
+        DROP TABLE IF EXISTS expired_tokens CASCADE;
     """))
 
     db.session.commit()

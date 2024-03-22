@@ -1,6 +1,6 @@
 import requests
 from initialize_db import initialize_database
-from utilities.client_user import get_setpassword_token
+from utilities.token_methods import generate_setpassword_token
 
 class AppLibrary:
     def __init__(self):
@@ -24,5 +24,5 @@ class AppLibrary:
         requests.post(f"{self._base_url}/register", data=data, timeout=self._timeout)
 
     def set_password_link(self, email):
-        robot_token = get_setpassword_token(email)
+        robot_token = generate_setpassword_token(email)
         return self._base_url + '/setpassword/' + robot_token

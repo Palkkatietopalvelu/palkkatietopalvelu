@@ -63,7 +63,7 @@ const ReminderSettingsForm = () => {
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
       console.error(e)
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'error'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'danger'))
     }
   }
 
