@@ -50,6 +50,12 @@ jobs:
               run: |
                 cd backend
                 poetry run coverage run --branch -m pytest
+              env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+                  SECRET_KEY: SECRET
+                  FLASK_ENV: development
+                  BACKEND_URL: http://localhost:5000
             - name: Coverage report
               run: |
                 cd backend
