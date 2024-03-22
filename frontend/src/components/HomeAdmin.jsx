@@ -47,8 +47,10 @@ const HomeAdmin = () => {
               {[...filteredCompanies]
                 .filter(filterByUser)
                 .sort(sortingCriteria === 'company'
-                  ? ((a,b) => a.company > b.company ? 1 : -1) // alphabetical order
-                  : ((a,b) => a.deadlines[0] - b.deadlines[0] ? 1 : -1)) // order by due date, earlier first
+                  // alphabetical order
+                  ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)
+                  // order by due date, earlier first. does not show undefined deadlines.
+                  : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))
                 .map(client => {
                   return (
                     <tr key={client.id}>

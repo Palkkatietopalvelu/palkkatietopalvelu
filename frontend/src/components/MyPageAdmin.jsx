@@ -74,14 +74,15 @@ const MyPageAdmin = () => {
             <tr>
               <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
               <th><input id="dateFilter" onChange={handleDateSearch} /></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {[...filteredCompanies]
               .filter(filterByUser)
               .sort(sortingCriteria === 'company'
-                ? ((a,b) => a.company > b.company ? 1 : -1) // alphabetical order
-                : ((a,b) => a.deadlines[0] - b.deadlines[0] ? 1 : -1)) // order by due date, earlier first
+                ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1) // alphabetical order
+                : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0]))) // order by due date, earlier first
               .map(client => {
                 return (
                   <tr key={client.id}>
@@ -95,7 +96,6 @@ const MyPageAdmin = () => {
                     <DueDateBadge client={client} now={now} />{' '}</td>
                     <td><Badge bg={client.active ? 'success' : 'warning'} pill>
                       {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
-
                   </tr>
                 )}
               )}

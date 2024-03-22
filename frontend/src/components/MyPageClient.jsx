@@ -31,7 +31,8 @@ const MyPageClient = () => {
               <div key={date}>
                 {new Date(date).toLocaleString('fi-FI',
                   { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-              </div>)} <DueDateBadge client={client} /> </td></tr>
+                {' '}{date == client.deadlines[0] && <DueDateBadge client={client} />}
+              </div>)}</td></tr>
             <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
           </tbody>
         </Table>
