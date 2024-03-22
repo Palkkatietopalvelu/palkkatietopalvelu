@@ -2,6 +2,8 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
+[![codecov](https://codecov.io/gh/Palkkatietopalvelu/palkkatietopalvelu/graph/badge.svg?token=2ZNIBLMX7I)](https://codecov.io/gh/Palkkatietopalvelu/palkkatietopalvelu)
+
 # Palkkatietopalvelu
 * Palvelu, jolla tilitoimisto voi vastaanottaa palkkatietoja asiakkailtaan.
 * Tilitoimisto voi määrittää eräpäivät tietojen toimittamiselle.

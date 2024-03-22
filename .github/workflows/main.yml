@@ -46,16 +46,22 @@ jobs:
                 cd backend
                 poetry run pylint src
     
-            - name: Run Pytest
+            - name: Run tests
               run: |
                 cd backend
-                poetry run pytest src/tests
+                poetry run coverage run --branch -m pytest
               env:
                   DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
                   BACKEND_URL: http://localhost:5000
+            - name: Coverage report
+              run: |
+                cd backend
+                poetry run coverage xml
+            - name: Coverage report to Codecov
+              run: bash <(curl -s https://codecov.io/bash)
     
     build_frontend:
         runs-on: ubuntu-latest
