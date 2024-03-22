@@ -75,6 +75,12 @@ class TestUsersController(unittest.TestCase):
         db.session.commit()
         response = client_methods.email_is_user(new_email)
         self.assertEqual(response, True)
+    
+    def test_handle_email_change_with_invalid_email(self):
+        client_id = 1
+        new_email = "abc"
+        with self.assertRaises(ValueError):
+            client_user.handle_email_change(client_id, new_email)
 
     def test_handle_email_change_to_other_clients_email(self):
         client_id = 2
