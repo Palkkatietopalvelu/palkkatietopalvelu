@@ -106,7 +106,7 @@ const UpdateClient = () => {
           <Form.Group>
             <Form.Label>Eräpäivät</Form.Label>
             <div className="form-control">
-            <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
+              <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
             </div>
           </Form.Group>
           <Form.Group>
