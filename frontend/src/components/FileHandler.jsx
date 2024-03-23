@@ -94,6 +94,9 @@ const FileHandler = ({ client, files }) => {
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
         Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
       </div>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        Uusi lomake <Link to={`/client/${client.id}/salaryformnew`} state={linkState}>täällä</Link>
+      </div>
     </div>}
       <div>
         <br /><h4>Ladatut tiedostot</h4>
@@ -131,6 +134,5 @@ const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, s
     </>
   )
 }
-
 
 export default FileHandler
