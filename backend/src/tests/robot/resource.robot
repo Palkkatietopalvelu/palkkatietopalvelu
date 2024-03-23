@@ -44,6 +44,10 @@ Set Password
     [Arguments]  ${password}
     Input Text  password  ${password}
 
+Set Confirm Password
+    [Arguments]  ${confirmPassword}
+    Input Password  confirmPassword  ${confirmPassword}
+
 Log Out
     Click Link  KIRJAUDU ULOS
 
