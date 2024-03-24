@@ -2,7 +2,7 @@ name: CI
 
 on:
     push:
-        branches: [ main ]
+        branches: [ main, sql-migrations ] ##Muista muokkaa takas
     pull_request:
         branches: [ main ]
 

@@ -21,6 +21,7 @@ venv
 __pycache__/
 htmlcov
 *.coverage
+*.pytest_cache
 
 # Editor directories and files
 .vscode/*
