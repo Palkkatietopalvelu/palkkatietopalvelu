@@ -28,11 +28,11 @@ def upgrade():
 """))
 
     conn.execute(text("""
-        ALTER TABLE files ADD delete_date IF NOT EXISTS DATE; 
+        ALTER TABLE files ADD IF NOT EXISTS delete_date DATE; 
 """))
 
     conn.execute(text("""
-        ALTER TABLE files ADD deleted_by IF NOT EXISTS INREGER REFERENCES users; 
+        ALTER TABLE files ADD IF NOT EXISTS deleted_by INTEGER REFERENCES users; 
 """))
 
     conn.commit()
@@ -45,11 +45,11 @@ def downgrade():
 """))
 
     conn.execute(text("""
-        ALTER TABLE files DROP delete_date IF EXISTS CASCADE; 
+        ALTER TABLE files DROP IF EXISTS delete_date CASCADE; 
 """))
 
     conn.execute(text("""
-        ALTER TABLE files DROP deleted_by IF EXISTS CASCADE; 
+        ALTER TABLE files DROP IF EXISTS deleted_by CASCADE; 
 """))
 
     conn.commit()
