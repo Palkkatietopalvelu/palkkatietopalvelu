@@ -3,6 +3,7 @@
 from sqlalchemy.sql import text
 from db import db
 from app import app
+from flask_migrate import upgrade, downgrade
 from config import ENV
 
 app.app_context().push()
@@ -106,6 +107,13 @@ def initialize_database():
     else:
         create_tables()
         update_tables()
+
+def initialize_database_new():
+    with app.app_context():
+        upgrade(revision='head', directory='src/migrations')
+        downgrade(tag='ed2ed6b66b9a', directory='src/migrations')
+        upgrade(revision='head', directory='src/migrations')
+
 
 if __name__ == "__main__":
     initialize_database()
