@@ -20,7 +20,7 @@ def manual_reminders():
         request_data = request.get_json()
         recipients = request_data.get('recipients', [])
         message = request_data.get('message', '')
-        if ENV != "development":   
+        if ENV != "development":
             for client_id in recipients:
                 receiver = get_email(client_id)
                 msg = Message('Muistutus',
