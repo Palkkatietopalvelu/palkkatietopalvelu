@@ -24,3 +24,7 @@ def robottests(ctx):
 @task
 def revision(ctx):
     ctx.run("flask --app src/app.py db revision --directory src/migrations")
+
+@task
+def dbupdate(ctx):
+    ctx.run("flask --app src/app db upgrade head --directory src/migrations")

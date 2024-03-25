@@ -70,8 +70,12 @@ yksikkötestit:
 testikattavuus:
 > poetry run invoke coverage
 
-## Tietokannan muokkaus
+## Tietokanta
 backend: 
+
+päivitä tietokanta uusimpaan versioon
+> poetry run invoke dbupdate
+
 luo uusi versio tietokannan versiohallintaan:
 > poetry run invoke revision
 

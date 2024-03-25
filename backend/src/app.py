@@ -1,7 +1,6 @@
 """ backend/app.py """
 
 from os import getenv
-from flask_migrate import upgrade, downgrade
 from flask import Flask
 from flask_cors import CORS
 from db import init_db
@@ -24,11 +23,6 @@ else:
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 init_db(app)
-with app.app_context():
-    if ENV == "development":
-        upgrade(revision='head', directory='src/migrations')
-        downgrade(tag='ed2ed6b66b9a', directory='src/migrations')
-    upgrade(revision='head', directory='src/migrations')
 
 # aseta salainen avain
 app.secret_key = getenv("SECRET_KEY")
