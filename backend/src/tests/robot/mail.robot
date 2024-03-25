@@ -8,7 +8,7 @@ Sending Manual Email Reminder Succeeds When A Company Is Selected
     Click Element  Dropdown_Muistutukset
     Mouse Over  Manual
     Click Element  Manual
-    Select Checkbox  1
+    Select Checkbox  mail1
     Click Button  Lähetä
     Wait For  Sähköpostimuistutukset lähetetty
 
@@ -16,7 +16,7 @@ Sending Manual Email Reminder Fails When No Company Is Selected
     Click Element  Dropdown_Muistutukset
     Mouse Over  Manual
     Click Element  Manual
-    Unselect Checkbox  1
+    Unselect Checkbox  mail1
     Click Button  Lähetä
     Wait For  Valitse vähintään yksi vastaanottaja
 
