@@ -1,4 +1,4 @@
-const CheckBox = ({ name, inputs, setInputs, checked }) => {
+const CheckBox = ({ name, id, inputs, setInputs, checked }) => {
   const handleCheckChange = () => {
     if (Array.isArray(inputs)) {
       // for array inputs
@@ -17,6 +17,7 @@ const CheckBox = ({ name, inputs, setInputs, checked }) => {
     <input
       type='checkbox'
       name={name}
+      id={id}
       onChange={handleCheckChange}
       checked={checked}
     />

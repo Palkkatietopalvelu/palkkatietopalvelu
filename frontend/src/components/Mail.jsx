@@ -115,10 +115,12 @@ const ClientReminder = () => {
                 {clients.map((client) => (
                   <tr key={client.id}>
                     <td><CheckBox name={client.id}
+                      id={'mail'+client.id}
                       inputs={emailinputs}
                       setInputs={setEmailinputs}
                     /></td>
                     <td><CheckBox name={client.id}
+                      id={'sms'+client.id}
                       inputs={smsinputs}
                       setInputs={setSmsinputs}
                     /></td>
