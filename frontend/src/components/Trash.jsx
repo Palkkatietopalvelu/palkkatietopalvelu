@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { deleteFile, restoreFile } from '../reducers/fileReducer'
 import { Button } from 'react-bootstrap'
 import { format } from 'date-fns'
@@ -11,6 +11,7 @@ import Modal from 'react-bootstrap/Modal'
 
 const Trash = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
@@ -40,6 +41,15 @@ const Trash = () => {
   } else if (client.email===user.username || client.user_id===user.id) {
     return (
       <div>
+        {user.role === 1 &&
+        <div>
+          <br />
+          <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
+            style={{ marginBottom: '20px' }}>
+        Takaisin asiakkaan tietoihin</Button>
+        </div>
+        }
+
         <br /><h4>Roskakori</h4>
         <p>Tiedostot poistetaan roskakorista automaattisesti viikon kuluttua niiden siirtämisestä roskakoriin</p>
         <Notification />
