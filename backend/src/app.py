@@ -16,15 +16,19 @@ app.config['SMS_PASSWORD'] = getenv('SMS_PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
+# aseta tietokanta
 if ENV == "development":
     app.config["SQLALCHEMY_DATABASE_URI"] = TEST_DATABASE_URL
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
-app.secret_key = getenv("SECRET_KEY")
-CORS(app)
-#db.init_app(app)
 init_db(app)
+
+# aseta salainen avain
+app.secret_key = getenv("SECRET_KEY")
+
+# aseta CORS
+CORS(app)
 
 # pylint: disable=unused-import,wrong-import-position
 from controllers import files, users, clients, login, mail, sms, reminders
