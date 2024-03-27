@@ -8,6 +8,7 @@ Sending Manual Email Reminder Succeeds When A Company Is Selected
     Click Element  Dropdown_Muistutukset
     Mouse Over  Manual
     Click Element  Manual
+    Wait For  Valitse asiakkaat, joille muistutus lähetetään
     Select Checkbox  mail1
     Click Button  Lähetä
     Wait For  Sähköpostimuistutukset lähetetty
@@ -29,12 +30,15 @@ Turning On Automatic Email Reminder Succeeds
     Click Button  Muokkaa
     Click Element  //*[@class='react-switch-handle']
     Wait For  Automaattiset muistutukset käytössä.
+    Unselect Checkbox  sms
+    Select Checkbox  email
+    Checkbox Should Be Selected  email
+    Checkbox Should Not Be Selected  sms
     Click Button  Tallenna
     Wait For  Asetukset tallennettu
 
 Turning On Automatic Email Reminder Fails Without Email Checkbox Selected
     Unselect Checkbox  email
-    Unselect Checkbox  sms
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetystapa
 
@@ -47,13 +51,6 @@ Turning On Automatic Email Reminder Fails Without Sending Day Selected
     Wait For  Valitse ainakin yksi lähetyspäivä
 
 Turning Off Automatic Email Reminder Succeeds
-    Go To Home Page
-    Click Element  Dropdown_Muistutukset
-    Mouse Over  Automatic
-    Click Element  Automatic
-    Wait For  Automaattiset muistutukset
-    Click Button  Muokkaa
-    Wait For  Automaattiset muistutukset käytössä.
     Click Element  //*[@class='react-switch-handle']
     Wait For  Automaattiset muistutukset pois käytöstä.
     Click Button  Tallenna
