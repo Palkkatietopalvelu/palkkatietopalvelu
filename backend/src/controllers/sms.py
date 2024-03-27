@@ -12,8 +12,9 @@ from utilities.require_admin import require_admin
 @require_login
 @require_admin
 def send_sms():
-    if app.config['SMS_PASSWORD'] is None:
-        return jsonify({'error': "API salasanaa ei ole asetettu"}), 400
+    if ENV != "development":
+        if app.config['SMS_PASSWORD'] is None:
+            return jsonify({'error': "API salasanaa ei ole asetettu"}), 400
     request_data = request.get_json()
     recipients = request_data.get('recipients', [])
     if len(recipients) == 0:
