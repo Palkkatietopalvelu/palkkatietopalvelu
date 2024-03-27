@@ -34,6 +34,7 @@ Turning On Automatic Email Reminder Succeeds
 
 Turning On Automatic Email Reminder Fails Without Email Checkbox Selected
     Unselect Checkbox  email
+    Unselect Checkbox  sms
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetystapa
 

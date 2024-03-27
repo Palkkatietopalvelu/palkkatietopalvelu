@@ -14,10 +14,13 @@ Login With Client User Link Succeeds
     Wait For  Salasana asetettu onnistuneesti
 
 Link Expires After Use
-    ${Link}=  Set Password Link  testi@email.com
     Go To Home Page
-    Login As New Client
-    Log Out
+    ${Link}=  Set Password Link  testi@email.com
+    Go To  ${Link}
+    Set Password  123
+    Set Confirm Password  123
+    Click Button  setpassword
+    Wait For  Salasana asetettu onnistuneesti
     Go To  ${Link}
     Wait For  Token on vanhentunut tai väärä
 
