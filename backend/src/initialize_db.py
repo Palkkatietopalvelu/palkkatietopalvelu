@@ -90,7 +90,7 @@ def drop_tables():
     db.session.commit()
 
 def initialize_database():
-    """   alustaa tietokannan """
+    #   alustaa tietokannan
 
     drop_tables()
     create_tables()

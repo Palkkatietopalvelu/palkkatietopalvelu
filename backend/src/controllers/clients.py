@@ -85,7 +85,9 @@ def delete_client(client_id):
 def update_status(client_id):
     try:
         client = request.json
-        clients.update_status(client_id, client["status"])
+        updated = clients.update_status(client_id, client["status"])
+        if not updated:
+            return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
         db.session.commit()
         return "Status päivitetty", 200
     except Exception as error:  # pylint: disable=broad-except
