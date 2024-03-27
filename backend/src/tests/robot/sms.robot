@@ -31,7 +31,6 @@ Turning On Automatic Sms Reminder Succeeds
     Wait For  Automaattiset muistutukset käytössä.
     Unselect Checkbox  email
     Select Checkbox  sms
-    Select Checkbox  day-0
     Checkbox Should Be Selected  sms
     Checkbox Should Not Be Selected  email
     Click Button  Tallenna
@@ -48,6 +47,7 @@ Turning On Automatic Sms Reminder Fails Without Sending Day Selected
     Unselect Checkbox  day-0
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetyspäivä
+    Select Checkbox  day-0
 
 Turning Off Automatic Sms Reminder Succeeds
     Click Element  //*[@class='react-switch-handle']
