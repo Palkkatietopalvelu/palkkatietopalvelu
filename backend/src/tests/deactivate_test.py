@@ -88,3 +88,11 @@ class TestPasswordChange(unittest.TestCase):
         data = {"username": "testi@gmail.com", "password": "testi123"}
         response = app.test_client().post("/api/login", json=data)
         self.assertEqual(response.status_code, 401)
+  
+  def test_activate_client(self):
+    # activate client back works
+    with app.test_request_context():
+        self.client_data["status"] = True
+        response = app.test_client().post(f"api/client/{self.client_id}/status", json=self.client_data,
+          headers=self.headers)
+        self.assertEqual(response.status_code, 200)

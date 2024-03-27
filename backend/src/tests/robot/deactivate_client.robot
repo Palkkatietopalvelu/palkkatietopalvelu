@@ -20,6 +20,7 @@ Deactivate Client Succeeds
     Wait For  Asiakkaan deaktivoiminen
     Click Button  Deaktivoi
     Wait For  Asiakas deaktivoitu
+    Page Should Not Contain  Eräpäivät  # can't add due dates when client is deactivated
 
 Deactivated Client Does Not Appear In The Sorting Categories
     Click Link  OMAT SIVUT
