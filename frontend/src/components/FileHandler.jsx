@@ -51,7 +51,6 @@ const FileHandler = ({ client, files }) => {
 
   const handleFileDownload = (fileId, fileName) => {
     dispatch(downloadFile(fileId, fileName)).then(() => {
-      dispatch(moveFileToTrash({ id: fileId }))
     })
   }
 

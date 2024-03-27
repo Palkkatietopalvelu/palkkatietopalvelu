@@ -6,6 +6,7 @@ import { useField } from '../hooks'
 import { DateSelect } from '../hooks/DatePicker'
 import SalaryFormContent from './SalaryFormContent'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
+import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
 
 const SalaryForm = () => {
   const navigate = useNavigate()
@@ -57,7 +58,9 @@ const SalaryForm = () => {
     }
     try {
       const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
+      const csvBlob = await generateCSV(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
       uploadGeneratedPDF(dispatch, pdfBlob, clientId, clientName)
+      uploadGeneratedCSV(dispatch, csvBlob, clientId, clientName)
       navigate('/')
     } catch (error) {
       console.error('Error generating or uploading PDF:', error)
