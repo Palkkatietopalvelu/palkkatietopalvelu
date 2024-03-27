@@ -111,6 +111,7 @@ const FileHandler = ({ client, files }) => {
         </ul>
       </div>
       <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
+      <br /><br />
     </div>
   )
 }
