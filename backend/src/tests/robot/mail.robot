@@ -22,7 +22,6 @@ Sending Manual Email Reminder Fails When No Company Is Selected
     Wait For  Valitse vähintään yksi vastaanottaja
 
 Turning On Automatic Email Reminder Succeeds
-    Go To Home Page
     Click Element  Dropdown_Muistutukset
     Mouse Over  Automatic
     Click Element  Automatic
@@ -39,6 +38,7 @@ Turning On Automatic Email Reminder Succeeds
 
 Turning On Automatic Email Reminder Fails Without Email Checkbox Selected
     Unselect Checkbox  email
+    Checkbox Should Not Be Selected  email
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetystapa
 
@@ -47,8 +47,12 @@ Turning On Automatic Email Reminder Fails Without Sending Day Selected
     Unselect Checkbox  day-0
     Unselect Checkbox  day-2
     Unselect Checkbox  day-4
+    Checkbox Should Not Be Selected  day-0
+    Checkbox Should Not Be Selected  day-2
+    Checkbox Should Not Be Selected  day-4
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetyspäivä
+    Select Checkbox  day-0
 
 Turning Off Automatic Email Reminder Succeeds
     Click Element  //*[@class='react-switch-handle']
