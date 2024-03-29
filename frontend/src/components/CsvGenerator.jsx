@@ -1,9 +1,33 @@
 // CsvGenerator.jsx
 import { addFile } from '../reducers/fileReducer'
 
-function convertToCSV(objArray) {
+function formatAbsencesDates(absences) {
+  return absences.map(item => {
+    let dateItem = item
+    if (!(dateItem instanceof Date)) {
+      dateItem = new Date(dateItem)
+    }
+    const year = dateItem.getFullYear()
+    const month = String(dateItem.getMonth() + 1).padStart(2, '0')
+    const day = String(dateItem.getDate()).padStart(2, '0')
+    return `${day}.${month}.${year}`
+  })
+}
+
+
+function convertToCSV(objArray, clientDetails, date) {
   const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray
-  let str = ''
+  let str = 'palkkatiedot,' + date + '\r\n'
+
+  // Append client details
+  str += 'Yritys,' + clientDetails.clientName + '\r\n'
+  str += 'Sähköposti,' + clientDetails.clientEmail + '\r\n'
+  str += 'Puhelinnumero,' + clientDetails.clientNumber + '\r\n'
+  str += 'Y-tunnus,' + clientDetails.clientCode + '\r\n'
+  str += 'Palkkakausi,' + clientDetails.clientPeriod + '\r\n'
+
+  // Add an empty row
+  str += '\r\n'
 
   // Extract headers
   str += 'Työntekijän nimi,Palkkatyyppi,Poissaolot,Provisiot,Ylityöt,Lounasetu,Päivärahat,Km-korvaukset,Kokonaistuntimäärä,Lisätiedot\n'
@@ -22,7 +46,7 @@ function convertToCSV(objArray) {
     let line = ''
     line += `"${array[i].employee_name}",`
     line += `"${array[i].salary_type}",`
-    line += `"${array[i].absences ? array[i].absences.join('|') : ''}",`
+    line += `"${array[i].absences ? formatAbsencesDates(array[i].absences).join('|') : ''}",`
 
     totals.provisions += Number(array[i].provisions || 0)
     totals.overtime += Number(array[i].overtime || 0)
@@ -57,12 +81,10 @@ function convertToCSV(objArray) {
   return str
 }
 
-const generateCSV = (formData) => {
-  return new Promise((resolve, reject) => {
-    const csvData = convertToCSV(formData.employees)
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' })
-    resolve(blob)
-  })
+const generateCSV = async (formData, clientDetails, date) => {
+  const csvData = convertToCSV(formData.employees, clientDetails, date)
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' })
+  return blob
 }
 
 function uploadGeneratedCSV(dispatch, csvBlob, clientId, clientName) {

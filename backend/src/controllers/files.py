@@ -54,6 +54,14 @@ def download_file(file_id):
         return send_file(file_path, as_attachment=True, download_name=file['name'])
     return 'File not found', 404
 
+@app.route('/api/files/template.csv', methods=['GET'])
+def download_template_csv():
+    try:
+        path = os.path.join(UPLOAD_FOLDER, 'template.csv')
+        return send_file(path, as_attachment=True, download_name='template.csv')
+    except Exception as e: # pylint: disable=broad-except
+        return str(e), 500
+
 @app.route('/api/files/<int:file_id>', methods=['POST'])
 @require_login
 def move_to_trash(file_id):

@@ -7,6 +7,7 @@ import { Button, Form } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import filesImport from '../services/files.js'
 
 const FileHandler = ({ client, files }) => {
   const user = useSelector(({ user }) => user)
@@ -91,7 +92,19 @@ const FileHandler = ({ client, files }) => {
         </Form.Group>
       </Form>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Tai täytä palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
+        Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
+      </div>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {
+          const data = await filesImport.downloadTemplateCSV()
+          const url = window.URL.createObjectURL(new Blob([data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'template.csv')
+          document.body.appendChild(link)
+          link.click()
+          link.parentNode.removeChild(link)
+        }}>täältä</a>
       </div>
     </div>}
       <div>

@@ -1,13 +1,26 @@
 import { jsPDF } from 'jspdf'
 import { addFile } from '../reducers/fileReducer'
 
-const generatePDF = (formData, clientDetails) => {
+function formatAbsencesDates(absences) {
+  return absences.map(item => {
+    let dateItem = item
+    if (!(dateItem instanceof Date)) {
+      dateItem = new Date(dateItem)
+    }
+    const year = dateItem.getFullYear()
+    const month = String(dateItem.getMonth() + 1).padStart(2, '0')
+    const day = String(dateItem.getDate()).padStart(2, '0')
+    return `${day}.${month}.${year}`
+  })
+}
+
+const generatePDF = (formData, clientDetails, date) => {
   return new Promise((resolve, reject) => {
     const { clientName, clientEmail, clientNumber, clientCode, clientPeriod } = clientDetails
     const doc = new jsPDF()
     doc.setFont('helvetica')
     doc.setFontSize(12)
-    doc.text('Palkkatiedot', 105, 10, null, null, 'center') // Document title
+    doc.text(`Palkkatiedot, ${date}`, 105, 10, null, null, 'center') // Document title
     let yPosition = 20 // Initial vertical position
     const clientInfo = `Yritys: ${clientName}\nSähköposti: ${clientEmail}\nPuhelinnumero: ${clientNumber}\nY-tunnus: ${clientCode}\nPalkkakausi: ${clientPeriod}\n`
     doc.text(clientInfo, 10, yPosition)
@@ -19,8 +32,8 @@ const generatePDF = (formData, clientDetails) => {
       doc.text(`Palkkatyyppi: ${employee.salary_type}`, 10, yPosition)
       yPosition += increment
       if (employee.absences && employee.absences.length > 0) {
-        const absencesString = employee.absences.join(', ')
-        doc.text(`Poissaolot: ${absencesString}`, 10, yPosition)
+        const formattedAbsences = formatAbsencesDates(employee.absences).join(', ')
+        doc.text(`Poissaolot: ${formattedAbsences}`, 10, yPosition)
         yPosition += increment
       }
       if (employee.provisions) {
