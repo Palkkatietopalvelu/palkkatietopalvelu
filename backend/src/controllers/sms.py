@@ -2,6 +2,7 @@ import urllib.parse
 from flask import jsonify, request
 import requests
 
+from config import ENV
 from app import app
 from utilities.client_methods import get_phonenumber
 from utilities.require_login import require_login
@@ -11,17 +12,19 @@ from utilities.require_admin import require_admin
 @require_login
 @require_admin
 def send_sms():
-    if app.config['SMS_PASSWORD'] is None:
-        return jsonify({'error': "API salasanaa ei ole asetettu"}), 400
+    if ENV != "development":
+        if app.config['SMS_PASSWORD'] is None:
+            return jsonify({'error': "API salasanaa ei ole asetettu"}), 400
     request_data = request.get_json()
     recipients = request_data.get('recipients', [])
     if len(recipients) == 0:
         return jsonify({'Valitse vähintään yksi vastaanottaja', 'danger'}), 400
     message = request_data.get('message', '')
-    for client_id in recipients:
-        sms_dest = get_phonenumber(client_id)
-        sms_text = message
-        send_sms_message(sms_dest, sms_text)
+    if ENV != "development":
+        for client_id in recipients:
+            sms_dest = get_phonenumber(client_id)
+            sms_text = message
+            send_sms_message(sms_dest, sms_text)
     return jsonify({'message': 'Tekstiviestimuistutukset lähetetty onnistuneesti'}), 200
 
 def send_sms_message(sms_dest, sms_text, auto=False):
