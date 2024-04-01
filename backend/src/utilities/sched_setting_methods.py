@@ -68,3 +68,7 @@ def validate_settings(settings):
 def delete_custom(filename = 'custom.json'):
     path = Path(__file__).parent / f'../sched_settings/{filename}'
     path.unlink()
+
+def recover_settings(filename = 'custom.json'):
+    delete_custom(filename)
+    return load_settings('default.json')

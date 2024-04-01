@@ -3,8 +3,7 @@ from flask import jsonify, request
 from flask_mail import Message
 from werkzeug.security import generate_password_hash
 from sqlalchemy.sql import text
-from mail_scheduler import mail
-from app import app
+from app import app, mail
 from config import ENV
 from models.user import User
 from db import db
