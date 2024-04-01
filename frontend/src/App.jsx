@@ -22,6 +22,7 @@ import SalaryForm from './components/SalaryForm'
 import ResetPassword from './components/ResetPassword'
 import Trash from './components/Trash'
 import InactiveClients from './components/ClientsInactive'
+import Files from './components/Files'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
           <Route path="/setpassword/:token" element={<SetPassword />}/>
           <Route path="/resetpassword" element={<ResetPassword />}/>
+          <Route path="/files" element={<Files />}/>
         </Routes>
       </Router>
     </div>
