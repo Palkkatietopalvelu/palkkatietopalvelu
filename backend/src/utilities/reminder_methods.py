@@ -60,7 +60,7 @@ def get_phonenumbers(client_ids):
 
 def days_to_next_run(run_days, from_day):
     for day in run_days:
-        if not day.isnumeric():
+        if type(day) != int and not day.isnumeric():
             continue
         if int(day) > int(from_day):
             return int(day) - int(from_day)
