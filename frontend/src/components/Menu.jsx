@@ -97,6 +97,7 @@ const Menu = () => {
                   </Dropdown.Menu>
                 </Dropdown>
               </span>}
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
               <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>
               :<span>
