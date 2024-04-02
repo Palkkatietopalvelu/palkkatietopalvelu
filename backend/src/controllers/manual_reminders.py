@@ -1,12 +1,11 @@
 from flask import jsonify, request
 from flask_mail import Message
 
-from app import app
+from app import app, mail
 from config import ENV
 from utilities.client_methods import get_clients_deadlines, get_email
 from utilities.require_login import require_login
 from utilities.require_admin import require_admin
-from mail_scheduler import mail
 
 @app.route('/api/mail', methods = ['GET', 'POST'])
 @require_login
