@@ -3,6 +3,10 @@ import React from 'react'
 import { Form, Button, Accordion, Card } from 'react-bootstrap'
 import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
+import days from './ReminderInfo'
+
+const { weekDays, months } = days
+const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
 
 const SalaryFormContent = ({
   formType,
@@ -65,7 +69,7 @@ const SalaryFormContent = ({
         <Form.Group>
           <Form.Label>Poissaolot (pidetyt lomat, sairaslomat, palkattomat vapaat)</Form.Label>
           <div className="form-control">
-            <DatePicker id='absences' {...absences} style={style} multiple/>
+            <DatePicker id='absences' {...absences} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
           </div>
         </Form.Group>
         {formType === 'monthly' && (
@@ -127,11 +131,11 @@ const SalaryFormContent = ({
                   ))}</p>
                 )}
                 {employee.provisions && <p>Provisiot: {employee.provisions}</p>}
-                {employee.formType === 'monthly' && employee.overtime && <p>Ylityöt: {employee.overtime}</p>}
+                {employee.overtime && <p>Ylityöt: {employee.overtime}</p>}
                 {employee.lunch_allowance && <p>Lounasetu: {employee.lunch_allowance}</p>}
                 {employee.daily_allowance && <p>Päivärahat: {employee.daily_allowance}</p>}
                 {employee.mileage_allowance && <p>Km-korvaukset: {employee.mileage_allowance}</p>}
-                {employee.formType === 'hourly' && employee.total_hours && <p>Kokonaistuntimäärä: {employee.total_hours}</p>}
+                {employee.total_hours && <p>Kokonaistuntimäärä: {employee.total_hours}</p>}
                 {employee.extra && <p>Lisätiedot: {employee.extra}</p>}
                 <Button variant="danger" onClick={() => deleteEmployee(index)}>Poista Työntekijä</Button>
               </Accordion.Body>

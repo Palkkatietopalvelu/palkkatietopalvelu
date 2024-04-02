@@ -24,7 +24,7 @@ const ReminderSettingsForm = () => {
       settingsService.get().then(settings => {
         setHour(settings.hour)
         setChecked(settings.enabled)
-        setDays(settings.days.split(',').map(day => `day-${day}`))
+        setDays(settings.days ? settings.days.split(',').map(day => `day-${day}`) : [])
         setDeltas(settings.deltas.map(delta => `delta-${delta}`))
         setEmailinputs(settings.email === 'True' || settings.email === true)
         setSmsinputs(settings.sms === 'True' || settings.sms === true)

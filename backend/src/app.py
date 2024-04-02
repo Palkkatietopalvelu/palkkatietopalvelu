@@ -2,6 +2,7 @@
 
 from os import getenv
 from flask import Flask
+from flask_mail import Mail
 from flask_cors import CORS
 from db import init_db
 from config import DATABASE_URL, TEST_DATABASE_URL, ENV
@@ -15,6 +16,8 @@ app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
 app.config['SMS_PASSWORD'] = getenv('SMS_PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
 
 # aseta tietokanta
 if ENV == "development":
@@ -31,7 +34,7 @@ app.secret_key = getenv("SECRET_KEY")
 CORS(app)
 
 # pylint: disable=unused-import,wrong-import-position
-from controllers import files, users, clients, login, mail, sms, reminders
+from controllers import files, users, clients, login, manual_reminders, sms, reminders
 from mail_scheduler import update_scheduler
 import daily_scheduler
 # pylint: enable=unused-import,wrong-import-position

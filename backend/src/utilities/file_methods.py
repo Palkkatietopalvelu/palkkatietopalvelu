@@ -5,7 +5,21 @@ from db import db
 from config import UPLOAD_FOLDER
 
 def get_all_files():
-    sql = text("SELECT id, owner, name, path, date, delete_date, deleted_by FROM files")
+    sql = text("""
+        SELECT 
+            f.id, 
+            f.owner, 
+            f.name, 
+            f.path, 
+            f.date, 
+            f.delete_date, 
+            f.deleted_by,
+            c.company
+        FROM 
+            files f 
+            JOIN clients c ON f.owner = c.id
+        ORDER BY f.date DESC
+    """)
     result = db.session.execute(sql)
     return [{
         "id": row[0],
@@ -14,7 +28,8 @@ def get_all_files():
         "path": row[3],
         "date": row[4],
         "delete_date": row[5],
-        "deleted_by": row[6]
+        "deleted_by": row[6], 
+        "company": row[7]
     } for row in result.fetchall()]
 
 def get_file(file_id):

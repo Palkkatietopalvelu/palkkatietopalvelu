@@ -1,9 +1,8 @@
 import unittest
 import os
 import jwt
-from app import app
+from app import app, mail
 from utilities import client_methods
-from mail_scheduler import mail
 from initialize_db import initialize_database
 import json
 from db import db
