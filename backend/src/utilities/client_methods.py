@@ -79,7 +79,8 @@ def delete_client(client_id):
 def update_status(client_id, status):
     sql = text("""UPDATE clients SET active=:active WHERE id=:id""")
     db.session.execute(sql, {"id": client_id, "active": status})
-    delete_deadlines(client_id)
+    if status is False:
+        delete_deadlines(client_id)
     return get_client_data(client_id)
 
 def get_email(client_id):
