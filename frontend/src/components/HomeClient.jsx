@@ -25,6 +25,13 @@ const HomeClient = () => {
     return
   }
 
+  let nextDL = null
+  if (client.deadlines.length > 0) {
+    const sortedDeadlines = [...client.deadlines].sort((a, b) => new Date(a) - new Date(b))
+    const earliestDate = new Date(sortedDeadlines[0])
+    nextDL = earliestDate.toLocaleString('fi-FI', { year: 'numeric', month: 'numeric', day: 'numeric' })
+  }
+
   return (
     <div>
       {user.role === 2 &&
@@ -45,7 +52,7 @@ const HomeClient = () => {
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
-          <FileHandler client={client} files={files} />
+          {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
         </div>
       }
     </div>
