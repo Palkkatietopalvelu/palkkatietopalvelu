@@ -58,7 +58,7 @@ def validate_settings(settings):
             raise ValueError('Virheellinen arvo') from exc
         if not all(isinstance(delta, int) for delta in settings['deltas']):
             raise ValueError('Virheellisiä delta-arvoja')
-        if settings['email'] == 'false' and settings['sms'] == 'false':
+        if settings['email'] is False and settings['sms'] is False:
             raise ValueError('Valitse ainakin yksi lähetystapa')
         if len(settings['remindertext']) < 2:
             raise ValueError('Muistutusviesti puuttuu')
@@ -68,3 +68,7 @@ def validate_settings(settings):
 def delete_custom(filename = 'custom.json'):
     path = Path(__file__).parent / f'../sched_settings/{filename}'
     path.unlink()
+
+def recover_settings(filename = 'custom.json'):
+    delete_custom(filename)
+    return load_settings('default.json')

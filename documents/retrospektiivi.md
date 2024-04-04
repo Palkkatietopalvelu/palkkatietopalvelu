@@ -93,3 +93,28 @@ Kirjuri: Aare
 - samanaikaiset merget
 - refaktorointia jälkikäteen
 - liian pitkiä tiedostoja
+
+
+## Retro 4, 25.3.2024
+Puheenjohtaja: Elias
+Demooja: Emma
+Kirjuri: Sanni
+
+### START - aloitetaan
+- priorisointia/karsintaa (kaikki valmiiksi loppudemoon)
+- pienien bugien etsintä
+
+### STOP - lopetetaan
+-
+
+### CONTINUE - jatketaan
+- ei viimeisenä sunnuntaina uutta toiminnallisuutta
+- testikattavuuden nostamista
+- yksi pullari kerrallaan
+- hyvää kommunikaatiota
+  
+### MORE OF - lisää
+- koodin dokumentaatio (englanniksi) / enemmän docstringiä
+
+### LESS OF - vähemmän
+- uusia toiminnallisuuksia

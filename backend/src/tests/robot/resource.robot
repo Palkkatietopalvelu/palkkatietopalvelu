@@ -44,6 +44,10 @@ Set Password
     [Arguments]  ${password}
     Input Text  password  ${password}
 
+Set Confirm Password
+    [Arguments]  ${confirmPassword}
+    Input Password  confirmPassword  ${confirmPassword}
+
 Log Out
     Click Link  KIRJAUDU ULOS
 
@@ -102,6 +106,13 @@ Login As New Client
     Set Password  123
     Click Button  login
     Wait For  Tervetuloa palkkatietopalveluun!
+
+Login As Admin
+    Go To Login Page
+    Set Username  testuser@mail.com
+    Set Password  123
+    Click Button  login
+    Logged In Page Should Be Open
 
 Wait For
     [Arguments]  ${text}

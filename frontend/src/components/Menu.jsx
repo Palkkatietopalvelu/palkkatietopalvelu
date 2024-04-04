@@ -1,3 +1,4 @@
+// (Ylärivin valikko)
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Dropdown } from 'react-bootstrap'
@@ -95,6 +96,7 @@ const Menu = () => {
                     <Dropdown.Item id="Manual" href="/reminders">Manuaaliset muistutukset</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
+                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
               </span>}
               <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>

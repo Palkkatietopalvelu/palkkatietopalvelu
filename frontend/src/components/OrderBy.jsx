@@ -1,8 +1,8 @@
+// ./ (admin) & ./mypage (Omat sivut, admin) ; järjestä asiakkaat
 import React from 'react'
 import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { isPast } from 'date-fns'
-
 
 const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   /* alphabetic, due date, late, not late, deactivated
@@ -19,21 +19,23 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   const showLate = () => {
     setSortingCriteria('date') // order by the due date
     setSortedBy('Myöhässä')
-    setFilteredCompanies(clients.filter(client => isPast(client.deadlines[0] &&
-      client.active)))
+    setFilteredCompanies(clients.filter(client =>
+      client.deadlines[0] && isPast(client.deadlines[0])))
   }
 
   const showNotLate = () => {
     setSortingCriteria('date')
     setSortedBy('Ei myöhässä')
-    setFilteredCompanies(clients.filter(client => !isPast(client.deadlines[0]) &&
+    setFilteredCompanies(clients.filter(client =>
+      client.deadlines[0] && !isPast(client.deadlines[0]) &&
       client.active))
   }
 
   const orderByDate = () => {
     setSortingCriteria('date')
     setSortedBy('Eräpäivä')
-    setFilteredCompanies(clients.filter(client => client.active))
+    setFilteredCompanies(clients.filter(client => client.active &&
+      client.deadlines[0]))
   }
 
   const showAllCompanies = () => {
@@ -58,20 +60,18 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   dateToggle.displayName = 'dateToggle'
 
   return (
-    <div>
-      <Dropdown>
-        <Dropdown.Toggle as={dateToggle} id="dropdown-client-sorter">
-          <b>{sortedBy}</b>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item eventKey="1" onClick={showAllCompanies}>Aakkosjärjestys</Dropdown.Item>
-          <Dropdown.Item eventKey="2" onClick={orderByDate}>Eräpäivän mukaan</Dropdown.Item>
-          <Dropdown.Item eventKey="3" onClick={showLate}>Myöhässä</Dropdown.Item>
-          <Dropdown.Item eventKey="4" onClick={showNotLate}>Ei myöhässä</Dropdown.Item>
-          <Dropdown.Item eventKey="4" onClick={showInactive}>Deaktivoidut</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
+    <Dropdown id='dropdown_client_sorter'>
+      <Dropdown.Toggle as={dateToggle}>
+        <b>{sortedBy}</b>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey='1' onClick={showAllCompanies}>Aakkosjärjestys</Dropdown.Item>
+        <Dropdown.Item eventKey='2' onClick={orderByDate}>Eräpäivän mukaan</Dropdown.Item>
+        <Dropdown.Item eventKey='3' onClick={showLate}>Myöhässä</Dropdown.Item>
+        <Dropdown.Item eventKey='4' onClick={showNotLate}>Ei myöhässä</Dropdown.Item>
+        <Dropdown.Item eventKey='4' onClick={showInactive}>Deaktivoidut</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   )
 }
 

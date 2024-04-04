@@ -2,6 +2,8 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
+[![codecov](https://codecov.io/gh/Palkkatietopalvelu/palkkatietopalvelu/graph/badge.svg?token=2ZNIBLMX7I)](https://codecov.io/gh/Palkkatietopalvelu/palkkatietopalvelu)
+
 # Palkkatietopalvelu
 * Palvelu, jolla tilitoimisto voi vastaanottaa palkkatietoja asiakkailtaan.
 * Tilitoimisto voi määrittää eräpäivät tietojen toimittamiselle.
@@ -67,6 +69,15 @@ yksikkötestit:
 
 testikattavuus:
 > poetry run invoke coverage
+
+## Tietokanta
+backend: 
+
+päivitä tietokanta uusimpaan versioon
+> poetry run invoke dbupdate
+
+luo uusi versio tietokannan versiohallintaan:
+> poetry run invoke revision
 
 ## Backlogit
 [backlog](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)

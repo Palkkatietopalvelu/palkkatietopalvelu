@@ -4,8 +4,7 @@ from datetime import datetime, timedelta
 import jwt
 from werkzeug.security import check_password_hash
 from flask_mail import Message
-from mail_scheduler import mail
-from app import app
+from app import app, mail
 from models.user import User
 from utilities import client_user
 

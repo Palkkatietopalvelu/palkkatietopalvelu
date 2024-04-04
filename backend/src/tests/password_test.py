@@ -80,7 +80,7 @@ class TestResetPassword(unittest.TestCase):
             response = app.test_client().post("/api/resetpassword", json=data)
             self.assertEqual(response.status_code, 400)
 
-    def test_reset_password_with_invalid_usermane_form(self):
+    def test_reset_password_with_invalid_username_form(self):
         with app.test_request_context():
             data = {"email": "maija"}
             response = app.test_client().post("/api/resetpassword", json=data)

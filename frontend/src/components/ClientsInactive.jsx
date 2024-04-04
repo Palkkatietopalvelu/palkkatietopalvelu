@@ -1,3 +1,4 @@
+// ./deactivated (Deaktivoidut asiakkaat)
 import { useSelector } from 'react-redux'
 import Notification from './Notification'
 import { Table, Badge } from 'react-bootstrap'

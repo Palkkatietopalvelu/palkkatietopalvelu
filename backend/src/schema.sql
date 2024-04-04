@@ -30,5 +30,13 @@ CREATE TABLE files (
   owner INTEGER REFERENCES clients,
   name TEXT,
   path TEXT,
-  date TIMESTAMP WITH TIME ZONE
+  date TIMESTAMP WITH TIME ZONE,
+  delete_date DATE,
+  deleted_by INTEGER REFERENCES users
+);
+
+CREATE TABLE expired_tokens (
+  id SERIAL PRIMARY KEY,
+  token TEXT,
+  date DATE
 );

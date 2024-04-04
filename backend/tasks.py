@@ -20,3 +20,11 @@ def coverage(ctx):
 @task
 def robottests(ctx):
     ctx.run("robot src/tests/robot", pty=True)
+
+@task
+def revision(ctx):
+    ctx.run("flask --app src/app.py db revision --directory src/migrations")
+
+@task
+def dbupdate(ctx):
+    ctx.run("flask --app src/app db upgrade head --directory src/migrations")

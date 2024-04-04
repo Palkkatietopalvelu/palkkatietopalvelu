@@ -5,6 +5,10 @@ const DueDateBadge = ({ client }) => {
   const now = endOfDay(new Date())
   const late = isPast(client.deadlines[0])
 
+  if (!client.deadlines[0]) {
+    return
+  }
+
   if (late) {
     return (
       <Badge bg='danger' pill>myöhässä</Badge>

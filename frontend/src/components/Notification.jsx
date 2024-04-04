@@ -8,9 +8,15 @@ const Notification = () => {
     return
   }
 
+  const lastTwoMessages = messages.slice(-2)
+
   return (
     <div>
-      <Alert variant={messages.slice(-1)[0].type}>{messages.slice(-1)[0].content}</Alert>
+      {lastTwoMessages.map((msg, index) => (
+        <Alert key={index} variant={msg.type}>
+          {msg.content}
+        </Alert>
+      ))}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+// ./remindersettingsform (Automaattiset muistutukset, asetussivu, lomake)
 import { Form, Button } from 'react-bootstrap'
 import Switch from 'react-switch'
 import CheckBox from './CheckBox'
@@ -72,18 +73,19 @@ const ReminderFormFields = ({
             <Form.Label style={{ marginTop: '20px' }}>
             Muistutuspäivät
             </Form.Label>
-            {weekDays.map((day, index) => (
-              <div key={`day-${index}`}>
-                <CheckBox
-                  name={`day-${index}`}
-                  inputs={days}
-                  setInputs={setDays}
-                  checked={days.includes(`day-${index}`)}
-                />
-                {' '}{day}
-                <br />
-              </div>
-            ))}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
+              {weekDays.map((day, index) => (
+                <div key={`day-${index}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <CheckBox
+                    name={`day-${index}`}
+                    inputs={days}
+                    setInputs={setDays}
+                    checked={days.includes(`day-${index}`)}
+                  />
+                  <label htmlFor={`delta-${index}`}>{day}</label>
+                </div>
+              ))}
+            </div>
             <Form.Label style={{ marginTop: '20px' }}>Kellonaika (tasatunti 0-23)</Form.Label>
             <Form.Control
               id='hour'

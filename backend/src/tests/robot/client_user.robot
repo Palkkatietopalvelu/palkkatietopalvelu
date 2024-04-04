@@ -6,12 +6,23 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Login With Client User Link Succeeds
     Log Out
+    ${Link}  Set Password Link  testi@email.com
+    Go To  ${Link}
+    Set Password  123
+    Set Confirm Password  123
+    Click Button  setpassword
+    Wait For  Salasana asetettu onnistuneesti
+
+Link Expires After Use
+    Go To Home Page
     ${Link}=  Set Password Link  testi@email.com
     Go To  ${Link}
     Set Password  123
     Set Confirm Password  123
     Click Button  setpassword
     Wait For  Salasana asetettu onnistuneesti
+    Go To  ${Link}
+    Wait For  Token on vanhentunut tai väärä
 
 Login With Correct Client User Credentials Succeeds
     Go To Login Page
