@@ -72,6 +72,7 @@ def delete_client(client_id):
             return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
         clients.delete_files(client_id)
         with db.session.begin_nested():
+
             client_user.delete_client_user(username)
             clients.delete_client(client_id)
         db.session.commit()
