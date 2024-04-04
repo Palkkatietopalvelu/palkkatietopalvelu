@@ -65,6 +65,11 @@ class TestUpdateClient(unittest.TestCase):
             for key in ['id', 'owner', 'name', 'path']:
                 self.assertEqual(file[key], self.file[key])
 
+    def test_try_nonexisting_file(self):
+        with app.app_context():
+            file = file_methods.get_file(1)
+            self.assertEqual(file, None)
+
     def test_delete_file(self):
         with app.app_context():
             file_methods.add_file(self.file)
@@ -73,3 +78,12 @@ class TestUpdateClient(unittest.TestCase):
             file_methods.delete_file(1, remove_file=False)
             all_files = file_methods.get_all_files()
             self.assertEqual(len(all_files), 0)
+    
+    def test_delete_file_fails_with_invalid_id(self):
+        with app.app_context():
+            file_methods.add_file(self.file)
+            all_files = file_methods.get_all_files()
+            self.assertEqual(len(all_files), 1)
+            file_methods.delete_file(5, remove_file=False) # wrong id
+            all_files = file_methods.get_all_files()
+            self.assertEqual(len(all_files), 1)

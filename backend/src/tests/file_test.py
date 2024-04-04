@@ -9,6 +9,8 @@ from initialize_db import initialize_database
 import json
 import jwt
 import sqlalchemy.exc
+from werkzeug.datastructures import FileStorage
+from io import BytesIO
 
 class TestFile(unittest.TestCase):
     def setUp(self):
@@ -44,7 +46,10 @@ class TestFile(unittest.TestCase):
         token = jwt.encode({
             "username": "pekka@mail.com", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
-
+        self.file_headers = {**self.headers, "Content-Type": 'multipart/form-data'}
+    
+    def tearDown(self):
+        initialize_database()
 
     def test_move_file_to_trash(self):
         with app.app_context():
@@ -83,4 +88,64 @@ class TestFile(unittest.TestCase):
         with app.app_context():
             file_methods.add_file(self.file)
             response = app.test_client().post("/api/files/1", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
+
+    def test_upload_file_succeeds(self):
+        with open("src/tests/test.pdf", "rb") as f:
+            file_contents = f.read()
+            file_storage = FileStorage(stream=BytesIO(file_contents), filename="test.pdf", content_type="application/pdf")
+        files = {'file': file_storage}
+        with app.test_request_context():
+            response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
+            self.assertEqual(response.status_code, 200) # document uploaded successfully
+    
+    def test_upload_file_fails_without_filename(self):
+        with open("src/tests/test.pdf", "rb") as f:
+            file_contents = f.read()
+            file_storage = FileStorage(stream=BytesIO(file_contents), filename="", content_type="application/pdf")
+        files = {'file': file_storage}
+        with app.test_request_context():
+            response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
+            self.assertEqual(response.status_code, 400) # no selected file, missing filename
+            self.assertIn('No selected file', str(response.data))
+    
+    def test_upload_file_fails_with_invalid_file_type(self):
+        with open("src/tests/not_a_pdf.txt", "rb") as f:
+            file_contents = f.read()
+            file_storage = FileStorage(stream=BytesIO(file_contents), filename="not_a_pdf.txt", content_type="text/plain")
+        files = {'file': file_storage}
+        with app.test_request_context():
+            response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
+            self.assertEqual(response.status_code, 400) # invalid file type
+            self.assertIn('Invalid file type', str(response.data))
+
+    def test_download_file_succeeds(self):
+        with app.app_context():
+            self.test_upload_file_succeeds()
+            response = app.test_client().get("/api/files/1/download", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
+    
+    def test_download_file_fails_with_invalid_id(self):
+        with app.app_context():
+            response = app.test_client().get("/api/files/5/download", headers=self.headers)
+            self.assertEqual(response.status_code, 404)  # file not found
+
+    def test_delete_file_succeeds(self):
+        with open("src/tests/test.pdf", "rb") as f:
+            file_contents = f.read()
+            file_storage = FileStorage(stream=BytesIO(file_contents), filename="test.pdf", content_type="application/pdf")
+        files = {'file': file_storage}
+        with app.test_request_context():
+            response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
+            response = app.test_client().delete("/api/files/1", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
+
+    def test_delete_file_fails_with_invalid_id(self):
+        with app.test_request_context():
+            response = app.test_client().delete("/api/files/5", headers=self.headers)
+            self.assertEqual(response.status_code, 404)
+    
+    def test_downlad_csv_template_succeeds(self):
+        with app.test_request_context():
+            response = app.test_client().get("/api/files/template.csv", headers=self.headers)
             self.assertEqual(response.status_code, 200)

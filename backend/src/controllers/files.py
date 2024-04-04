@@ -86,7 +86,9 @@ def restore(file_id):
 @require_login
 def delete_file(file_id):
     try:
-        files.delete_file(file_id)
+        result = files.delete_file(file_id)
+        if not result:
+            return "File not found", 404
         return "File deleted successfully", 200
     except Exception as e: # pylint: disable=broad-except
         return str(e), 400

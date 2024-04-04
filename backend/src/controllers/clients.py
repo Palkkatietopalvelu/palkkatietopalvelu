@@ -68,9 +68,9 @@ def update_client(client_id):
 def delete_client(client_id):
     try:
         with db.session.begin_nested():
-            sql = text("""SELECT email FROM clients WHERE id=:id""")
-            result = db.session.execute(sql, {"id": client_id})
-            username = result.fetchone()[0]
+            username = clients.get_email(client_id)
+            if not username: # client email is required, if not found the client must not exist
+                return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
             client_user.delete_client_user(username)
             clients.delete_client(client_id)
         db.session.commit()
