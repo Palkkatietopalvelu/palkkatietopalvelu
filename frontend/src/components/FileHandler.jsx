@@ -95,6 +95,9 @@ const FileHandler = ({ client, files }) => {
         Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
       </div>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        Uusi lomake <Link to={`/client/${client.id}/salaryformnew`} state={linkState}>täällä</Link>
+      </div>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
         Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {
           const data = await filesImport.downloadTemplateCSV()
           const url = window.URL.createObjectURL(new Blob([data]))

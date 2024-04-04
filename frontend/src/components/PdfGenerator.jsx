@@ -31,35 +31,113 @@ const generatePDF = (formData, clientDetails, date) => {
       yPosition += increment
       doc.text(`Palkkatyyppi: ${employee.salary_type}`, 10, yPosition)
       yPosition += increment
-      if (employee.absences && employee.absences.length > 0) {
-        const formattedAbsences = formatAbsencesDates(employee.absences).join(', ')
-        doc.text(`Poissaolot: ${formattedAbsences}`, 10, yPosition)
+      if (employee.month) {
+        doc.text(`Kuukausi: ${employee.month}`, 10, yPosition)
         yPosition += increment
       }
-      if (employee.provisions) {
-        doc.text(`Provisiot: ${employee.provisions}`, 10, yPosition)
-        yPosition += increment
+      yPosition += increment
+      // Salary inforomation
+      doc.text('PALKKATIEDOT', 10, yPosition)
+      yPosition += increment
+      doc.text('Palkat', 15, yPosition)
+      yPosition += increment
+      doc.text('Tuntimäärä', 20, yPosition)
+      doc.text('Sunnuntaitunnit', 55, yPosition)
+      doc.text('Tuntipalkka', 90, yPosition)
+      doc.text('Kuukausipalkka', 125, yPosition)
+      doc.text('Bruttopalkka', 160, yPosition)
+      yPosition += increment
+      if (employee.total_hours_weekdays) {
+        doc.text(`${employee.total_hours_weekdays}`, 20, yPosition)
       }
-      if (employee.overtime) {
-        doc.text(`Ylityöt: ${employee.overtime}`, 10, yPosition)
-        yPosition += increment
+      if (employee.total_hours_sundays) {
+        doc.text(`${employee.total_hours_sundays}`, 55, yPosition)
       }
-      if (employee.lunch_allowance) {
-        doc.text(`Lounasetu: ${employee.lunch_allowance}`, 10, yPosition)
-        yPosition += increment
+      if (employee.wage_hourly) {
+        doc.text(`${employee.wage_hourly}`, 90, yPosition)
       }
-      if (employee.daily_allowance) {
-        doc.text(`Päivärahat: ${employee.daily_allowance}`, 10, yPosition)
-        yPosition += increment
+      if (employee.wage_monthly) {
+        doc.text(`${employee.wage_monthly}`, 125, yPosition)
       }
+      if (employee.wage_total_gross) {
+        doc.text(`${employee.wage_total_gross}`, 160, yPosition)
+      }
+      yPosition += increment
+      // Benefit information
+      doc.text('Luontoisedut', 15, yPosition)
+      yPosition += increment
+      doc.text('Asuntoetu', 20, yPosition)
+      doc.text('Autoetu', 55, yPosition)
+      doc.text('Puhelinetu', 90, yPosition)
+      doc.text('Lounarit', 125, yPosition)
+      doc.text('Liikuntasetelit', 160, yPosition)
+      yPosition += increment
+      if (employee.flat_benefit) {
+        doc.text(`${employee.flat_benefit}`, 20, yPosition)
+      }
+      if (employee.car_benefit) {
+        doc.text(`${employee.car_benefit}`, 55, yPosition)
+      }
+      if (employee.phone_benefit) {
+        doc.text(`${employee.flat_benefit}`, 90, yPosition)
+      }
+      if (employee.lunch_benefit) {
+        doc.text(`${employee.lunch_benefit}`, 125, yPosition)
+      }
+      if (employee.sport_benefit) {
+        doc.text(`${employee.sport_benefit}`, 160, yPosition)
+      }
+      yPosition += increment
+      doc.text('Korvaukset ja päivärahat', 15, yPosition)
+      yPosition += increment
+      doc.text('Km-korvaukset', 20, yPosition)
+      doc.text('Kotimaan päiväraha', 65, yPosition)
+      doc.text('Kotimaan osapäivä', 110, yPosition)
+      doc.text('Ulkomaan päiväraha', 155, yPosition)
+      yPosition += increment
       if (employee.mileage_allowance) {
-        doc.text(`Km-korvaukset: ${employee.mileage_allowance}`, 10, yPosition)
+        doc.text(`${employee.mileage_allowance}`, 20, yPosition)
+      }
+      if (employee.daily_allowance_domestic) {
+        doc.text(`${employee.daily_allowance_domestic}`, 65, yPosition)
+      }
+      if (employee.daily_allowance_domestic_part_time) {
+        doc.text(`${employee.daily_allowance_domestic_part_time}`, 110, yPosition)
+      }
+      if (employee.daily_allowance_foreign) {
+        doc.text(`${employee.daily_allowance_foreign}`, 155, yPosition)
+      }
+      yPosition += increment
+      // Absences
+      if (employee.absence_reason_1) {
+        yPosition += increment
+        doc.text('POISSAOLOT', 10, yPosition)
+        yPosition += increment
+        doc.text(`Syy`, 15, yPosition)
+        doc.text(`Palkallinen`, 100, yPosition)
+        doc.text(`Ajalta`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.total_hours) {
-        doc.text(`Kokonaistuntimäärä: ${employee.total_hours}`, 10, yPosition)
+      if (employee.absence_compensated_1) {
+        doc.text(`${employee.absence_reason_1}`, 15, yPosition)
+        doc.text(`${employee.absence_compensated_1}`, 100, yPosition)
+        doc.text(`${employee.absence_time_period_1}`, 140, yPosition)
         yPosition += increment
       }
+      if (employee.absence_reason_2) {
+        doc.text(`${employee.absence_reason_2}`, 15, yPosition)
+        doc.text(`${employee.absence_compensated_2}`, 100, yPosition)
+        doc.text(`${employee.absence_time_period_2}`, 140, yPosition)
+        yPosition += increment
+      }
+      if (employee.absence_reason_3) {
+        doc.text(`${employee.absence_reason_3}`, 15, yPosition)
+        doc.text(`${employee.absence_compensated_3}`, 100, yPosition)
+        doc.text(`${employee.absence_time_period_3}`, 140, yPosition)
+        yPosition += increment
+      }
+      yPosition += increment
+      // Additional information
       if (employee.extra) {
         doc.text(`Lisätiedot: ${employee.extra}`, 10, yPosition)
         yPosition += increment
