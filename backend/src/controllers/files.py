@@ -55,6 +55,7 @@ def download_file(file_id):
     return 'File not found', 404
 
 @app.route('/api/files/template.csv', methods=['GET'])
+@require_login
 def download_template_csv():
     try:
         path = os.path.join(UPLOAD_FOLDER, 'template.csv')

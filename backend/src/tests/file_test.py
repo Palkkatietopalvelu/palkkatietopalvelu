@@ -47,8 +47,10 @@ class TestFile(unittest.TestCase):
             "username": "pekka@mail.com", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
         self.file_headers = {**self.headers, "Content-Type": 'multipart/form-data'}
+        self.path = os.path.dirname(os.path.abspath(__file__))  # the current directory of the test file
     
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(self):
         initialize_database()
 
     def test_move_file_to_trash(self):
@@ -91,29 +93,29 @@ class TestFile(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_upload_file_succeeds(self):
-        with open("src/tests/test.pdf", "rb") as f:
-            file_contents = f.read()
-            file_storage = FileStorage(stream=BytesIO(file_contents), filename="test.pdf", content_type="application/pdf")
-        files = {'file': file_storage}
+        files = self.upload_file_helper() # use the helper function to upload a new file
         with app.test_request_context():
             response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
             self.assertEqual(response.status_code, 200) # document uploaded successfully
+            self.assertEqual(len(file_methods.get_all_files()), 1) # document was added to the database
+        file_methods.delete_file(1) # delete file after test
     
     def test_upload_file_fails_without_filename(self):
-        with open("src/tests/test.pdf", "rb") as f:
+        with open(self.path+"/files_for_tests/test.pdf", "rb") as f:
             file_contents = f.read()
             file_storage = FileStorage(stream=BytesIO(file_contents), filename="", content_type="application/pdf")
-        files = {'file': file_storage}
+        files = {'file': file_storage, 'owner': 1}
         with app.test_request_context():
             response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
             self.assertEqual(response.status_code, 400) # no selected file, missing filename
             self.assertIn('No selected file', str(response.data))
+            self.assertEqual(len(file_methods.get_all_files()), 0) # document not added to the database
     
     def test_upload_file_fails_with_invalid_file_type(self):
-        with open("src/tests/not_a_pdf.txt", "rb") as f:
+        with open(self.path+"/files_for_tests/not_a_pdf.txt", "rb") as f:
             file_contents = f.read()
             file_storage = FileStorage(stream=BytesIO(file_contents), filename="not_a_pdf.txt", content_type="text/plain")
-        files = {'file': file_storage}
+        files = {'file': file_storage, 'owner': 1}
         with app.test_request_context():
             response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
             self.assertEqual(response.status_code, 400) # invalid file type
@@ -121,9 +123,11 @@ class TestFile(unittest.TestCase):
 
     def test_download_file_succeeds(self):
         with app.app_context():
-            self.test_upload_file_succeeds()
+            files = self.upload_file_helper() # use the helper function to upload a new file
+            response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
             response = app.test_client().get("/api/files/1/download", headers=self.headers)
             self.assertEqual(response.status_code, 200)
+        file_methods.delete_file(1) # delete file after test
     
     def test_download_file_fails_with_invalid_id(self):
         with app.app_context():
@@ -131,21 +135,39 @@ class TestFile(unittest.TestCase):
             self.assertEqual(response.status_code, 404)  # file not found
 
     def test_delete_file_succeeds(self):
-        with open("src/tests/test.pdf", "rb") as f:
-            file_contents = f.read()
-            file_storage = FileStorage(stream=BytesIO(file_contents), filename="test.pdf", content_type="application/pdf")
-        files = {'file': file_storage}
         with app.test_request_context():
+            files = self.upload_file_helper() # use the helper function to upload a new file
             response = app.test_client().post("/api/files", headers=self.file_headers, data = files)
+            self.assertEqual(len(file_methods.get_all_files()), 1) # document was added to database
             response = app.test_client().delete("/api/files/1", headers=self.headers)
             self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(file_methods.get_all_files()), 0) # document was deleted
 
     def test_delete_file_fails_with_invalid_id(self):
         with app.test_request_context():
             response = app.test_client().delete("/api/files/5", headers=self.headers)
             self.assertEqual(response.status_code, 404)
     
-    def test_downlad_csv_template_succeeds(self):
+    def test_download_csv_template_succeeds(self):
         with app.test_request_context():
             response = app.test_client().get("/api/files/template.csv", headers=self.headers)
             self.assertEqual(response.status_code, 200)
+    
+    def test_download_csv_fails_if_file_missing(self):
+        original_path = os.path.abspath(os.path.join(self.path, "../../file_storage/template.csv"))
+        hidden_path = os.path.abspath(os.path.join(self.path, "../../file_storage/template_hidden.csv"))
+        try:
+            os.rename(original_path, hidden_path) # hide the template.csv temporarily
+            with app.test_request_context():
+                response = app.test_client().get("/api/files/template.csv", headers=self.headers)
+                self.assertEqual(response.status_code, 500)
+                self.assertIn("No such file or directory", str(response.data))
+        finally:
+            os.rename(hidden_path, original_path) # move the file back
+    
+    def upload_file_helper(self):
+        with open(self.path+"/files_for_tests/test.pdf", "rb") as f:
+            file_contents = f.read()
+            file_storage = FileStorage(stream=BytesIO(file_contents), filename="test.pdf", content_type="application/pdf")
+        files = {'file': file_storage, 'owner': 1}
+        return files
