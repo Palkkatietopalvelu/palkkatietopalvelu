@@ -6,6 +6,7 @@ import { useField } from '../hooks'
 import { DateSelect } from '../hooks/DatePicker'
 import SalaryFormContentNew from './SalaryFormContentNew'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
+import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
 
 const SalaryForm = () => {
   const navigate = useNavigate()
@@ -63,6 +64,14 @@ const SalaryForm = () => {
     }
   }, [user, client, urlClientId, navigate])
 
+  const formatDate = (date) => {
+    const d = new Date(date),
+      day = '' + d.getDate(),
+      month = '' + (d.getMonth() + 1),
+      year = d.getFullYear()
+    return [(day.length < 2 ? '0' : '') + day, (month.length < 2 ? '0' : '') + month, year].join('.')
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (employees.length === 0) {
@@ -72,9 +81,12 @@ const SalaryForm = () => {
     const formData = {
       employees,
     }
+    const currentDate = formatDate(new Date())
     try {
       const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
+      const csvBlob = await generateCSV(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod }, currentDate)
       uploadGeneratedPDF(dispatch, pdfBlob, clientId, clientName)
+      uploadGeneratedCSV(dispatch, csvBlob, clientId, clientName)
       navigate('/')
     } catch (error) {
       console.error('Error generating or uploading PDF:', error)

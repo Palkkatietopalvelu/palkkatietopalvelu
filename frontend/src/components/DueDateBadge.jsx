@@ -9,23 +9,31 @@ const DueDateBadge = ({ client }) => {
     return
   }
 
+  let days_left = formatDistanceToNow(client.deadlines[0], now).split(' ')
   if (late) {
+    if(days_left[0] === 'about' && days_left[2] ==='hours') {
+      days_left = 'tänään'
+    }
+    else {
+      days_left = 'myöhässä'
+    }
     return (
-      <Badge bg='danger' pill>myöhässä</Badge>
+      <Badge bg='danger' pill>{days_left}</Badge>
     )
   }
 
-  let days_left = formatDistanceToNow(client.deadlines[0], now).split(' ')
-  if (days_left[2] === 'month') {
-    days_left = 'noin kuukausi'
-  }
-  else if (days_left[1] === 'months') {
+  if (days_left[2] === 'month' || days_left[1] === 'months') {
     days_left = 'yli kuukausi'
   }
   else if (days_left[0] === 'about')
     days_left = '1 päivä'
-  else
-    days_left = days_left[0] + ' päivää'
+  else if (days_left[0] === '1' && days_left[1] === 'day') {
+    days_left = '2 päivää'
+  }
+  else {
+    let days_left_int = Number(days_left[0]) + 1
+    days_left = days_left_int + ' päivää'
+  }
 
   return (
     <Badge bg='primary' pill>{days_left}</Badge>

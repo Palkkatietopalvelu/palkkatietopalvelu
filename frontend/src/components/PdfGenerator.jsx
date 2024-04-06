@@ -14,6 +14,11 @@ function formatAbsencesDates(absences) {
   })
 }
 
+function changePDFPage(doc) {
+  doc.addPage()
+  return 20  // returning new page start position (yPosition = 20)
+}
+
 const generatePDF = (formData, clientDetails, date) => {
   return new Promise((resolve, reject) => {
     const { clientName, clientEmail, clientNumber, clientCode, clientPeriod } = clientDetails
@@ -27,6 +32,10 @@ const generatePDF = (formData, clientDetails, date) => {
     yPosition += 30 // Adjust vertical space after adding client info
     formData.employees.forEach((employee, index) => {
       const increment = 7 // Vertical space between lines
+      if (yPosition > 280) { // If close to the bottom of the page, create a new one
+        doc.addPage()
+        yPosition = 10 // Reset position for the new page
+      }
       doc.text(`Työntekijä ${index + 1}: ${employee.employee_name}`, 10, yPosition)
       yPosition += increment
       doc.text(`Palkkatyyppi: ${employee.salary_type}`, 10, yPosition)
@@ -36,6 +45,7 @@ const generatePDF = (formData, clientDetails, date) => {
         yPosition += increment
       }
       yPosition += increment
+      //yPosition = changePDFPage(doc)
       // Salary inforomation
       doc.text('PALKKATIEDOT', 10, yPosition)
       yPosition += increment
@@ -108,14 +118,15 @@ const generatePDF = (formData, clientDetails, date) => {
         doc.text(`${employee.daily_allowance_foreign}`, 155, yPosition)
       }
       yPosition += increment
+      // yPosition = changePDFPage(doc)
       // Absences
       if (employee.absence_reason_1) {
         yPosition += increment
         doc.text('POISSAOLOT', 10, yPosition)
         yPosition += increment
-        doc.text(`Syy`, 15, yPosition)
-        doc.text(`Palkallinen`, 100, yPosition)
-        doc.text(`Ajalta`, 140, yPosition)
+        doc.text('Syy', 15, yPosition)
+        doc.text('Palkallinen', 100, yPosition)
+        doc.text('Ajalta', 140, yPosition)
         yPosition += increment
       }
       if (employee.absence_compensated_1) {
@@ -143,11 +154,14 @@ const generatePDF = (formData, clientDetails, date) => {
         yPosition += increment
       }
       // Ensure there's a visual separation between employees
-      yPosition += 5 // Add a little extra space before the next employee
-      if (yPosition > 280) { // If close to the bottom of the page, create a new one
+      // yPosition += 5 // Add a little extra space before the next employee
+      // If you want to a separate page for each employee, use the line below
+      yPosition = changePDFPage(doc)
+      // If you do not want a separate page for each employee, use the if statement below
+      /*if (yPosition > 280) { // If close to the bottom of the page, create a new one
         doc.addPage()
         yPosition = 10 // Reset position for the new page
-      }
+      }*/
     })
     const pdfBlob = doc.output('blob')
     resolve(pdfBlob)

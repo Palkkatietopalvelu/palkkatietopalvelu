@@ -4,6 +4,10 @@ import { Form, Button, Accordion, Card } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
+import days from './ReminderInfo'
+
+const { weekDays, months } = days
+const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
 
 const SalaryFormContent = ({
   client,
@@ -43,7 +47,7 @@ const SalaryFormContent = ({
     boxShadow: 'none'
   }
 
-  const tableStyle = { margin: '15px'}
+  const tableStyle = { margin: '15px' }
   const buttonStyle = { margin: '10px 5px 20px' }
   const buttonStyle2 = { margin: '60px 5px 0px' }
 
@@ -51,7 +55,7 @@ const SalaryFormContent = ({
     <h3>Palkkatietolomake</h3> <br />
     <Form onSubmit={handleSubmit}>
       <div><Notification /></div>
-      {client ? <p><h5>{client.company}</h5></p> : null} <br />
+      {client ? <h5>{client.company}</h5> : null} <br />
       <div>
         <h5>PALKKATIEDOT</h5>
         <Table style={tableStyle}>
@@ -64,23 +68,29 @@ const SalaryFormContent = ({
         </Table>
         <Table style={tableStyle}>
           <tbody>
-          <thead><h6><b>Palkat</b></h6></thead>
             <tr>
-              <td>Tuntimäärä <Form.Control id='total_hours_weekdays' {...total_hours_weekdays} /></td>
+              <th>Palkat</th>
+            </tr>
+            <tr>
+              <td>Tuntimäärä (arkipäivät)<Form.Control id='total_hours_weekdays' {...total_hours_weekdays} /></td>
               <td>Sunnuntaitunnit <Form.Control id='total_hours_sundays' {...total_hours_sundays} /></td>
               <td>Tuntipalkka <Form.Control id='wage_hourly' {...wage_hourly} /></td>
               <td>Kk-palkat <Form.Control id='wage_monthly' {...wage_monthly} /></td>
               <td>Bruttopalkka yhteensä <Form.Control id='wage_total_gross' {...wage_total_gross} /></td>
             </tr>
-            <thead><h6><b>Luontoisedut</b></h6></thead>
-            <tr padding='10rem'>
+            <tr>
+              <th>Luontoisedut</th>
+            </tr>
+            <tr>
               <td>Asuntoetu <Form.Control id='flat_benefit' {...flat_benefit} /></td>
               <td>Autoetu <Form.Control id='car_benefit' {...car_benefit} /></td>
               <td>Puhelinetu <Form.Control id='phone_benefit' {...phone_benefit} /></td>
               <td>Lounarit <Form.Control id='lunch_benefit' {...lunch_benefit} /></td>
               <td>Liikuntasetelit <Form.Control id='sport_benefit' {...sport_benefit} /></td>
             </tr>
-            <thead><h6><b>Korvaukset ja päivärahat</b></h6></thead>
+            <tr>
+              <th>Korvaukset ja päivärahat</th>
+            </tr>
             <tr>
               <td>Km-korvaus <Form.Control id='mileage_allowance' {...mileage_allowance} /></td>
               <td>Kotimaan päiväraha <Form.Control id='daily_allowance_domestic' {...daily_allowance_domestic} /></td>
@@ -123,10 +133,10 @@ const SalaryFormContent = ({
       </div>
       <div>
         <br /><h5>Tarkistusrivit</h5>
-          <p>Rahapalkka <br />
+        <p>Rahapalkka <br />
           Luontoisedut <br />
           Vähennykset
-          </p><br />
+        </p><br />
       </div>
       <div>
         <Form.Group>
