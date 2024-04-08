@@ -23,6 +23,7 @@ import ResetPassword from './components/ResetPassword'
 import Trash from './components/Trash'
 import InactiveClients from './components/ClientsInactive'
 import Files from './components/Files'
+import Instructions from './components/Instructions'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -57,6 +58,7 @@ const App = () => {
           <Route path="/setpassword/:token" element={<SetPassword />}/>
           <Route path="/resetpassword" element={<ResetPassword />}/>
           <Route path="/files" element={<Files />}/>
+          <Route path="/instructions" element={<Instructions />} />
         </Routes>
       </Router>
     </div>
