@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import React from 'react'
 
 const Header = (props) => {
-    console.log(props)
     return (
       <div>
         <h4>
