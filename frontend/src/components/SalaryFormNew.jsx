@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useField } from '../hooks'
-import { DateSelect } from '../hooks/DatePicker'
 import SalaryFormContentNew from './SalaryFormContentNew'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
@@ -39,6 +38,7 @@ const SalaryForm = () => {
   const car_benefit = useField()
   const phone_benefit = useField()
   const lunch_benefit = useField()
+  const lunch_benefit_value = useField()
   const sport_benefit = useField()
   const mileage_allowance = useField()
   const daily_allowance_domestic = useField()
@@ -83,7 +83,7 @@ const SalaryForm = () => {
     }
     const currentDate = formatDate(new Date())
     try {
-      const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod })
+      const pdfBlob = await generatePDF(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod }, currentDate)
       const csvBlob = await generateCSV(formData, { clientName, clientEmail, clientNumber, clientCode, clientPeriod }, currentDate)
       uploadGeneratedPDF(dispatch, pdfBlob, clientId, clientName)
       uploadGeneratedCSV(dispatch, csvBlob, clientId, clientName)
@@ -94,8 +94,8 @@ const SalaryForm = () => {
   }
 
   const addEmployee = () => {
-    if (!employee_name.value.trim()) {
-      alert('Työntekijän nimi on pakollinen tieto.')
+    if (!employee_name.value.trim() || !month.value.trim()) {
+      alert('Työntekijän nimi ja palkkajakso ovat pakollisia tietoja.')
       return
     }
     let employeeData = {
@@ -112,6 +112,11 @@ const SalaryForm = () => {
     if (car_benefit.value) employeeData.car_benefit = car_benefit.value
     if (phone_benefit.value) employeeData.phone_benefit = phone_benefit.value
     if (lunch_benefit.value) employeeData.lunch_benefit = lunch_benefit.value
+    if (lunch_benefit_value.value) employeeData.lunch_benefit_value = lunch_benefit_value.value
+    if (lunch_benefit.value && lunch_benefit_value.value) {
+      const lunch_benefit_total = Number(lunch_benefit.value) * Number(lunch_benefit_value.value)
+      employeeData.lunch_benefit_total = lunch_benefit_total
+    }
     if (sport_benefit.value) employeeData.sport_benefit = sport_benefit.value
     if (mileage_allowance.value) employeeData.mileage_allowance = mileage_allowance.value
     if (daily_allowance_domestic.value) employeeData.daily_allowance_domestic = daily_allowance_domestic.value
@@ -177,6 +182,7 @@ const SalaryForm = () => {
         car_benefit={car_benefit}
         phone_benefit={phone_benefit}
         lunch_benefit={lunch_benefit}
+        lunch_benefit_value={lunch_benefit_value}
         sport_benefit={sport_benefit}
         mileage_allowance={mileage_allowance}
         daily_allowance_domestic={daily_allowance_domestic}

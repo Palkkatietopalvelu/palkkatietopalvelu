@@ -92,10 +92,7 @@ const FileHandler = ({ client, files }) => {
         </Form.Group>
       </Form>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
-      </div>
-      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Uusi lomake <Link to={`/client/${client.id}/salaryformnew`} state={linkState}>täällä</Link>
+        Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryformnew`} state={linkState}>täällä</Link>
       </div>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
         Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {

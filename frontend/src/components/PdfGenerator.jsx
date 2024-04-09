@@ -38,10 +38,8 @@ const generatePDF = (formData, clientDetails, date) => {
       }
       doc.text(`Työntekijä ${index + 1}: ${employee.employee_name}`, 10, yPosition)
       yPosition += increment
-      doc.text(`Palkkatyyppi: ${employee.salary_type}`, 10, yPosition)
-      yPosition += increment
       if (employee.month) {
-        doc.text(`Kuukausi: ${employee.month}`, 10, yPosition)
+        doc.text(`Palkkajakso: ${employee.month}`, 10, yPosition)
         yPosition += increment
       }
       yPosition += increment
@@ -94,6 +92,9 @@ const generatePDF = (formData, clientDetails, date) => {
       if (employee.lunch_benefit) {
         doc.text(`${employee.lunch_benefit}`, 125, yPosition)
       }
+      if (employee.lunch_benefit_value) {
+        doc.text(`x  ${employee.lunch_benefit_value} €`, 132, yPosition)
+      }
       if (employee.sport_benefit) {
         doc.text(`${employee.sport_benefit}`, 160, yPosition)
       }
@@ -104,6 +105,8 @@ const generatePDF = (formData, clientDetails, date) => {
       doc.text('Kotimaan päiväraha', 65, yPosition)
       doc.text('Kotimaan osapäivä', 110, yPosition)
       doc.text('Ulkomaan päiväraha', 155, yPosition)
+      yPosition += 5
+      doc.text('(maa ja päivien määrä)', 155, yPosition)
       yPosition += increment
       if (employee.mileage_allowance) {
         doc.text(`${employee.mileage_allowance}`, 20, yPosition)

@@ -22,6 +22,7 @@ const SalaryFormContent = ({
   car_benefit,
   phone_benefit,
   lunch_benefit,
+  lunch_benefit_value,
   sport_benefit,
   mileage_allowance,
   daily_allowance_domestic,
@@ -62,7 +63,7 @@ const SalaryFormContent = ({
           <tbody>
             <tr>
               <td>Palkansaaja <Form.Control id='employee name' {...employee_name} /></td>
-              <td>Kuukausi <Form.Control id='month' {...month} /></td>
+              <td>Palkkajakso <Form.Control id='month' {...month} /></td>
             </tr>
           </tbody>
         </Table>
@@ -85,7 +86,16 @@ const SalaryFormContent = ({
               <td>Asuntoetu <Form.Control id='flat_benefit' {...flat_benefit} /></td>
               <td>Autoetu <Form.Control id='car_benefit' {...car_benefit} /></td>
               <td>Puhelinetu <Form.Control id='phone_benefit' {...phone_benefit} /></td>
-              <td>Lounarit <Form.Control id='lunch_benefit' {...lunch_benefit} /></td>
+              <td>
+                <Table style={{ margin: 0, padding: 0, border: 'none' }}>
+                  <tbody>
+                    <tr>
+                      <td style={{ border: 'none' }}>Lounarimäärä <Form.Control id='lunch_benefit' {...lunch_benefit} /></td>
+                      <td style={{ border: 'none' }}>Lounarihinta <Form.Control id='lunch_benefit_value' {...lunch_benefit_value} /></td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </td>
               <td>Liikuntasetelit <Form.Control id='sport_benefit' {...sport_benefit} /></td>
             </tr>
             <tr>
@@ -174,7 +184,8 @@ const SalaryFormContent = ({
                 {employee.flat_benefit && <p>Asuntoetu: {employee.flat_benefit}</p>}
                 {employee.car_benefit && <p>Autoetu: {employee.car_benefit}</p>}
                 {employee.phone_benefit && <p>Puhelinetu: {employee.phone_benefit}</p>}
-                {employee.lunch_benefit && <p>Lounarit: {employee.lunch_benefit}</p>}
+                {employee.lunch_benefit && <p>Lounarimäärä: {employee.lunch_benefit}</p>}
+                {employee.lunch_benefit_value && <p>Lounarihinta: {employee.lunch_benefit_value}</p>}
                 {employee.sport_benefit && <p>Liikuntasetelit: {employee.sport_benefit}</p>}
                 {employee.mileage_allowance && <p>Km-korvaukset: {employee.mileage_allowance}</p>}
                 {employee.daily_allowance_domestic && <p>Kotimaan päiväraha: {employee.daily_allowance_domestic}</p>}

@@ -1,23 +1,10 @@
 // CsvGenerator.jsx
 import { addFile } from '../reducers/fileReducer'
 
-function formatAbsencesDates(absences) {
-  return absences.map(item => {
-    let dateItem = item
-    if (!(dateItem instanceof Date)) {
-      dateItem = new Date(dateItem)
-    }
-    const year = dateItem.getFullYear()
-    const month = String(dateItem.getMonth() + 1).padStart(2, '0')
-    const day = String(dateItem.getDate()).padStart(2, '0')
-    return `${day}.${month}.${year}`
-  })
-}
-
 function convertToCSV(objArray, clientDetails, date) {
   const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray
   console.log('convertToCSV array: ', array)
-  let str = 'PALKKATIEDOT  ,' + month + '\r\n'
+  let str = 'PALKKATIEDOT \r\n'
   str += 'Raportti lähetetty  ,  ' + date + '\r\n'
 
   // Append client details
@@ -31,10 +18,10 @@ function convertToCSV(objArray, clientDetails, date) {
   str += '\r\n'
 
   // Extract headers
-  str += 'Palkansaaja  ,\
-  Tuntimäärä  ,  Sunnuntaitunnit  ,  Tuntipalkka €  ,  Kk-palkat  ,  Asuntoetu  ,  Autoetu  ,\
-  Puh.etu,  Bruttopalkka yhteensä  ,  Lounarit  ,  Liikuntasetelit  ,\
-  Km-korvaus (km)  ,  Kotimaan päiväraha  ,  Kotimaan osapäivä  ,  Ulkomaan päivärahat  ,  Lisäinfo  \n'
+  str += 'Palkansaaja,Palkkajakso,\
+Tuntimäärä,Sunnuntaitunnit,Tuntipalkka €,Kk-palkat,Asuntoetu,Autoetu,\
+Puh.etu,Bruttopalkka yhteensä,Lounarimäärä,Lounarihinta,Liikuntasetelit,\
+Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (maa ja päivien määrä),Lisäinfo\n'
 
   // Initialize totals
   let totals = {
@@ -47,6 +34,8 @@ function convertToCSV(objArray, clientDetails, date) {
     phone_benefit: 0,
     wage_total_gross: 0,
     lunch_benefit: 0,
+    lunch_benefit_value: 0,
+    lunch_benefit_total: 0,
     sport_benefit: 0,
     mileage_allowance: 0,
     daily_allowance_domestic: 0,
@@ -55,17 +44,12 @@ function convertToCSV(objArray, clientDetails, date) {
     absence_reason_1: '',
     absence_reason_2: '',
     absence_reason_3: '',
-    absence_compensated_1,
-    absence_compensated_2,
-    absence_compensated_3,
-    absence_time_period_1,
-    absence_time_period_2,
-    absence_time_period_3,
   }
 
   for (let i = 0; i < array.length; i++) {
     let line = ''
     line += `"${array[i].employee_name}",`
+    line += `"${array[i].month}",`
     //line += `"${array[i].salary_type}",`
     //line += `"${array[i].absences ? formatAbsencesDates(array[i].absences).join('|') : ''}",`
 
@@ -78,6 +62,8 @@ function convertToCSV(objArray, clientDetails, date) {
     totals.phone_benefit += Number(array[i].phone_benefit || 0)
     totals.wage_total_gross += Number(array[i].wage_total_gross || 0)
     totals.lunch_benefit += Number(array[i].lunch_benefit || 0)
+    totals.lunch_benefit_value += Number(array[i].lunch_benefit_value || 0)
+    totals.lunch_benefit_total += Number(array[i].lunch_benefit_total || 0)
     totals.sport_benefit += Number(array[i].sport_benefit || 0)
     totals.mileage_allowance += Number(array[i].mileage_allowance || 0)
     totals.daily_allowance_domestic += Number(array[i].daily_allowance_domestic || 0)
@@ -93,6 +79,7 @@ function convertToCSV(objArray, clientDetails, date) {
     line += `"${array[i].phone_benefit || ''}",`
     line += `"${array[i].wage_total_gross || ''}",`
     line += `"${array[i].lunch_benefit || ''}",`
+    line += `"${array[i].lunch_benefit_value || ''}",`
     line += `"${array[i].sport_benefit || ''}",`
     line += `"${array[i].mileage_allowance || ''}",`
     line += `"${array[i].daily_allowance_domestic || ''}",`
@@ -107,13 +94,22 @@ function convertToCSV(objArray, clientDetails, date) {
   str += '\r\n'
 
   // Add totals row and two empty rows after that
-  str += ',,,,,,"Yhteensä",,'
-  str += `"${totals.wage_total_gross}",`
+  str += ',,,,,,,,"Yhteensä",'
+  str += `"${totals.wage_total_gross} €",`
   str += '\r\n'
   str += '\r\n'
 
+  str += ',,,,,,,,"Tarkistusrivit",\n'
+  str += ',,,,,,,,"Rahapalkka",'
+  str += `"${totals.wage_total_gross}",\n`
+  str += ',,,,,,,,"Luontoisedut",'
+  const totalBenefits = totals.flat_benefit + totals.car_benefit + totals.phone_benefit
+  str += `"${totalBenefits}",\n`
+  str += ',,,,,,,,"Vähennykset",-'
+  str += `${totals.lunch_benefit_total},\n`
+
   str += 'POISSAOLOT' + '\r\n'
-  str += 'Palkansaaja  ,Syy  ,Palkallinen  ,Ajalta  \n'
+  str += 'Palkansaaja,Syy,Palkallinen,Ajalta\n'
   for (let i = 0; i < array.length; i++) {
     let line = ''
 
