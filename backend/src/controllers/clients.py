@@ -67,10 +67,11 @@ def update_client(client_id):
 @require_admin
 def delete_client(client_id):
     try:
+        username = clients.get_email(client_id)
+        if not username: # client email is required, if not found the client must not exist
+            return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
+        clients.delete_files(client_id)
         with db.session.begin_nested():
-            username = clients.get_email(client_id)
-            if not username: # client email is required, if not found the client must not exist
-                return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
             client_user.delete_client_user(username)
             clients.delete_client(client_id)
         db.session.commit()
