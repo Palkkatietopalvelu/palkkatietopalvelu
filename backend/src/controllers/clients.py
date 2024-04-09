@@ -67,10 +67,11 @@ def update_client(client_id):
 @require_admin
 def delete_client(client_id):
     try:
+        sql = text("""SELECT email FROM clients WHERE id=:id""")
+        result = db.session.execute(sql, {"id": client_id})
+        username = result.fetchone()[0]
+        clients.delete_files(client_id)
         with db.session.begin_nested():
-            sql = text("""SELECT email FROM clients WHERE id=:id""")
-            result = db.session.execute(sql, {"id": client_id})
-            username = result.fetchone()[0]
             client_user.delete_client_user(username)
             clients.delete_client(client_id)
         db.session.commit()
