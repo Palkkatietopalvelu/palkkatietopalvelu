@@ -6,8 +6,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Create User With Initial Password Succeeds
     Initialize Database
-    Go To Register Page
-    Create User  pekka@mail.com  pekka123
+    Create New User  pekka@mail.com  pekka123   1
     Login With Credentials  pekka@mail.com  pekka123
     Logged In Page Should Be Open
     Logout
@@ -95,9 +94,3 @@ Login With Credentials
     Set Username  ${username}
     Set Password  ${password}
     Click Button  login
-
-Create User
-    [Arguments]  ${username}  ${password}
-    Set Username  ${username}
-    Set Password  ${password}
-    Click Button  create
