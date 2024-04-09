@@ -93,7 +93,6 @@ const Menu = () => {
             </span>
               :<span>
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/register" id='register'>REKISTERÖIDY</NavLink>
               </span>}
           </Nav>
         </Navbar.Collapse>

@@ -1,6 +1,7 @@
 """ alustaa tietokannan """
-
+import os
 from sqlalchemy.sql import text
+from werkzeug.security import generate_password_hash
 from db import db
 from app import app
 
@@ -89,11 +90,24 @@ def drop_tables():
 
     db.session.commit()
 
+def create_admin():
+    username = os.environ.get('ADMIN_USERNAME')
+    password = os.environ.get('ADMIN_PASSWORD')
+    hashed_password = generate_password_hash(password)
+    role = 1
+
+    db.session.execute(text("""
+        INSERT INTO users (username, password, role) VALUES (:username, :password, :role); 
+    """), {"username": username, "password": hashed_password, "role": role})
+
+    db.session.commit()
+
 def initialize_database():
     #   alustaa tietokannan
 
     drop_tables()
     create_tables()
+    create_admin()
 
 if __name__ == "__main__":
     initialize_database()

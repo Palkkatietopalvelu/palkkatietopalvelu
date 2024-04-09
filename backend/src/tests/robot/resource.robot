@@ -27,6 +27,9 @@ Logged In Page Should Be Open
 Go To Home Page
     Go To  ${HOME_URL}
 
+Go To Mypage
+    Go To  ${HOME_URL}/mypage
+
 Go To Login Page
     Go To  ${HOME_URL}/login
 
@@ -65,10 +68,7 @@ Add New Client
 Setup With Existing User
     Open And Configure Browser
     Initialize Database
-    Go To Register Page
-    Set Username  testuser@mail.com
-    Set Password  123
-    Click Button  create
+    Create New User   testuser@mail.com   123   1
     Go To Login Page
     Set Username  testuser@mail.com
     Set Password  123
@@ -78,10 +78,7 @@ Setup With Existing User
 Setup With Existing User And Client
     Open And Configure Browser
     Initialize Database
-    Go To Register Page
-    Set Username  testuser@mail.com
-    Set Password  123
-    Click Button  create
+    Create New User   testuser@mail.com   123   1
     Go To Login Page
     Set Username  testuser@mail.com
     Set Password  123
