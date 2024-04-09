@@ -104,12 +104,12 @@ const UpdateClient = () => {
             <Form.Label>Y-tunnus</Form.Label>
             <Form.Control id='bicode' {...bicode} required/>
           </Form.Group>
-          <Form.Group>
+          {client.active && <Form.Group>
             <Form.Label>Eräpäivät</Form.Label>
             <div className="form-control">
               <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
             </div>
-          </Form.Group>
+          </Form.Group>}
           <Form.Group>
             <Form.Label>Palkkakausi</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
