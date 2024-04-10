@@ -15,7 +15,7 @@ const Header = (props) => {
 const InstructionsClient = () => {
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
-  const parts = {part: ['Tiedostojen palautus', 'Tiedostojen poisto', 'Salasanan vaihto']}
+  const parts = ['Tiedostojen palautus', 'Tiedostojen poisto', 'Salasanan vaihto']
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -26,17 +26,17 @@ const InstructionsClient = () => {
   return (
     <div>
       {user.role === 2 && <div> <hr />
-      <br /><Header headline={parts.part[0]} />
+      <br /><Header headline={parts[0]} />
       <br /><p>
       Kotisivulla voi palauttaa aineistoja. Voit palauttaa joko valmiin tiedoston tai syöttää ohjelmassa olevan lomakkeen kautta jokaisen työntekijän tiedot. 
       Voit myös ladata .csv tiedoston, johon voit täyttää tiedot ja sitten palauttaa sen tiedostona.
       </p>
-      <br /><Header headline={parts.part[1]} />
+      <br /><Header headline={parts[1]} />
       <br /><p>
       Kotisivulla voi myös poistaa tiedostoja. Painamalla poista nappia, tiedosto siirtyy roskakoriin. 
       Roskakori poistaa yhden viikon vanhat tiedostot automaattisesti. Roskakorista voi myös manuaalisesti poistaa tiedoston kokonaan.
       </p>
-      <br /><Header headline={parts.part[2]} />
+      <br /><Header headline={parts[2]} />
       <br /><p>
       Omilla sivuilla voit vaihtaa salasanan, painamalla "Vaihda salasana."
       </p>
