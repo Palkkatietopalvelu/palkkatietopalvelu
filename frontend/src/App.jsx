@@ -21,7 +21,6 @@ import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
 import ResetPassword from './components/ResetPassword'
 import Trash from './components/Trash'
-import InactiveClients from './components/ClientsInactive'
 import Files from './components/Files'
 
 const App = () => {
@@ -50,7 +49,6 @@ const App = () => {
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
           <Route path="/client/:id/trash" element={<Trash />}/>
-          <Route path="/deactivated" element={<InactiveClients />} />
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
