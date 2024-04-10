@@ -33,6 +33,14 @@ const Menu = () => {
     }
   }
 
+  const infoStyle = ({ isActive }) => {
+    return {
+      fontSize: "30px",
+      fontWeight: 'bold',
+      color: isActive ? 'black' : 'white',
+    }
+  }
+
   const dropdownStyle = {
     paddingLeft: 30,
     paddingRight: 8,
@@ -99,7 +107,6 @@ const Menu = () => {
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
               </span>}
               <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
-              <NavLink onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
             </span>
               :<span>
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
@@ -107,6 +114,7 @@ const Menu = () => {
               </span>}
           </Nav>
         </Navbar.Collapse>
+        <NavLink style={infoStyle} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
         <div className="logo-container">
           <img
             src={'../assets/Reilu_logo_white.png'}
