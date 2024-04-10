@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from sqlalchemy.sql import text
 from app import app
 from utilities import client_methods as clients
 from utilities import client_user

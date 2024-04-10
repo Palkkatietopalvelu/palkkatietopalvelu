@@ -64,9 +64,9 @@ const Trash = () => {
                   <td><Button id={file.id+'palauta'} variant="primary" size="sm"
                     onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
                   <Button id={file.id} variant="danger" size="sm" onClick={() =>
-                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                  {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
                 </tr>
-            )})}
+              )})}
           </tbody>
           <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
             showModal={showModal} setShowModal={setShowModal} />

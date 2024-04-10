@@ -1,6 +1,6 @@
 // FileHandlerForm -alanäkymä (Yläpuolella FileHandler.jsx)
 import { Link } from 'react-router-dom'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import filesImport from '../services/files.js'
 
@@ -73,29 +73,29 @@ const FileHandlerForm = ({
       <div>
         {files.length > 0 ? (
           <Table striped>
-          <thead>
-            <tr>
-              <th>Tiedoston nimi</th>
-              <th>Päivämäärä</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {files.map((file) => {
-              return (
-                <tr key={file.id}>
-                  <td>{file.name}</td>
-                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
-                  <td><Button variant="primary" size="sm" onClick={() => 
-                    handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
-                  <Button id={file.id} variant="danger" size="sm" onClick={() =>
+            <thead>
+              <tr>
+                <th>Tiedoston nimi</th>
+                <th>Päivämäärä</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => {
+                return (
+                  <tr key={file.id}>
+                    <td>{file.name}</td>
+                    <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                    <td><Button variant="primary" size="sm" onClick={() =>
+                      handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                    <Button id={file.id} variant="danger" size="sm" onClick={() =>
                     {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
-                </tr>
-            )})}
-          </tbody>
-          <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
-            showModal={showModal} setShowModal={setShowModal} />
-        </Table>
+                  </tr>
+                )})}
+            </tbody>
+            <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
+              showModal={showModal} setShowModal={setShowModal} />
+          </Table>
         ) : (
           <div>Palkkatietoja ei ole vielä ilmoitettu</div>
         )}
