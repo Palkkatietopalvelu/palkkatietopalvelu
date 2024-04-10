@@ -104,12 +104,12 @@ const UpdateClient = () => {
             <Form.Label>Y-tunnus</Form.Label>
             <Form.Control id='bicode' {...bicode} required/>
           </Form.Group>
-          <Form.Group>
+          {client.active && <Form.Group>
             <Form.Label>Eräpäivät</Form.Label>
             <div className="form-control">
               <DatePicker id="deadlines" {...deadlines} style={style} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
             </div>
-          </Form.Group>
+          </Form.Group>}
           <Form.Group>
             <Form.Label>Palkkakausi</Form.Label>
             <Form.Control id='payperiod' {...payperiod} required style={{ marginBottom: '20px' }} />
@@ -135,7 +135,7 @@ const DeleteClientModal = ({ client, handleDeleteClient, showModal, setShowModal
           <Modal.Header closeButton>
             <Modal.Title>Asiakkaan poistaminen</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}?</Modal.Body>
+          <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}? Tämä poistaa asiakkaan tunnukset ja kaikki asiakkaan lisäämät tiedostot.</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
             <Button variant="danger" onClick={handleDeleteClient}>Poista</Button>

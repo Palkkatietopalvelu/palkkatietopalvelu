@@ -7,6 +7,7 @@ import { Table, Badge, Dropdown } from 'react-bootstrap'
 import { format, endOfDay, isPast } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
 import OrderBy from './OrderBy'
+import { Button } from 'react-bootstrap'
 
 const MyPageAdmin = () => {
   const user = useSelector(({ user }) => user)
@@ -60,7 +61,10 @@ const MyPageAdmin = () => {
 
   return (
     <div>
-      {user.role === 1 && <div> <hr />
+      {user.role === 1 && <div>
+        <br />
+        <Button variant="warning" href="/register">Luo uusi tilitoimistokäyttäjä</Button>
+        <hr />
         <h4 style={{ marginTop: '20px' }}>Omat asiakkaat</h4> <br />
         <OrderBy clients={clients} setFilteredCompanies={setFilteredCompanies}
           setSortingCriteria={setSortingCriteria} />

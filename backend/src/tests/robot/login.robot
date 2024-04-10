@@ -43,10 +43,7 @@ Logout Should Succeed After Login
 
 *** Keywords ***
 Create User And Go To Login Page
-    Go To Register Page
-    Set Username  masa@mail.com
-    Set Password  masa123
-    Register User
+    Create New User   masa@mail.com   masa123   1
     Go To Login Page
 
 Login Should Succeed

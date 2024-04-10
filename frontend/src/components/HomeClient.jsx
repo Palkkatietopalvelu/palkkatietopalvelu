@@ -1,7 +1,6 @@
 // ./ (asiakas)
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
@@ -23,6 +22,13 @@ const HomeClient = () => {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
+  }
+
+  let nextDL = null
+  if (client.deadlines.length > 0) {
+    const sortedDeadlines = [...client.deadlines].sort((a, b) => new Date(a) - new Date(b))
+    const earliestDate = new Date(sortedDeadlines[0])
+    nextDL = earliestDate.toLocaleString('fi-FI', { year: 'numeric', month: 'numeric', day: 'numeric' })
   }
 
   return (
@@ -47,7 +53,7 @@ const HomeClient = () => {
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
-          <FileHandler client={client} files={files} />
+          {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
         </div>
       }
     </div>
