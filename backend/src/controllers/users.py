@@ -18,12 +18,8 @@ def create_user():
         username = data['username']
         password = data['password']
         role = data['role']
-        user_methods.validate_credentials(username, password)
-        hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password, role=role)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify(new_user.serialize()), 201
+        new_user = user_methods.create_user(username, password, role)
+        return new_user, 201
     except ValueError as error:
         return str(error), 400
 

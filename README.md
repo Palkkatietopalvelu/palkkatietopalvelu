@@ -79,5 +79,13 @@ päivitä tietokanta uusimpaan versioon
 luo uusi versio tietokannan versiohallintaan:
 > poetry run invoke revision
 
+#### Admin-tunnukset
+Lisää backendin .env-tiedostoon rivit
+> ADMIN_USERNAME = "käyttäjänimi"
+>
+> ADMIN_PASSWORD = "salasana"
+
+Tietokannan alustamisen yhteydessä lisätään ensimmäinen tilitoimistokäyttäjä näiden tietojen avulla.
+
 ## Backlogit
 [backlog](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)
