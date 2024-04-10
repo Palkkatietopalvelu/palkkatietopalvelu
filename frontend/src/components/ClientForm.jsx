@@ -42,8 +42,7 @@ const ClientForm = () => {
     })).then(result => {
       if (result) {
         resetFields(event)
-        setAddButtonText('Lisää')
-      }
+      } setAddButtonText('Lisää')
     })
   }
 
