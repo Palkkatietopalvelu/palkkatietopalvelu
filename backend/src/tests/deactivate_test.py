@@ -26,9 +26,10 @@ class TestPasswordChange(unittest.TestCase):
           {"username": "pekka", "id": "1", "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
       self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
       app.test_client().post("/api/client", headers=self.headers, json=self.client_data)
+      self.set_up_client_user()
 
-  def test_login_succeeds_as_client_user(self):
-      # set up client user password and login works
+  def set_up_client_user(self):
+      # set up client user password
       with app.test_request_context():
         self.setpassword_token = token_methods.generate_setpassword_token(self.client_data["email"])
         passwords = { "password": "testi123", "confirmPassword": "testi123"}
@@ -36,9 +37,13 @@ class TestPasswordChange(unittest.TestCase):
           f"/api/setpassword/{self.setpassword_token}",
           headers={"Content-Type": "application/json"}, json=passwords)
         self.assertEqual(response.status_code, 200)
-        data = {"username": "testi@gmail.com", "password": "testi123"}
-        response = app.test_client().post("/api/login", json=data)
-        self.assertEqual(response.status_code, 200)
+  
+  def test_login_succeeds_as_client_user(self):
+     # login works when client is active
+     with app.test_request_context():
+      data = {"username": "testi@gmail.com", "password": "testi123"}
+      response = app.test_client().post("/api/login", json=data)
+      self.assertEqual(response.status_code, 200)
   
   def test_deactivate_client_succeeds(self):
     # deactivation works
@@ -79,12 +84,22 @@ class TestPasswordChange(unittest.TestCase):
     with app.test_request_context():
         response = app.test_client().post(f"api/client/{self.client_id}/status",
           headers=self.headers)
-        print(response)
         self.assertEqual(response.status_code, 400)
 
   def test_login_fails_deactivated_client(self):
       # client user is frozen due to deactivation
       with app.test_request_context():
-        data = {"username": "testi@gmail.com", "password": "testi123"}
+        self.test_deactivate_client_succeeds()
+        data = {"username": "testi@gmail.com", "password": "testi123", "role": 2}
         response = app.test_client().post("/api/login", json=data)
+        self.assertIn("Tili jäädytetty deaktivoinnin takia.", str(response.get_json()))
         self.assertEqual(response.status_code, 401)
+
+  def test_activate_client(self):
+    # activate client back works
+    with app.test_request_context():
+      self.test_deactivate_client_succeeds()
+      self.client_data["status"] = True
+      response = app.test_client().post(f"api/client/{self.client_id}/status", json=self.client_data,
+        headers=self.headers)
+      self.assertEqual(response.status_code, 200)

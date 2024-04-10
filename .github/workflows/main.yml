@@ -56,6 +56,8 @@ jobs:
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
                   BACKEND_URL: http://localhost:5000
+                  ADMIN_USERNAME: admin
+                  ADMIN_PASSWORD: admin123
             - name: Coverage report
               run: |
                 cd backend
@@ -157,6 +159,8 @@ jobs:
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
                   VITE_BACKEND_URL: http://localhost:5000
+                  ADMIN_USERNAME: admin
+                  ADMIN_PASSWORD: admin123
 
 
             - name: Run robot tests
@@ -169,3 +173,5 @@ jobs:
                   SECRET_KEY: SECRET
                   FLASK_ENV: development
                   VITE_BACKEND_URL: http://localhost:5000
+                  ADMIN_USERNAME: admin
+                  ADMIN_PASSWORD: admin123

@@ -30,10 +30,14 @@ const RegisterForm = () => {
     password.onReset()
   }
 
+  if (!user) {
+    return ('Et ole kirjautunut sisään')
+  }
+
   return (
     <div><br />
-      {!user && <div>
-        <h2>Luo uusi käyttäjä</h2>
+      {user.role === 1 && <div>
+        <h2>Luo uusi tilitoimistokäyttäjä</h2>
         <Notification />
         <Form onSubmit={handleRegistration}>
           <Form.Group>

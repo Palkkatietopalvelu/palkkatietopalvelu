@@ -62,6 +62,12 @@ class TestClient(unittest.TestCase):
             response = app.test_client().post(
                 "/api/client", headers=self.headers, json=self.client_data)
             self.assertEqual(response.status_code, 201)
+    
+    def test_add_client_fails_without_data(self):
+        with app.test_request_context():
+            response = app.test_client().post(
+                "/api/client", headers=self.headers)
+            self.assertEqual(response.status_code, 400)
 
     def test_update_client_with_valid_id(self):
         with app.test_request_context():
@@ -71,6 +77,13 @@ class TestClient(unittest.TestCase):
                 "/api/client/1", headers=self.headers, json=self.updated_client_data)
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.get_json()["phonenumber"], "+358123456788")
+    
+    def test_update_client_fails_without_data(self):
+        with app.test_request_context():
+            client_methods.add_client(self.client_data)
+            response = app.test_client().post(
+                "/api/client/1", headers=self.headers)
+            self.assertEqual(response.status_code, 400)
 
     def test_delete_client_with_valid_id(self):
         with app.test_request_context():
@@ -78,3 +91,8 @@ class TestClient(unittest.TestCase):
             db.session.commit()
             response = app.test_client().delete("/api/client/1", headers=self.headers)
             self.assertEqual(response.status_code, 200)
+
+    def test_delete_client_fails_with_invalid_id(self):
+        with app.test_request_context():
+            response = app.test_client().delete("/api/client/1", headers=self.headers)
+            self.assertEqual(response.status_code, 400)

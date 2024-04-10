@@ -24,7 +24,7 @@ class TestPasswordChange(unittest.TestCase):
             data = {"oldPassword": "pekka123",
                     "newPassword": "okPwd",
                     "confirmPassword": "okPwd"}
-            response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            response = app.test_client().post("/api/users/2", json=data, headers=self.headers)
             self.assertEqual(response.status_code, 200)
 
     def test_login_after_password_change(self):
@@ -40,7 +40,7 @@ class TestPasswordChange(unittest.TestCase):
                 "oldPassword": "pekka123",
                 "newPassword": "okPwd",
                 "confirmPassword": "wrongPwd"}
-            response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            response = app.test_client().post("/api/users/2", json=data, headers=self.headers)
             self.assertEqual(response.status_code, 400)
 
     def test_change_password_with_wrong_initial_pwd(self):
@@ -48,7 +48,7 @@ class TestPasswordChange(unittest.TestCase):
             data = {"oldPassword": "notMyPwd",
                     "newPassword": "okPwd",
                     "confirmPassword": "okPwd"}
-            response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            response = app.test_client().post("/api/users/2", json=data, headers=self.headers)
             self.assertEqual(response.status_code, 400)
 
     def test_change_password_with_too_short_pwd(self):
@@ -56,7 +56,7 @@ class TestPasswordChange(unittest.TestCase):
             data = {"oldPassword": "pekka123",
                     "newPassword": "aa",
                     "confirmPassword": "aa"}
-            response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            response = app.test_client().post("/api/users/2", json=data, headers=self.headers)
             self.assertEqual(response.status_code, 400)
 
     def test_change_password_with_too_long_pwd(self):
@@ -64,7 +64,7 @@ class TestPasswordChange(unittest.TestCase):
             data = {"oldPassword": "pekka123",
                     "newPassword": "waytoolongpassword",
                     "confirmPassword": "waytoolongpassword"}
-            response = app.test_client().post("/api/users/1", json=data, headers=self.headers)
+            response = app.test_client().post("/api/users/2", json=data, headers=self.headers)
             self.assertEqual(response.status_code, 400)
 
 class TestResetPassword(unittest.TestCase):
