@@ -151,29 +151,29 @@ const DeactivateModal = ({ client, statusUpdate, showModal, setShowModal }) => {
   return (
     <>
       <Button variant={client.active ? 'warning' : 'success'} onClick={() => setShowModal('deactivate')}
-        style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi asiakas' : 'Aktivoi asiakas'}</Button>
+        style={{ marginLeft: '10px' }}>{client.active ? 'Aseta epäaktiiviseksi' : 'Aseta aktiiviseksi'}</Button>
       {showModal == 'deactivate' && <span>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           {client.active ? <div>
             <Modal.Header closeButton>
-              <Modal.Title>Asiakkaan deaktivoiminen</Modal.Title>
+              <Modal.Title>Asiakkaan asettaminen epäaktiiviseksi</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Haluatko varmasti deaktivoida asiakkaan {client.company}?<br />
-              Deaktivoiminen nollaa asiakkaan eräpäivätiedot, asiakkaalle ei lähetetä eräpäivämuistutuksia
+            <Modal.Body>Haluatko varmasti asettaa asiakkaan {client.company} epäaktiiviseksi?<br />
+              Tämä toiminto nollaa asiakkaan eräpäivätiedot, asiakkaalle ei lähetetä eräpäivämuistutuksia
               ja asiakkaan tunnus jäädytetään. </Modal.Body>
           </div>
             : <div>
               <Modal.Header closeButton>
                 <Modal.Title>Asiakkaan aktivoiminen</Modal.Title>
               </Modal.Header>
-              <Modal.Body>Haluatko varmasti aktivoida asiakkaan {client.company}?<br />
+              <Modal.Body>Haluatko varmasti asettaa asiakkaan {client.company} aktiiviseksi?<br />
               Aktivoiminen palauttaa asiakkaan tunnuksen takaisin käyttöön.
               Lisääthän eräpäivätiedot asiakkaalle. </Modal.Body>
             </div>}
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
             <Button variant={client.active ? 'warning' : 'success'} onClick={statusUpdate}
-              style={{ marginLeft: '10px' }}>{client.active ? 'Deaktivoi' : 'Aktivoi'}</Button>
+              style={{ marginLeft: '10px' }}>{client.active ? 'Aseta epäaktiiviseksi' : 'Aseta aktiiviseksi'}</Button>
           </Modal.Footer>
         </Modal>
       </span>}

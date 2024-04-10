@@ -2,12 +2,11 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { deleteFile, restoreFile } from '../reducers/fileReducer'
-import { Button } from 'react-bootstrap'
+import { Button, Modal, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { useState } from 'react'
-import Modal from 'react-bootstrap/Modal'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -41,30 +40,37 @@ const Trash = () => {
   } else if (client.email===user.username || client.user_id===user.id) {
     return (
       <div>
-        {user.role === 1 &&
-        <div>
-          <br />
+        {user.role === 1 && <div><br />
           <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
-            style={{ marginBottom: '20px' }}>
-        Takaisin asiakkaan tietoihin</Button>
-        </div>
-        }
-
-        <br /><h4>Roskakori</h4>
+            style={{ marginBottom: '20px' }}>Takaisin asiakkaan tietoihin</Button>
+        </div>}<br />
+        <h4>Roskakori</h4>
         <p>Tiedostot poistetaan roskakorista automaattisesti viikon kuluttua niiden siirtämisestä roskakoriin</p>
         <Notification />
-        <ul>
-          {files.map((file) => (
-            <li key={file.id}>
-              {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button id={file.id+'palauta'} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
-              {' '}
-              <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
-            </li>
-          ))}
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Tiedosto</th>
+              <th>Päivämäärä</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {files.map((file) => {
+              return (
+                <tr key={file.id}>
+                  <td>{file.name}</td>
+                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                  <td><Button id={file.id+'palauta'} variant="primary" size="sm"
+                    onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
+                  <Button id={file.id} variant="danger" size="sm" onClick={() =>
+                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                </tr>
+            )})}
+          </tbody>
           <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
             showModal={showModal} setShowModal={setShowModal} />
-        </ul>
+        </Table>
       </div>
     )}
   else {

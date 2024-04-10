@@ -15,15 +15,15 @@ const MyPageClient = () => {
 
   return (
     <div>
-      {user.role === 2 && <div>
+      {user.role === 2 && <div> <hr />
         <h5 style={{ marginTop: '20px' }}>Yhteystiedot</h5>
         <Table striped>
           <tbody key={client.email} >
             <tr><td>Sähköposti</td><td>{client.email}</td></tr>
-            <tr><td>Puhelinnumero</td><td> {client.phonenumber}</td></tr>
+            <tr><td>Puhelinnumero</td><td>{client.phonenumber}</td></tr>
           </tbody>
         </Table>
-        <h4>Laskutustiedot</h4>
+        <h5>Laskutustiedot</h5>
         <Table striped>
           <tbody key={client.email}>
             <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>

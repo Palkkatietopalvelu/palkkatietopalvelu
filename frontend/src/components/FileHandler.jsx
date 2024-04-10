@@ -3,10 +3,9 @@ import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Modal, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import Modal from 'react-bootstrap/Modal'
 import filesImport from '../services/files.js'
 
 const FileHandler = ({ client, files }) => {
@@ -83,7 +82,7 @@ const FileHandler = ({ client, files }) => {
     <div><br />
       <Form>
         <Form.Group controlId="file-upload">
-          <Form.Label><h4>Lataa tiedosto</h4></Form.Label>
+          <Form.Label><h3>Lataa tiedosto</h3></Form.Label>
           <Form.Control
             type="file"
             onChange={handleFileSubmit}
@@ -107,20 +106,32 @@ const FileHandler = ({ client, files }) => {
         }}>täältä</a>
       </div>
     </div>}
-      <div>
-        <br /><h4>Ladatut tiedostot</h4>
-        <ul>
-          {files.map((file) => (
-            <li key={file.id}>
-              {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
-              {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
-            </li>
-          ))}
+    <div>
+        <br /><h3>Ladatut tiedostot</h3>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Tiedoston nimi</th>
+              <th>Päivämäärä</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {files.map((file) => {
+              return (
+                <tr key={file.id}>
+                  <td>{file.name}</td>
+                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                  <td><Button variant="primary" size="sm" onClick={() => 
+                    handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                  <Button id={file.id} variant="danger" size="sm" onClick={() =>
+                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                </tr>
+            )})}
+          </tbody>
           <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
             showModal={showModal} setShowModal={setShowModal} />
-        </ul>
+        </Table>
       </div>
       <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
       <br /><br />
