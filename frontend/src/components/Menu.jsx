@@ -33,12 +33,11 @@ const Menu = () => {
     }
   }
 
-  const infoStyle = ({ isActive }) => {
-    return {
+  const infoStyle = {
+      paddingRight: 10,
       fontSize: "30px",
       fontWeight: 'bold',
-      color: isActive ? 'black' : 'white',
-    }
+      color:'white',
   }
 
   const dropdownStyle = {
@@ -114,7 +113,7 @@ const Menu = () => {
               </span>}
           </Nav>
         </Navbar.Collapse>
-        <NavLink style={infoStyle} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
+        <NavLink style={infoStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
         <div className="logo-container">
           <img
             src={'../assets/Reilu_logo_white.png'}
