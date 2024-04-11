@@ -79,12 +79,12 @@ const Menu = () => {
               <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
               {user.role === 1 && <span className="d-flex" style={{ fontWeight: 'b' }}>
                 <Dropdown id="Dropdown_Asiakkaat" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                    <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
-                      <Dropdown.Item href="/">Asiakkaat</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
+                    <Dropdown.Item href="/">Asiakkaat</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
                 <Dropdown id="Dropdown_Muistutukset" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                   <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>MUISTUTUKSET</b></Dropdown.Toggle>

@@ -59,11 +59,11 @@ const Trash = () => {
             {files.map((file) => {
               return (
                 <tr key={file.id}>
-                    <td style={{textAlign:"right", width: "11%"}}>
-                      <Button id={file.id+'palauta'} variant="primary" size="sm" 
-                        onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
-                      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
-                        {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                  <td style={{ textAlign:'right', width: '11%' }}>
+                    <Button id={file.id+'palauta'} variant="primary" size="sm"
+                      onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
+                    <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
+                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
                   <td>{file.name}</td>
                   <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
                 </tr>

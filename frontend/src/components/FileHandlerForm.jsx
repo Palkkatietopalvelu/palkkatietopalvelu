@@ -83,12 +83,12 @@ const FileHandlerForm = ({
               {files.map((file) => {
                 return (
                   <tr key={file.id}>
-                    <td style={{textAlign:"right", width: "10%"}}><Button variant="primary" size="sm" onClick={() =>
+                    <td style={{ textAlign:'right', width: '10%' }}><Button variant="primary" size="sm" onClick={() =>
                       handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
                     <Button id={file.id} variant="danger" size="sm" onClick={() =>
-                      {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
-                    <td style={{width: "50%"}}>{file.name}</td>
-                    <td style={{width: "50%"}}>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                    <td style={{ width: '50%' }}>{file.name}</td>
+                    <td style={{ width: '50%' }}>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
                   </tr>
                 )})}
             </tbody>
