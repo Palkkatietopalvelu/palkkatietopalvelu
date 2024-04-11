@@ -173,7 +173,7 @@ const DeactivateModal = ({ client, statusUpdate, showModal, setShowModal }) => {
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
             <Button variant={client.active ? 'warning' : 'success'} onClick={statusUpdate}
-              style={{ marginLeft: '10px' }}>{client.active ? 'Aseta epäaktiiviseksi' : 'Aseta aktiiviseksi'}</Button>
+              style={{ marginLeft: '10px' }}>{client.active ? 'Epäaktivoi' : 'Aktivoi'}</Button>
           </Modal.Footer>
         </Modal>
       </span>}

@@ -50,21 +50,22 @@ const Trash = () => {
         <Table striped>
           <thead>
             <tr>
+              <th></th>
               <th>Tiedosto</th>
               <th>Päivämäärä</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
             {files.map((file) => {
               return (
                 <tr key={file.id}>
+                    <td style={{textAlign:"right", width: "11%"}}>
+                      <Button id={file.id+'palauta'} variant="primary" size="sm" 
+                        onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
+                      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
+                        {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
                   <td>{file.name}</td>
-                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
-                  <td><Button id={file.id+'palauta'} variant="primary" size="sm"
-                    onClick={() => handleFileRestore(file.id)}>Palauta</Button>{' '}
-                  <Button id={file.id} variant="danger" size="sm" onClick={() =>
-                  {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
                 </tr>
               )})}
           </tbody>

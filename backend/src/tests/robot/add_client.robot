@@ -8,10 +8,7 @@ Dropdown Item ASIAKKAAT shows all options on the list
     Page Should Contain  ASIAKKAAT
     Click Element  Dropdown_Asiakkaat
     Page Should Contain  Lisää uusi
-    Page Should Contain  Omat
-    Page Should Contain  Kaikki
-    Page Should Contain  Aktiiviset
-    Page Should Contain  Deaktivoidut
+    Page Should Contain  Asiakkaat
 
 Add Client Succeeds With Correct Credentials
     Go To Home Page

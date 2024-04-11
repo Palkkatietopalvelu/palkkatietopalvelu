@@ -73,13 +73,5 @@ Create Account Should Fail With Long Username
 Click Create Account Button
     Click Button  luo käyttäjä
 
-Set Username
-    [Arguments]  ${username}
-    Input Text  username  ${username}
-
-Set Password
-    [Arguments]  ${password}
-    Input Password  password  ${password}
-
 Submit Credentials
     Click Button  create
