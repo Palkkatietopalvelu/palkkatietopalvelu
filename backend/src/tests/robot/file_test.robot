@@ -35,17 +35,7 @@ Moving File To Trash Succeeds
     Click Button  Siirrä roskakoriin
     Wait For  Tiedosto siirretty roskakoriin
 
-Restoring File Succeeds
-    Click Link  trash
-    Click Button  2palauta 
-    Wait For  Tiedosto palautettu onnistuneesti
-
 File Moved To Trash By Client Is Not Visible To Admin
-    Go To Home Page
-    Click Button  2              
-    Wait For  Tiedoston siirtäminen roskakoriin
-    Click Button  Siirrä roskakoriin
-    Wait For  Tiedosto siirretty roskakoriin
     Log Out
     Login As Admin
     Click Link  OMAT SIVUT

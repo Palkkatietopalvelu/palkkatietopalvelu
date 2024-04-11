@@ -73,15 +73,6 @@ def move_to_trash(file_id):
     except Exception as e: # pylint: disable=broad-except
         return str(e), 400
 
-@app.route('/api/files/<int:file_id>/restore', methods=['POST'])
-@require_login
-def restore(file_id):
-    try:
-        files.restore_file(file_id)
-        return "File restored successfully", 200
-    except Exception as e: # pylint: disable=broad-except
-        return str(e), 400
-
 @app.route('/api/files/<int:file_id>', methods=['DELETE'])
 @require_login
 def delete_file(file_id):

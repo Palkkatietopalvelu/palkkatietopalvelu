@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { deleteFile, restoreFile } from '../reducers/fileReducer'
+import { deleteFile, downloadFile } from '../reducers/fileReducer'
 import { Button } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
@@ -25,8 +25,9 @@ const Trash = () => {
       dispatch(getFile())}
   }, [dispatch, user, client])
 
-  const handleFileRestore = (fileId) => {
-    dispatch(restoreFile({ id: fileId }))
+  const handleFileDownload = (fileId, fileName) => {
+    dispatch(downloadFile(fileId, fileName)).then(() => {
+    })
   }
 
   const handleFileDelete = (fileId) => {
@@ -57,7 +58,7 @@ const Trash = () => {
           {files.map((file) => (
             <li key={file.id}>
               {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button id={file.id+'palauta'} variant="primary" size="sm" onClick={() => handleFileRestore(file.id)}>Palauta</Button>
+              <Button id={file.id+'lataa'} variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
               {' '}
               <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
             </li>

@@ -75,20 +75,6 @@ export const moveFileToTrash = (file) => {
   }
 }
 
-export const restoreFile = (file) => {
-  return async dispatch => {
-    try {
-      await fileService.restore(file.id)
-      dispatch(remove(file.id))
-      dispatch(notify('Tiedosto palautettu onnistuneesti'))
-      return true
-    } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
-      return false
-    }
-  }
-}
-
 export const deleteFile = (file) => {
   return async dispatch => {
     try {
