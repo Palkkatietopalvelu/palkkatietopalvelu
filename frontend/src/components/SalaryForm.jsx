@@ -1,9 +1,9 @@
 // ./client/{client.id}/salaryform (Palkkatietolomake, vain asiakkaille)
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useField } from '../hooks'
-import SalaryFormContentNew from './SalaryFormContentNew'
+import SalaryFormContent from './SalaryFormContent'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
 
@@ -29,17 +29,20 @@ const SalaryForm = () => {
 
   const employee_name = useField()
   const month = useField()
-  const total_hours_weekdays = useField()
-  const total_hours_sundays = useField()
-  const wage_hourly = useField()
-  const wage_monthly = useField()
-  const wage_total_gross = useField()
-  const flat_benefit = useField()
-  const car_benefit = useField()
-  const phone_benefit = useField()
-  const lunch_benefit = useField()
-  const lunch_benefit_value = useField()
-  const sport_benefit = useField()
+  const [total_hours_weekdays, setTotalHoursWeekdays] = useState('')
+  const [total_hours_sundays, setTotalHoursSundays] = useState('')
+  const [wage_hourly, setWageHourly] = useState('')
+  const [wage_monthly, setWageMonthly] = useState('')
+  const [flat_benefit, setFlatBenefit] = useState('')
+  const [car_benefit, setCarBenefit] = useState('')
+  const [phone_benefit, setPhoneBenefit] = useState('')
+  const [lunch_benefit, setLunchBenefit] = useState('')
+  const [lunch_benefit_value, setLunchBenefitValue] = useState('')
+  const [sport_benefit, setSportBenefit] = useState('')
+  const [sport_benefit_value, setSportBenefitValue] = useState('')
+  const [wage_total_gross, setWageTotalGross] = useState('')
+  const [benefits_total, setBenefitsTotal] = useState('')
+  const [reductions_total, setReductionsTotal] = useState('')
   const mileage_allowance = useField()
   const daily_allowance_domestic = useField()
   const daily_allowance_domestic_part_time = useField()
@@ -55,6 +58,58 @@ const SalaryForm = () => {
   const absence_time_period_3 = useField()
   const extra = useField()
 
+  const calculateWageTotalGross = useCallback(() => {
+    const toNumber = (value) => {
+      const number = Number(value.replace(',', '.'))
+      return isNaN(number) ? null : number
+    }
+    const total = (toNumber(total_hours_weekdays) * toNumber(wage_hourly)) +
+                  (2 * toNumber(total_hours_sundays) * toNumber(wage_hourly)) +
+                  toNumber(wage_monthly) +
+                  toNumber(flat_benefit) +
+                  toNumber(car_benefit) +
+                  toNumber(phone_benefit)
+    setWageTotalGross(total.toFixed(2))
+  }, [
+    total_hours_weekdays,
+    total_hours_sundays,
+    wage_hourly,
+    wage_monthly,
+    flat_benefit,
+    car_benefit,
+    phone_benefit,
+  ])
+
+  const calculateBenefitsTotal = useCallback(() => {
+    const toNumber = (value) => {
+      const number = Number(value.replace(',', '.'))
+      return isNaN(number) ? null : number
+    }
+    const total = toNumber(flat_benefit) +
+                  toNumber(car_benefit) +
+                  toNumber(phone_benefit)
+    setBenefitsTotal(total.toFixed(2))
+  }, [
+    flat_benefit,
+    car_benefit,
+    phone_benefit,
+  ])
+
+  const calculateReductionsTotal = useCallback(() => {
+    const toNumber = (value) => {
+      const number = Number(value.replace(',', '.'))
+      return isNaN(number) ? null : number
+    }
+    const total = (toNumber(lunch_benefit) * toNumber(lunch_benefit_value)) +
+                  (toNumber(sport_benefit) * toNumber(sport_benefit_value))
+    setReductionsTotal(total.toFixed(2))
+  }, [
+    lunch_benefit,
+    lunch_benefit_value,
+    sport_benefit,
+    sport_benefit_value,
+  ])
+
   useEffect(() => {
     if (!user) {
       navigate('/login')
@@ -63,6 +118,18 @@ const SalaryForm = () => {
       navigate('/')
     }
   }, [user, client, urlClientId, navigate])
+
+  useEffect(() => {
+    calculateWageTotalGross()
+  }, [calculateWageTotalGross])
+
+  useEffect(() => {
+    calculateBenefitsTotal()
+  }, [calculateBenefitsTotal])
+
+  useEffect(() => {
+    calculateReductionsTotal()
+  }, [calculateReductionsTotal])
 
   const formatDate = (date) => {
     const d = new Date(date),
@@ -103,21 +170,28 @@ const SalaryForm = () => {
       salary_type: formType === 'monthly' ? 'Kuukausipalkkalainen' : 'Tuntipalkkalainen',
     }
     if (month.value) employeeData.month = month.value
-    if (total_hours_weekdays.value) employeeData.total_hours_weekdays = total_hours_weekdays.value
-    if (total_hours_sundays.value) employeeData.total_hours_sundays = total_hours_sundays.value
-    if (wage_hourly.value) employeeData.wage_hourly = wage_hourly.value
-    if (wage_monthly.value) employeeData.wage_monthly = wage_monthly.value
-    if (wage_total_gross.value) employeeData.wage_total_gross = wage_total_gross.value
-    if (flat_benefit.value) employeeData.flat_benefit = flat_benefit.value
-    if (car_benefit.value) employeeData.car_benefit = car_benefit.value
-    if (phone_benefit.value) employeeData.phone_benefit = phone_benefit.value
-    if (lunch_benefit.value) employeeData.lunch_benefit = lunch_benefit.value
-    if (lunch_benefit_value.value) employeeData.lunch_benefit_value = lunch_benefit_value.value
-    if (lunch_benefit.value && lunch_benefit_value.value) {
-      const lunch_benefit_total = Number(lunch_benefit.value) * Number(lunch_benefit_value.value)
+    if (total_hours_weekdays) employeeData.total_hours_weekdays = total_hours_weekdays
+    if (total_hours_sundays) employeeData.total_hours_sundays = total_hours_sundays
+    if (wage_hourly) employeeData.wage_hourly = wage_hourly
+    if (wage_monthly) employeeData.wage_monthly = wage_monthly
+    if (flat_benefit) employeeData.flat_benefit = flat_benefit
+    if (car_benefit) employeeData.car_benefit = car_benefit
+    if (phone_benefit) employeeData.phone_benefit = phone_benefit
+    if (lunch_benefit) employeeData.lunch_benefit = lunch_benefit
+    if (lunch_benefit_value) employeeData.lunch_benefit_value = lunch_benefit_value
+    if (lunch_benefit && lunch_benefit_value) {
+      const lunch_benefit_total = Number(lunch_benefit) * Number(lunch_benefit_value)
       employeeData.lunch_benefit_total = lunch_benefit_total
     }
-    if (sport_benefit.value) employeeData.sport_benefit = sport_benefit.value
+    if (sport_benefit) employeeData.sport_benefit = sport_benefit
+    if (sport_benefit_value) employeeData.sport_benefit_value = sport_benefit_value
+    if (sport_benefit && sport_benefit_value) {
+      const sport_benefit_total = Number(sport_benefit) * Number(sport_benefit_value)
+      employeeData.sport_benefit_total = sport_benefit_total
+    }
+    if (wage_total_gross) employeeData.wage_total_gross = wage_total_gross
+    if (benefits_total) employeeData.benefits_total = benefits_total
+    if (reductions_total) employeeData.reductions_total = reductions_total
     if (mileage_allowance.value) employeeData.mileage_allowance = mileage_allowance.value
     if (daily_allowance_domestic.value) employeeData.daily_allowance_domestic = daily_allowance_domestic.value
     if (daily_allowance_domestic_part_time.value) employeeData.daily_allowance_domestic_part_time = daily_allowance_domestic_part_time.value
@@ -135,16 +209,20 @@ const SalaryForm = () => {
     setEmployees([...employees, employeeData])
     employee_name.onReset()
     month.onReset()
-    total_hours_weekdays.onReset()
-    total_hours_sundays.onReset()
-    wage_hourly.onReset()
-    wage_monthly.onReset()
-    wage_total_gross.onReset()
-    flat_benefit.onReset()
-    car_benefit.onReset()
-    phone_benefit.onReset()
-    lunch_benefit.onReset()
-    sport_benefit.onReset()
+    setTotalHoursWeekdays('')
+    setTotalHoursSundays('')
+    setWageHourly('')
+    setWageMonthly('')
+    setFlatBenefit('')
+    setCarBenefit('')
+    setPhoneBenefit('')
+    setLunchBenefit('')
+    setLunchBenefitValue('')
+    setSportBenefit('')
+    setSportBenefitValue('')
+    setWageTotalGross('')
+    setBenefitsTotal('')
+    setReductionsTotal('')
     mileage_allowance.onReset()
     daily_allowance_domestic.onReset()
     daily_allowance_domestic_part_time.onReset()
@@ -169,21 +247,38 @@ const SalaryForm = () => {
 
   return (
     <>
-      <SalaryFormContentNew
+      <SalaryFormContent
         client={client}
         employee_name={employee_name}
         month={month}
         total_hours_weekdays={total_hours_weekdays}
+        setTotalHoursWeekdays={setTotalHoursWeekdays}
         total_hours_sundays={total_hours_sundays}
+        setTotalHoursSundays={setTotalHoursSundays}
         wage_hourly={wage_hourly}
+        setWageHourly={setWageHourly}
         wage_monthly={wage_monthly}
-        wage_total_gross={wage_total_gross}
+        setWageMonthly={setWageMonthly}
         flat_benefit={flat_benefit}
+        setFlatBenefit={setFlatBenefit}
         car_benefit={car_benefit}
+        setCarBenefit={setCarBenefit}
         phone_benefit={phone_benefit}
+        setPhoneBenefit={setPhoneBenefit}
         lunch_benefit={lunch_benefit}
+        setLunchBenefit={setLunchBenefit}
         lunch_benefit_value={lunch_benefit_value}
+        setLunchBenefitValue={setLunchBenefitValue}
         sport_benefit={sport_benefit}
+        setSportBenefit={setSportBenefit}
+        sport_benefit_value={sport_benefit_value}
+        setSportBenefitValue={setSportBenefitValue}
+        wage_total_gross={wage_total_gross}
+        setWageTotalGross={setWageTotalGross}
+        benefits_total={benefits_total}
+        setBenefitsTotal={setBenefitsTotal}
+        reductions_total={reductions_total}
+        setReductionsTotal={setReductionsTotal}
         mileage_allowance={mileage_allowance}
         daily_allowance_domestic={daily_allowance_domestic}
         daily_allowance_domestic_part_time={daily_allowance_domestic_part_time}

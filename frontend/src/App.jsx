@@ -19,7 +19,6 @@ import ReminderSettingsForm from './components/ReminderSettingsForm'
 import SetPassword from './components/SetPassword'
 import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
-import SalaryFormNew from './components/SalaryFormNew'
 import ResetPassword from './components/ResetPassword'
 import Trash from './components/Trash'
 import InactiveClients from './components/ClientsInactive'
@@ -50,7 +49,6 @@ const App = () => {
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
-          <Route path="/client/:id/salaryformnew" element={<SalaryFormNew />} />
           <Route path="/client/:id/trash" element={<Trash />}/>
           <Route path="/deactivated" element={<InactiveClients />} />
           <Route path="/reminders" element={<ClientReminder />} />

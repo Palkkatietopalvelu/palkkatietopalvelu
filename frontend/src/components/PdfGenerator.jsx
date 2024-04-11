@@ -53,7 +53,6 @@ const generatePDF = (formData, clientDetails, date) => {
       doc.text('Sunnuntaitunnit', 55, yPosition)
       doc.text('Tuntipalkka', 90, yPosition)
       doc.text('Kuukausipalkka', 125, yPosition)
-      doc.text('Bruttopalkka', 160, yPosition)
       yPosition += increment
       if (employee.total_hours_weekdays) {
         doc.text(`${employee.total_hours_weekdays}`, 20, yPosition)
@@ -67,9 +66,6 @@ const generatePDF = (formData, clientDetails, date) => {
       if (employee.wage_monthly) {
         doc.text(`${employee.wage_monthly}`, 125, yPosition)
       }
-      if (employee.wage_total_gross) {
-        doc.text(`${employee.wage_total_gross}`, 160, yPosition)
-      }
       yPosition += increment
       // Benefit information
       doc.text('Luontoisedut', 15, yPosition)
@@ -77,8 +73,6 @@ const generatePDF = (formData, clientDetails, date) => {
       doc.text('Asuntoetu', 20, yPosition)
       doc.text('Autoetu', 55, yPosition)
       doc.text('Puhelinetu', 90, yPosition)
-      doc.text('Lounarit', 125, yPosition)
-      doc.text('Liikuntasetelit', 160, yPosition)
       yPosition += increment
       if (employee.flat_benefit) {
         doc.text(`${employee.flat_benefit}`, 20, yPosition)
@@ -87,17 +81,36 @@ const generatePDF = (formData, clientDetails, date) => {
         doc.text(`${employee.car_benefit}`, 55, yPosition)
       }
       if (employee.phone_benefit) {
-        doc.text(`${employee.flat_benefit}`, 90, yPosition)
+        doc.text(`${employee.phone_benefit}`, 90, yPosition)
       }
+      yPosition += increment
+      doc.text('Vähennykset', 15, yPosition)
+      yPosition += increment
+      doc.text('Lounarit', 20, yPosition)
+      doc.text('Liikuntasetelit', 55, yPosition)
+      yPosition += increment
       if (employee.lunch_benefit) {
-        doc.text(`${employee.lunch_benefit}`, 125, yPosition)
+        doc.text(`${employee.lunch_benefit}`, 20, yPosition)
       }
       if (employee.lunch_benefit_value) {
-        doc.text(`x  ${employee.lunch_benefit_value} €`, 132, yPosition)
+        doc.text(`x  ${employee.lunch_benefit_value} €`, 27, yPosition)
       }
       if (employee.sport_benefit) {
-        doc.text(`${employee.sport_benefit}`, 160, yPosition)
+        doc.text(`${employee.sport_benefit}`, 55, yPosition)
       }
+      if (employee.sport_benefit_value) {
+        doc.text(`x  ${employee.sport_benefit_value} €`, 62, yPosition)
+      }
+      yPosition += increment
+      yPosition += increment
+      doc.text('Bruttopalkka yhteensä', 20, yPosition)
+      doc.text('Luontoisedut', 90, yPosition)
+      doc.text('Vähennykset', 125, yPosition)
+      yPosition += increment
+      doc.text(`${employee.wage_total_gross} €`, 20, yPosition)
+      doc.text(`${employee.benefits_total} €`, 90, yPosition)
+      doc.text(`${employee.reductions_total} €`, 125, yPosition)
+      yPosition += increment
       yPosition += increment
       doc.text('Korvaukset ja päivärahat', 15, yPosition)
       yPosition += increment

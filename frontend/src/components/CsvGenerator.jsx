@@ -20,7 +20,7 @@ function convertToCSV(objArray, clientDetails, date) {
   // Extract headers
   str += 'Palkansaaja,Palkkajakso,\
 Tuntimäärä,Sunnuntaitunnit,Tuntipalkka €,Kk-palkat,Asuntoetu,Autoetu,\
-Puh.etu,Bruttopalkka yhteensä,Lounarimäärä,Lounarihinta,Liikuntasetelit,\
+Puh.etu,Bruttopalkka yhteensä,Lounarimäärä,Lounarihinta,Liikuntasetelit,Liikuntasetelin arvo\
 Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (maa ja päivien määrä),Lisäinfo\n'
 
   // Initialize totals
@@ -37,6 +37,7 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
     lunch_benefit_value: 0,
     lunch_benefit_total: 0,
     sport_benefit: 0,
+    sport_benefit_value: 0,
     mileage_allowance: 0,
     daily_allowance_domestic: 0,
     daily_allowance_domestic_part_time: 0,
@@ -65,6 +66,7 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
     totals.lunch_benefit_value += Number(array[i].lunch_benefit_value || 0)
     totals.lunch_benefit_total += Number(array[i].lunch_benefit_total || 0)
     totals.sport_benefit += Number(array[i].sport_benefit || 0)
+    totals.sport_benefit_value += Number(array[i].sport_benefit_value || 0)
     totals.mileage_allowance += Number(array[i].mileage_allowance || 0)
     totals.daily_allowance_domestic += Number(array[i].daily_allowance_domestic || 0)
     totals.daily_allowance_domestic_part_time += Number(array[i].daily_allowance_domestic_part_time || 0)
@@ -81,6 +83,7 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
     line += `"${array[i].lunch_benefit || ''}",`
     line += `"${array[i].lunch_benefit_value || ''}",`
     line += `"${array[i].sport_benefit || ''}",`
+    line += `"${array[i].sport_benefit_value || ''}",`
     line += `"${array[i].mileage_allowance || ''}",`
     line += `"${array[i].daily_allowance_domestic || ''}",`
     line += `"${array[i].daily_allowance_domestic_part_time || ''}",`
@@ -106,7 +109,7 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
   const totalBenefits = totals.flat_benefit + totals.car_benefit + totals.phone_benefit
   str += `"${totalBenefits}",\n`
   str += ',,,,,,,,"Vähennykset",-'
-  str += `${totals.lunch_benefit_total},\n`
+  str += `${totals.lunch_benefit_total + (totals.sport_benefit * totals.sport_benefit_value)},\n`
 
   str += 'POISSAOLOT' + '\r\n'
   str += 'Palkansaaja,Syy,Palkallinen,Ajalta\n'
