@@ -24,6 +24,7 @@ import Trash from './components/Trash'
 import InactiveClients from './components/ClientsInactive'
 import Files from './components/Files'
 import Instructions from './components/Instructions'
+import Footer from './components/Footer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/files" element={<Files />}/>
           <Route path="/instructions" element={<Instructions />} />
         </Routes>
+        <Footer/>
       </Router>
     </div>
   )
