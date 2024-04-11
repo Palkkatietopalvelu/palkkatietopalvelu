@@ -6,9 +6,10 @@ Test Setup  Initialize Database
 
 *** Test Cases ***
 Create Account Page Can Be Opened
-    Go To Home Page
-    Click Link  REKISTERÖIDY
-    Wait For  Luo uusi käyttäjä
+    Setup With Existing User
+    Go To Mypage
+    Click Link  Luo uusi tilitoimistokäyttäjä
+    Wait For  Luo uusi tilitoimistokäyttäjä
 
 New Account Can Be Created
     Go To Register Page

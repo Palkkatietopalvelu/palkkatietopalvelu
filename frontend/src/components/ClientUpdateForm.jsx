@@ -135,7 +135,7 @@ const DeleteClientModal = ({ client, handleDeleteClient, showModal, setShowModal
           <Modal.Header closeButton>
             <Modal.Title>Asiakkaan poistaminen</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}?</Modal.Body>
+          <Modal.Body>Haluatko varmasti poistaa asiakkaan {client.company}? Tämä poistaa asiakkaan tunnukset ja kaikki asiakkaan lisäämät tiedostot.</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
             <Button variant="danger" onClick={handleDeleteClient}>Poista</Button>
