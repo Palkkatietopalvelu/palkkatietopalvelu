@@ -1,7 +1,6 @@
 // (Alareuna)
-import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
   const [linkColor, setLinkColor] = useState('white')
@@ -42,7 +41,7 @@ const Footer = () => {
             <div class="container" style={containerStyle}>
         <section class="text-center p-5">
           <div class="col-md-20">
-            <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">TIETOSUOJASELOSTE</NavLink>
+            <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
             <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
           </div>
           </section>
