@@ -56,8 +56,8 @@ const Files = () => {
           </tbody>
         </Table>
       </div>
-    }
-  </div>
+      }
+    </div>
   )
 }
 
