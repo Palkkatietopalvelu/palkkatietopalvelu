@@ -25,6 +25,7 @@ import InactiveClients from './components/ClientsInactive'
 import Files from './components/Files'
 import Instructions from './components/Instructions'
 import Footer from './components/Footer'
+import PrivacyPolicy from './components/PrivacyPolicy'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/resetpassword" element={<ResetPassword />}/>
           <Route path="/files" element={<Files />}/>
           <Route path="/instructions" element={<Instructions />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
         <Footer/>
       </Router>
