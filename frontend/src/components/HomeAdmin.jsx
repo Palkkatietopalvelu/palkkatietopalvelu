@@ -14,6 +14,8 @@ const HomeAdmin = () => {
   const filterByUser = (c => c.user_id === user.id)
   const [filteredCompanies, setFilteredCompanies] = useState([])
   const [sortingCriteria, setSortingCriteria] = useState('company')  // company, due date, status
+  const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
+    'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12' }
 
   useEffect(() => {
     if (!clients) {
@@ -25,6 +27,34 @@ const HomeAdmin = () => {
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
+  }
+
+  const handleCompanySearch = (event) => {
+    event.target.value === ''
+      ? setFilteredCompanies(clients)
+      : setFilteredCompanies(clients.filter(
+        client => client.company.toLowerCase().includes(event.target.value.toLowerCase())))
+  }
+
+  const handleDateSearch = (event) => {
+    event.target.value === ''
+      ? setFilteredCompanies(clients)
+      : setFilteredCompanies(clients.filter(
+        client => deadlineChecker(client, event.target.value)))
+  }
+
+  const deadlineChecker = (client, searchword) => {
+    const dlExists = client.deadlines.map(dl => duedateFormater(dl.toLowerCase()).includes(searchword.toLowerCase()))
+    if(dlExists.includes(true)) {
+      return client
+    }
+    return
+  }
+
+  const duedateFormater = (duedate) => {
+    const parts = duedate.split(' ')
+    const duedateFinnish = parts[1] + '.' + englishToDigitsMonths[parts[2]] + '.' + parts[3]
+    return duedateFinnish
   }
 
   return (
@@ -41,6 +71,11 @@ const HomeAdmin = () => {
                 <th>Yritys</th>
                 <th>Seuraava eräpäivä</th>
                 <th>Status</th>
+              </tr>
+              <tr>
+                <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
+                <th><input id="dateFilter" onChange={handleDateSearch} /></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
