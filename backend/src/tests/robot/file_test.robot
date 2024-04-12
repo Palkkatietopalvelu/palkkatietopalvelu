@@ -17,10 +17,13 @@ Adding Wrong Filetype Fails
 Adding File Succesfully With Salary Form
     Go To Home Page
     Click Link    täällä
-    Add New Monthly Employee    employee_name1    2025/02/12, 2024/12/04, 2024/05/07    123    2    1, 2,50€    50    20    ei valkosipulia
+    Add New Monthly Employee    employee_name1  tammikuu  120   1230    1, 2,50€    ei valkosipulia
+    Scroll Element Into View    id=lisää
     Click Button  Lisää työntekijän tiedot lomakkeelle
-    Add New Hourly Employee    employee_name2    2025/02/12, 2024/12/04, 2024/05/07    120    3    50    20
+    Add New Hourly Employee    employee_name2  tammikuu  100    120    3    50
+    Scroll Element Into View    id=lisää
     Click Button  Lisää työntekijän tiedot lomakkeelle
+    Scroll Element Into View    id=tallenna
     Click Button  Tallenna lomake
     Wait For  Tiedosto lisätty onnistuneesti
 
@@ -72,26 +75,19 @@ Set Confirm Password
     Input Password  confirmPassword  ${confirmPassword}
 
 Add New Monthly Employee
-    [Arguments]  ${employee_name}  ${absences}  ${provisions}  ${overtime}  ${lunch_allowance}  ${daily_allowance}  ${mileage_allowance}  ${extra}
+    [Arguments]  ${employee_name}  ${month}  ${total_hours_weekdays}  ${wage_monthly}  ${mileage_allowance}  ${extra}
     Input Text  employee name  ${employee_name}
-    Clear Element Text  absences
-    Input Text    absences   ${absences}
-    Click Element  id=provisions
-    Input Text  provisions  ${provisions}
-    Input Text  overtime  ${overtime}
-    Input Text  lunch_allowance  ${lunch_allowance}
-    Input Text  daily_allowance  ${daily_allowance}
+    Input Text  month  ${month}
+    Input Text  total_hours_weekdays  ${total_hours_weekdays}
+    Input Text  wage_monthly  ${wage_monthly}
     Input Text  mileage_allowance  ${mileage_allowance}
     Input Text  extra  ${extra}
 
 Add New Hourly Employee
-    [Arguments]  ${employee_name}  ${absences}  ${lunch_allowance}  ${daily_allowance}  ${mileage_allowance}  ${total_hours}
-    Click Element    id=hourly
+    [Arguments]  ${employee_name}  ${month}  ${total_hours_weekdays}  ${wage_hourly}  ${sport_benefit}  ${sport_benefit_value}
     Input Text  employee name  ${employee_name}
-    Clear Element Text  absences
-    Input Text    absences    ${absences}
-    Click Element  id=lunch_allowance
-    Input Text  lunch_allowance  ${lunch_allowance}
-    Input Text  daily_allowance  ${daily_allowance}
-    Input Text  mileage_allowance  ${mileage_allowance}
-    Input Text  total_hours  ${mileage_allowance}
+    Input Text  month  ${month}
+    Input Text  total_hours_weekdays  ${total_hours_weekdays}
+    Input Text  wage_hourly  ${wage_hourly}
+    Input Text  sport_benefit  ${sport_benefit}
+    Input Text  sport_benefit_value  ${sport_benefit_value}
