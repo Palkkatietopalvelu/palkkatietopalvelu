@@ -16,7 +16,7 @@ def login():
 
     if user and check_password_hash(user.password, password):
         if user.role == 2 and not get_status(user.username):
-            return jsonify({"error": "Tili jäädytetty deaktivoinnin takia."}), 401
+            return jsonify({"error": "Tili on asetettu epäaktiiviseksi."}), 401
         user_info = {"username": user.username, "id": user.id, "role": user.role}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username,

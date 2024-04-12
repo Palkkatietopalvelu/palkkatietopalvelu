@@ -1,12 +1,10 @@
 // Ladatut tiedostot -alanäkymä (Yläpuolella Client.jsx ja HomeClient.jsx, alapuolella FileHandlerForm)
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
-import { Button } from 'react-bootstrap'
-import { useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 import { updateClient } from '../reducers/clientsReducer'
-import Modal from 'react-bootstrap/Modal'
 import FileHandlerForm from './FileHandlerForm'
 
 const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {

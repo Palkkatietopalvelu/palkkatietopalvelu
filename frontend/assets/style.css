@@ -1,0 +1,15 @@
+.welcome {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.2em;
+}
+
+.client {
+  color: #0db10d;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1em;
+}

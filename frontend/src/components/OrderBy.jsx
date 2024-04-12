@@ -12,7 +12,7 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
 
   const showInactive = () => {
     setSortingCriteria('company') // alphabetical order
-    setSortedBy('Deaktivoidut')
+    setSortedBy('Epäaktiiviset')
     setFilteredCompanies(clients.filter(client => !client.active))
   }
 
@@ -69,7 +69,7 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
         <Dropdown.Item eventKey='2' onClick={orderByDate}>Eräpäivän mukaan</Dropdown.Item>
         <Dropdown.Item eventKey='3' onClick={showLate}>Myöhässä</Dropdown.Item>
         <Dropdown.Item eventKey='4' onClick={showNotLate}>Ei myöhässä</Dropdown.Item>
-        <Dropdown.Item eventKey='4' onClick={showInactive}>Deaktivoidut</Dropdown.Item>
+        <Dropdown.Item eventKey='4' onClick={showInactive}>Epäaktiiviset</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )

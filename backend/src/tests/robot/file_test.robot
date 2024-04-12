@@ -51,7 +51,7 @@ File Moved To Trash By Client Is Not Visible To Admin
     Wait For  Tiedosto siirretty roskakoriin
     Log Out
     Login As Admin
-    Click Link  OMAT SIVUT
+    Wait For  testi oy
     Click Link  testi oy
     Click Link  trash
     Page Should Not Contain Element  2palauta
@@ -70,10 +70,6 @@ Deleting File From Trash Succeeds
     Wait For  Tiedosto poistettu onnistuneesti
 
 *** Keywords ***
-Set Confirm Password
-    [Arguments]  ${confirmPassword}
-    Input Password  confirmPassword  ${confirmPassword}
-
 Add New Monthly Employee
     [Arguments]  ${employee_name}  ${month}  ${total_hours_weekdays}  ${wage_monthly}  ${mileage_allowance}  ${extra}
     Input Text  employee name  ${employee_name}

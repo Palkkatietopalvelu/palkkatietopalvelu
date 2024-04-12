@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 
 *** Test Cases ***
 Change Client Company Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  testi oy
     Click Button  Muuta asiakkaan tietoja
     Change Company Name  eiku oy
@@ -14,7 +14,7 @@ Change Client Company Succeeds
     Wait Until Page Does Not Contain  Asiakkaan tiedot päivitetty onnistuneesti  timeout=6s
 
 Change Client Email With Correct Format Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Email  testi@eiku.com
@@ -23,7 +23,7 @@ Change Client Email With Correct Format Succeeds
     Wait Until Page Does Not Contain  Asiakkaan tiedot päivitetty onnistuneesti  timeout=6s
 
 Change Client Email With Incorrect Format Fails
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Wait For  eiku oy
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
@@ -32,7 +32,7 @@ Change Client Email With Incorrect Format Fails
     Wait For  Sähköposti ei ole oikeassa muodossa
     
 Change Client Phonenumber With Correct Format Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Phonenumber  +358 111111111
@@ -40,7 +40,7 @@ Change Client Phonenumber With Correct Format Succeeds
     Wait For  Asiakkaan tiedot päivitetty onnistuneesti
 
 Change Client Phonenumber With Incorrect Format Fails
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Phonenumber  123123456789
@@ -48,7 +48,7 @@ Change Client Phonenumber With Incorrect Format Fails
     Wait For  Puhelinnumero ei ole oikeassa muodossa
 
 Change Client BICode With Correct Format Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change BICode  1234567-9
@@ -56,7 +56,7 @@ Change Client BICode With Correct Format Succeeds
     Wait For  Asiakkaan tiedot päivitetty onnistuneesti
 
 Change Client BICode With Incorrect Format Fails
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change BICode  123
@@ -64,7 +64,7 @@ Change Client BICode With Incorrect Format Fails
     Wait For  Y-tunnus ei ole oikeassa muodossa
 
 Change Client Deadlines With Correct Format Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Deadlines  2023/01/01, 2024/01/02
@@ -72,14 +72,14 @@ Change Client Deadlines With Correct Format Succeeds
     Wait For  Asiakkaan tiedot päivitetty onnistuneesti
 
 Change Client Deadlines With Incorrect Format Fails
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Deadlines  01/01/2023, 23/04/2025
     Page Should Not Contain  01/01/2023, 23/04/2025
 
 Change Client Payperiod Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Change Payperiod  2 vko
@@ -88,7 +88,7 @@ Change Client Payperiod Succeeds
     Wait Until Page Does Not Contain  Asiakkaan tiedot päivitetty onnistuneesti  timeout=6s
 
 Delete Client Succeeds
-    Click Link  OMAT SIVUT
+    Click Link  KOTI
     Click Link  eiku oy
     Click Button  Muuta asiakkaan tietoja
     Click Button  Poista asiakas

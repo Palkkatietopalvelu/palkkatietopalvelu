@@ -70,3 +70,5 @@ def delete_file(file_id, remove_file=True):
         db.session.commit()
         if remove_file:
             os.remove(os.path.join(UPLOAD_FOLDER, file['path']))
+        return True
+    return False

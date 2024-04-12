@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from sqlalchemy.sql import text
 from app import app
 from utilities import client_methods as clients
 from utilities import client_user
@@ -67,9 +66,9 @@ def update_client(client_id):
 @require_admin
 def delete_client(client_id):
     try:
-        sql = text("""SELECT email FROM clients WHERE id=:id""")
-        result = db.session.execute(sql, {"id": client_id})
-        username = result.fetchone()[0]
+        username = clients.get_email(client_id)
+        if not username: # client email is required, if not found the client must not exist
+            return jsonify({'error': 'Asiakasta ei löytynyt'}), 404
         clients.delete_files(client_id)
         with db.session.begin_nested():
             client_user.delete_client_user(username)
