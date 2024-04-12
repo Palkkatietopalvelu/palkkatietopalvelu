@@ -36,7 +36,7 @@ export const addFile = (file) => {
       dispatch(getFile())
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
       return false
     }
   }
@@ -56,7 +56,7 @@ export const downloadFile = (id, fileName) => {
       window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Download document failed:', error)
-      dispatch(notify('Tiedoston lataus epäonnistui'))
+      dispatch(notify('Tiedoston lataus epäonnistui', 'danger'))
     }
   }
 }
@@ -69,7 +69,7 @@ export const moveFileToTrash = (file) => {
       dispatch(notify('Tiedosto siirretty roskakoriin'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
       return false
     }
   }
@@ -83,7 +83,7 @@ export const deleteFile = (file) => {
       dispatch(notify('Tiedosto poistettu onnistuneesti'))
       return true
     } catch (e) {
-      dispatch(notify(e.response?.data || 'Tapahtui virhe'))
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
       return false
     }
   }

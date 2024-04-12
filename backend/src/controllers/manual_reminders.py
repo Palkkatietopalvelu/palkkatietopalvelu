@@ -19,13 +19,14 @@ def manual_reminders():
         request_data = request.get_json()
         recipients = request_data.get('recipients', [])
         message = request_data.get('message', '')
-        if ENV != "development":
-            for client_id in recipients:
-                receiver = get_email(client_id)
+        for client_id in recipients:
+            receiver = get_email(client_id)
+            if receiver:
                 msg = Message('Muistutus',
                             sender = app.config['MAIL_USERNAME'],
                             recipients = [receiver])
                 msg.body = str(message)
-                mail.send(msg)
-        return 'Reminders sent', 200
+                if ENV != "development":
+                    mail.send(msg)
+                return 'Reminders sent', 200
     return jsonify({'error': 'Virhe sähköpostiviestin lähetyksessä'}), 500

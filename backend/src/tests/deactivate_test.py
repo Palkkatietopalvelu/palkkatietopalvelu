@@ -92,7 +92,7 @@ class TestPasswordChange(unittest.TestCase):
         self.test_deactivate_client_succeeds()
         data = {"username": "testi@gmail.com", "password": "testi123", "role": 2}
         response = app.test_client().post("/api/login", json=data)
-        self.assertIn("Tili jäädytetty deaktivoinnin takia.", str(response.get_json()))
+        self.assertIn("Tili on asetettu epäaktiiviseksi.", str(response.get_json()))
         self.assertEqual(response.status_code, 401)
 
   def test_activate_client(self):

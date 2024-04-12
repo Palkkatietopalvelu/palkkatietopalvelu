@@ -77,18 +77,9 @@ const Menu = () => {
           <Nav className="mr-auto">
             {user ? <span className="d-flex" style={{ fontWeight: 'b' }}>
               <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
-              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
               {user.role === 1 && <span className="d-flex" style={{ fontWeight: 'b' }}>
-                <Dropdown id="Dropdown_Asiakkaat" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
-                    <Dropdown.Item href="#">Omat</Dropdown.Item>
-                    <Dropdown.Item href="#">Kaikki</Dropdown.Item>
-                    <Dropdown.Item href="#">Aktiiviset</Dropdown.Item>
-                    <Dropdown.Item href="/deactivated">Deaktivoidut</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/addclient">LISÄÄ ASIAKAS</NavLink>
+                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
                 <Dropdown id="Dropdown_Muistutukset" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                   <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>MUISTUTUKSET</b></Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -96,8 +87,8 @@ const Menu = () => {
                     <Dropdown.Item id="Manual" href="/reminders">Manuaaliset muistutukset</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
               </span>}
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
               <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
             </span>
               :<span>
