@@ -102,6 +102,13 @@ Login As New Client
     Click Button  login
     Wait For  Tervetuloa palkkatietopalveluun!
 
+Login As Client
+    Go To Login Page
+    Set Username  testi@email.com
+    Set Password  123
+    Click Button  login
+    Wait For  Tervetuloa palkkatietopalveluun!
+
 Login As Admin
     Go To Login Page
     Set Username  testuser@mail.com

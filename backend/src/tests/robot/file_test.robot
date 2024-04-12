@@ -27,7 +27,15 @@ Adding File Succesfully With Salary Form
     Click Button  Tallenna lomake
     Wait For  Tiedosto lisätty onnistuneesti
 
+Files Page Works
+    Log Out
+    Login As Admin
+    Click Link  AINEISTOT
+    Page Should Contain  testi oy
+
 Moving File To Trash Succeeds
+    Log Out
+    Login As Client
     Go To Home Page
     Click Button  1
     Wait For  Tiedoston siirtäminen roskakoriin
@@ -37,28 +45,28 @@ Moving File To Trash Succeeds
     Wait For  Tiedoston siirtäminen roskakoriin
     Click Button  Siirrä roskakoriin
     Wait For  Tiedosto siirretty roskakoriin
-
-Restoring File Succeeds
-    Click Link  trash
-    Click Button  2palauta 
-    Wait For  Tiedosto palautettu onnistuneesti
-
-File Moved To Trash By Client Is Not Visible To Admin
-    Go To Home Page
-    Click Button  2              
+    Click Button  3
     Wait For  Tiedoston siirtäminen roskakoriin
     Click Button  Siirrä roskakoriin
     Wait For  Tiedosto siirretty roskakoriin
+    Page Should Not Contain  .pdf
+
+
+File Moved To Trash By Client Is Not Visible To Admin
     Log Out
     Login As Admin
-    Wait For  testi oy
+    Click Link  AINEISTOT
+    Page Should Not Contain  testi oy
+    Click Link  KOTI
     Click Link  testi oy
     Click Link  trash
     Page Should Not Contain Element  2palauta
+    Click Link  AINEISTOT
+    Page Should Not Contain  testi oy
     Log Out
 
 Deleting File From Trash Succeeds
-    Login As New Client
+    Login As Client
     Click Link  trash
     Click Button  1poista
     Wait For  Tiedoston poistaminen
@@ -68,6 +76,31 @@ Deleting File From Trash Succeeds
     Wait For  Tiedoston poistaminen
     Click Button  Poista tiedosto
     Wait For  Tiedosto poistettu onnistuneesti
+    Click Button  3poista
+    Wait For  Tiedoston poistaminen
+    Click Button  Poista tiedosto
+    Wait For  Tiedosto poistettu onnistuneesti
+
+Admin Can Mark Files Delivered
+    Go To Home Page
+    Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
+    Wait For  Tiedosto lisätty onnistuneesti
+    Log Out
+    Login As Admin
+    Click Link  testi oy
+    Page Should Contain   Eräpäivän 20.11.2024 palkkatiedot
+    Click Button  Merkitse palkkatiedot toimitetuksi
+    Wait For  Tiedot toimitetuksi
+    Click Button  Merkkaa toimitetuksi
+    Wait For  Tiedosto siirretty roskakoriin
+    Page Should Not Contain  20.11.2024
+    Page Should Not Contain  .pdf
+    Click Link  trash
+    Click Button  4poista
+    Wait For  Tiedoston poistaminen
+    Click Button  Poista tiedosto
+    Wait For  Tiedosto poistettu onnistuneesti
+
 
 *** Keywords ***
 Add New Monthly Employee

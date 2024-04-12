@@ -1,7 +1,7 @@
 // ./client/{client.id} (Asiakaskohtainen sivu)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { Table, Button, Badge } from 'react-bootstrap'
@@ -67,6 +67,10 @@ const Client = () => {
         </Table>
         <Button onClick={() => navigate(`/client/${client.id}/update`)}>Muuta asiakkaan tietoja</Button>
         {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} remainingDeadlines={remainingDeadlines} />}
+        <br/><br/>
+        <h4>Poistetut tiedostot</h4>
+        <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
+        <br/><br/>
       </div>}
     </div>
   )

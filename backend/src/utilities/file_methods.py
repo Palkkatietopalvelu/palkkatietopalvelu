@@ -57,11 +57,6 @@ def move_file_to_trash(file_id, user_id):
     db.session.execute(sql, {"delete_date": delete_date,"user_id": user_id, "file_id": file_id})
     db.session.commit()
 
-def restore_file(file_id):
-    sql = text("UPDATE files SET delete_date=NULL, deleted_by=NULL WHERE id=:id")
-    db.session.execute(sql, {"id": file_id})
-    db.session.commit()
-
 def delete_file(file_id, remove_file=True):
     file = get_file(file_id)
     if file:

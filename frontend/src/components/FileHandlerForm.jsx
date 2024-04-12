@@ -106,10 +106,6 @@ const FileHandlerForm = ({
         showModal={showMarkAsDeliveredModal}
         setShowModal={setShowMarkAsDeliveredModal}
       />
-      <br></br>
-      <h4>Poistetut tiedostot</h4>
-      <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
-      <br /><br />
     </div>
   )
 }

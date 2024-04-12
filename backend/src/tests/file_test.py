@@ -62,16 +62,6 @@ class TestFile(unittest.TestCase):
             self.assertEqual(file["delete_date"], datetime.now().date()+timedelta(weeks=1))
             self.assertEqual(file["deleted_by"], self.user_id)
 
-    def test_restore_file(self):
-        with app.app_context():
-            file_methods.add_file(self.file)
-            file_methods.move_file_to_trash(1, self.user_id)
-            response = app.test_client().post("/api/files/1/restore", headers=self.headers)
-            self.assertEqual(response.status_code, 200)
-            file = file_methods.get_all_files()[0]
-            self.assertEqual(file["delete_date"], None)
-            self.assertEqual(file["deleted_by"], None)
-
     def test_get_all_files_with_valid_token(self):
         with app.app_context():
             file_methods.add_file(self.file)

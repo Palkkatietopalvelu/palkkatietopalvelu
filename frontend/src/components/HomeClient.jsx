@@ -2,6 +2,7 @@
 import '../../assets/style.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
@@ -53,6 +54,10 @@ const HomeClient = () => {
             </tbody>
           </Table>
           {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
+          <br/><br/>
+          <h4>Poistetut tiedostot</h4>
+          <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
+          <br/><br/>
         </div>
       }
     </div>
