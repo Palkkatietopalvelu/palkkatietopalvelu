@@ -87,7 +87,6 @@ Admin Can Mark Files Delivered
     Wait For  Tiedosto lisätty onnistuneesti
     Log Out
     Login As Admin
-    Click Link  OMAT SIVUT
     Click Link  testi oy
     Page Should Contain   Eräpäivän 20.11.2024 palkkatiedot
     Click Button  Merkitse palkkatiedot toimitetuksi
