@@ -48,7 +48,7 @@ File Moved To Trash By Client Is Not Visible To Admin
     Wait For  Tiedosto siirretty roskakoriin
     Log Out
     Login As Admin
-    Click Link  OMAT SIVUT
+    Wait For  testi oy
     Click Link  testi oy
     Click Link  trash
     Page Should Not Contain Element  2palauta

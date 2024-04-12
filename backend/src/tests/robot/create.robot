@@ -1,53 +1,47 @@
 *** Settings ***
 Resource  resource.robot
-Suite Setup  Open And Configure Browser
+Suite Setup  Setup With Existing User
 Suite Teardown  Close Browser
 Test Setup  Initialize Database
 
 *** Test Cases ***
-Create Account Page Can Be Opened
-    Setup With Existing User
-    Go To Mypage
-    Click Link  Luo uusi tilitoimistokäyttäjä
-    Wait For  Luo uusi tilitoimistokäyttäjä
-
 New Account Can Be Created
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  antti56@mail.com
     Set Password  antti123
     Submit Credentials
     Create Account Should Succeed
 
 Create New Account Fails With One Letter Username
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  a
     Set Password  pass123
     Submit Credentials
     Create Account Should Fail With Incorrect Username
 
 Create New Account Fails With One Letter Password
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  bertta@mail.com
     Set Password  p
     Submit Credentials
     Create Account Should Fail With Short Password
 
 Create New Account Fails With One Letter Username And Password
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  x
     Set Password  y
     Submit Credentials
     Create Account Should Fail With Incorrect Username
 
 Create New Account Fails With Username Too Long
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  thisusernameisverylong@mail.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
     Set Password  pass123
     Submit Credentials
     Create Account Should Fail With Long Username
 
 Create New Account Fails With Password Too Long
-    Go To Register Page
+    Go To My Page and Click Luo uusi tilitoimistokäyttäjä
     Set Username  cecilia@mail.com
     Set Password  thispasswordisverylong123
     Submit Credentials
@@ -55,6 +49,11 @@ Create New Account Fails With Password Too Long
 
 
 *** Keywords ***
+Go To My Page and Click Luo uusi tilitoimistokäyttäjä
+    Go To Mypage
+    Click Button  Luo uusi tilitoimistokäyttäjä
+    Wait For  Sähköposti
+
 Create Account Should Succeed
     Wait Until Page Contains  Käyttäjä luotu onnistuneesti
 

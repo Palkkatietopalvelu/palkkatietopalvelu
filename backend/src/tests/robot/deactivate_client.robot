@@ -11,7 +11,7 @@ Login As Client Succeeds When Active
 
 Deactivate Client Succeeds
     Login As Admin
-    Click Link  OMAT SIVUT
+    Go To Home Page
     Click Link  testi oy
     Wait For  20.11.2024  # client has a due date
     Page Should Contain  aktiivinen  # client is active
@@ -23,7 +23,7 @@ Deactivate Client Succeeds
     Page Should Not Contain  Eräpäivät  # can't add due dates when client is deactivated
 
 Deactivated Client Does Not Appear In The Sorting Categories
-    Click Link  OMAT SIVUT
+    Go To Home Page
     Wait For  Aakkosjärjestys
     Page Should Not Contain  testi oy
     Change Sorting Category  Aakkosjärjestys  Eräpäivän mukaan
@@ -49,7 +49,7 @@ Login Fails As Client When Deactivated
 
 Activating Deactivated Client Succeeds
     Login As Admin
-    Click Link  OMAT SIVUT
+    Go To Home Page
     Change Sorting Category  Aakkosjärjestys  Epäaktiiviset
     Click Link  testi oy
     Click Button  Muuta asiakkaan tietoja
@@ -57,7 +57,7 @@ Activating Deactivated Client Succeeds
     Wait For  Asiakkaan aktivoiminen
     Click Button  Aktivoi
     Wait For  Asiakas on asetettu aktiiviseksi
-    Click Link  OMAT SIVUT
+    Go To Home Page
     Wait For  testi oy
 
 *** Keywords ***
