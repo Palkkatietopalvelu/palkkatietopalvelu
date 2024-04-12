@@ -61,7 +61,7 @@ const HomeAdmin = () => {
     <div>
       {user.role === 1 &&
         <div>
-          <br /><h2>Asiakkaat</h2><br />
+          <br /><h2>Asiakkaat</h2><hr />
           <Notification />
           <OrderBy clients={clients} setFilteredCompanies={setFilteredCompanies}
             setSortingCriteria={setSortingCriteria} />
