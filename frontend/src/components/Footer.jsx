@@ -1,6 +1,6 @@
 // (Alareuna)
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
 
 const Footer = () => {
   const [linkColor, setLinkColor] = useState('white')
@@ -44,7 +44,7 @@ const Footer = () => {
             <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
             <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
           </div>
-          </section>
+        </section>
           <br/>
 
       <hr class="my-1" />
