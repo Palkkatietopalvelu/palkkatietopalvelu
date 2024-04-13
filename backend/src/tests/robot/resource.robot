@@ -24,7 +24,7 @@ Env is set
 Initialize Database
     ${passed}=  Run Keyword And Return Status  Env is set
     IF   not ${passed}
-    Log To Console  Please set add FLASK_ENV="development" to .env and restart the app
+    Log To Console  Please set FLASK_ENV="development" to .env and restart the app
     Fatal Error    
     END
     Initialize Db
