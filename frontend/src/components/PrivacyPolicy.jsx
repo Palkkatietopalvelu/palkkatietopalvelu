@@ -57,11 +57,13 @@ const PrivacyPolicy = () => {
       EU:n yleinen tietosuoja-asetuksen mukaan henkilötietoja käsittelevän yrityksen tai organisaation täytyy informoida 
       henkilötietojen luovuttajalle syy henkilötietojen käsittelyyn ja millä tavoin hänen tietojaan käsitellään. 
       Tietosuojaselosteessa informoidaan tiivistetysti, kuinka henkilötietojen käsittely tapahtuu. 
-      
+      </p>
+      <p>
       Henkilötietoja ovat kaikki tunnistettuun tai tunnistettavissa olevaan luonnolliseen henkilöön (elossa olevaan ihmiseen) liittyvät tiedot. 
       Henkilötietoja ovat myös erilliset tiedot, jotka yhdistettyinä mahdollistavat tietyn henkilön tunnistamisen. 
       Näitä tietoja ovat esimerkiksi nimi, sähköpostiosoite, IP-osoite tai palkkatiedot. 
-      
+      </p>
+      <p>
       Y-tunnus on henkilötieto, mikäli on kyse yksityisestä elinkeinonharjoittajasta (toiminimi).
       </p>
       <br /><Header headline={mainHeading[1]} />
@@ -70,10 +72,12 @@ const PrivacyPolicy = () => {
       emme toimi rekisterinpitäjänä vaan olemme henkilötietojen käsittelijä, jolla on pääsy rekisterinpitäjän henkilötietoihin. 
       Kun asiakas esimerkiksi toimittaa tilitoimistolle työntekijöidensä henkilötietoja palkkojen laskemista ja maksamista varten, 
       asiakas on rekisterinpitäjä, koska se määrittelee henkilötietojen käsittelyn tarkoituksen ja keinot. 
-      
+      </p>
+      <p>
       Henkilötietojen käsittelijä voi käsitellä henkilötietoja vain rekisterinpitäjän määrittelemiin tarkoituksiin. 
       Käsittelijän velvollisuudet rekisterinpitäjää kohtaan määritellään Reilu Hallinnon ja asiakkaan välisessä toimeksiantosopimuksessa. 
-      
+      </p>
+      <p>
       Toimimme rekisterin pitäjänä tilanteessa, jossa käsittelemme henkilötietoja omasta puolestamme eli päätämme itse, 
       mitä varten ja miten keräämme henkilötietoja. Esimerkki tällaisesta tilanteesta on se, kun käsittelemme oman henkilökuntamme henkilötietoja.
       </p>
@@ -82,10 +86,12 @@ const PrivacyPolicy = () => {
       <br /><p>
       Taloushallintopalveluiden yhteydessä henkilötietoja tallennetaan ja käsitellään toimeksiantosopimuksen mukaisesti kirjanpidon ja tilinpäätöksen laatimisessa, 
       palkkojen laskemisessa ja maksamisessa, viranomaisilmoitusten tekemisessä sekä rahanpesulain vaatimusten täyttämiseksi. 
-      
+      </p>
+      <p>
       Viranomaisilmoituksia ovat esimerkiksi tuloveroilmoitus, osakaslainojen vuosi-ilmoitus, osinkojen vuosi-ilmoitus, työntekijäilmoitus urakoista, 
       TAS- ja TyEL- ilmoitukset, ilmoitukset Kelalle, vakuutusyhtiöille ja työttömyyskassaan sekä mahdolliset jäsenmaksut ja ulosottotilitykset. 
-      
+      </p>
+      <p>
       Henkilötietoja käsitellään myös palveluissa tai erikseen sovituissa toimeksiannoissa, joissa tehdään erilaisia raportteja, 
       hakemuksia ja selvityksiä asiakkaalle tai tämän puolesta.
       </p>
@@ -156,13 +162,15 @@ const PrivacyPolicy = () => {
       Saatamme käyttää toimeksiantosopimuksen mukaisesti alihankkijoita ja palveluntarjoajia palveluiden tuottamiseen, ylläpitoon ja kehittämiseen. 
       Alihankkijat ja palveluntarjoajat käsittelevät henkilötietoja vain siinä laajuudessa, kun on tarpeen tässä tietosuojalausekkeessa kuvattujen käyttötarkoitusten toteuttamiseen. 
       Heillä on myös vaitiolovelvollisuus liittyen kaikkeen asiakkaan taloushallinnon tietoon ja henkilötietoon. 
-      
+      </p>
+      <p>
       Annamme pyydettäessä lisätietoja henkilötietojen käsittelijöistä.
       </p>
       <br /><Header headline={mainHeading[7]} />
       <br /><p>
       Lakisääteisten taloushallinnon palveluiden tuottamisessa käsittelemme henkilötietoja vain EU- tai ETA-maissa sijaitsevia toimijoita ja palveluja hyödyntäen. 
-      
+      </p>
+      <p>
       Muiden palvelujemme, kuten esimerkiksi verkkosivujemme, toteuttamiseen saatamme käyttää myös EU- tai ETA-maiden ulkopuolella sijaitsevia toimijoita, palveluja ja palvelimia. 
       Siirrot toteutetaan lainsäädännön edellyttämällä tavalla, esimerkiksi EU:n hyväksymiä mallisopimuslausekkeita käyttäen ja näin varmistetaan, 
       että henkilötietojen suoja on riittävällä tasolla sekä käsittely tapahtuu tämän tietosuojalausekkeen mukaisesti.
@@ -179,7 +187,8 @@ const PrivacyPolicy = () => {
       <br /><Header headline={mainHeading[10]} />
       <br /><p>
       Henkilötietoja käsitellään niin pitkään kuin palveluita toimitetaan toimeksiantosopimuksen mukaisesti tai voimassa oleva lainsäädäntö edellyttää tiedon säilyttämistä.
-      
+      </p>
+      <p>
       Oikeutetun edun perusteella käsiteltyjä henkilötietoja käsitellään niin kauan kuin niiden käsittelylle on olemassa perusteet. Jos vastustat tällaista käsittelyä, tietosi poistetaan sen jälkeen, kun pyyntösi oikeutus on varmistettu.
       </p>
       <br /><Header headline={mainHeading[11]} />
@@ -204,7 +213,8 @@ const PrivacyPolicy = () => {
       </ul>
       <p>
         Et kuitenkaan voi käyttää kaikkia oikeuksia kaikissa tilanteissa. Tilanteeseen vaikuttaa esimerkiksi se, millä perusteella henkilötietoja käsitellään. Jos haluat käyttää oikeuksiasi, siitä täytyy lähettää pyyntö meille.
-        
+        </p>
+        <p>
         Sinulla on oikeus tehdä valitus toimivaltaiselle valvontaviranomaiselle, jos mielestäsi emme ole soveltaneet tietosuojasääntelyä henkilötietojen käsittelyssä. 
         Suomessa valvontaviranomainen on Tietosuojavaltuutetun toimisto, jonka yhteystiedot ja ohjeet löytyvät osoitteesta www.tietosuoja.fi.
         </p>
