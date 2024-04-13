@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/resetpassword'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/resetpassword'
 import storage from './storage'
 
 const resetpassword = async email => {

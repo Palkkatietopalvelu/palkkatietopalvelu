@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/reminders'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/reminders'
 import storage from './storage'
 
 const send = async object => {
