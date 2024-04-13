@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/setpassword'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/setpassword'
 import storage from './storage'
 
 const get = async token => {
