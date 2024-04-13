@@ -7,7 +7,7 @@ const Footer = () => {
 
   const footerStyle = {
     position: 'relative',
-    marginTop:"50vh"
+    marginTop:'50vh'
   }
 
   const textStyle = {
@@ -19,7 +19,7 @@ const Footer = () => {
 
   const containerStyle = {
     position: 'absolute',
-    paddingTop: "30px",
+    paddingTop: '30px',
     backgroundColor: '#055e05'
     //backgroundColor: 'rgb(13, 177, 13)'
   }
@@ -37,25 +37,25 @@ const Footer = () => {
 
   return (
     <div>
-        <footer class="footer" style={footerStyle}>
-            <div class="container" style={containerStyle}>
-        <section class="text-center p-5">
-          <div class="col-md-20">
-            <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
-            <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
-          </div>
-        </section>
+      <footer className="footer" style={footerStyle}>
+        <div className="container" style={containerStyle}>
+          <section className="text-center p-5">
+            <div className="col-md-20">
+              <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
+              <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
+            </div>
+          </section>
           <br/>
 
-      <hr class="my-1" />
+          <hr className="my-1" />
 
-            <div class="text-center p-3" style={textStyle}>
+          <div className="text-center p-3" style={textStyle}>
             &copy; 2024 Reilu Hallinto Oy
-            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-        </footer>
-    </div>
-  );
-};
+  )
+}
 
 export default Footer

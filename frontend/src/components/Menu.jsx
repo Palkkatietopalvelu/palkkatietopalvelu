@@ -34,10 +34,10 @@ const Menu = () => {
   }
 
   const infoStyle = {
-      paddingRight: 10,
-      fontSize: "30px",
-      fontWeight: 'bold',
-      color:'white',
+    paddingRight: 10,
+    fontSize: '30px',
+    fontWeight: 'bold',
+    color:'white',
   }
 
   const dropdownStyle = {
