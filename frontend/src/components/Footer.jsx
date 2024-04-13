@@ -19,7 +19,7 @@ const Footer = () => {
 
   const containerStyle = {
     position: 'absolute',
-    paddingTop: "70px",
+    paddingTop: "30px",
     backgroundColor: '#055e05'
     //backgroundColor: 'rgb(13, 177, 13)'
   }
