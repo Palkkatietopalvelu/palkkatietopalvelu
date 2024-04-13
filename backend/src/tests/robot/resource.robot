@@ -1,6 +1,7 @@
 *** Settings ***
 Library  SeleniumLibrary  run_on_failure=NOTHING
 Library  ../../AppLibrary.py
+Variables  ../../config.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
@@ -17,7 +18,15 @@ Open And Configure Browser
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
 
+Env is set
+    Should Be Equal  ${ENV}  development
+
 Initialize Database
+    ${passed}=  Run Keyword And Return Status  Env is set
+    IF   not ${passed}
+    Log To Console  Please set add FLASK_ENV="development" to .env and restart the app
+    Fatal Error    
+    END
     Initialize Db
 
 Logged In Page Should Be Open
