@@ -66,6 +66,8 @@ const InstructionsAdmin = () => {
       <br /><p>
       Valitse navigointipalkista "Aineistot". Sivulla näkee kaikki saapuneet aineistot. Paina sen yrityksen nimeä, jonka aineistoa haluat tarkastaa. 
       Avautuneella sivulla näkee asiakkaan tiedot. Sivun lopussa on ladatut tiedostot kohta, josta aineiston voi ladata omalle koneelle. 
+      </p>
+      <p>
       Painamalla "Merkitse palkkatiedot toimitetuksi", eräpäivä poistetaan ja tiedosto siirretään roskakoriin. Aineston voi siirtää roskakoriin painamalla "Poista". 
       Roskakori poistaa yhden viikon vanhat tiedostot automaattisesti. Roskakorista voi myös manuaalisesti poistaa tiedoston kokonaan.
       </p>
