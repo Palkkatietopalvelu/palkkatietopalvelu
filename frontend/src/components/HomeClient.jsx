@@ -1,6 +1,8 @@
 // ./ (asiakas)
+import '../../assets/style.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Notification from './Notification'
 import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
@@ -35,17 +37,15 @@ const HomeClient = () => {
     <div>
       {user.role === 2 &&
         <div>
-          <br /><h2>Tervetuloa palkkatietopalveluun!</h2>
+          <br /><h2 className='welcome'>Tervetuloa palkkatietopalveluun!</h2><hr />
           <br></br>
           <h3>Palautathan palkka-aineiston hyvissä ajoin</h3>
           <br></br>
           <Notification />
-          <h4 style={{ marginBottom: '20px' }}>{client.company}</h4>
-          <h4>Laskutustiedot</h4>
+          <h4 className='client'>{client.company}</h4>
           <Table striped>
             <tbody key={client.email}>
-              <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
-              <tr><td>Eräpäivät</td><td>{client.deadlines.map(date =>
+              <tr><td>Seuraavat eräpäivät</td><td>{client.deadlines.map(date =>
                 <div key={date}>
                   {new Date(date).toLocaleString('fi-FI',
                     { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
@@ -54,6 +54,10 @@ const HomeClient = () => {
             </tbody>
           </Table>
           {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
+          <br/><br/>
+          <h4>Poistetut tiedostot</h4>
+          <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
+          <br/><br/>
         </div>
       }
     </div>

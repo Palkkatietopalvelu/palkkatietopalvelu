@@ -1,7 +1,7 @@
-"""empty message
+"""add admin account
 
 Revision ID: dc258a42ef21
-Revises: 9a086143448d
+Revises: d010c3150f7f
 Create Date: 2024-04-07 21:26:17.259263
 
 """
@@ -13,7 +13,7 @@ from werkzeug.security import generate_password_hash
 
 # revision identifiers, used by Alembic.
 revision = 'dc258a42ef21'
-down_revision = '9a086143448d'
+down_revision = 'd010c3150f7f'
 branch_labels = None
 depends_on = None
 

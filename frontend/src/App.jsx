@@ -21,7 +21,6 @@ import HomePage from './components/HomePage'
 import SalaryForm from './components/SalaryForm'
 import ResetPassword from './components/ResetPassword'
 import Trash from './components/Trash'
-import InactiveClients from './components/ClientsInactive'
 import Files from './components/Files'
 import Instructions from './components/Instructions'
 import Footer from './components/Footer'
@@ -48,12 +47,11 @@ const App = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/client" element={<ClientForm />} />
+          <Route path="/addclient" element={<ClientForm />} />
           <Route path="/client/:id" element={<Client />} />
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
           <Route path="/client/:id/trash" element={<Trash />}/>
-          <Route path="/deactivated" element={<InactiveClients />} />
           <Route path="/reminders" element={<ClientReminder />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>

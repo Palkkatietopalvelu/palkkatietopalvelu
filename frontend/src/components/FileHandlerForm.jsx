@@ -1,6 +1,6 @@
 // FileHandlerForm -alanäkymä (Yläpuolella FileHandler.jsx)
 import { Link } from 'react-router-dom'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import filesImport from '../services/files.js'
 
@@ -69,21 +69,32 @@ const FileHandlerForm = ({
         }}>täältä</a>
       </div>
     </div>}
-      <br></br>
       <div>
         {files.length > 0 ? (
-          <ul>
-            {files.map((file) => (
-              <li key={file.id}>
-                {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-                <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
-                {' '}
-                <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
-              </li>
-            ))}
+          <Table striped>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Tiedoston nimi</th>
+                <th>Päivämäärä</th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => {
+                return (
+                  <tr key={file.id}>
+                    <td style={{ textAlign:'right', width: '10%' }}><Button variant="primary" size="sm" onClick={() =>
+                      handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                    <Button id={file.id} variant="danger" size="sm" onClick={() =>
+                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                    <td style={{ width: '50%' }}>{file.name}</td>
+                    <td style={{ width: '50%' }}>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                  </tr>
+                )})}
+            </tbody>
             <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
               showModal={showModal} setShowModal={setShowModal} />
-          </ul>
+          </Table>
         ) : (
           <div>Palkkatietoja ei ole vielä ilmoitettu</div>
         )}
@@ -95,10 +106,6 @@ const FileHandlerForm = ({
         showModal={showMarkAsDeliveredModal}
         setShowModal={setShowMarkAsDeliveredModal}
       />
-      <br></br>
-      <h4>Poistetut tiedostot</h4>
-      <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
-      <br /><br />
     </div>
   )
 }

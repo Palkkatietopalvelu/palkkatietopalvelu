@@ -55,6 +55,7 @@ def download_file(file_id):
     return 'File not found', 404
 
 @app.route('/api/files/template.csv', methods=['GET'])
+@require_login
 def download_template_csv():
     try:
         path = os.path.join(UPLOAD_FOLDER, 'template.csv')
@@ -73,20 +74,13 @@ def move_to_trash(file_id):
     except Exception as e: # pylint: disable=broad-except
         return str(e), 400
 
-@app.route('/api/files/<int:file_id>/restore', methods=['POST'])
-@require_login
-def restore(file_id):
-    try:
-        files.restore_file(file_id)
-        return "File restored successfully", 200
-    except Exception as e: # pylint: disable=broad-except
-        return str(e), 400
-
 @app.route('/api/files/<int:file_id>', methods=['DELETE'])
 @require_login
 def delete_file(file_id):
     try:
-        files.delete_file(file_id)
+        result = files.delete_file(file_id)
+        if not result:
+            return "File not found", 404
         return "File deleted successfully", 200
     except Exception as e: # pylint: disable=broad-except
         return str(e), 400

@@ -17,9 +17,8 @@ const ResetPassword = () => {
     dispatch(resetClientPassword({
       email: email.value })).then(result => {
       if (result) {
-        setSendButtonText('Lähetä')
         resetFields(event)
-      }
+      } setSendButtonText('Lähetä')
     })
   }
 

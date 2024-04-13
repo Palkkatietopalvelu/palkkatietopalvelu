@@ -27,7 +27,7 @@ const ReminderFormFields = ({
   return (
     <div>
       {user.role === 1 && <div>
-        <br /><h2>Automaattiset muistutukset</h2>
+        <br /><h2>Automaattiset muistutukset</h2><hr/>
         <Notification />
         <div className="switch">
           <p>Automaattiset muistutukset <span>{checked ? 'käytössä' : 'pois käytöstä'}</span>.</p>

@@ -25,9 +25,8 @@ const Files = () => {
 
   return (
     <div>
-      {user.role === 1 &&
-      <div>
-        <br /><h2> Saapuneet aineistot</h2><br />
+      {user.role === 1 && <div>
+        <br /><h2> Saapuneet aineistot</h2><hr/>
         <Table striped>
           <thead>
             <tr>
@@ -37,30 +36,28 @@ const Files = () => {
             </tr>
           </thead>
           <tbody>
-            {files
-              .map(file => {
-                return (
-                  <tr key={file.id}>
-                    <td>
-                      <Link to={`/client/${file.owner}`}>
-                        {file.company}
-                      </Link>
-                    </td>
-                    <td>
-                      {format(new Date(file.date), 'dd.MM.yyyy HH:mm')}
-                    </td>
-                    <td>
-                      {file.name}
-                    </td>
-                  </tr>
-                )}
+            {files.map(file => {
+              return (
+                <tr key={file.id}>
+                  <td>
+                    <Link to={`/client/${file.owner}`}>
+                      {file.company}
+                    </Link>
+                  </td>
+                  <td>
+                    {format(new Date(file.date), 'dd.MM.yyyy HH:mm')}
+                  </td>
+                  <td>
+                    {file.name}
+                  </td>
+                </tr>
               )}
+            )}
           </tbody>
         </Table>
       </div>
       }
     </div>
-
   )
 }
 

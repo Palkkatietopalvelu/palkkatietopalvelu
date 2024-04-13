@@ -5,6 +5,7 @@ import { useField } from '../hooks'
 import Togglable from './Togglable'
 import { changePassword } from '../reducers/userReducer'
 import { Form, Button } from 'react-bootstrap'
+import Notification from './Notification'
 
 const PasswordChange = () => {
   const dispatch = useDispatch()
@@ -41,6 +42,8 @@ const PasswordChange = () => {
   return (
     <div>
       <Togglable buttonLabel='Vaihda salasana' ref={formRef}>
+        <hr/><h3>Vaihda salasana</h3>
+        <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Nykyinen salasana</Form.Label>
