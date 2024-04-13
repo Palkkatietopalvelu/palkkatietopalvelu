@@ -28,10 +28,11 @@ Adding File Succesfully With Salary Form
     Wait For  Tiedosto lisätty onnistuneesti
 
 Files Page Works
+    Scroll Element Into View  id=logout
     Log Out
     Login As Admin
     Click Link  AINEISTOT
-    Page Should Contain  testi oy
+    Wait For  testi oy
 
 Moving File To Trash Succeeds
     Log Out
