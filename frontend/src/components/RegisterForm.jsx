@@ -1,8 +1,10 @@
 // ./register (Luo uusi käyttäjä)
 import { useDispatch, useSelector } from 'react-redux'
+import { useRef } from 'react'
 import { useField } from '../hooks'
 import { registerUser } from '../reducers/userReducer'
 import Notification from '../components/Notification'
+import Togglable from './Togglable'
 import { Form, Button } from 'react-bootstrap'
 
 const RegisterForm = () => {
@@ -10,6 +12,7 @@ const RegisterForm = () => {
   const username = useField()
   const password = useField()
   const user = useSelector(({ user }) => user)
+  const formRef = useRef()
 
   const handleRegistration = async (event) => {
     event.preventDefault()
@@ -19,6 +22,7 @@ const RegisterForm = () => {
       role: 1
     })).then(result => {
       if (result) {
+        formRef.current.toggleVisibility()
         resetFields(event)
       }
     })
@@ -30,22 +34,28 @@ const RegisterForm = () => {
     password.onReset()
   }
 
+  if (!user) {
+    return ('Et ole kirjautunut sisään')
+  }
+
   return (
     <div><br />
-      {!user && <div>
-        <h2>Luo uusi käyttäjä</h2>
-        <Notification />
-        <Form onSubmit={handleRegistration}>
-          <Form.Group>
-            <Form.Label>Sähköposti</Form.Label>
-            <Form.Control id='username' type='text' {...username} required />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Salasana</Form.Label>
-            <Form.Control id='password' type='password' {...password} required />
-          </Form.Group> <br />
-          <Button id='create' type="submit" variant="primary">Luo käyttäjä</Button>
-        </Form>
+      {user.role === 1 && <div>
+        <Togglable buttonLabel='Luo uusi tilitoimistokäyttäjä' ref={formRef} variant={'warning'}>
+          <hr/><h3>Luo uusi tilitoimistokäyttäjä</h3>
+          <Notification />
+          <Form onSubmit={handleRegistration}>
+            <Form.Group>
+              <Form.Label>Sähköposti</Form.Label>
+              <Form.Control id='username' type='text' {...username} required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Salasana</Form.Label>
+              <Form.Control id='password' type='password' {...password} required />
+            </Form.Group> <br />
+            <Button id='create' type="submit" variant="primary">Luo käyttäjä</Button>
+          </Form>
+        </Togglable>
       </div>}
     </div>
   )

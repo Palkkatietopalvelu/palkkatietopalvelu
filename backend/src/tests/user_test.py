@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash
 from app import app
 from models.user import User
 from initialize_db import initialize_database
+import check_env
 
 class TestUsersController(unittest.TestCase):
     def setUp(self):

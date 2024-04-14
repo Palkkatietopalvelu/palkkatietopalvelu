@@ -42,8 +42,7 @@ const ClientForm = () => {
     })).then(result => {
       if (result) {
         resetFields(event)
-        setAddButtonText('Lisää')
-      }
+      } setAddButtonText('Lisää')
     })
   }
 
@@ -68,7 +67,7 @@ const ClientForm = () => {
   return (
     <div>
       {user.role === 1 && <div>
-        <br /><h2>Lisää asiakas</h2>
+        <br /><h2>Lisää asiakas</h2><hr/>
         <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>

@@ -2,11 +2,20 @@ import os
 import re
 from datetime import datetime, timedelta
 import jwt
-from werkzeug.security import check_password_hash
+from flask import jsonify
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mail import Message
+from models.user import User, db
 from app import app, mail
-from models.user import User
 from utilities import client_user
+
+def create_user(username, password, role):
+    validate_credentials(username, password)
+    hashed_password = generate_password_hash(password)
+    new_user = User(username=username, password=hashed_password, role=role)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify(new_user.serialize())
 
 def validate_credentials(username, password):
     if existing_user(username):

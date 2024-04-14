@@ -81,9 +81,9 @@ export const updateStatus = (client) => {
     try {
       const data = await clientService.status(client)
       if (!client.status) {
-        dispatch(notify('Asiakas deaktivoitu'))
+        dispatch(notify('Asiakas on asetettu epäaktiiviseksi'))
       } else {
-        dispatch(notify('Asiakas aktivoitu'))
+        dispatch(notify('Asiakas on asetettu aktiiviseksi'))
       }
       dispatch(update(data))
       dispatch(getClients())

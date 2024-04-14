@@ -1,3 +1,4 @@
+# manual reminders page, ./reminders
 import unittest
 import os
 import jwt
@@ -26,7 +27,18 @@ class TestMailController(unittest.TestCase):
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
     def test_get_deadlines(self):
-        with app.app_context():
-            client_methods.get_clients_deadlines()
+        with app.test_request_context():
             response = app.test_client().get("/api/mail", headers=self.headers)
             self.assertEqual(response.status_code, 200)
+    
+    def test_send_manual_reminder(self):
+        data = {'recipients': [1]}
+        with app.test_request_context():
+            response = app.test_client().post("/api/mail", headers=self.headers, json=data)
+            self.assertEqual(response.status_code, 200)
+  
+    def test_send_manual_reminder_invalid_id(self):
+        data = {'recipients': [5]}
+        with app.test_request_context():
+            response = app.test_client().post("/api/mail", headers=self.headers, json=data)
+            self.assertEqual(response.status_code, 500)

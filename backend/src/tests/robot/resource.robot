@@ -1,6 +1,7 @@
 *** Settings ***
 Library  SeleniumLibrary  run_on_failure=NOTHING
 Library  ../../AppLibrary.py
+Variables  ../../config.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
@@ -17,7 +18,15 @@ Open And Configure Browser
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
 
+Env is set
+    Should Be Equal  ${ENV}  development
+
 Initialize Database
+    ${passed}=  Run Keyword And Return Status  Env is set
+    IF   not ${passed}
+    Log To Console  Please set FLASK_ENV="development" to .env and restart the app
+    Fatal Error    
+    END
     Initialize Db
 
 Logged In Page Should Be Open
@@ -26,6 +35,9 @@ Logged In Page Should Be Open
 
 Go To Home Page
     Go To  ${HOME_URL}
+
+Go To Mypage
+    Go To  ${HOME_URL}/mypage
 
 Go To Login Page
     Go To  ${HOME_URL}/login
@@ -65,10 +77,7 @@ Add New Client
 Setup With Existing User
     Open And Configure Browser
     Initialize Database
-    Go To Register Page
-    Set Username  testuser@mail.com
-    Set Password  123
-    Click Button  create
+    Create New User   testuser@mail.com   123   1
     Go To Login Page
     Set Username  testuser@mail.com
     Set Password  123
@@ -78,18 +87,13 @@ Setup With Existing User
 Setup With Existing User And Client
     Open And Configure Browser
     Initialize Database
-    Go To Register Page
-    Set Username  testuser@mail.com
-    Set Password  123
-    Click Button  create
+    Create New User   testuser@mail.com   123   1
     Go To Login Page
     Set Username  testuser@mail.com
     Set Password  123
     Click Button  login
     Logged In Page Should Be Open
-    Click Element  Dropdown_Asiakkaat
-    Mouse over  Lisää uusi
-    Click Element  Lisää uusi
+    Click Link  LISÄÄ ASIAKAS
     Add New Client  testi oy  testi@email.com  +358 123456789  1234567-8  2024/11/20  kk
     Click Button  lisää
     Wait For  Asiakas lisätty onnistuneesti
@@ -101,6 +105,13 @@ Login As New Client
     Set Confirm Password  123
     Click Button  setpassword
     Wait For  Salasana asetettu onnistuneesti
+    Go To Login Page
+    Set Username  testi@email.com
+    Set Password  123
+    Click Button  login
+    Wait For  Tervetuloa palkkatietopalveluun!
+
+Login As Client
     Go To Login Page
     Set Username  testi@email.com
     Set Password  123

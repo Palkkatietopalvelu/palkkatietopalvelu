@@ -1,4 +1,5 @@
 // ./ (asiakas)
+import '../../assets/style.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -25,21 +26,26 @@ const HomeClient = () => {
     return
   }
 
+  let nextDL = null
+  if (client.deadlines.length > 0) {
+    const sortedDeadlines = [...client.deadlines].sort((a, b) => new Date(a) - new Date(b))
+    const earliestDate = new Date(sortedDeadlines[0])
+    nextDL = earliestDate.toLocaleString('fi-FI', { year: 'numeric', month: 'numeric', day: 'numeric' })
+  }
+
   return (
     <div>
       {user.role === 2 &&
         <div>
-          <br /><h2>Tervetuloa palkkatietopalveluun!</h2>
+          <br /><h2 className='welcome'>Tervetuloa palkkatietopalveluun!</h2><hr />
           <br></br>
           <h3>Palautathan palkka-aineiston hyvissä ajoin</h3>
           <br></br>
           <Notification />
-          <h4 style={{ marginBottom: '20px' }}>{client.company}</h4>
-          <h4>Laskutustiedot</h4>
+          <h4 className='client'>{client.company}</h4>
           <Table striped>
             <tbody key={client.email}>
-              <tr><td>Y-tunnus</td><td>{client.bi_code}</td></tr>
-              <tr><td>Eräpäivät</td><td>{client.deadlines.map(date =>
+              <tr><td>Seuraavat eräpäivät</td><td>{client.deadlines.map(date =>
                 <div key={date}>
                   {new Date(date).toLocaleString('fi-FI',
                     { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
@@ -47,7 +53,11 @@ const HomeClient = () => {
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
-          <FileHandler client={client} files={files} />
+          {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
+          <br/><br/>
+          <h4>Poistetut tiedostot</h4>
+          <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
+          <br/><br/>
         </div>
       }
     </div>

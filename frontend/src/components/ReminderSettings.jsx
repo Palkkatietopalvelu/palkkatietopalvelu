@@ -31,7 +31,7 @@ const ReminderSettings = () => {
   return (
     <div>
       {user.role === 1 && <div>
-        <br /><h2 style={{ marginBottom: '20px' }}>Automaattiset muistutukset</h2>
+        <br /><h2 style={{ marginBottom: '20px' }}>Automaattiset muistutukset</h2><hr/>
         {settings.enabled && <div>
           <p>Muistutukset lähetetään:</p>
           <div>

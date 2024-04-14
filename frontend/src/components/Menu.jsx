@@ -33,6 +33,13 @@ const Menu = () => {
     }
   }
 
+  const infoStyle = {
+    paddingRight: 10,
+    fontSize: '30px',
+    fontWeight: 'bold',
+    color:'white',
+  }
+
   const dropdownStyle = {
     paddingLeft: 30,
     paddingRight: 8,
@@ -77,18 +84,9 @@ const Menu = () => {
           <Nav className="mr-auto">
             {user ? <span className="d-flex" style={{ fontWeight: 'b' }}>
               <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/">KOTI</NavLink>
-              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
               {user.role === 1 && <span className="d-flex" style={{ fontWeight: 'b' }}>
-                <Dropdown id="Dropdown_Asiakkaat" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                  <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>ASIAKKAAT</b></Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item id="Lisää uusi" href="/client">Lisää uusi</Dropdown.Item>
-                    <Dropdown.Item href="#">Omat</Dropdown.Item>
-                    <Dropdown.Item href="#">Kaikki</Dropdown.Item>
-                    <Dropdown.Item href="#">Aktiiviset</Dropdown.Item>
-                    <Dropdown.Item href="/deactivated">Deaktivoidut</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/addclient">LISÄÄ ASIAKAS</NavLink>
+                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
                 <Dropdown id="Dropdown_Muistutukset" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                   <Dropdown.Toggle style={dropdownStyle} variant={navbar}><b>MUISTUTUKSET</b></Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -96,16 +94,16 @@ const Menu = () => {
                     <Dropdown.Item id="Manual" href="/reminders">Manuaaliset muistutukset</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/files">AINEISTOT</NavLink>
               </span>}
-              <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>KIRJAUDU ULOS</NavLink>
+              <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/mypage">OMAT SIVUT</NavLink>
+              <NavLink style={logoutLinkStyle} onClick={handleLogout} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} id='logout'>KIRJAUDU ULOS</NavLink>
             </span>
               :<span>
                 <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/login" id='login'>KIRJAUDU SISÄÄN</NavLink>
-                <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/register" id='register'>REKISTERÖIDY</NavLink>
               </span>}
           </Nav>
         </Navbar.Collapse>
+        <NavLink style={infoStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
         <div className="logo-container">
           <img
             src={'../assets/Reilu_logo_white.png'}

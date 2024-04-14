@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5000/api/files'
+const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/files'
 import storage from './storage'
 
 const get = async () => {
@@ -32,12 +32,8 @@ const move_to_trash = async id => {
   await axios.post(`${baseUrl}/${id}`, null, { headers: storage.setHeaders() })
 }
 
-const restore = async id => {
-  await axios.post(`${baseUrl}/${id}/restore`, null, { headers: storage.setHeaders() })
-}
-
 const remove = async id => {
   await axios.delete(`${baseUrl}/${id}`, { headers: storage.setHeaders() })
 }
 
-export default { get, add, download, downloadTemplateCSV, move_to_trash, restore, remove }
+export default { get, add, download, downloadTemplateCSV, move_to_trash, remove }

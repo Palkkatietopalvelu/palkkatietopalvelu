@@ -1,15 +1,13 @@
-// Ladatut tiedostot -alanäkymä
-import React, { useRef } from 'react'
+// Ladatut tiedostot -alanäkymä (Yläpuolella Client.jsx ja HomeClient.jsx, alapuolella FileHandlerForm)
+import React, { useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
-import { Button, Form } from 'react-bootstrap'
-import { format } from 'date-fns'
-import { useState } from 'react'
-import Modal from 'react-bootstrap/Modal'
-import filesImport from '../services/files.js'
+import { Button, Modal } from 'react-bootstrap'
+import { updateClient } from '../reducers/clientsReducer'
+import FileHandlerForm from './FileHandlerForm'
 
-const FileHandler = ({ client, files }) => {
+const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
   const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -17,6 +15,7 @@ const FileHandler = ({ client, files }) => {
   const [showModal, setShowModal] = useState(false)
   const [varyingFileName, setVaryingFileName] = useState('')
   const [varyingFileId, setVaryingFileId] = useState(0)
+  const [showMarkAsDeliveredModal, setShowMarkAsDeliveredModal] = useState(false)
 
   const handleFileSubmit = async (event) => {
     event.preventDefault()
@@ -68,82 +67,104 @@ const FileHandler = ({ client, files }) => {
     setShowModal(false)
   }
 
+  const handleMarkAsDelivered = () => {
+    files.forEach(file => {
+      dispatch(moveFileToTrash({ id: file.id }))
+    })
+    updateData()
+    setShowMarkAsDeliveredModal(false)
+  }
+
+  const updateData = () => {
+    const clientObject = {
+      id: client.id,
+      user_id: user.id,
+      company: client.company,
+      email: client.email,
+      phonenumber: client.phonenumber,
+      bi_code: client.bi_code,
+      deadlines: JSON.stringify(remainingDeadlines),
+      payperiod: client.payperiod,
+    }
+    dispatch(updateClient(clientObject)).then(result => {
+      if (result) {
+        navigate(`/client/${client.id}`)
+      }
+    })
+  }
+
   const linkState = {
     clientId: client.id,
     clientName: client.company,
     clientEmail: client.email,
     clientNumber: client.phonenumber,
     clientCode: client.bi_code,
+    clientDeadlines: remainingDeadlines,
     clientPeriod: client.payperiod,
   }
 
-  return (
-    <div>
-      {user.role === 2 &&
-    <div><br />
-      <Form>
-        <Form.Group controlId="file-upload">
-          <Form.Label><h4>Lataa tiedosto</h4></Form.Label>
-          <Form.Control
-            type="file"
-            onChange={handleFileSubmit}
-            ref={fileInputRef}
-          />
-        </Form.Group>
-      </Form>
-      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
-      </div>
-      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {
-          const data = await filesImport.downloadTemplateCSV()
-          const url = window.URL.createObjectURL(new Blob([data]))
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'template.csv')
-          document.body.appendChild(link)
-          link.click()
-          link.parentNode.removeChild(link)
-        }}>täältä</a>
-      </div>
-    </div>}
-      <div>
-        <br /><h4>Ladatut tiedostot</h4>
-        <ul>
-          {files.map((file) => (
-            <li key={file.id}>
-              {file.name}, {format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}
-              <Button variant="primary" size="sm" onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>
-              {' '}
-              <Button id={file.id} variant="danger" size="sm" onClick={() => {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button>
-            </li>
-          ))}
-          <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
-            showModal={showModal} setShowModal={setShowModal} />
-        </ul>
-      </div>
-      <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>
-      <br /><br />
-    </div>
-  )
-}
+  const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, showModal, setShowModal  }) => {
+    return (
+      <>
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header>
+            <Modal.Title>Tiedoston siirtäminen roskakoriin</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Haluatko varmasti siirtää tiedoston {varyingFileName} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+            <Button variant="danger" onClick={() => handleFileToTrash(varyingFileId)}>Siirrä roskakoriin</Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
+  }
 
-const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, showModal, setShowModal  }) => {
+  const MarkAsDeliveredModal = ({ nextDL, handleMarkAsDelivered, showModal, setShowModal }) => {
+    return (
+      <>
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header>
+            <Modal.Title>Tiedot toimitetuksi</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Merkataanko eräpäivän {nextDL} tiedot toimitetuksi? Toimitetut tiedostot siirretään roskakoriin, jossa ne säilyvät vielä yhden viikon.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
+            <Button variant="primary" onClick={handleMarkAsDelivered}>Merkkaa toimitetuksi</Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
+  }
+
   return (
     <>
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header>
-          <Modal.Title>Tiedoston siirtäminen roskakoriin</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Haluatko varmasti siirtää tiedoston {varyingFileName} roskakoriin? Tiedosto säilyy roskakorissa yhden viikon. </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-          <Button variant="danger" onClick={() => handleFileToTrash(varyingFileId)}>Siirrä roskakoriin</Button>
-        </Modal.Footer>
-      </Modal>
+      <FileHandlerForm
+        handleFileSubmit={handleFileSubmit}
+        files={files}
+        nextDL={nextDL}
+        handleFileDownload={handleFileDownload}
+        setShowModal={setShowModal}
+        setVaryingFileName={setVaryingFileName}
+        setVaryingFileId={setVaryingFileId}
+        linkState={linkState}
+        user={user}
+        client={client}
+        showMarkAsDeliveredModal={showMarkAsDeliveredModal}
+        setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
+        fileInputRef={fileInputRef}
+        showModal={showModal}
+        varyingFileId={varyingFileId}
+        varyingFileName={varyingFileName}
+        MarkAsDeliveredModal={MarkAsDeliveredModal}
+        FileToTrashModal={FileToTrashModal}
+        handleMarkAsDelivered={handleMarkAsDelivered}
+        handleFileToTrash={handleFileToTrash}
+      />
     </>
   )
 }
-
 
 export default FileHandler

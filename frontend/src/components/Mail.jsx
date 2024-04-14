@@ -87,7 +87,7 @@ const ClientReminder = () => {
   return (
     <div>
       {user.role === 1 && <div>
-        <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2>
+        <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2><hr/>
         <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>

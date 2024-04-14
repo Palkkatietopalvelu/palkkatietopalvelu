@@ -6,6 +6,7 @@ from utilities import client_methods
 from initialize_db import initialize_database
 import json
 from db import db
+import check_env
 
 class TestClient(unittest.TestCase):
     def setUp(self):
@@ -95,4 +96,4 @@ class TestClient(unittest.TestCase):
     def test_delete_client_fails_with_invalid_id(self):
         with app.test_request_context():
             response = app.test_client().delete("/api/client/1", headers=self.headers)
-            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 404) # client not found

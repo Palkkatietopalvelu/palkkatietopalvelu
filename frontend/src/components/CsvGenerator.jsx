@@ -1,23 +1,11 @@
 // CsvGenerator.jsx
 import { addFile } from '../reducers/fileReducer'
 
-function formatAbsencesDates(absences) {
-  return absences.map(item => {
-    let dateItem = item
-    if (!(dateItem instanceof Date)) {
-      dateItem = new Date(dateItem)
-    }
-    const year = dateItem.getFullYear()
-    const month = String(dateItem.getMonth() + 1).padStart(2, '0')
-    const day = String(dateItem.getDate()).padStart(2, '0')
-    return `${day}.${month}.${year}`
-  })
-}
-
-
 function convertToCSV(objArray, clientDetails, date) {
   const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray
-  let str = 'palkkatiedot,' + date + '\r\n'
+  console.log('convertToCSV array: ', array)
+  let str = 'PALKKATIEDOT \r\n'
+  str += 'Raportti lähetetty  ,  ' + date + '\r\n'
 
   // Append client details
   str += 'Yritys,' + clientDetails.clientName + '\r\n'
@@ -30,54 +18,136 @@ function convertToCSV(objArray, clientDetails, date) {
   str += '\r\n'
 
   // Extract headers
-  str += 'Työntekijän nimi,Palkkatyyppi,Poissaolot,Provisiot,Ylityöt,Lounasetu,Päivärahat,Km-korvaukset,Kokonaistuntimäärä,Lisätiedot\n'
+  str += 'Palkansaaja,Palkkajakso,\
+Tuntimäärä,Sunnuntaitunnit,Tuntipalkka €,Kk-palkat,Asuntoetu,Autoetu,\
+Puh.etu,Bruttopalkka yhteensä,Lounarimäärä,Lounarihinta,Liikuntasetelit,Liikuntasetelin arvo\
+Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (maa ja päivien määrä),Lisäinfo\n'
 
   // Initialize totals
   let totals = {
-    provisions: 0,
-    overtime: 0,
-    lunch_allowance: 0,
-    daily_allowance: 0,
+    total_hours_weekdays: 0,
+    total_hours_sundays: 0,
+    wage_hourly: 0,
+    wage_monthly: 0,
+    flat_benefit: 0,
+    car_benefit: 0,
+    phone_benefit: 0,
+    wage_total_gross: 0,
+    lunch_benefit: 0,
+    lunch_benefit_value: 0,
+    lunch_benefit_total: 0,
+    sport_benefit: 0,
+    sport_benefit_value: 0,
     mileage_allowance: 0,
-    total_hours: 0,
+    daily_allowance_domestic: 0,
+    daily_allowance_domestic_part_time: 0,
+    daily_allowance_foreign: 0,
+    absence_reason_1: '',
+    absence_reason_2: '',
+    absence_reason_3: '',
   }
 
   for (let i = 0; i < array.length; i++) {
     let line = ''
     line += `"${array[i].employee_name}",`
-    line += `"${array[i].salary_type}",`
-    line += `"${array[i].absences ? formatAbsencesDates(array[i].absences).join('|') : ''}",`
+    line += `"${array[i].month}",`
+    //line += `"${array[i].salary_type}",`
+    //line += `"${array[i].absences ? formatAbsencesDates(array[i].absences).join('|') : ''}",`
 
-    totals.provisions += Number(array[i].provisions || 0)
-    totals.overtime += Number(array[i].overtime || 0)
-    totals.lunch_allowance += Number(array[i].lunch_allowance || 0)
-    totals.daily_allowance += Number(array[i].daily_allowance || 0)
+    totals.total_hours_weekdays += Number(array[i].total_hours_weekdays || 0)
+    totals.total_hours_sundays += Number(array[i].total_hours_sundays || 0)
+    totals.wage_hourly += Number(array[i].wage_hourly || 0)
+    totals.wage_monthly += Number(array[i].wage_monthly || 0)
+    totals.flat_benefit += Number(array[i].flat_benefit || 0)
+    totals.car_benefit += Number(array[i].car_benefit || 0)
+    totals.phone_benefit += Number(array[i].phone_benefit || 0)
+    totals.wage_total_gross += Number(array[i].wage_total_gross || 0)
+    totals.lunch_benefit += Number(array[i].lunch_benefit || 0)
+    totals.lunch_benefit_value += Number(array[i].lunch_benefit_value || 0)
+    totals.lunch_benefit_total += Number(array[i].lunch_benefit_total || 0)
+    totals.sport_benefit += Number(array[i].sport_benefit || 0)
+    totals.sport_benefit_value += Number(array[i].sport_benefit_value || 0)
     totals.mileage_allowance += Number(array[i].mileage_allowance || 0)
-    totals.total_hours += Number(array[i].total_hours || 0)
+    totals.daily_allowance_domestic += Number(array[i].daily_allowance_domestic || 0)
+    totals.daily_allowance_domestic_part_time += Number(array[i].daily_allowance_domestic_part_time || 0)
+    totals.daily_allowance_foreign += Number(array[i].daily_allowance_foreign || 0)
 
-    line += `"${array[i].provisions || ''}",`
-    line += `"${array[i].overtime || ''}",`
-    line += `"${array[i].lunch_allowance || ''}",`
-    line += `"${array[i].daily_allowance || ''}",`
+    line += `"${array[i].total_hours_weekdays || ''}",`
+    line += `"${array[i].total_hours_sundays || ''}",`
+    line += `"${array[i].wage_hourly || ''}",`
+    line += `"${array[i].wage_monthly || ''}",`
+    line += `"${array[i].flat_benefit || ''}",`
+    line += `"${array[i].car_benefit || ''}",`
+    line += `"${array[i].phone_benefit || ''}",`
+    line += `"${array[i].wage_total_gross || ''}",`
+    line += `"${array[i].lunch_benefit || ''}",`
+    line += `"${array[i].lunch_benefit_value || ''}",`
+    line += `"${array[i].sport_benefit || ''}",`
+    line += `"${array[i].sport_benefit_value || ''}",`
     line += `"${array[i].mileage_allowance || ''}",`
-    line += `"${array[i].total_hours || ''}",`
+    line += `"${array[i].daily_allowance_domestic || ''}",`
+    line += `"${array[i].daily_allowance_domestic_part_time || ''}",`
+    line += `"${array[i].daily_allowance_foreign || ''}",`
     line += `"${array[i].extra || ''}"`
     str += line + '\r\n'
   }
 
-  // Add an empty row
+  // Add 2 empty rows
+  str += '\r\n'
   str += '\r\n'
 
-  // Add totals row
-  str += '"yhteensä",,,'
-  str += `"${totals.provisions}",`
-  str += `"${totals.overtime}",`
-  str += `"${totals.lunch_allowance}",`
-  str += `"${totals.daily_allowance}",`
-  str += `"${totals.mileage_allowance}",`
-  str += `"${totals.total_hours}",`
+  // Add totals row and two empty rows after that
+  str += ',,,,,,,,"Yhteensä",'
+  str += `"${totals.wage_total_gross} €",`
+  str += '\r\n'
   str += '\r\n'
 
+  str += ',,,,,,,,"Tarkistusrivit",\n'
+  str += ',,,,,,,,"Rahapalkka",'
+  str += `"${totals.wage_total_gross}",\n`
+  str += ',,,,,,,,"Luontoisedut",'
+  const totalBenefits = totals.flat_benefit + totals.car_benefit + totals.phone_benefit
+  str += `"${totalBenefits}",\n`
+  str += ',,,,,,,,"Vähennykset",-'
+  str += `${totals.lunch_benefit_total + (totals.sport_benefit * totals.sport_benefit_value)},\n`
+
+  str += 'POISSAOLOT' + '\r\n'
+  str += 'Palkansaaja,Syy,Palkallinen,Ajalta\n'
+  for (let i = 0; i < array.length; i++) {
+    let line = ''
+
+    if (array[i].absence_reason_1 !== undefined) {
+      totals.absence_reason_1 += (array[i].absence_reason_1 || '')
+      totals.absence_compensated_1 += (array[i].absence_compensated_1 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_1 || ''}",`
+      line += `"${array[i].absence_compensated_1 || ''}",`
+      line += `"${array[i].absence_time_period_1 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_2 !== undefined) {
+      totals.absence_reason_2 += (array[i].absence_reason_2 || '')
+      totals.absence_compensated_2 += (array[i].absence_compensated_2 || '')
+      totals.absence_time_period_2 += (array[i].absence_time_period_2 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_2 || ''}",`
+      line += `"${array[i].absence_compensated_2 || ''}",`
+      line += `"${array[i].absence_time_period_2 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_3 !== undefined) {
+      totals.absence_reason_3 += (array[i].absence_reason_3 || '')
+      totals.absence_compensated_3 += (array[i].absence_compensated_3 || '')
+      totals.absence_time_period_3 += (array[i].absence_time_period_3 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_3 || ''}",`
+      line += `"${array[i].absence_compensated_3 || ''}",`
+      line += `"${array[i].absence_time_period_3 || ''}",\n`
+    }
+
+    str += line
+  }
+  str += '\r\n'
   return str
 }
 
