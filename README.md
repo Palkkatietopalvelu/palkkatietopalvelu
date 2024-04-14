@@ -21,7 +21,7 @@
       >
       >MAIL_PASSWORD="sinun_mailtrap_salasana"
       >
-      >CORS_ORIGINS: '*'
+      >CORS_ORIGINS="*"
       
     - Lisää frontendin .env tiedostoon tämä muuttuja:
       >VITE_BACKEND_URL="http://localhost:5000"
