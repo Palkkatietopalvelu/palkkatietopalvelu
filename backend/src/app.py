@@ -31,7 +31,7 @@ init_db(app)
 app.secret_key = getenv("SECRET_KEY")
 
 # aseta CORS
-CORS(app)
+CORS(app, origins=[getenv("CORS_ORIGINS")])
 
 # pylint: disable=unused-import,wrong-import-position
 from controllers import files, users, clients, login, manual_reminders, sms, reminders

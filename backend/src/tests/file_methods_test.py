@@ -10,6 +10,7 @@ import utilities.file_methods as file_methods
 import controllers.files as files
 from initialize_db import initialize_database
 import json
+import check_env
 
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):

@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Dropdown } from 'react-bootstrap'
 import { logoutUser } from '../reducers/userReducer'
 import { useState } from 'react'
+import NavbarLogo from '../../assets/Reilu_logo_white.png'
 
 const Menu = () => {
   const dispatch = useDispatch()
@@ -106,7 +107,7 @@ const Menu = () => {
         <NavLink style={infoStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions"><i className="bi bi-info-circle"></i></NavLink>
         <div className="logo-container">
           <img
-            src={'../assets/Reilu_logo_white.png'}
+            src={NavbarLogo}
             id='reilu-logo'
             className="logo img-fluid"
             alt="Logo"

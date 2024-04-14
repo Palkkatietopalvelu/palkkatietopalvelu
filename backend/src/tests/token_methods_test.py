@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 from daily_scheduler import delete_old_expired_tokens
 from db import db
 from sqlalchemy.sql import text
+import check_env
 
 class TestUsersController(unittest.TestCase):
     def setUp(self):

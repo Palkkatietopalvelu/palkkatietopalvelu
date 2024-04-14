@@ -17,6 +17,7 @@ Link Expires After Use
     Go To Home Page
     ${Link}=  Set Password Link  testi@email.com
     Go To  ${Link}
+    Wait Until Element Is Visible  password
     Set Password  123
     Set Confirm Password  123
     Click Button  setpassword

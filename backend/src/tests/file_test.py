@@ -11,6 +11,7 @@ import jwt
 import sqlalchemy.exc
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
+import check_env
 
 class TestFile(unittest.TestCase):
     def setUp(self):

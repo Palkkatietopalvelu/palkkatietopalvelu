@@ -3,6 +3,7 @@ import os
 import jwt
 from app import app
 from initialize_db import initialize_database
+import check_env
 
 class TestPasswordChange(unittest.TestCase):
     def setUp(self):

@@ -9,6 +9,7 @@ from utilities import client_methods
 from utilities import token_methods
 from db import db
 from unittest.mock import patch
+import check_env
 
 class TestUsersController(unittest.TestCase):
     def setUp(self):
