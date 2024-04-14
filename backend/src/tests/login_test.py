@@ -1,6 +1,7 @@
 import unittest
 from app import app
 from initialize_db import initialize_database
+import check_env
 
 class TestLoginController(unittest.TestCase):
     def setUp(self):

@@ -4,6 +4,7 @@ from utilities import client_methods as client
 import utilities.client_methods as client_methods
 from initialize_db import initialize_database
 import json
+import check_env
 
 class TestUpdateClient(unittest.TestCase):
     def setUp(self):
