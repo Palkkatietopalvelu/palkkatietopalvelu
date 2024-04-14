@@ -9,7 +9,7 @@ from utilities.sched_setting_methods import get_readable_settings
 def send_email_reminders(remindertext, latetext):
     with app.app_context():
         deadlines, emails = get_reminder_data()[:2]
-        for deadline, email in zip(deadlines, emails): # pylint: disable=unused-variable
+        for deadline, email in zip(deadlines, emails):
             recipient = email
             msg = Message('Eräpäivämuistutus',
                         sender = app.config['MAIL_USERNAME'],
@@ -26,15 +26,15 @@ def is_late(deadline):
 def send_sms_reminders(remindertext, latetext):
     with app.app_context():
         deadlines, _, phonenumbers = get_reminder_data()
-        for deadline, phonenumber in zip(deadlines, phonenumber):
+        for deadline, phonenumber in zip(deadlines, phonenumbers):
             if is_late(deadline):
                 success = send_sms_message(phonenumber,
-                                           f'{latetext}\n eräpäivä oli {deadline.strftime("%d.%m.%y")}',
-                                           auto=True)
+                            f'{latetext}\neräpäivä oli {deadline.strftime("%d.%m.%y")}',
+                            auto=True)
             else:
                 success = send_sms_message(phonenumber,
-                                           f'{remindertext}\neräpäivä on {deadline.strftime("%d.%m.%y")}',
-                                           auto=True)
+                            f'{remindertext}\neräpäivä on {deadline.strftime("%d.%m.%y")}',
+                            auto=True)
             if not success:
                 print(f"Failed to send SMS to {phonenumber}")
 
