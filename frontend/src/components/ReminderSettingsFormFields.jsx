@@ -14,6 +14,8 @@ const ReminderFormFields = ({
   setSmsinputs,
   remindertext,
   setRemindertext,
+  latetext,
+  setLatetext,
   days,
   setDays,
   weekDays,
@@ -22,6 +24,7 @@ const ReminderFormFields = ({
   deltas,
   setDeltas,
   relativeDays,
+  deltaList,
   handleSubmit,
 }) => {
   return (
@@ -65,10 +68,22 @@ const ReminderFormFields = ({
               rows={3}
               required={checked}
               value={remindertext}
-              maxLength={160}
+              maxLength={137}
               onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
             />
             <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
+            <br></br>
+            <Form.Label style={{ marginTop: '20px' }}>Myöhästymismuistutuksen teksti (Max. 160 merkkiä)</Form.Label>
+            <Form.Control
+              id='latetext'
+              as="textarea"
+              rows={3}
+              required={checked}
+              value={latetext}
+              maxLength={137}
+              onChange={(e) => setLatetext(e.target.value.slice(0, 160))}
+            />
+            <span>{`${latetext ? latetext.length : 0}/160`}</span>
             <br></br>
             <Form.Label style={{ marginTop: '20px' }}>
             Muistutuspäivät
@@ -101,12 +116,12 @@ const ReminderFormFields = ({
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
               <div>Päivää ennen eräpäivää</div>
               {relativeDays.map((day, index) => (
-                <div key={`delta-${index}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div key={`delta-${deltaList[index]}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <CheckBox
-                    name={`delta-${index}`}
+                    name={`delta-${deltaList[index]}`}
                     inputs={deltas}
                     setInputs={setDeltas}
-                    checked={deltas.includes(`delta-${index}`)}
+                    checked={deltas.includes(`delta-${deltaList[index]}`)}
                   />
                   <label htmlFor={`delta-${index}`}>{day}</label>
                 </div>
