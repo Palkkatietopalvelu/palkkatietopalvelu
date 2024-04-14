@@ -5,6 +5,7 @@ from app import app
 from initialize_db import initialize_database
 import utilities.token_methods as token_methods
 import json
+import check_env
 
 class TestPasswordChange(unittest.TestCase):
   def setUp(self):
