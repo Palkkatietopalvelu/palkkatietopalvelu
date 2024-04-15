@@ -28,5 +28,5 @@ def manual_reminders():
                 msg.body = str(message)
                 if ENV != "development":
                     mail.send(msg)
-                return 'Reminders sent', 200
+        return 'Reminders sent', 200
     return jsonify({'error': 'Virhe sähköpostiviestin lähetyksessä'}), 500
