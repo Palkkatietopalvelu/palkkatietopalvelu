@@ -118,3 +118,30 @@ Kirjuri: Sanni
 
 ### LESS OF - vähemmän
 - uusia toiminnallisuuksia
+
+## Retro 5, 15.4.2024
+Puheenjohtaja: Aare
+Demooja: Joacim "Jokke"
+Kirjuri: Joel
+
+### START - aloitetaan
+- loppukiri ilman crunchia
+
+### STOP - lopetetaan
+- kunniallisesti
+
+### CONTINUE - jatketaan
+- jatketaan samaan malliin
+- kommunikaatiota ja kollaboraatiota
+- konfliktittomuutta
+- testikattavuuden nostamista
+  
+### MORE OF - lisää
+- muutoksia tehdessä mietitään niiden vaikutuksia koko sovelluksen toimintaan
+- enemmän refaktorointia
+- enemmän dokumentaatiota
+- backlogin päivitys
+
+### LESS OF - vähemmän
+- 
+
