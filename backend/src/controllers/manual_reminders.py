@@ -22,11 +22,17 @@ def manual_reminders():
         for client_id in recipients:
             receiver = get_email(client_id)
             if receiver:
-                msg = Message('Muistutus',
-                            sender = app.config['MAIL_USERNAME'],
-                            recipients = [receiver])
-                msg.body = str(message)
-                if ENV != "development":
-                    mail.send(msg)
-        return 'Reminders sent', 200
-    return jsonify({'error': 'Virhe sähköpostiviestin lähetyksessä'}), 500
+                try:
+                    msg = Message('Muistutus',
+                                sender = app.config['MAIL_USERNAME'],
+                                recipients = [receiver])
+                    msg.body = str(message)
+                    if ENV != "development":
+                        mail.send(msg)
+                except Exception: # pylint: disable=broad-except
+                    return jsonify({'error': 'Sähköpostimuistutusten lähetys epäonnistui'}), 500
+            else:
+                return jsonify({'error': 'Vastaanottajaa ei löydetty'}), 404
+        return jsonify({'message': 'Sähköpostimuistutukset lähetetty'}), 200
+
+    return jsonify({'error': 'Invalid request method'}), 400
