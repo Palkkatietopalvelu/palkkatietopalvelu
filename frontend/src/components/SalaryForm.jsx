@@ -100,14 +100,11 @@ const SalaryForm = () => {
       const number = Number(value.replace(',', '.'))
       return isNaN(number) ? null : number
     }
-    const total = (toNumber(lunch_benefit) * toNumber(lunch_benefit_value)) +
-                  (toNumber(sport_benefit) * toNumber(sport_benefit_value))
+    const total = (toNumber(lunch_benefit) * toNumber(lunch_benefit_value))
     setReductionsTotal(total.toFixed(2))
   }, [
     lunch_benefit,
     lunch_benefit_value,
-    sport_benefit,
-    sport_benefit_value,
   ])
 
   useEffect(() => {
