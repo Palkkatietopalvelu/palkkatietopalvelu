@@ -47,4 +47,4 @@ class TestMailController(unittest.TestCase):
     def test_invalid_request_method(self):
         with app.test_request_context():
             response = app.test_client().put("/api/mail", headers=self.headers)
-            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 405)

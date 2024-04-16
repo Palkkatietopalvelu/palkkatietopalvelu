@@ -35,4 +35,4 @@ def manual_reminders():
                 return jsonify({'error': 'Vastaanottajaa ei löydetty'}), 404
         return jsonify({'message': 'Sähköpostimuistutukset lähetetty'}), 200
 
-    return jsonify({'error': 'Invalid request method'}), 400
+    return jsonify({'error': 'Invalid request method'}), 405
