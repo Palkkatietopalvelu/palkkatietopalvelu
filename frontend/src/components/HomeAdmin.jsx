@@ -6,7 +6,7 @@ import { Table, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
-import OrderBy from './OrderBy'
+import ClientsOrder from './SorterClients'
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
@@ -63,7 +63,7 @@ const HomeAdmin = () => {
         <div>
           <br /><h2>Asiakkaat</h2><hr />
           <Notification />
-          <OrderBy clients={clients} setFilteredCompanies={setFilteredCompanies}
+          <ClientsOrder clients={clients} setFilteredCompanies={setFilteredCompanies}
             setSortingCriteria={setSortingCriteria} />
           <Table striped>
             <thead>
@@ -96,7 +96,7 @@ const HomeAdmin = () => {
                       </td>
                       <td>{client.deadlines != '' &&
                         format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge client={client} /></td>
+                      <DueDateBadge deadline={client.deadlines[0]} /></td>
                       <td><Badge bg={client.active ? 'success' : 'warning'} pill>
                         {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
                     </tr>

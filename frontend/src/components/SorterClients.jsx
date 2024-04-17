@@ -1,10 +1,10 @@
-// ./ (admin) & ./mypage (Omat sivut, admin) ; järjestä asiakkaat
+// ./ (admin) ; järjestä asiakkaat
 import React from 'react'
 import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { isPast } from 'date-fns'
 
-const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
+const ClientsOrder = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   /* alphabetic, due date, late, not late, deactivated
     sets the text in the menu box
     alphabetical order is the default */
@@ -75,4 +75,4 @@ const OrderBy = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
   )
 }
 
-export default OrderBy
+export default ClientsOrder
