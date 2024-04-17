@@ -9,7 +9,7 @@ import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import Client from './components/Client'
 import UpdateClient from './components/ClientUpdateForm'
-import ClientReminder from './components/Mail'
+import ReminderManual from './components/ReminderManual'
 import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/client/:id/update" element={<UpdateClient />} />
           <Route path="/client/:id/salaryform" element={<SalaryForm />} />
           <Route path="/client/:id/trash" element={<Trash />}/>
-          <Route path="/reminders" element={<ClientReminder />} />
+          <Route path="/reminders" element={<ReminderManual />} />
           <Route path="/remindersettings" element={<ReminderSettings />}/>
           <Route path="/remindersettingsform" element={<ReminderSettingsForm />}/>
           <Route path="/setpassword/:token" element={<SetPassword />}/>
