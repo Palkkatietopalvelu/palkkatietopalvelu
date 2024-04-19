@@ -11,7 +11,7 @@ import ClientsOrder from './SorterClients'
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
   const clients = useSelector(({ clients }) => clients)
-  const filterByUser = (c => c.user_id === user.id)
+  //const filterByUser = (c => c.user_id === user.id)
   const [filteredCompanies, setFilteredCompanies] = useState([])
   const [sortingCriteria, setSortingCriteria] = useState('company')  // company, due date, status
   const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
@@ -80,7 +80,7 @@ const HomeAdmin = () => {
             </thead>
             <tbody>
               {[...filteredCompanies]
-                .filter(filterByUser)
+                //.filter(filterByUser)
                 .sort(sortingCriteria === 'company'
                   // alphabetical order
                   ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)

@@ -1,6 +1,7 @@
 // ./files (admin) ; järjestä aineistot
 import React from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 
 const FilesOrder = ({ setSortingCriteria }) => {
@@ -46,11 +47,52 @@ const FilesOrder = ({ setSortingCriteria }) => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item eventKey='1' onClick={orderByArrivalNewest}>Saapumisaika (uusin ensin)</Dropdown.Item>
-        <Dropdown.Item eventKey='1' onClick={orderByArrivalOldest}>Saapumisaika (vanhin ensin)</Dropdown.Item>
-        <Dropdown.Item eventKey='2' onClick={orderByDueDate}>Eräpäivän mukaan</Dropdown.Item>
+        <Dropdown.Item eventKey='2' onClick={orderByArrivalOldest}>Saapumisaika (vanhin ensin)</Dropdown.Item>
+        <Dropdown.Item eventKey='3' onClick={orderByDueDate}>Eräpäivän mukaan</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
 }
 
-export default FilesOrder
+const FilesFilter = ({ files, clients, setFilteredFiles }) => {
+  const [filteredBy, setFilteredBy] = useState('Omat asiakkaat')
+
+  const filterOwn = () => {
+    setFilteredBy('Omat asiakkaat')
+    setFilteredFiles(files.filter(f => clients.some(c => c.id === f.owner)))
+  }
+
+  const filterAll = () => {
+    setFilteredBy('Kaikki asiakkaat')
+    setFilteredFiles(files)
+  }
+
+  const dateToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault()
+        onClick(e)
+      }}>
+      {children}
+      &#x25bc;
+    </a>
+  ))
+
+  dateToggle.displayName = 'dateToggle'
+
+  return (
+    <Dropdown id='dropdown_files_sorter'>
+      <Dropdown.Toggle as={dateToggle}>
+        <b>{filteredBy}</b>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey='1' onClick={filterOwn}>Omat asiakkaat</Dropdown.Item>
+        <Dropdown.Item eventKey='2' onClick={filterAll}>Kaikki asiakkaat</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+}
+
+export { FilesOrder, FilesFilter }

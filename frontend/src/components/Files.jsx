@@ -7,19 +7,31 @@ import { getFile } from '../reducers/fileReducer'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import DueDateBadge from './DueDateBadge'
-import FilesOrder from './SorterFiles'
+import { FilesOrder, FilesFilter } from './SorterFiles'
 
 const Files = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const clients = useSelector(({ clients }) => clients).filter(c => c.user_id === user.id)
-  const files = useSelector(({ file }) => file).filter(f => f.delete_date === null && clients.some(c => c.id === f.owner))
+  const files = useSelector(({ file }) => file)//.filter(f => f.delete_date === null )// && clients.some(c => c.id === f.owner)
+  const [filteredFiles, setFilteredFiles] = useState([])
   const [sortingCriteria, setSortingCriteria] = useState('arrival time newest')  // arrival time newest, arrival time oldest, due date
 
   useEffect(() => {
     if (user) {
       dispatch(getFile())}
   }, [dispatch, user])
+
+
+  useEffect(() => {
+    if (!files) {
+      return
+    } else {
+      setFilteredFiles(files)
+      console.log('hei')
+    }
+  }, [files])
+
 
   if (!user) {
     return ('Et ole kirjautunut sisään')
@@ -29,7 +41,13 @@ const Files = () => {
     <div>
       {user.role === 1 && <div>
         <br /><h2> Saapuneet aineistot</h2><hr/>
-        <FilesOrder setSortingCriteria={setSortingCriteria} />
+        <div className="container">
+          <div className="row">
+            <div className="col"><FilesOrder setSortingCriteria={setSortingCriteria} /></div>
+            <div className="col"><FilesFilter files={files} clients={clients} setFilteredFiles={setFilteredFiles}/></div>
+            <br /><br />
+          </div>
+        </div>
         <Table striped>
           <thead>
             <tr>
@@ -40,7 +58,7 @@ const Files = () => {
             </tr>
           </thead>
           <tbody>
-            {files
+            {[...filteredFiles]
               .sort(sortingCriteria === 'arrival time newest'
               // order by arrival time newest first
                 ? ((a,b) => new Date(b.date) - new Date(a.date))
