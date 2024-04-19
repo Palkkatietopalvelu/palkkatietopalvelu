@@ -45,6 +45,13 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
     absence_reason_1: '',
     absence_reason_2: '',
     absence_reason_3: '',
+    absence_reason_4: '',
+    absence_reason_5: '',
+    absence_reason_6: '',
+    absence_reason_7: '',
+    absence_reason_8: '',
+    absence_reason_9: '',
+    absence_reason_10: '',
   }
 
   for (let i = 0; i < array.length; i++) {
@@ -143,6 +150,76 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_reason_3 || ''}",`
       line += `"${array[i].absence_compensated_3 || ''}",`
       line += `"${array[i].absence_time_period_3 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_4 !== undefined) {
+      totals.absence_reason_4 += (array[i].absence_reason_4 || '')
+      totals.absence_compensated_4 += (array[i].absence_compensated_4 || '')
+      totals.absence_time_period_4 += (array[i].absence_time_period_4 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_4 || ''}",`
+      line += `"${array[i].absence_compensated_4 || ''}",`
+      line += `"${array[i].absence_time_period_4 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_5 !== undefined) {
+      totals.absence_reason_5 += (array[i].absence_reason_5 || '')
+      totals.absence_compensated_5 += (array[i].absence_compensated_5 || '')
+      totals.absence_time_period_5 += (array[i].absence_time_period_5 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_5 || ''}",`
+      line += `"${array[i].absence_compensated_5 || ''}",`
+      line += `"${array[i].absence_time_period_5 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_6 !== undefined) {
+      totals.absence_reason_6 += (array[i].absence_reason_6 || '')
+      totals.absence_compensated_6 += (array[i].absence_compensated_6 || '')
+      totals.absence_time_period_6 += (array[i].absence_time_period_6 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_6 || ''}",`
+      line += `"${array[i].absence_compensated_6 || ''}",`
+      line += `"${array[i].absence_time_period_6 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_7 !== undefined) {
+      totals.absence_reason_7 += (array[i].absence_reason_7 || '')
+      totals.absence_compensated_7 += (array[i].absence_compensated_7 || '')
+      totals.absence_time_period_7 += (array[i].absence_time_period_7 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_7 || ''}",`
+      line += `"${array[i].absence_compensated_7 || ''}",`
+      line += `"${array[i].absence_time_period_7 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_8 !== undefined) {
+      totals.absence_reason_8 += (array[i].absence_reason_8 || '')
+      totals.absence_compensated_8 += (array[i].absence_compensated_8 || '')
+      totals.absence_time_period_8 += (array[i].absence_time_period_8 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_8 || ''}",`
+      line += `"${array[i].absence_compensated_8 || ''}",`
+      line += `"${array[i].absence_time_period_8 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_9 !== undefined) {
+      totals.absence_reason_9 += (array[i].absence_reason_9 || '')
+      totals.absence_compensated_9 += (array[i].absence_compensated_9 || '')
+      totals.absence_time_period_9 += (array[i].absence_time_period_9 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_9 || ''}",`
+      line += `"${array[i].absence_compensated_9 || ''}",`
+      line += `"${array[i].absence_time_period_9 || ''}",\n`
+    }
+
+    if (array[i].absence_reason_10 !== undefined) {
+      totals.absence_reason_10 += (array[i].absence_reason_10 || '')
+      totals.absence_compensated_10 += (array[i].absence_compensated_10 || '')
+      totals.absence_time_period_10 += (array[i].absence_time_period_10 || '')
+      line += `"${array[i].employee_name}",`
+      line += `"${array[i].absence_reason_10 || ''}",`
+      line += `"${array[i].absence_compensated_10 || ''}",`
+      line += `"${array[i].absence_time_period_10 || ''}",\n`
     }
 
     str += line

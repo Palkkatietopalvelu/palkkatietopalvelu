@@ -1,5 +1,6 @@
 // ./client/{client.id}/salaryform (Palkkatietolomake, vain asiakkaille, lomakeosa)
 import React from 'react'
+import { useState } from 'react'
 import { Form, Button, Accordion, Card } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
@@ -42,10 +43,7 @@ const SalaryFormContent = ({
   daily_allowance_domestic,
   daily_allowance_domestic_part_time,
   daily_allowance_foreign,
-  absence_reason_1, absence_reason_2, absence_reason_3,
-  absence_compensated_1, absence_compensated_2, absence_compensated_3,
-  absence_time_period_1, absence_time_period_2, absence_time_period_3,
-
+  absencesTable,
   extra,
   addEmployee,
   employees,
@@ -53,6 +51,8 @@ const SalaryFormContent = ({
   handleSubmit,
   navigate
 }) => {
+
+  const [visibleAbsenceRows, setVisibleAbsenceRows] = useState(3) // manual salary form
 
   const style = {
     width: '90vw',
@@ -65,6 +65,26 @@ const SalaryFormContent = ({
   const tableStyle = { margin: '15px' }
   const buttonStyle = { margin: '10px 5px 20px' }
   const buttonStyle2 = { margin: '60px 5px 0px' }
+
+  // creating absences table items in the manual salary form (3 items per row)
+  const addAbsenceTableRow = (i) => {
+    let reason = 'absence_reason_' + i
+    let compensated = 'absence_compensated_' + i
+    let period = 'absence_time_period_' + i
+
+    return (
+      <tr>
+        <td><Form.Control id={reason} {...absencesTable[i-1][0]} /></td>
+        <td><Form.Control id={compensated} {...absencesTable[i-1][1]} /></td>
+        <td><Form.Control id={period} {...absencesTable[i-1][2]} /></td>
+      </tr>
+    )
+  }
+
+  const handleAddEmployee = () => {
+    addEmployee()
+    setVisibleAbsenceRows(3)
+  }
 
   return (<div><br />
     <h3>Palkkatietolomake</h3> <br />
@@ -221,32 +241,32 @@ const SalaryFormContent = ({
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><Form.Control id='absence_reason_1' {...absence_reason_1} /></td>
-              <td><Form.Control id='absence_compensated_1' {...absence_compensated_1} /></td>
-              <td><Form.Control id='absence_time_period_1' {...absence_time_period_1} /></td>
-            </tr>
-            <tr>
-              <td><Form.Control id='absence_reason_2' {...absence_reason_2} /></td>
-              <td><Form.Control id='absence_compensated_2' {...absence_compensated_2} /></td>
-              <td><Form.Control id='absence_time_period_2' {...absence_time_period_2} /></td>
-            </tr>
-            <tr>
-              <td><Form.Control id='absence_reason_3' {...absence_reason_3} /></td>
-              <td><Form.Control id='absence_compensated_3' {...absence_compensated_3} /></td>
-              <td><Form.Control id='absence_time_period_3' {...absence_time_period_3} /></td>
-            </tr>
+            {visibleAbsenceRows >= 1 ? addAbsenceTableRow(1) : null}
+            {visibleAbsenceRows >= 2 ? addAbsenceTableRow(2) : null}
+            {visibleAbsenceRows >= 3 ? addAbsenceTableRow(3) : null}
+            {visibleAbsenceRows >= 4 ? addAbsenceTableRow(4) : null}
+            {visibleAbsenceRows >= 5 ? addAbsenceTableRow(5) : null}
+            {visibleAbsenceRows >= 6 ? addAbsenceTableRow(6) : null}
+            {visibleAbsenceRows >= 7 ? addAbsenceTableRow(7) : null}
+            {visibleAbsenceRows >= 8 ? addAbsenceTableRow(8) : null}
+            {visibleAbsenceRows >= 9 ? addAbsenceTableRow(9) : null}
+            {visibleAbsenceRows === 10 ? addAbsenceTableRow(10) : null}
           </tbody>
         </Table>
-      </div>
+        {visibleAbsenceRows < 10
+          ? <Button className='absence-btn' onClick={() =>
+            setVisibleAbsenceRows(visibleAbsenceRows + 1)}>Lisää uusi poissaolorivi</Button>
+          : null
+        }
+      </div> <br />
       <div>
         <Form.Group>
-          <Form.Label><h5>Lisätiedot</h5></Form.Label>
+          <Form.Label><h5>LISÄTIEDOT</h5></Form.Label>
           <Form.Control as="textarea" rows={5} id='extra' {...extra} />
         </Form.Group>
       </div>
       <br></br>
-      <Button id={'lisää'} variant="info" style={buttonStyle} onClick={addEmployee}>
+      <Button id={'lisää'} variant="info" style={buttonStyle} onClick={handleAddEmployee}>
         Lisää työntekijän tiedot lomakkeelle
       </Button>
       {employees.length > 0 && (
@@ -294,6 +314,27 @@ const SalaryFormContent = ({
                 {employee.absence_reason_3 && <p>Syy: {employee.absence_reason_3}</p>}
                 {employee.absence_compensated_3 && <p>Palkallinen: {employee.absence_compensated_3}</p>}
                 {employee.absence_time_period_3 && <p>Ajalta: {employee.absence_time_period_3}</p>}
+                {employee.absence_reason_4 && <p>Syy: {employee.absence_reason_4}</p>}
+                {employee.absence_compensated_4 && <p>Palkallinen: {employee.absence_compensated_4}</p>}
+                {employee.absence_time_period_4 && <p>Ajalta: {employee.absence_time_period_4}</p>}
+                {employee.absence_reason_5 && <p>Syy: {employee.absence_reason_5}</p>}
+                {employee.absence_compensated_5 && <p>Palkallinen: {employee.absence_compensated_5}</p>}
+                {employee.absence_time_period_5 && <p>Ajalta: {employee.absence_time_period_5}</p>}
+                {employee.absence_reason_6 && <p>Syy: {employee.absence_reason_6}</p>}
+                {employee.absence_compensated_6 && <p>Palkallinen: {employee.absence_compensated_6}</p>}
+                {employee.absence_time_period_6 && <p>Ajalta: {employee.absence_time_period_6}</p>}
+                {employee.absence_reason_7 && <p>Syy: {employee.absence_reason_7}</p>}
+                {employee.absence_compensated_7 && <p>Palkallinen: {employee.absence_compensated_7}</p>}
+                {employee.absence_time_period_7 && <p>Ajalta: {employee.absence_time_period_7}</p>}
+                {employee.absence_reason_8 && <p>Syy: {employee.absence_reason_8}</p>}
+                {employee.absence_compensated_8 && <p>Palkallinen: {employee.absence_compensated_8}</p>}
+                {employee.absence_time_period_8 && <p>Ajalta: {employee.absence_time_period_8}</p>}
+                {employee.absence_reason_9 && <p>Syy: {employee.absence_reason_9}</p>}
+                {employee.absence_compensated_9 && <p>Palkallinen: {employee.absence_compensated_9}</p>}
+                {employee.absence_time_period_9 && <p>Ajalta: {employee.absence_time_period_9}</p>}
+                {employee.absence_reason_10 && <p>Syy: {employee.absence_reason_10}</p>}
+                {employee.absence_compensated_10 && <p>Palkallinen: {employee.absence_compensated_10}</p>}
+                {employee.absence_time_period_10 && <p>Ajalta: {employee.absence_time_period_10}</p>}
                 {employee.extra && <p>Lisätiedot: {employee.extra}</p>}
                 <Button variant="danger" onClick={() => deleteEmployee(index)}>Poista Työntekijä</Button>
               </Accordion.Body>
