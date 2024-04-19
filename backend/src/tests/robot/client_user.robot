@@ -16,6 +16,7 @@ Login With Client User Link Succeeds
 Link Expires After Use
     Go To Home Page
     ${Link}=  Set Password Link  testi@email.com
+    Sleep  1s
     Go To  ${Link}
     Wait Until Element Is Visible  password
     Set Password  123
