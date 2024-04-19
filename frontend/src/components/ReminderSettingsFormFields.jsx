@@ -128,7 +128,7 @@ const ReminderFormFields = ({
               ))}
               <div>Päivää eräpäivän jälkeen</div>
             </div>
-            <Button type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
+            <Button id={'tallenna'} type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
           </Form.Group>
         </Form>
       </div>}
