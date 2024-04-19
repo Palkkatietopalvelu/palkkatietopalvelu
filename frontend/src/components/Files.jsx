@@ -12,8 +12,10 @@ import { FilesOrder, FilesFilter } from './SorterFiles'
 const Files = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
-  const clients = useSelector(({ clients }) => clients).filter(c => c.user_id === user.id)
-  const files = useSelector(({ file }) => file)//.filter(f => f.delete_date === null )// && clients.some(c => c.id === f.owner)
+  const clients = useSelector(({ clients }) => clients)
+  const files = useSelector(({ file }) => file)
+  // files and clients have to be defined without any filters bc they are used in SorterFiles.jsx
+  // and otherwise the useEffect gets messed up
   const [filteredFiles, setFilteredFiles] = useState([])
   const [sortingCriteria, setSortingCriteria] = useState('arrival time newest')  // arrival time newest, arrival time oldest, due date
 
@@ -24,13 +26,14 @@ const Files = () => {
 
 
   useEffect(() => {
-    if (!files) {
+    if (!files || !clients) {
       return
     } else {
-      setFilteredFiles(files)
-      console.log('hei')
+      // the default is omat asiakkaat/own clients so let's filter the files with the current user here
+      setFilteredFiles(files.filter(f =>
+        clients.some(c => c.id === f.owner && c.user_id === user.id)))
     }
-  }, [files])
+  }, [files, clients, user])
 
 
   if (!user) {
@@ -44,7 +47,8 @@ const Files = () => {
         <div className="container">
           <div className="row">
             <div className="col"><FilesOrder setSortingCriteria={setSortingCriteria} /></div>
-            <div className="col"><FilesFilter files={files} clients={clients} setFilteredFiles={setFilteredFiles}/></div>
+            <div className="col"><FilesFilter user={user} files={files}
+              clients={clients} setFilteredFiles={setFilteredFiles}/></div>
             <br /><br />
           </div>
         </div>
@@ -60,7 +64,7 @@ const Files = () => {
           <tbody>
             {[...filteredFiles]
               .sort(sortingCriteria === 'arrival time newest'
-              // order by arrival time newest first
+              // order by arrival time newest first, the default
                 ? ((a,b) => new Date(b.date) - new Date(a.date))
                 : sortingCriteria == 'arrival time oldest'
                 // order by arrival time oldest first

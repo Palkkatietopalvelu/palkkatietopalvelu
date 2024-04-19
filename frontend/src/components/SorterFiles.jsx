@@ -54,12 +54,13 @@ const FilesOrder = ({ setSortingCriteria }) => {
   )
 }
 
-const FilesFilter = ({ files, clients, setFilteredFiles }) => {
+const FilesFilter = ({ user, files, clients, setFilteredFiles }) => {
   const [filteredBy, setFilteredBy] = useState('Omat asiakkaat')
 
   const filterOwn = () => {
     setFilteredBy('Omat asiakkaat')
-    setFilteredFiles(files.filter(f => clients.some(c => c.id === f.owner)))
+    setFilteredFiles(files.filter(f =>
+      clients.some(c => c.id === f.owner && c.user_id === user.id)))
   }
 
   const filterAll = () => {
