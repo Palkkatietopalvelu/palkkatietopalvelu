@@ -6,22 +6,35 @@ from utilities import client_methods as clients
 from utilities.sched_setting_methods import get_readable_settings
 
 
-def send_email_reminders(remindertext):
+def send_email_reminders(remindertext, latetext):
     with app.app_context():
         deadlines, emails = get_reminder_data()[:2]
-        for deadline, email in zip(deadlines, emails): # pylint: disable=unused-variable
+        for deadline, email in zip(deadlines, emails):
             recipient = email
-            msg = Message('Muistutus lähestyvästä eräpäivästä',
+            msg = Message('Eräpäivämuistutus',
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
-            msg.body = remindertext
+            if is_late(deadline):
+                msg.body = f'{latetext}\nEräpäivä oli {deadline.strftime("%d.%m.%y")}'
+            else:
+                msg.body = f'{remindertext}\nEräpäivä on {deadline.strftime("%d.%m.%y")}'
             mail.send(msg)
 
-def send_sms_reminders(remindertext):
+def is_late(deadline):
+    return deadline < date.today()
+
+def send_sms_reminders(remindertext, latetext):
     with app.app_context():
-        _, _, phonenumbers = get_reminder_data()
-        for phonenumber in phonenumbers:
-            success = send_sms_message(phonenumber, remindertext, auto=True)
+        deadlines, _, phonenumbers = get_reminder_data()
+        for deadline, phonenumber in zip(deadlines, phonenumbers):
+            if is_late(deadline):
+                success = send_sms_message(phonenumber,
+                            f'{latetext}\nEräpäivä oli {deadline.strftime("%d.%m.%y")}',
+                            auto=True)
+            else:
+                success = send_sms_message(phonenumber,
+                            f'{remindertext}\nEräpäivä on {deadline.strftime("%d.%m.%y")}',
+                            auto=True)
             if not success:
                 print(f"Failed to send SMS to {phonenumber}")
 
