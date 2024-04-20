@@ -30,7 +30,7 @@ class TestSchedSettingMethods(unittest.TestCase):
                         "email": True,
                         "sms": False,
                         "remindertext": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
-                        "latetext": "Hei! palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdolllisimman pian. T. Reilu Hallinto"}
+                        "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"}
         self.default_data = {"days": "0,2,4",
                         "hour": "10",
                         "enabled": False,
@@ -38,7 +38,7 @@ class TestSchedSettingMethods(unittest.TestCase):
                         "email": False,
                         "sms": False,
                         "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto",
-                        "latetext": "Hei! palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdolllisimman pian. T. Reilu Hallinto"}
+                        "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"}
 
     def test_load_settings_with_invalid_filename(self):
         settings = sched.load_settings(filename= 'wrong')
