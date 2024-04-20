@@ -15,9 +15,9 @@ def send_email_reminders(remindertext, latetext):
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
             if is_late(deadline):
-                msg.body = f'{latetext}\neräpäivä oli {deadline.strftime("%d.%m.%y")}'
+                msg.body = f'{latetext}\nEräpäivä oli {deadline.strftime("%d.%m.%y")}'
             else:
-                msg.body = f'{remindertext}\neräpäivä on {deadline.strftime("%d.%m.%y")}'
+                msg.body = f'{remindertext}\nEräpäivä on {deadline.strftime("%d.%m.%y")}'
             mail.send(msg)
 
 def is_late(deadline):
@@ -29,11 +29,11 @@ def send_sms_reminders(remindertext, latetext):
         for deadline, phonenumber in zip(deadlines, phonenumbers):
             if is_late(deadline):
                 success = send_sms_message(phonenumber,
-                            f'{latetext}\neräpäivä oli {deadline.strftime("%d.%m.%y")}',
+                            f'{latetext}\nEräpäivä oli {deadline.strftime("%d.%m.%y")}',
                             auto=True)
             else:
                 success = send_sms_message(phonenumber,
-                            f'{remindertext}\neräpäivä on {deadline.strftime("%d.%m.%y")}',
+                            f'{remindertext}\nEräpäivä on {deadline.strftime("%d.%m.%y")}',
                             auto=True)
             if not success:
                 print(f"Failed to send SMS to {phonenumber}")

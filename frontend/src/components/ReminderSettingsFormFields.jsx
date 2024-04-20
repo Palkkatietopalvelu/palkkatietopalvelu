@@ -61,7 +61,7 @@ const ReminderFormFields = ({
             />
             {' '}{'Tekstiviestillä'}
             <br></br>
-            <Form.Label style={{ marginTop: '20px' }}>Muistutusviestin teksti (Max. 160 merkkiä)</Form.Label>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutusviestin teksti (Max. 137 merkkiä)</Form.Label>
             <Form.Control
               id='remindertext'
               as="textarea"
@@ -69,11 +69,11 @@ const ReminderFormFields = ({
               required={checked}
               value={remindertext}
               maxLength={137}
-              onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
+              onChange={(e) => setRemindertext(e.target.value.slice(0, 137))}
             />
-            <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
+            <span>{`${remindertext ? remindertext.length : 0}/137`}</span>
             <br></br>
-            <Form.Label style={{ marginTop: '20px' }}>Myöhästymismuistutuksen teksti (Max. 160 merkkiä)</Form.Label>
+            <Form.Label style={{ marginTop: '20px' }}>Myöhästymismuistutuksen teksti (Max. 137 merkkiä)</Form.Label>
             <Form.Control
               id='latetext'
               as="textarea"
@@ -81,9 +81,9 @@ const ReminderFormFields = ({
               required={checked}
               value={latetext}
               maxLength={137}
-              onChange={(e) => setLatetext(e.target.value.slice(0, 160))}
+              onChange={(e) => setLatetext(e.target.value.slice(0, 137))}
             />
-            <span>{`${latetext ? latetext.length : 0}/160`}</span>
+            <span>{`${latetext ? latetext.length : 0}/137`}</span>
             <br></br>
             <Form.Label style={{ marginTop: '20px' }}>
             Muistutuspäivät
