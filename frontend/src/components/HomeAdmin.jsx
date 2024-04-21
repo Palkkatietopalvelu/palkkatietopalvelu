@@ -6,14 +6,14 @@ import { Table, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
-import ClientsOrder from './SorterClients'
+import { ClientsOrder, ClientsFilter } from './SorterClients'
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
   const clients = useSelector(({ clients }) => clients)
-  //const filterByUser = (c => c.user_id === user.id)
   const [filteredCompanies, setFilteredCompanies] = useState([])
   const [sortingCriteria, setSortingCriteria] = useState('company')  // company, due date, status
+  const [filterByUser, setFilterByUser] = useState(true)
   const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
     'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12' }
 
@@ -63,8 +63,14 @@ const HomeAdmin = () => {
         <div>
           <br /><h2>Asiakkaat</h2><hr />
           <Notification />
-          <ClientsOrder clients={clients} setFilteredCompanies={setFilteredCompanies}
-            setSortingCriteria={setSortingCriteria} />
+          <div className="clients-sorters">
+            <div className="row">
+              <div className="col"><ClientsOrder clients={clients} setFilteredCompanies={setFilteredCompanies}
+                setSortingCriteria={setSortingCriteria} /></div>
+              <div className="col"><ClientsFilter setFilterByUser={setFilterByUser}/></div>
+              <br /><br />
+            </div>
+          </div>
           <Table striped>
             <thead>
               <tr>
@@ -80,7 +86,7 @@ const HomeAdmin = () => {
             </thead>
             <tbody>
               {[...filteredCompanies]
-                //.filter(filterByUser)
+                .filter(((c) => filterByUser ? c.user_id === user.id : true)) // filters clients by user only if filterByUser is true
                 .sort(sortingCriteria === 'company'
                   // alphabetical order
                   ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)

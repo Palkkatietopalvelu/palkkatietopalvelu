@@ -75,4 +75,45 @@ const ClientsOrder = ({ clients, setFilteredCompanies, setSortingCriteria }) => 
   )
 }
 
-export default ClientsOrder
+const ClientsFilter = ({ setFilterByUser }) => {
+  const [filteredBy, setFilteredBy] = useState('Omat asiakkaat')
+
+  const filterOwn = () => {
+    setFilteredBy('Omat asiakkaat')
+    setFilterByUser(true)
+  }
+
+  const filterAll = () => {
+    setFilteredBy('Kaikki asiakkaat')
+    setFilterByUser(false)
+  }
+
+  const dateToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault()
+        onClick(e)
+      }}>
+      {children}
+      &#x25bc;
+    </a>
+  ))
+
+  dateToggle.displayName = 'dateToggle'
+
+  return (
+    <Dropdown id='dropdown_files_sorter'>
+      <Dropdown.Toggle as={dateToggle}>
+        <b>{filteredBy}</b>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey='1' onClick={filterOwn}>Omat asiakkaat</Dropdown.Item>
+        <Dropdown.Item eventKey='2' onClick={filterAll}>Kaikki asiakkaat</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+}
+
+export { ClientsOrder, ClientsFilter }
