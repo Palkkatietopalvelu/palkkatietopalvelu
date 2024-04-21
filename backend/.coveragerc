@@ -1,2 +1,2 @@
 [run]
-omit = **/tests/**, *__init__.py, */db.py, */config.py
+omit = **/tests/**, *__init__.py, */db.py, */config.py, */check_env.py
