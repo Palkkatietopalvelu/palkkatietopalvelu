@@ -2,13 +2,13 @@
 
 Oletuksena on palvelin jolle on git, docker (ja vaihtoehtoisesti python poetry-kirjastolla tietokannan alustamisen helpottamiseksi) asennettuna.
 
-Sovelluksen voi julkaista monen eri tavoin, tämä on vain yksi esimerkki niistä.
+Sovelluksen voi julkaista monella eri tavalla, tämä on vain yksi esimerkki niistä.
 
 #### 1. Lataa repositorio palvelimelle:
 ```git clone https://github.com/Palkkatietopalvelu/palkkatietopalvelu.git```
 
 #### 2. Luo ympäristömuuttujat:
-- Siirry repositorion juurkansioon ja luo .env tiedostot frontend ja backend kansioihin
+- Siirry repositorion juurikansioon ja luo .env tiedostot frontend ja backend kansioihin
 - Lisää tiedostoihin tarvittavat ympäristömuuttujat readmen mukaisesti 
 
 #### 3. Luo sovelluksen imaget:
@@ -46,13 +46,13 @@ Backend-sovelluksessa on alembic kirjasto tietokannan alustamisen helpottamiseks
 - Aja ```poetry install```
 - Aja ```poetry run invoke dbupdate ```
 
-Nyt postgres-tietokannassa poitäisi olla tietokanta alustettuna ja admin tunnukset luotuna
+Nyt postgres-tietokannassa pitäisi olla tietokanta alustettuna ja admin tunnukset luotuna
 
 Jos jäkimmäinen komento ei aja koska portti on varattu, pysäytä porttia käyttävä sovellus komennon ajon ajaksi.
 
 #### 8. Tarkista että konttien portit ovat palomuurin takana
 
-Jos tietokanta tai backend ovat suoraan auki ulkoiseen verkkoon, pahat tekijät voivat päästä salattuun tietoon käsiksi
+Jos tietokanta tai backend ovat suoraan auki ulkoiseen verkkoon, pahantahtoiset tahot voivat päästä salattuun tietoon käsiksi
 
 #### 9. Jos sovellus toimii, voit poistaa githubista ladatun repositorion
 
@@ -60,8 +60,8 @@ Jos tietokanta tai backend ovat suoraan auki ulkoiseen verkkoon, pahat tekijät 
 
 **K:** Miksi ympäristömuuttujat luodaan docker imageihin eikä syötetä suoraan kontteihin? Miksei sovelluksen kontteja ladata suoraan verkosta?
 
-**V:** NodeJS sovellusten, kuten frontendin ympäristömuuttujia ei voi muokata sovelluksen buldauksen jälkeen. Se, että backendin ymperistömuuttujat ovat sovelluksen kansiossa myös mahdollistaa helpon tietokannan aslustuksen.
+**V:** NodeJS sovellusten, kuten frontendin ympäristömuuttujia ei voi muokata sovelluksen buildauksen jälkeen. Se, että backendin ymperistömuuttujat ovat sovelluksen kansiossa myös mahdollistaa helpon tietokannan alustuksen.
 
 **K:** Miksi tietokanta alustetaan näin?
 
-**V:** Tietokannan scheman ja admin-tunnukset voi myös luoda käsin. Ohjeessa oleva  tapa ei vaadi sql-komentojen kirjottamista ja takaa että admin-tunnukset ovat enkyptroidut salatulla avaimella.
+**V:** Tietokannan scheman ja admin-tunnukset voi myös luoda käsin. Ohjeessa oleva tapa ei vaadi sql-komentojen kirjottamista ja takaa että admin-tunnukset ovat enkyptroidut salatulla avaimella.
