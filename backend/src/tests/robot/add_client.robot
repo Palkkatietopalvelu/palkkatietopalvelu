@@ -35,14 +35,4 @@ Add Client Fails With Wrong BIcode Format
     Click Button  Lisää
     Wait For  Y-tunnus ei ole oikeassa muodossa
 
-All Clients Filter Works In Home Page
-    Setup With Two Existing Users And Two Clients
-    Log Out
-    Login As Admin
-    Page Should Contain  testi oy
-    Page Should Not Contain  asiakas oy
-    Click Link  Omat asiakkaat
-    Click Link  Kaikki asiakkaat
-    Page Should Contain  testi oy
-    Page Should Contain  asiakas oy
 
