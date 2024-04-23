@@ -102,7 +102,7 @@ const HomeAdmin = () => {
                       </td>
                       <td>{client.deadlines != '' &&
                         format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge deadline={client.deadlines[0]} /></td>
+                      {date == client.deadlines[0] && <DueDateBadge deadline={date} />} </div>)} /></td>
                       <td><Badge bg={client.active ? 'success' : 'warning'} pill>
                         {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
                     </tr>
