@@ -98,23 +98,39 @@ Setup With Existing User And Client
     Click Button  lisää
     Wait For  Asiakas lisätty onnistuneesti
 
+Setup With Two Existing Users And Two Clients
+    Setup With Existing User And Client
+    Log Out
+    Create New User   user2@email.com   user2   1
+    Go To Login Page
+    Set Username  user2@email.com
+    Set Password  user2
+    Click Button  login
+    Logged In Page Should Be Open
+    Click Link  LISÄÄ ASIAKAS
+    Add New Client  asiakas oy  asiakas@email.com  +358 123456789  1234567-8  2024/09/10  kk
+    Click Button  lisää
+    Wait For  Asiakas lisätty onnistuneesti
+
 Login As New Client
-    ${Link}=  Set Password Link  testi@email.com
+    [Arguments]  ${username}  ${password}
+    ${Link}=  Set Password Link  ${username} 
     Go To  ${Link}
-    Set Password  123
-    Set Confirm Password  123
+    Set Password  ${password}
+    Set Confirm Password  ${password}
     Click Button  setpassword
     Wait For  Salasana asetettu onnistuneesti
     Go To Login Page
-    Set Username  testi@email.com
-    Set Password  123
+    Set Username  ${username} 
+    Set Password  ${password}
     Click Button  login
     Wait For  Tervetuloa palkkatietopalveluun!
 
 Login As Client
+    [Arguments]  ${username}  ${password}
     Go To Login Page
-    Set Username  testi@email.com
-    Set Password  123
+    Set Username  ${username} 
+    Set Password  ${password}
     Click Button  login
     Wait For  Tervetuloa palkkatietopalveluun!
 

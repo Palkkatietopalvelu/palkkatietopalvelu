@@ -35,14 +35,14 @@ Add Client Fails With Wrong BIcode Format
     Click Button  Lisää
     Wait For  Y-tunnus ei ole oikeassa muodossa
 
-*** Keywords ***
-Add New Client
-    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
-    Input Text  company  ${company}
-    Input Text  email  ${email}
-    Input Text  phonenumber  ${phonenumber}
-    Input Text  bicode  ${bicode}
-    Clear Element Text  deadlines
-    Input Text  deadlines  ${deadline}
-    Click Element  id=email
-    Input Text  payperiod  ${payperiod}
+All Clients Filter Works In Home Page
+    Setup With Two Existing Users And Two Clients
+    Log Out
+    Login As Admin
+    Page Should Contain  testi oy
+    Page Should Not Contain  asiakas oy
+    Click Link  Omat asiakkaat
+    Click Link  Kaikki asiakkaat
+    Page Should Contain  testi oy
+    Page Should Contain  asiakas oy
+

@@ -59,13 +59,13 @@ const FilesFilter = ({ user, files, clients, setFilteredFiles }) => {
 
   const filterOwn = () => {
     setFilteredBy('Omat asiakkaat')
-    setFilteredFiles(files.filter(f =>
+    setFilteredFiles(files.filter(f => f.delete_date === null &&
       clients.some(c => c.id === f.owner && c.user_id === user.id)))
   }
 
   const filterAll = () => {
     setFilteredBy('Kaikki asiakkaat')
-    setFilteredFiles(files)
+    setFilteredFiles(files.filter(f => f.delete_date === null))
   }
 
   const dateToggle = React.forwardRef(({ children, onClick }, ref) => (

@@ -30,7 +30,7 @@ const Files = () => {
       return
     } else {
       // the default is omat asiakkaat/own clients so let's filter the files with the current user here
-      setFilteredFiles(files.filter(f =>
+      setFilteredFiles(files.filter(f => f.delete_date === null &&
         clients.some(c => c.id === f.owner && c.user_id === user.id)))
     }
   }, [files, clients, user])
