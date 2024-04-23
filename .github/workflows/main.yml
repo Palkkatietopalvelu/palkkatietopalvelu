@@ -66,7 +66,11 @@ jobs:
                 cd backend
                 poetry run coverage xml
             - name: Coverage report to Codecov
-              run: bash <(curl -s https://codecov.io/bash)
+            - uses: codecov/codecov-action@v4
+              with: 
+                files: ./coverage.xml
+                token: ${{ secrets.CODECOV_TOKEN }}
+              
     
     build_frontend:
         runs-on: ubuntu-latest
