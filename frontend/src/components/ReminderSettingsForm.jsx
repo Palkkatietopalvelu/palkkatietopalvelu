@@ -6,7 +6,7 @@ import settingsService from '../services/reminderSettings'
 import reminderInfoModule from './ReminderInfo'
 import ReminderFormFields from './ReminderSettingsFormFields'
 
-const { weekDays, relativeDays } = reminderInfoModule
+const { weekDays, relativeDays, deltaList } = reminderInfoModule
 
 const ReminderSettingsForm = () => {
   const dispatch = useDispatch()
@@ -18,6 +18,7 @@ const ReminderSettingsForm = () => {
   const [emailinputs, setEmailinputs] = useState(false)
   const [smsinputs, setSmsinputs] = useState(false)
   const [remindertext, setRemindertext] = useState('')
+  const [latetext, setLatetext] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -29,6 +30,7 @@ const ReminderSettingsForm = () => {
         setEmailinputs(settings.email === 'True' || settings.email === true)
         setSmsinputs(settings.sms === 'True' || settings.sms === true)
         setRemindertext(settings.remindertext)
+        setLatetext(settings.latetext)
       })
     }}, [user])
 
@@ -57,7 +59,8 @@ const ReminderSettingsForm = () => {
         deltas: formattedDeltas,
         email: emailinputs,
         sms: smsinputs,
-        remindertext: remindertext
+        remindertext: remindertext,
+        latetext: latetext
       }
       const response = await settingsService.send(settingsToSave)
       dispatch(notify('Asetukset tallennettu'))
@@ -82,6 +85,8 @@ const ReminderSettingsForm = () => {
             setSmsinputs={setSmsinputs}
             remindertext={remindertext}
             setRemindertext={setRemindertext}
+            latetext={latetext}
+            setLatetext={setLatetext}
             days={days}
             setDays={setDays}
             weekDays={weekDays}
@@ -90,6 +95,7 @@ const ReminderSettingsForm = () => {
             deltas={deltas}
             setDeltas={setDeltas}
             relativeDays={relativeDays}
+            deltaList={deltaList}
           />
         </div>
       )}

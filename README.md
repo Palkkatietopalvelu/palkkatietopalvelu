@@ -17,9 +17,13 @@
       >
       >SECRET_KEY="sinun_salainen_avain"
       >
-      >MAIL_USERNAME="sinun_mailtrap_username"
+      >MAIL_USERNAME="lähetyssähköpostiosoite_tai_-tunnus"
       >
-      >MAIL_PASSWORD="sinun_mailtrap_salasana"
+      >MAIL_PASSWORD="lähetyssähköpostin_salasana"
+      >
+      >MAIL_SERVER = 'käyttämäsi_smtp_palvelin'
+      >
+      >MAIL_PORT = palvelimen_portti
       >
       >CORS_ORIGINS="*"
       

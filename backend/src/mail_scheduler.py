@@ -33,7 +33,7 @@ def run_new_job(trigger, settings):
     if settings['email']:
         sched.add_job(
             send_email_reminders,
-            args=[settings['remindertext']],
+            args=[settings['remindertext'], settings['latetext']],
             trigger=trigger,
             id='email_reminders',
             max_instances=1
@@ -41,7 +41,7 @@ def run_new_job(trigger, settings):
     if settings['sms']:
         sched.add_job(
             send_sms_reminders,
-            args=[settings['remindertext']],
+            args=[settings['remindertext'], settings['latetext']],
             trigger=trigger,
             id='sms_reminders',
             max_instances=1

@@ -144,3 +144,19 @@ Login As Admin
 Wait For
     [Arguments]  ${text}
     Wait Until Page Contains  ${text}  timeout=10s
+
+Unselect Days
+    Unselect Checkbox  day-0
+    Unselect Checkbox  day-1
+    Unselect Checkbox  day-2
+    Unselect Checkbox  day-3
+    Unselect Checkbox  day-4
+    Unselect Checkbox  day-5
+    Unselect Checkbox  day-6
+    Checkbox Should Not Be Selected  day-0
+    Checkbox Should Not Be Selected  day-1
+    Checkbox Should Not Be Selected  day-2
+    Checkbox Should Not Be Selected  day-3
+    Checkbox Should Not Be Selected  day-4
+    Checkbox Should Not Be Selected  day-5
+    Checkbox Should Not Be Selected  day-6
