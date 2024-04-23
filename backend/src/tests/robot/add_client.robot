@@ -35,14 +35,4 @@ Add Client Fails With Wrong BIcode Format
     Click Button  Lisää
     Wait For  Y-tunnus ei ole oikeassa muodossa
 
-*** Keywords ***
-Add New Client
-    [Arguments]  ${company}  ${email}  ${phonenumber}  ${bicode}  ${deadline}  ${payperiod}
-    Input Text  company  ${company}
-    Input Text  email  ${email}
-    Input Text  phonenumber  ${phonenumber}
-    Input Text  bicode  ${bicode}
-    Clear Element Text  deadlines
-    Input Text  deadlines  ${deadline}
-    Click Element  id=email
-    Input Text  payperiod  ${payperiod}
+
