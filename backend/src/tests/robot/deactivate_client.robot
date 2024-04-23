@@ -6,7 +6,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Login As Client Succeeds When Active
     Log Out  # logout from admin user
-    Login As New Client  # set up password and login to the client user
+    Login As New Client  testi@email.com  123  # set up password and login to the client user
     Log Out  # logout from the client user
 
 Deactivate Client Succeeds

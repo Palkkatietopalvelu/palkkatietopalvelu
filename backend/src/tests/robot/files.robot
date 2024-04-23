@@ -6,7 +6,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 Adding File Succeeds
     Log Out
-    Login As New Client
+    Login As New Client  testi@email.com  123
     Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
     Wait For  Tiedosto lisätty onnistuneesti
 
@@ -36,20 +36,11 @@ Files Page Works
 
 Moving File To Trash Succeeds
     Log Out
-    Login As Client
+    Login As Client  testi@email.com  123
     Go To Home Page
-    Click Button  1
-    Wait For  Tiedoston siirtäminen roskakoriin
-    Click Button  Siirrä roskakoriin
-    Wait For  Tiedosto siirretty roskakoriin
-    Click Button  2
-    Wait For  Tiedoston siirtäminen roskakoriin
-    Click Button  Siirrä roskakoriin
-    Wait For  Tiedosto siirretty roskakoriin
-    Click Button  3
-    Wait For  Tiedoston siirtäminen roskakoriin
-    Click Button  Siirrä roskakoriin
-    Wait For  Tiedosto siirretty roskakoriin
+    Move File To Trash  1
+    Move File To Trash  2
+    Move File To Trash  3
     Page Should Not Contain  .pdf
 
 
@@ -67,20 +58,11 @@ File Moved To Trash By Client Is Not Visible To Admin
     Log Out
 
 Deleting File From Trash Succeeds
-    Login As Client
+    Login As Client   testi@email.com   123
     Click Link  trash
-    Click Button  1poista
-    Wait For  Tiedoston poistaminen
-    Click Button  Poista tiedosto
-    Wait For  Tiedosto poistettu onnistuneesti
-    Click Button  2poista
-    Wait For  Tiedoston poistaminen
-    Click Button  Poista tiedosto
-    Wait For  Tiedosto poistettu onnistuneesti
-    Click Button  3poista
-    Wait For  Tiedoston poistaminen
-    Click Button  Poista tiedosto
-    Wait For  Tiedosto poistettu onnistuneesti
+    Delete File  1poista
+    Delete File  2poista
+    Delete File  3poista
 
 Admin Can Mark Files Delivered
     Go To Home Page
@@ -96,11 +78,39 @@ Admin Can Mark Files Delivered
     Wait For  Tiedosto siirretty roskakoriin
     Page Should Not Contain  20.11.2024
     Page Should Not Contain  .pdf
+    # delete added files:
     Click Link  trash
-    Click Button  4poista
-    Wait For  Tiedoston poistaminen
-    Click Button  Poista tiedosto
-    Wait For  Tiedosto poistettu onnistuneesti
+    Delete File  4poista
+  
+Files Page All Clients Filter Works
+    Setup With Two Existing Users And Two Clients
+    Log Out
+    Login As New Client  asiakas@email.com  asiakas
+    Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
+    Wait For  Tiedosto lisätty onnistuneesti
+    Log Out
+    Login As New Client  testi@email.com  123
+    Choose File  id=file-upload  ${CURDIR}/files_for_robot_tests/test.pdf
+    Wait For  Tiedosto lisätty onnistuneesti
+    Log Out
+    Login As Admin
+    Click Link  AINEISTOT
+    Page Should Contain  testi oy
+    Page Should Not Contain  asiakas oy
+    Click Link  Omat asiakkaat
+    Click Link  Kaikki asiakkaat
+    Page Should Contain  testi oy
+    Page Should Contain  asiakas oy
+    # delete added files:
+    Click link  asiakas oy
+    Move File To Trash  1
+    Go To Home Page
+    Click Link  testi oy
+    Move File To Trash  2
+    Click Link  trash
+    Delete File  1poista
+    Delete File  2poista
+
 
 
 *** Keywords ***
@@ -121,3 +131,17 @@ Add New Hourly Employee
     Input Text  wage_hourly  ${wage_hourly}
     Input Text  sport_benefit  ${sport_benefit}
     Input Text  sport_benefit_value  ${sport_benefit_value}
+
+Move File To Trash
+    [Arguments]  ${file_id}
+    Click Button  ${file_id}
+    Wait For  Tiedoston siirtäminen roskakoriin
+    Click Button  Siirrä roskakoriin
+    Wait For  Tiedosto siirretty roskakoriin
+
+Delete File
+    [Arguments]  ${button_id}
+    Click Button  ${button_id}
+    Wait For  Tiedoston poistaminen
+    Click Button  Poista tiedosto
+    Wait For  Tiedosto poistettu onnistuneesti

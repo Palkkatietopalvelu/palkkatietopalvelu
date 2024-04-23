@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { useField } from '../hooks'
 import { registerUser } from '../reducers/userReducer'
-import Notification from '../components/Notification'
 import Togglable from './Togglable'
 import { Form, Button } from 'react-bootstrap'
 
@@ -43,7 +42,6 @@ const RegisterForm = () => {
       {user.role === 1 && <div>
         <Togglable buttonLabel='Luo uusi tilitoimistokäyttäjä' ref={formRef} variant={'warning'}>
           <hr/><h3>Luo uusi tilitoimistokäyttäjä</h3>
-          <Notification />
           <Form onSubmit={handleRegistration}>
             <Form.Group>
               <Form.Label>Sähköposti</Form.Label>
