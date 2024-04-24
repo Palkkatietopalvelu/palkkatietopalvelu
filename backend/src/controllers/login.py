@@ -2,10 +2,10 @@ import os
 from flask import request, jsonify
 import jwt
 from werkzeug.security import check_password_hash
+from sqlalchemy import func
 from models.user import User
 from app import app
 from utilities.client_methods import get_status
-from sqlalchemy import func
 
 @app.route('/api/login', methods=['POST'])
 def login():
