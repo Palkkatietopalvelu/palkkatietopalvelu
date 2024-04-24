@@ -72,6 +72,15 @@ class TestFile(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.get_json()), 1)
 
+    def test_get_all_files_has_correct_data(self):
+        with app.app_context():
+            file_methods.add_file(self.file)
+            response = app.test_client().get("/api/files", headers=self.headers)
+            self.assertEqual(response.status_code, 200)
+            files = response.get_json()
+            self.assertEqual(files[0]["company"], "Testiyritys")
+            self.assertEqual(len(files[0]["deadlines"]), 2)
+
     def test_upload_odt_file(self):
         with app.app_context():
             with self.assertRaises(sqlalchemy.exc.StatementError):
