@@ -123,16 +123,21 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
   for (let i = 0; i < array.length; i++) {
     let line = ''
 
-    if (array[i].absence_reason_1 !== undefined) {
+    if (array[i].absence_reason_1 !== undefined &&
+      array[i].absence_compensated_1 !== undefined &&
+      array[i].absence_time_period_1 !== undefined) {
       totals.absence_reason_1 += (array[i].absence_reason_1 || '')
       totals.absence_compensated_1 += (array[i].absence_compensated_1 || '')
+      totals.absence_time_period_1 += (array[i].absence_time_period_1 || '')
       line += `"${array[i].employee_name}",`
       line += `"${array[i].absence_reason_1 || ''}",`
       line += `"${array[i].absence_compensated_1 || ''}",`
       line += `"${array[i].absence_time_period_1 || ''}",\n`
     }
 
-    if (array[i].absence_reason_2 !== undefined) {
+    if (array[i].absence_reason_2 !== undefined &&
+      array[i].absence_compensated_2 !== undefined &&
+      array[i].absence_time_period_2 !== undefined) {
       totals.absence_reason_2 += (array[i].absence_reason_2 || '')
       totals.absence_compensated_2 += (array[i].absence_compensated_2 || '')
       totals.absence_time_period_2 += (array[i].absence_time_period_2 || '')
@@ -142,7 +147,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_2 || ''}",\n`
     }
 
-    if (array[i].absence_reason_3 !== undefined) {
+    if (array[i].absence_reason_3 !== undefined &&
+      array[i].absence_compensated_3 !== undefined &&
+      array[i].absence_time_period_3 !== undefined) {
       totals.absence_reason_3 += (array[i].absence_reason_3 || '')
       totals.absence_compensated_3 += (array[i].absence_compensated_3 || '')
       totals.absence_time_period_3 += (array[i].absence_time_period_3 || '')
@@ -152,7 +159,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_3 || ''}",\n`
     }
 
-    if (array[i].absence_reason_4 !== undefined) {
+    if (array[i].absence_reason_4 !== undefined &&
+      array[i].absence_compensated_4 !== undefined &&
+      array[i].absence_time_period_4 !== undefined) {
       totals.absence_reason_4 += (array[i].absence_reason_4 || '')
       totals.absence_compensated_4 += (array[i].absence_compensated_4 || '')
       totals.absence_time_period_4 += (array[i].absence_time_period_4 || '')
@@ -162,7 +171,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_4 || ''}",\n`
     }
 
-    if (array[i].absence_reason_5 !== undefined) {
+    if (array[i].absence_reason_5 !== undefined &&
+      array[i].absence_compensated_5 !== undefined &&
+      array[i].absence_time_period_5 !== undefined) {
       totals.absence_reason_5 += (array[i].absence_reason_5 || '')
       totals.absence_compensated_5 += (array[i].absence_compensated_5 || '')
       totals.absence_time_period_5 += (array[i].absence_time_period_5 || '')
@@ -172,7 +183,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_5 || ''}",\n`
     }
 
-    if (array[i].absence_reason_6 !== undefined) {
+    if (array[i].absence_reason_6 !== undefined &&
+      array[i].absence_compensated_6 !== undefined &&
+      array[i].absence_time_period_6 !== undefined) {
       totals.absence_reason_6 += (array[i].absence_reason_6 || '')
       totals.absence_compensated_6 += (array[i].absence_compensated_6 || '')
       totals.absence_time_period_6 += (array[i].absence_time_period_6 || '')
@@ -182,7 +195,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_6 || ''}",\n`
     }
 
-    if (array[i].absence_reason_7 !== undefined) {
+    if (array[i].absence_reason_7 !== undefined &&
+      array[i].absence_compensated_7 !== undefined &&
+      array[i].absence_time_period_7 !== undefined) {
       totals.absence_reason_7 += (array[i].absence_reason_7 || '')
       totals.absence_compensated_7 += (array[i].absence_compensated_7 || '')
       totals.absence_time_period_7 += (array[i].absence_time_period_7 || '')
@@ -192,7 +207,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_7 || ''}",\n`
     }
 
-    if (array[i].absence_reason_8 !== undefined) {
+    if (array[i].absence_reason_8 !== undefined &&
+      array[i].absence_compensated_8 !== undefined &&
+      array[i].absence_time_period_8 !== undefined) {
       totals.absence_reason_8 += (array[i].absence_reason_8 || '')
       totals.absence_compensated_8 += (array[i].absence_compensated_8 || '')
       totals.absence_time_period_8 += (array[i].absence_time_period_8 || '')
@@ -202,7 +219,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_8 || ''}",\n`
     }
 
-    if (array[i].absence_reason_9 !== undefined) {
+    if (array[i].absence_reason_9 !== undefined &&
+      array[i].absence_compensated_9 !== undefined &&
+      array[i].absence_time_period_9 !== undefined) {
       totals.absence_reason_9 += (array[i].absence_reason_9 || '')
       totals.absence_compensated_9 += (array[i].absence_compensated_9 || '')
       totals.absence_time_period_9 += (array[i].absence_time_period_9 || '')
@@ -212,7 +231,9 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
       line += `"${array[i].absence_time_period_9 || ''}",\n`
     }
 
-    if (array[i].absence_reason_10 !== undefined) {
+    if (array[i].absence_reason_10 !== undefined &&
+      array[i].absence_compensated_10 !== undefined &&
+      array[i].absence_time_period_10 !== undefined) {
       totals.absence_reason_10 += (array[i].absence_reason_10 || '')
       totals.absence_compensated_10 += (array[i].absence_compensated_10 || '')
       totals.absence_time_period_10 += (array[i].absence_time_period_10 || '')

@@ -139,71 +139,75 @@ const generatePDF = (formData, clientDetails, date) => {
       yPosition += increment
       doc.text('POISSAOLOT', 10, yPosition)
       yPosition += increment
-      if (!employee.absence_reason_1 && !employee.absence_reason_2 && !employee.absence_reason_3) {
+      if (!employee.absence_reason_1 || !employee.absence_reason_2 || !employee.absence_reason_3) {
         doc.text('Ei syötettyjä poissaoloja', 15, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_1) {
+      if (employee.absence_reason_1 && employee.absence_compensated_1 && employee.absence_time_period_1) {
         doc.text('Syy', 15, yPosition)
         doc.text('Palkallinen', 100, yPosition)
         doc.text('Ajalta', 140, yPosition)
         yPosition += increment
-      }
-      if (employee.absence_compensated_1) {
         doc.text(`${employee.absence_reason_1}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_1}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_1}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_2) {
+      /*if (employee.absence_compensated_1) {
+        doc.text(`${employee.absence_reason_1}`, 15, yPosition)
+        doc.text(`${employee.absence_compensated_1}`, 100, yPosition)
+        doc.text(`${employee.absence_time_period_1}`, 140, yPosition)
+        yPosition += increment
+      }*/
+      if (employee.absence_reason_2 && employee.absence_compensated_2 && employee.absence_time_period_2) {
         doc.text(`${employee.absence_reason_2}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_2}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_2}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_3) {
+      if (employee.absence_reason_3 && employee.absence_compensated_3 && employee.absence_time_period_3) {
         doc.text(`${employee.absence_reason_3}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_3}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_3}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_4) {
+      if (employee.absence_reason_4 && employee.absence_compensated_4 && employee.absence_time_period_4) {
         doc.text(`${employee.absence_reason_4}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_4}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_4}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_5) {
+      if (employee.absence_reason_5 && employee.absence_compensated_5 && employee.absence_time_period_5) {
         doc.text(`${employee.absence_reason_5}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_5}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_5}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_6) {
+      if (employee.absence_reason_6 && employee.absence_compensated_6 && employee.absence_time_period_6) {
         doc.text(`${employee.absence_reason_6}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_6}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_6}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_7) {
+      if (employee.absence_reason_7 && employee.absence_compensated_7 && employee.absence_time_period_7) {
         doc.text(`${employee.absence_reason_7}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_7}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_7}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_8) {
+      if (employee.absence_reason_8 && employee.absence_compensated_8 && employee.absence_time_period_8) {
         doc.text(`${employee.absence_reason_8}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_8}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_8}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_9) {
+      if (employee.absence_reason_9 && employee.absence_compensated_9 && employee.absence_time_period_9) {
         doc.text(`${employee.absence_reason_9}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_9}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_9}`, 140, yPosition)
         yPosition += increment
       }
-      if (employee.absence_reason_10) {
+      if (employee.absence_reason_10 && employee.absence_compensated_10 && employee.absence_time_period_10) {
         doc.text(`${employee.absence_reason_10}`, 15, yPosition)
         doc.text(`${employee.absence_compensated_10}`, 100, yPosition)
         doc.text(`${employee.absence_time_period_10}`, 140, yPosition)
