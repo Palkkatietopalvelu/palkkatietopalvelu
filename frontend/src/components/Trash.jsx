@@ -14,7 +14,7 @@ const Trash = () => {
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
-  const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
+  const files = useSelector(({ files }) => files).filter(f => f.delete_date !== null && f.deleted_by === user.id)
   const [showModal, setShowModal] = useState(false)
   const [varyingFileId, setVaryingFileId] = useState(0)
   const [varyingFileName, setVaryingFileName] = useState('')

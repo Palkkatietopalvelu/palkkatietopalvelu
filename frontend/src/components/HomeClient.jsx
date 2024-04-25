@@ -13,7 +13,7 @@ const HomeClient = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
-  const files = useSelector(({ file }) => file).filter(f => f.owner === client.id && f.delete_date === null)
+  const files = useSelector(({ files }) => files).filter(f => f.owner === client.id && f.delete_date === null)
 
   useEffect(() => {
     if (user && client) {
