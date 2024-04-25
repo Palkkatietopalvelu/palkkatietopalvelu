@@ -3,11 +3,17 @@ import React, { useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addFile, downloadFile, moveFileToTrash } from '../reducers/fileReducer'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Form } from 'react-bootstrap'
 import { updateClient } from '../reducers/clientsReducer'
 import FileHandlerForm from './FileHandlerForm'
+import { DateSelect } from '../hooks/DatePicker'
+import DatePicker from 'react-multi-date-picker'
+import days from './ReminderInfo'
 
-const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
+const { weekDays, months } = days
+const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
+
+const FileHandler = ({ client, files, nextDL }) => {
   const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -16,7 +22,14 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
   const [varyingFileName, setVaryingFileName] = useState('')
   const [varyingFileId, setVaryingFileId] = useState(0)
   const [showMarkAsDeliveredModal, setShowMarkAsDeliveredModal] = useState(false)
-
+  const [showDeadlinesModal, setShowDeadlinesModal] = useState(false)
+  const deadlines = DateSelect(client
+    ? client.deadlines
+      .map(deadline => new Date(deadline).getTime())
+      .sort((a, b) => a - b)
+      .slice(1)
+    : []
+  )
   const handleFileSubmit = async (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -67,15 +80,11 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
     setShowModal(false)
   }
 
-  const handleMarkAsDelivered = () => {
+  const updateData = (event, fromDeadlinesModal = false) => {
+    event.preventDefault()
     files.forEach(file => {
       dispatch(moveFileToTrash({ id: file.id }))
     })
-    updateData()
-    setShowMarkAsDeliveredModal(false)
-  }
-
-  const updateData = () => {
     const clientObject = {
       id: client.id,
       user_id: user.id,
@@ -83,14 +92,23 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
       email: client.email,
       phonenumber: client.phonenumber,
       bi_code: client.bi_code,
-      deadlines: JSON.stringify(remainingDeadlines),
+      deadlines: JSON.stringify(deadlines.value),
       payperiod: client.payperiod,
     }
     dispatch(updateClient(clientObject)).then(result => {
-      if (result) {
-        navigate(`/client/${client.id}`)
+      if (fromDeadlinesModal) {
+        if (result) {
+          setShowDeadlinesModal(false)
+          window.location = `/client/${client.id}`
+        }
+      } else {
+        if (client.deadlines.length === 1) {
+          setShowMarkAsDeliveredModal(false)
+          setShowDeadlinesModal(true)
+        }
       }
     })
+    setShowMarkAsDeliveredModal(false)
   }
 
   const linkState = {
@@ -99,8 +117,16 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
     clientEmail: client.email,
     clientNumber: client.phonenumber,
     clientCode: client.bi_code,
-    clientDeadlines: remainingDeadlines,
+    clientDeadlines: client.deadlines,
     clientPeriod: client.payperiod,
+  }
+
+  const style = {
+    width: '999vw',
+    padding: '0rem',
+    color: '#495057',
+    border: 0,
+    boxShadow: 'none'
   }
 
   const FileToTrashModal = ({ varyingFileId, varyingFileName, handleFileToTrash, showModal, setShowModal  }) => {
@@ -120,21 +146,54 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
     )
   }
 
-  const MarkAsDeliveredModal = ({ nextDL, handleMarkAsDelivered, showModal, setShowModal }) => {
+  const MarkAsDeliveredModal = ({ nextDL, showMarkAsDeliveredModal, updateData }) => {
     return (
       <>
-        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-          <Modal.Header>
-            <Modal.Title>Tiedot toimitetuksi</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Merkataanko eräpäivän {nextDL} tiedot toimitetuksi? Toimitetut tiedostot siirretään roskakoriin, jossa ne säilyvät vielä yhden viikon.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Peruuta</Button>
-            <Button variant="primary" onClick={handleMarkAsDelivered}>Merkkaa toimitetuksi</Button>
-          </Modal.Footer>
-        </Modal>
+        <Form onSubmit={updateData}>
+          <Modal show={showMarkAsDeliveredModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Header>
+              <Modal.Title>Tiedot toimitetuksi</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Merkataanko eräpäivän {nextDL} tiedot toimitetuksi? Toimitetut tiedostot siirretään roskakoriin, jossa ne säilyvät vielä yhden viikon.
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => window.location = `/client/${client.id}`}>Peruuta</Button>
+              <Button variant="primary" onClick={updateData}>Merkkaa toimitetuksi</Button>
+            </Modal.Footer>
+          </Modal>
+        </Form>
+      </>
+    )
+  }
+
+  const DeadlinesModal = ({ showDeadlinesModal, setShowDeadlinesModal, deadlines, updateData }) => {
+    return (
+      <>
+        <Form onSubmit={updateData}>
+          <Modal show={showDeadlinesModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Header>
+              <Modal.Title>Eräpäivien asetus</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>
+                Asiakkaalle ei ole tällä hetkellä merkattuna uusia eräpäiviä. Voit lisätä asiakkaalle uusia eräpäiviä alta.
+              </div>
+              <div>
+                Asiakkaan palkkakausi: {client.payperiod}
+              </div>
+              <Form.Group>
+                <div className="form-control">
+                  <DatePicker id="deadlines" {...deadlines} multiple months={months} weekDays={weekDaysSorted} weekStartDayIndex={1}/>
+                </div>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowDeadlinesModal(false)}>Ei nyt</Button>
+              <Button variant="primary" onClick={(e) => updateData(e, true)}>Päivitä eräpäivät</Button>
+            </Modal.Footer>
+          </Modal>
+        </Form>
       </>
     )
   }
@@ -160,8 +219,12 @@ const FileHandler = ({ client, files, nextDL, remainingDeadlines }) => {
         varyingFileName={varyingFileName}
         MarkAsDeliveredModal={MarkAsDeliveredModal}
         FileToTrashModal={FileToTrashModal}
-        handleMarkAsDelivered={handleMarkAsDelivered}
         handleFileToTrash={handleFileToTrash}
+        deadlines={deadlines}
+        updateData={updateData}
+        showDeadlinesModal={showDeadlinesModal}
+        setShowDeadlinesModal={setShowDeadlinesModal}
+        DeadlinesModal={DeadlinesModal}
       />
     </>
   )

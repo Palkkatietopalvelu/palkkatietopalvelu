@@ -17,7 +17,6 @@ const FileHandlerForm = ({
   setShowModal,
   setVaryingFileName,
   setVaryingFileId,
-  handleMarkAsDelivered,
   showMarkAsDeliveredModal,
   handleFileToTrash,
   varyingFileId,
@@ -26,49 +25,59 @@ const FileHandlerForm = ({
   fileInputRef,
   FileToTrashModal,
   MarkAsDeliveredModal,
+  deadlines,
+  updateData,
+  showDeadlinesModal,
+  setShowDeadlinesModal,
+  DeadlinesModal
 }) => {
   return (
     <div>
       <br></br>
       <h4>
-        Eräpäivän {nextDL} palkkatiedot
-        {user.role === 1 && (
-          <Button
-            variant="info"
-            size="sm"
-            style={{ marginLeft: '20px' }}
-            onClick={() => setShowMarkAsDeliveredModal(true)}>
-            Merkitse palkkatiedot toimitetuksi
-          </Button>
+        {nextDL && (
+          <>
+            Eräpäivän {nextDL} palkkatiedot
+            {user.role === 1 && (
+              <Button
+                variant="info"
+                size="sm"
+                style={{ marginLeft: '20px' }}
+                onClick={() => setShowMarkAsDeliveredModal(true)}>
+                Merkitse palkkatiedot toimitetuksi
+              </Button>
+            )}
+          </>
         )}
       </h4>
       {user.role === 2 &&
-    <div>
-      <Form>
-        <Form.Group controlId="file-upload">
-          <Form.Control
-            type="file"
-            onChange={handleFileSubmit}
-            ref={fileInputRef}
-          />
-        </Form.Group>
-      </Form>
-      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
-      </div>
-      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-        Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {
-          const data = await filesImport.downloadTemplateCSV()
-          const url = window.URL.createObjectURL(new Blob([data]))
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'template.csv')
-          document.body.appendChild(link)
-          link.click()
-          link.parentNode.removeChild(link)
-        }}>täältä</a>
-      </div>
-    </div>}
+        <div>
+          <Form>
+            <Form.Group controlId="file-upload">
+              <Form.Control
+                type="file"
+                onChange={handleFileSubmit}
+                ref={fileInputRef}
+              />
+            </Form.Group>
+          </Form>
+          <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+            Voit myös täyttää palkkatiedot lomakkeelle <Link to={`/client/${client.id}/salaryform`} state={linkState}>täällä</Link>
+          </div>
+          <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+            Tai ladata .csv-dokumenttipohjan palkkatiedoille <a href="#" onClick={async () => {
+              const data = await filesImport.downloadTemplateCSV()
+              const url = window.URL.createObjectURL(new Blob([data]))
+              const link = document.createElement('a')
+              link.href = url
+              link.setAttribute('download', 'template.csv')
+              document.body.appendChild(link)
+              link.click()
+              link.parentNode.removeChild(link)
+            }}>täältä</a>
+          </div>
+        </div>
+      }
       <div>
         {files.length > 0 ? (
           <Table striped>
@@ -96,15 +105,21 @@ const FileHandlerForm = ({
               showModal={showModal} setShowModal={setShowModal} />
           </Table>
         ) : (
-          <div>Palkkatietoja ei ole vielä ilmoitettu</div>
+          nextDL && (
+            <div>Palkkatietoja ei ole vielä ilmoitettu</div>
+          )
         )}
       </div>
       <MarkAsDeliveredModal
         nextDL={nextDL}
-        files={files}
-        handleMarkAsDelivered={() => handleMarkAsDelivered()}
-        showModal={showMarkAsDeliveredModal}
-        setShowModal={setShowMarkAsDeliveredModal}
+        showMarkAsDeliveredModal={showMarkAsDeliveredModal}
+        updateData={updateData}
+      />
+      <DeadlinesModal
+        showDeadlinesModal={showDeadlinesModal}
+        setShowDeadlinesModal={setShowDeadlinesModal}
+        deadlines={deadlines}
+        updateData={updateData}
       />
     </div>
   )

@@ -96,6 +96,8 @@ Admin Can Mark Files Delivered
     Wait For  Tiedosto siirretty roskakoriin
     Page Should Not Contain  20.11.2024
     Page Should Not Contain  .pdf
+    Wait For  Ei nyt
+    Click Button  Ei nyt
     Click Link  trash
     Click Button  4poista
     Wait For  Tiedoston poistaminen
