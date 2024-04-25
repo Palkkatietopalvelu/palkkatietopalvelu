@@ -6,9 +6,11 @@ from app import app
 import utilities.client_methods as client_methods
 import utilities.file_methods as file_methods
 from initialize_db import initialize_database
+from daily_scheduler import delete_old_files_from_trash
 import json
 import jwt
 import sqlalchemy.exc
+from sqlalchemy.sql import text
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
 import check_env
@@ -164,6 +166,23 @@ class TestFile(unittest.TestCase):
                 self.assertIn("No such file or directory", str(response.data))
         finally:
             os.rename(hidden_path, original_path) # move the file back
+
+    def test_delete_old_files_from_trash(self):
+        sql = text("""INSERT INTO files (owner, name, path, date, delete_date)
+                  VALUES (:owner, :name, :path, :date, :delete_date)""")
+        data = {
+            "id": 1,
+            "owner": 1,
+            "name": "test.pdf",
+            "path": "test/path",
+            "date": "2024-01-21",
+            "delete_date": datetime.now()
+        }
+        db.session.execute(sql, data)
+        db.session.commit()
+        self.assertEqual(len(file_methods.get_all_files()), 1)
+        delete_old_files_from_trash()
+        self.assertEqual(len(file_methods.get_all_files()), 0)
     
     def upload_file_helper(self):
         with open(self.path+"/files_for_tests/test.pdf", "rb") as f:
