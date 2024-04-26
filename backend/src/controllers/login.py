@@ -18,7 +18,7 @@ def login():
     if user and check_password_hash(user.password, password):
         if user.role == 2 and not get_status(user.username):
             return jsonify({"error": "Tili on asetettu epäaktiiviseksi."}), 401
-        valid_for = timedelta(seconds=10)
+        valid_for = timedelta(seconds=5)
         expiration_time = datetime.now(timezone.utc) + valid_for
         user_info = {"username": user.username, "id": user.id, "role": user.role, "exp": expiration_time}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
