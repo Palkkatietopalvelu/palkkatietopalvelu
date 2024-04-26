@@ -11,15 +11,16 @@ const Footer = () => {
   }
 
   const textStyle = {
-    paddingLeft: '80px',
-    paddingRight: '160px',
+    paddingLeft: '2%',
+    paddingRight: '15%',
     fontWeight: 'bold',
     color: 'white'
   }
 
   const containerStyle = {
+    maxWidth: '100%',
     position: 'absolute',
-    paddingTop: '30px',
+    paddingTop: '10%',
     backgroundColor: '#055e05'
     //backgroundColor: 'rgb(13, 177, 13)'
   }
