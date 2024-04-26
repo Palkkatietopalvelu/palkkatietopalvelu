@@ -2,12 +2,12 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
-  role INTEGER
+  role INTEGER -- 1 = admin, 2 = client
 );
 
 CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users,
+  user_id INTEGER REFERENCES users, -- admin user's id that created the client
   company TEXT,
   email TEXT,
   phonenumber TEXT,
@@ -20,7 +20,7 @@ CREATE TABLE deadlines (
   id SERIAL PRIMARY KEY,
   client_id INTEGER REFERENCES clients,
   deadline DATE,
-  delivered BOOLEAN
+  delivered BOOLEAN  -- not in use ?
 );
 
 SET TIME ZONE 'Europe/Helsinki';
@@ -31,10 +31,11 @@ CREATE TABLE files (
   name TEXT,
   path TEXT,
   date TIMESTAMP WITH TIME ZONE,
-  delete_date DATE,
-  deleted_by INTEGER REFERENCES users
+  delete_date DATE, -- date when file will be deleted from trash
+  deleted_by INTEGER REFERENCES users -- id of the user that deleted the file
 );
 
+-- Used new/forgotten password link tokens
 CREATE TABLE expired_tokens (
   id SERIAL PRIMARY KEY,
   token TEXT,
