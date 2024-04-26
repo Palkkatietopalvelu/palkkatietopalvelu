@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+// UseDateSelect.js
+import { useState, useCallback } from 'react'
 
-export const DateSelect = (initialValue = []) => {
+export const useDateSelect = (initialValue = []) => {
   const [value, setValue] = useState(initialValue)
 
-  const onChange = setValue
+  const onChange = useCallback((newDates) => {
+    setValue(newDates)
+  }, [])
 
-  const onReset = () => {
-    setValue('')
-  }
+  const onReset = useCallback(() => {
+    setValue([])
+  }, [])
 
   return {
     value,

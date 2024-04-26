@@ -29,7 +29,7 @@ const FileHandlerForm = ({
   updateData,
   showDeadlinesModal,
   setShowDeadlinesModal,
-  DeadlinesModal
+  DeadlinesModal,
 }) => {
   return (
     <div>
