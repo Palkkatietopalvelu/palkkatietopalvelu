@@ -13,3 +13,13 @@
   font-weight: 700;
   line-height: 1.1em;
 }
+
+.filter-width {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .filter-width {
+    width: 100%;
+  }
+}
