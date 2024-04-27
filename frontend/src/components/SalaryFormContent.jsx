@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
 import days from './ReminderInfo'
+import './Styles.css'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -44,6 +45,8 @@ const SalaryFormContent = ({
   daily_allowance_domestic_part_time,
   daily_allowance_foreign,
   absencesTable,
+  visibleAbsenceRows,
+  setVisibleAbsenceRows,
   extra,
   addEmployee,
   employees,
@@ -52,7 +55,7 @@ const SalaryFormContent = ({
   navigate
 }) => {
 
-  const [visibleAbsenceRows, setVisibleAbsenceRows] = useState(3) // manual salary form
+  //const [visibleAbsenceRows, setVisibleAbsenceRows] = useState(3) // manual salary form
 
   const style = {
     width: '90vw',
@@ -83,7 +86,7 @@ const SalaryFormContent = ({
 
   const handleAddEmployee = () => {
     addEmployee()
-    setVisibleAbsenceRows(3)
+    setVisibleAbsenceRows(setVisibleAbsenceRows)
   }
 
   return (<div><br />

@@ -77,6 +77,7 @@ const SalaryForm = () => {
   const absence_reason_10 = useField()
   const absence_compensated_10 = useField()
   const absence_time_period_10 = useField()
+  const [visibleAbsenceRows, setVisibleAbsenceRows] = useState(3)
   const extra = useField()
 
   const calculateWageTotalGross = useCallback(() => {
@@ -183,6 +184,19 @@ const SalaryForm = () => {
       alert('Työntekijän nimi ja palkkajakso ovat pakollisia tietoja.')
       return
     }
+    for (let i = 0; i < absencesTable.length; i++) {
+      let filledRowItems = 0
+      for (let j = 0; j <= 2; j++) {
+        if (absencesTable[i][j].value.trim() === '') {
+          filledRowItems++
+        }
+      }
+      if (filledRowItems === 1 || filledRowItems == 2) {
+        alert(`Poissaolotaulukon riviltä ${i+1} puuttuu tietoja.`)
+        return
+      }
+    }
+    setVisibleAbsenceRows(3)
     let employeeData = {
       employee_name: employee_name.value,
       salary_type: formType === 'monthly' ? 'Kuukausipalkkalainen' : 'Tuntipalkkalainen',
@@ -358,6 +372,8 @@ const SalaryForm = () => {
         daily_allowance_domestic_part_time={daily_allowance_domestic_part_time}
         daily_allowance_foreign={daily_allowance_foreign}
         absencesTable={absencesTable}
+        visibleAbsenceRows={visibleAbsenceRows}
+        setVisibleAbsenceRows={setVisibleAbsenceRows}
         extra={extra}
         addEmployee={addEmployee}
         employees={employees}
