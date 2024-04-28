@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux'
 import Notification from './Notification'
 import InstructionsAdmin from './InstructionsAdmin'
 import InstructionsClient from './InstructionsClient'
+import checkLogin from './CheckLogin'
 
 const Instructions = () => {
   const user = useSelector(({ user }) => user)
 
-  if (!user) {
+  if (!checkLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

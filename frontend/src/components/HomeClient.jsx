@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
 import FileHandler from './FileHandler'
 import DueDateBadge from './DueDateBadge'
+import checkLogin from './CheckLogin'
 
 const HomeClient = () => {
   const dispatch = useDispatch()
@@ -20,7 +21,7 @@ const HomeClient = () => {
       dispatch(getFile())}
   }, [dispatch, user, client])
 
-  if (!user) {
+  if (!checkLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

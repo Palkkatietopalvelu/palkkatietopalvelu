@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { useState } from 'react'
+import checkLogin from './CheckLogin'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -34,7 +35,7 @@ const Trash = () => {
     setShowModal(false)
   }
 
-  if (!user) {
+  if (!checkLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

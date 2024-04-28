@@ -3,9 +3,8 @@ import {
   BrowserRouter as Router,
   Routes, Route
 } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from './reducers/userReducer'
-import { logoutUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'
 import Client from './components/Client'
@@ -29,27 +28,15 @@ import PrivacyPolicy from './components/PrivacyPolicy'
 
 const App = () => {
   const dispatch = useDispatch()
-  const [ isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     dispatch(getUser())
       .then(user => {
         if (user) {
-          setIsLoggedIn(user.exp)
           dispatch(getClients())
         }
       })
   }, [dispatch])
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      console.log(isLoggedIn)
-      setTimeout(() => {
-        dispatch(logoutUser())
-      }, isLoggedIn)
-      setIsLoggedIn(false)
-    }
-  }, [dispatch, isLoggedIn])
 
   return (
     <div className="container">

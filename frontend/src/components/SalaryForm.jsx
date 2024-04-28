@@ -6,6 +6,7 @@ import { useField } from '../hooks'
 import SalaryFormContent from './SalaryFormContent'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
+import checkLogin from './CheckLogin'
 
 const SalaryForm = () => {
   const navigate = useNavigate()
@@ -108,7 +109,7 @@ const SalaryForm = () => {
   ])
 
   useEffect(() => {
-    if (!user) {
+    if (!checkLogin()) {
       navigate('/login')
     } else if (!client || client.id !== urlClientId) {
       console.error('Unauthorized access or client not found.')
