@@ -41,7 +41,7 @@ const Files = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {user.role === 1 && <div>
         <br /><h2> Saapuneet aineistot</h2><hr/>
         <div className="container">
@@ -52,6 +52,7 @@ const Files = () => {
             <br /><br />
           </div>
         </div>
+        <div className='table-responsive'>
         <Table striped>
           <thead>
             <tr>
@@ -93,6 +94,7 @@ const Files = () => {
               )}
           </tbody>
         </Table>
+        </div>
       </div>
       }
     </div>
