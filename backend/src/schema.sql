@@ -19,8 +19,7 @@ CREATE TABLE clients (
 CREATE TABLE deadlines (
   id SERIAL PRIMARY KEY,
   client_id INTEGER REFERENCES clients,
-  deadline DATE,
-  delivered BOOLEAN  -- not in use ?
+  deadline DATE
 );
 
 SET TIME ZONE 'Europe/Helsinki';
