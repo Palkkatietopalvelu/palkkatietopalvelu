@@ -1,7 +1,7 @@
 // ./intsructions (ohjeet, Client)
 import { useSelector } from 'react-redux'
 import React from 'react'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Header = (props) => {
   return (
@@ -18,7 +18,7 @@ const InstructionsClient = () => {
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
   const parts = ['Tiedostojen palautus', 'Tiedostojen poisto', 'Salasanan vaihto']
 
-  if (!checkLogin()) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

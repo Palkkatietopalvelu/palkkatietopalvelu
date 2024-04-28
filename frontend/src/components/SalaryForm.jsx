@@ -6,7 +6,7 @@ import { useField } from '../hooks'
 import SalaryFormContent from './SalaryFormContent'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const SalaryForm = () => {
   const navigate = useNavigate()
@@ -109,9 +109,7 @@ const SalaryForm = () => {
   ])
 
   useEffect(() => {
-    if (!checkLogin()) {
-      navigate('/login')
-    } else if (!client || client.id !== urlClientId) {
+    if (!client || client.id !== urlClientId) {
       console.error('Unauthorized access or client not found.')
       navigate('/')
     }
@@ -241,6 +239,10 @@ const SalaryForm = () => {
     const newEmployees = [...employees]
     newEmployees.splice(index, 1)
     setEmployees(newEmployees)
+  }
+
+  if (!useCheckLogin()) {
+    return ('Et ole kirjautunut sisään')
   }
 
   return (

@@ -6,13 +6,13 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import DueDateBadge from './DueDateBadge'
 import Notification from './Notification'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
 
-  if (!checkLogin()) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

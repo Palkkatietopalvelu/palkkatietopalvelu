@@ -7,7 +7,7 @@ import Notification from './Notification'
 import { Table, Button, Badge } from 'react-bootstrap'
 import FileHandler from './FileHandler'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Client = () => {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Client = () => {
 
   const files = useSelector(({ file }) => file).filter(f => f.owner === id && f.delete_date === null)
 
-  if (!checkLogin()) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import DueDateBadge from './DueDateBadge'
 import { ClientsOrder, ClientsFilter } from './SorterClients'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const HomeAdmin = () => {
   const user = useSelector(({ user }) => user)
@@ -26,7 +26,7 @@ const HomeAdmin = () => {
     }
   }, [clients])
 
-  if (!checkLogin()) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

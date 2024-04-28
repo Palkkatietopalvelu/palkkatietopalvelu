@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../reducers/userReducer'
 
-const checkLogin = () => {
+const useCheckLogin = () => {
   const user = useSelector(({ user }) => user)
   const dispatch = useDispatch()
 
@@ -16,4 +16,4 @@ const checkLogin = () => {
   return true
 }
 
-export default checkLogin
+export default useCheckLogin

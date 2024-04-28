@@ -5,7 +5,7 @@ import { useField } from '../hooks'
 import Togglable from './Togglable'
 import { changePassword } from '../reducers/userReducer'
 import { Form, Button } from 'react-bootstrap'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const PasswordChange = () => {
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const PasswordChange = () => {
   const newPassword = useField()
   const confirmPassword = useField()
 
-  if (!checkLogin()) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

@@ -6,7 +6,7 @@ import { loginUser } from '../reducers/userReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import checkLogin from './CheckLogin'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const LoginForm = () => {
 
   return (
     <div><br />
-      {!checkLogin() && <div>
+      {!useCheckLogin() && <div>
         <h2>Kirjaudu sisään</h2>
         <Notification />
         <Form onSubmit={handleLogin}>
