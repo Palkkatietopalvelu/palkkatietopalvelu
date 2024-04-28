@@ -1,8 +1,7 @@
-# manual reminders page, ./reminders
 import unittest
 import os
 import jwt
-from app import app, mail
+from app import app
 from utilities import client_methods
 from initialize_db import initialize_database
 import json
@@ -27,20 +26,16 @@ class TestMailController(unittest.TestCase):
             "username": "pekka@mail.com", "id": 1, "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
-    def test_get_deadlines(self):
-        with app.test_request_context():
-            response = app.test_client().get("/api/mail", headers=self.headers)
-            self.assertEqual(response.status_code, 200)
-    
-    def test_send_manual_reminder(self):
+    def test_send_sms_reminder_succeeds(self):
         data = {'recipients': [1]}
         with app.test_request_context():
-            response = app.test_client().post("/api/mail", headers=self.headers, json=data)
+            response = app.test_client().post("/api/sms", headers=self.headers, json=data)
             self.assertEqual(response.status_code, 200)
-  
-    def test_send_manual_reminder_invalid_id(self):
-        data = {'recipients': [5]}
+    
+    def test_send_sms_reminder_fails_without_recipient(self):
+        data = {'recipients': []}
         with app.test_request_context():
-            response = app.test_client().post("/api/mail", headers=self.headers, json=data)
-            self.assertEqual(response.status_code, 404)
-
+            response = app.test_client().post("/api/sms", headers=self.headers, json=data)
+            self.assertEqual(response.status_code, 400)
+            res_data = json.loads(response.data.decode('utf-8'))
+            self.assertIn("Valitse vähintään yksi vastaanottaja", res_data["error"])

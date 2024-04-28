@@ -24,7 +24,7 @@ jobs:
                     - 5432:5432
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 
@@ -66,12 +66,15 @@ jobs:
                 cd backend
                 poetry run coverage xml
             - name: Coverage report to Codecov
-              run: bash <(curl -s https://codecov.io/bash)
+              uses: codecov/codecov-action@v4
+              with: 
+                token: ${{ secrets.CODECOV_TOKEN }}
+              
     
     build_frontend:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Set up Node.js
               uses: actions/setup-node@v3
@@ -106,7 +109,7 @@ jobs:
                     - 5432:5432
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Set up Python
               uses: actions/setup-python@v3
@@ -123,7 +126,7 @@ jobs:
                 cd backend
                 poetry install
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Set up Node.js
               uses: actions/setup-node@v3
