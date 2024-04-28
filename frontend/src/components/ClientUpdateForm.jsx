@@ -6,7 +6,7 @@ import { updateClient, deleteClient, updateStatus } from '../reducers/clientsRed
 import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
-import { DateSelect } from '../hooks/DatePicker'
+import { useDateSelect } from '../hooks/DatePicker'
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import days from './ReminderInfo'
@@ -28,7 +28,7 @@ const UpdateClient = () => {
   const email = useField(client ? client.email : '')
   const phonenumber = useField(client ? client.phonenumber : '')
   const bicode = useField(client ? client.bi_code : '')
-  const deadlines = DateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
+  const deadlines = useDateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
   const payperiod = useField(client ? client.payperiod : '')
 
   if (!useCheckLogin()) {
