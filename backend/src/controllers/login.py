@@ -1,12 +1,12 @@
 import os
+import time
+from datetime import datetime, timedelta, timezone
 from flask import request, jsonify
 import jwt
 from werkzeug.security import check_password_hash
 from models.user import User
-from app import app
 from utilities.client_methods import get_status
-from datetime import datetime, timedelta, timezone
-import time
+from app import app
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -22,7 +22,10 @@ def login():
             return jsonify({"error": "Tili on asetettu epäaktiiviseksi."}), 401
         valid_for = timedelta(hours=10)
         expiration_time = datetime.now(timezone.utc) + valid_for
-        user_info = {"username": user.username, "id": user.id, "role": user.role, "exp": expiration_time}
+        user_info = {"username": user.username,
+                     "id": user.id,
+                     "role": user.role,
+                     "exp": expiration_time}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username,
                         "id": user.id, "role": user.role,
