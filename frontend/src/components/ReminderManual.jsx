@@ -85,7 +85,7 @@ const ClientReminder = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {user.role === 1 && <div>
         <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2><hr/>
         <Notification />
@@ -102,6 +102,7 @@ const ClientReminder = () => {
               onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
             />
             <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
+            <div className='table-responsive'>
             <Table striped>
               <thead>
                 <tr>
@@ -130,6 +131,7 @@ const ClientReminder = () => {
                 ))}
               </tbody>
             </Table>
+            </div>
             <Button type="submit" disabled={isSending}>{isSending ? 'Lähetetään...' : 'Lähetä'}</Button>
           </Form.Group>
         </Form>
