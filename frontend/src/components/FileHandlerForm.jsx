@@ -28,7 +28,7 @@ const FileHandlerForm = ({
   MarkAsDeliveredModal,
 }) => {
   return (
-    <div>
+    <div className='container'>
       <br></br>
       <h4>
         Eräpäivän {nextDL} palkkatiedot
@@ -71,6 +71,7 @@ const FileHandlerForm = ({
     </div>}
       <div>
         {files.length > 0 ? (
+          <div className='table-responsive'>
           <Table striped>
             <thead>
               <tr>
@@ -95,6 +96,7 @@ const FileHandlerForm = ({
             <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
               showModal={showModal} setShowModal={setShowModal} />
           </Table>
+          </div>
         ) : (
           <div>Palkkatietoja ei ole vielä ilmoitettu</div>
         )}

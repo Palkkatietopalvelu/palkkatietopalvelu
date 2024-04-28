@@ -34,7 +34,7 @@ const HomeClient = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {user.role === 2 &&
         <div>
           <br /><h2 className='welcome'>Tervetuloa palkkatietopalveluun!</h2><hr />
@@ -43,6 +43,7 @@ const HomeClient = () => {
           <br></br>
           <Notification />
           <h4 className='client'>{client.company}</h4>
+          <div className='table-responsive'>
           <Table striped>
             <tbody key={client.email}>
               <tr><td>Seuraavat eräpäivät</td><td>{client.deadlines.map(date =>
@@ -53,6 +54,7 @@ const HomeClient = () => {
               <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
             </tbody>
           </Table>
+          </div>
           {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
           <br/><br/>
           <h4>Poistetut tiedostot</h4>
