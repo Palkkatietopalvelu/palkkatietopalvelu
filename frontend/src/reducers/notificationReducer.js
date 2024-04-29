@@ -1,3 +1,4 @@
+// virheilmotuksiin liittyviä metodeja
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = []

@@ -1,3 +1,4 @@
+// hae/muokkaa asiakkaan tietoja
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/client'
 import storage from './storage'

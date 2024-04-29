@@ -1,3 +1,4 @@
+// ./client/id/trash (Roskakori)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'

@@ -1,3 +1,4 @@
+// muistutusviestijen lähetys
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/reminders'
 import storage from './storage'

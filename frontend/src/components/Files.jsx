@@ -1,4 +1,4 @@
-// ./files (admin)
+// ./files (admin) Yhteenveto palautetuista tiedostoista
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'

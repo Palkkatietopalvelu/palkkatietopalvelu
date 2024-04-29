@@ -1,4 +1,4 @@
-// ./ (admin ja asiakas)
+// ./ (admin ja asiakas) Yleinen etusivu.
 import { useSelector } from 'react-redux'
 import HomeAdmin from './HomeAdmin'
 import HomeClient from './HomeClient'

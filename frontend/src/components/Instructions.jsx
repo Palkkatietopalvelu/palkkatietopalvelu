@@ -1,4 +1,4 @@
-// instructions (ohjeet)
+// instructions (ohjeet) Yleinen ohjesivu
 import { useSelector } from 'react-redux'
 import Notification from './Notification'
 import InstructionsAdmin from './InstructionsAdmin'

@@ -1,4 +1,4 @@
-// ./mypage (Omat sivut, admin ja asiakas)
+// ./mypage (Asetussivut, admin ja asiakas)
 import { useSelector } from 'react-redux'
 import PasswordChange from './PasswordForm'
 import RegisterForm from './RegisterForm'

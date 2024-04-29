@@ -1,3 +1,4 @@
+// tiedostoihin liittyviä metodeja
 import { createSlice } from '@reduxjs/toolkit'
 import fileService from '../services/files'
 import { notify } from './notificationReducer'

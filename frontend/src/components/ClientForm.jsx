@@ -1,4 +1,4 @@
-// ./client (Lisää asiakas)
+// ./client (Asiakkaan lisäyslomake)
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
 import { addClient } from '../reducers/clientsReducer'

@@ -1,3 +1,4 @@
+// Auttomaattisten muistutuksien asetuselementtejä
 const weekDays = [
   'ma',
   'ti',

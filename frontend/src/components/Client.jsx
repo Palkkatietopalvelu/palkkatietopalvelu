@@ -1,4 +1,4 @@
-// ./client/{client.id} (Asiakaskohtainen sivu)
+// ./client/{client.id} ("asiakkaan tiedot"-sivu. Asiakaskohtainen)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate, Link } from 'react-router-dom'

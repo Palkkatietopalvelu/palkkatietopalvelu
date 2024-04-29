@@ -1,3 +1,4 @@
+// Komponentti muiden komponenttejen näkyvyyden muuttamiseen
 import { useState, useImperativeHandle, forwardRef } from 'react'
 import { Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
