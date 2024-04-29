@@ -8,19 +8,20 @@ import { Table } from 'react-bootstrap'
 import { getFile } from '../reducers/fileReducer'
 import FileHandler from './FileHandler'
 import DueDateBadge from './DueDateBadge'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const HomeClient = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
-  const files = useSelector(({ file }) => file).filter(f => f.owner === client.id && f.delete_date === null)
+  const files = useSelector(({ files }) => files).filter(f => f.owner === client.id && f.delete_date === null)
 
   useEffect(() => {
     if (user && client) {
       dispatch(getFile())}
   }, [dispatch, user, client])
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

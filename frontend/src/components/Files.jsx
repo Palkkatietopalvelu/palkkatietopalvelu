@@ -8,12 +8,13 @@ import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import DueDateBadge from './DueDateBadge'
 import { FilesOrder, FilesFilter } from './SorterFiles'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Files = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const clients = useSelector(({ clients }) => clients)
-  const files = useSelector(({ file }) => file)
+  const files = useSelector(({ files }) => files)
   // files and clients have to be defined without any filters bc they are used in SorterFiles.jsx
   // and otherwise the useEffect gets messed up
   const [filteredFiles, setFilteredFiles] = useState([])
@@ -36,7 +37,7 @@ const Files = () => {
   }, [files, clients, user])
 
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

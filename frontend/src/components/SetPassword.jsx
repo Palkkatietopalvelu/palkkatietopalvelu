@@ -1,4 +1,4 @@
-// ./setpassword/{user.password.hashed} (Aseta uusi salasana, vain asiakkaille)
+// ./setpassword/{user.password.hashed} (Aseta uusi salasana, uusille asiakkaille ensimmäinen salasana, kaikille käyttäjille uusi salasana unohtuneen tilalle)
 import { useDispatch } from 'react-redux'
 import { useField } from '../hooks'
 import { setClientPassword, validateToken, logoutUser } from '../reducers/userReducer'
