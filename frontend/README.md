@@ -51,7 +51,7 @@ Tiedostot sisältävät metodit jotka kutsuvat sovelluksen backendiä
 
 ### Tiedostot
 
-index.html, src/App.jsx, src/main.jsx ja store.js tiedostot kokoavat sovelluksen eri komponentit yhdeksi sivuksi
+index.html, src/App.jsx, src/main.jsx ja store.js tiedostot kokoavat sovelluksen eri komponentit yhdeksi sivustoksi
 
 .eslint-tiedostot sisältävät lint configuraatiota
 

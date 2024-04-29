@@ -1,4 +1,4 @@
-//tilitoinmistokäyttäjän tietojan hakeminen ja muokkaus
+// tilitoinmistokäyttäjän tietojan hakeminen ja muokkaus
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/users'
 import storage from './storage'

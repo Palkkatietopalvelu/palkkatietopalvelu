@@ -51,29 +51,29 @@ Salaista avainta käytetään esimerkiksi käyttäjien salasanojen enkyproinniss
 
 Nämä ympäristömuuttujat mahdollistavat sähköpostiviestien lähettämisen smtp-palveluista.
 
-joskus nämä ympäristömuuttujat ei toimi lainausmerkkejen sisällä, vaan pelkästään heittomerkeissä
+Joskus näiden ympäristömmuutujien arvot ei toimi lainausmerkkejen sisällä, vaan pelkästään heittomerkeissä.
 
 ```SMS_PASSWORD```
 
-Tekstari.fi käyttäjän salasana. sovellus on kovakoodattu käyttämään kyseistä palvelua tekstiviestien lähettäömistä varten
+Tekstari.fi käyttäjän salasana. sovellus on kovakoodattu käyttämään kyseistä palvelua tekstiviestien lähettämistä varten.
 
 ```CORS_ORIGINS```
 
-Cors-suojaus määrittää mistä osoitteista sovelluksen backendiä/apia voi kutsua. Tuotannossa tämän kuuluisi olla frontendin osoite
+Cors-suojaus määrittää mistä osoitteista sovelluksen backendiä/apia voi kutsua. Tuotannossa tämän kuuluisi olla frontendin osoite, jos arvo on "*", sovellus ei ole suojattu.
 
 #### Tietokanta:
 
 ```ADMIN_USERNAME``` & ```ADMIN_PASSWORD```
 
-Tietokantaa alustaessa käyttäen poetryn dbupdate komentoa, sovellukseen lisätään käyttäjätunnukset näillä tiedoilla. Sovelluksessa ei voi luoda käyttäjiä kirjautumisen ulkopuolelta, joten ensimmäiset tunnukset pitää syöttää suoraan tietokantaan.
+Tietokantaa alustaessa käyttäen poetryn dbupdate komentoa, sovellukseen lisätään käyttäjätunnukset näillä arvoilla. Sovelluksessa ei voi luoda käyttäjiä kirjautumatta, joten ensimmäiset tunnukset pitää syöttää suoraan tietokantaan.
 
 #### Testit:
 
 ```TEST_DATABASE_URL```
-Tietokanta jota käytetään yksikkö- ja robottesteissä. Tämä tietomanta tyhjennetään testejä varten, joten älä käytä tietokantaa missä on mitään tärkeätä
+Tietokanta jota käytetään yksikkö- ja robottesteissä. Tämä tietokanta tyhjennetään testejä varten, joten älä käytä tietokantaa missä on mitään tärkeätä.
 
 ```FLASK_ENV```
-Tietokannan suojaamiseksi testejen suoritaminen sallitaan vain jos tämän ympäristömuuttujan arvo on "development"
+Tietokannan suojaamiseksi, testejen suoritaminen sallitaan vain jos tämän ympäristömuuttujan arvo on "development".
 
 ### Kansiorakenne
 
@@ -120,7 +120,7 @@ AppLibrary.py sisältää metodeja joita tarvitaan testejen suorittamiseen
 
 check_env.py Tarkistaa onko flask_env development
 
-config.py sisältää konfiguraatiota, kuten tiedostojen tallennusijainnin osoitteen
+config.py sisältää konfiguraatiota robottestejä varten
 
 daily_scheduler.py sisältää toimintoja joita sovellus ajaa kerran päivässä
 

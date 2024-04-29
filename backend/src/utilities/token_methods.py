@@ -1,4 +1,4 @@
-"""Metodit, liittyen tokeneihin"""
+"""Metodit, jotka liittyvät tokeneihin"""
 import os
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.sql import text
