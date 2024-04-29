@@ -40,7 +40,7 @@ const Trash = () => {
     return
   } else if (client.email===user.username || client.user_id===user.id) {
     return (
-      <div>
+      <div className='container'>
         {user.role === 1 && <div><br />
           <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
             style={{ marginBottom: '20px' }}>Takaisin asiakkaan tietoihin</Button>
@@ -48,6 +48,7 @@ const Trash = () => {
         <h4>Roskakori</h4>
         <p>Tiedostot poistetaan roskakorista automaattisesti viikon kuluttua niiden siirtämisestä roskakoriin</p>
         <Notification />
+        <div className='table-responsive'>
         <Table striped>
           <thead>
             <tr>
@@ -73,6 +74,7 @@ const Trash = () => {
           <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
             showModal={showModal} setShowModal={setShowModal} />
         </Table>
+        </div>
       </div>
     )}
   else {
