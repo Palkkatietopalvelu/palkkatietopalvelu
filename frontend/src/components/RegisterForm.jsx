@@ -5,6 +5,7 @@ import { useField } from '../hooks'
 import { registerUser } from '../reducers/userReducer'
 import Togglable from './Togglable'
 import { Form, Button } from 'react-bootstrap'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const RegisterForm = () => {
   const dispatch = useDispatch()
@@ -33,7 +34,7 @@ const RegisterForm = () => {
     password.onReset()
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

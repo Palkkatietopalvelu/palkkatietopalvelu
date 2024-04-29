@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux'
 import HomeAdmin from './HomeAdmin'
 import HomeClient from './HomeClient'
 import LoginForm from './LoginForm'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const HomePage = () => {
   const user = useSelector(({ user }) => user)
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return <LoginForm />
   }
 

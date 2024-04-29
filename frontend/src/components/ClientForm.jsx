@@ -8,6 +8,7 @@ import { useDateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
 import { useState } from 'react'
 import days from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -24,7 +25,7 @@ const ClientForm = () => {
   const deadlines = useDateSelect()
   const payperiod = useField()
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 
