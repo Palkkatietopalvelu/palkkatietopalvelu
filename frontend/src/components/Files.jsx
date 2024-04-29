@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import DueDateBadge from './DueDateBadge'
 import { FilesOrder, FilesFilter } from './SorterFiles'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Files = () => {
   const dispatch = useDispatch()
@@ -36,7 +37,7 @@ const Files = () => {
   }, [files, clients, user])
 
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

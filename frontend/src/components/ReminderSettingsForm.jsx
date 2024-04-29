@@ -5,6 +5,7 @@ import { notify } from '../reducers/notificationReducer'
 import settingsService from '../services/reminderSettings'
 import reminderInfoModule from './ReminderInfo'
 import ReminderFormFields from './ReminderSettingsFormFields'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, relativeDays, deltaList } = reminderInfoModule
 
@@ -38,7 +39,7 @@ const ReminderSettingsForm = () => {
     setChecked(nextChecked)
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 
