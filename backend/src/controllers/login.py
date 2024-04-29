@@ -21,5 +21,5 @@ def login():
         user_info = {"username": user.username, "id": user.id, "role": user.role}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username,
-                        "id": user.id, "role": user.role}), 200
+                        "id": user.id, "role": user.role, "two_fa": True}), 200
     return jsonify({"error": "Väärä käyttäjätunnus tai salasana"}), 401

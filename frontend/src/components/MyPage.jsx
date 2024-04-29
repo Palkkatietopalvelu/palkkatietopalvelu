@@ -6,6 +6,7 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import DueDateBadge from './DueDateBadge'
 import Notification from './Notification'
+import TwoFactor from './TwoFactor'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
@@ -21,6 +22,8 @@ const MyPage = () => {
       <h4 style={{ marginTop: '20px' }}>Käyttäjätilin asetukset</h4>
       <p>Käyttäjätunnus: {user.username}</p>
       <Notification />
+      <TwoFactor />
+      <br />
       <PasswordChange />
       {user.role === 1 && <div>
         <RegisterForm /> </div>}
