@@ -9,7 +9,7 @@ const store = configureStore({
     user: userReducer,
     notification: notificationReducer,
     clients: clientsReducer,
-    file: fileReducer
+    files: fileReducer
   }
 })
 

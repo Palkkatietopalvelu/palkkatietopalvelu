@@ -141,9 +141,9 @@ def add_deadlines(deadlines, client_id):
     deadlines = json.loads(deadlines)
     for d in deadlines:
         d = date.fromtimestamp(d/1000)
-        sql = text("""INSERT INTO deadlines (deadline, client_id, delivered)
-                   VALUES (:d, :client_id, :delivered)""")
-        db.session.execute(sql, {"d": d, "client_id": client_id, "delivered": False})
+        sql = text("""INSERT INTO deadlines (deadline, client_id)
+                   VALUES (:d, :client_id)""")
+        db.session.execute(sql, {"d": d, "client_id": client_id})
 
 def delete_deadlines(client_id):
     sql = text("""DELETE FROM deadlines WHERE client_id=:client_id""")
@@ -159,7 +159,6 @@ def delete_files(client_id):
 def get_next_deadlines():
     sql = text("""SELECT MIN(deadline) AS next_deadline,
                client_id FROM deadlines
-               WHERE NOT delivered
                GROUP BY client_id ORDER BY next_deadline""")
     result = db.session.execute(sql)
     return result.fetchall()

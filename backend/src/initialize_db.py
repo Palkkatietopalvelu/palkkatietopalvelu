@@ -38,8 +38,7 @@ def create_tables():
         CREATE TABLE deadlines (
             id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients,
-            deadline DATE,
-            delivered BOOLEAN
+            deadline DATE
         );
         """))
 

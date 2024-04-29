@@ -21,7 +21,7 @@ const Client = () => {
       dispatch(getFile())}
   }, [dispatch, id, user])
 
-  const files = useSelector(({ file }) => file).filter(f => f.owner === id && f.delete_date === null)
+  const files = useSelector(({ files }) => files).filter(f => f.owner === id && f.delete_date === null)
 
   if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
