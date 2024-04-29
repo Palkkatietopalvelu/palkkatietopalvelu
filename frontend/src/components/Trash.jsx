@@ -8,6 +8,7 @@ import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { useState } from 'react'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const Trash = () => {
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
-  const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
+  const files = useSelector(({ files }) => files).filter(f => f.delete_date !== null && f.deleted_by === user.id)
   const [showModal, setShowModal] = useState(false)
   const [varyingFileId, setVaryingFileId] = useState(0)
   const [varyingFileName, setVaryingFileName] = useState('')
@@ -35,7 +36,7 @@ const Trash = () => {
     setShowModal(false)
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
