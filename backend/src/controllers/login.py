@@ -1,3 +1,4 @@
+"""Reititys kirjautumiselle"""
 import os
 from flask import request, jsonify
 import jwt

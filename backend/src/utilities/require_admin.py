@@ -1,3 +1,4 @@
+"""Metodi, joka tarkistaa käytäjän oikeudet"""
 import os
 from functools import wraps
 from flask import request

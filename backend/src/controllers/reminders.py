@@ -1,3 +1,4 @@
+"""Reititys automaattimuistutuksille"""
 from flask import request
 from utilities.sched_setting_methods import get_readable_settings, save_settings
 from utilities.require_login import require_login

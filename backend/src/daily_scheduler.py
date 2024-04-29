@@ -1,3 +1,4 @@
+"""Metodit, jotka ajetaan kerran päivässä"""
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy.sql import text

@@ -1,3 +1,4 @@
+"""Metodit, liittyen käyttäjiin (tilitoimisto ja asiakas)"""
 import os
 import re
 from datetime import datetime, timedelta

@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät asiakkaisiin"""
 import re
 from datetime import date
 import json
