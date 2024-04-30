@@ -1,4 +1,4 @@
-// Ilmoituselemennti. Tulostaa virheviestejä
+// Ilmoituselementti
 import { useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 

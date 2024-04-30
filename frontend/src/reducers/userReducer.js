@@ -1,4 +1,4 @@
-// Tilitoimistokäyttäjiin liittyviä metodeja
+// käyttäjiin liittyviä metodeja
 import { createSlice } from '@reduxjs/toolkit'
 import userService from '../services/user'
 import setpasswordService from '../services/setpassword'

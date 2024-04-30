@@ -20,7 +20,7 @@
       MAIL_PASSWORD="lähetyssähköpostin_salasana"
       MAIL_SERVER ='käyttämäsi_smtp_palvelin'
       MAIL_PORT='smtp palvelimen portti'
-      SMS_PASSWORD="Tekstari.fi slasana"
+      SMS_PASSWORD="Tekstari.fi salasana"
       CORS_ORIGINS="*"
       ```
       

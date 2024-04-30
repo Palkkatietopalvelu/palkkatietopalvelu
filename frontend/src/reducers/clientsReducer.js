@@ -1,4 +1,4 @@
-//asiakaskäyttäjiin liittyviä metodeja
+// asiakkaisiin liittyviä metodeja
 import { createSlice } from '@reduxjs/toolkit'
 import clientService from '../services/client'
 import clientsService from '../services/clients'

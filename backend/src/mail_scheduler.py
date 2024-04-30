@@ -1,4 +1,4 @@
-"""Auttomaattisten muistutuksien lähetys"""
+"""Automaattisten muistutuksien lähetys"""
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from utilities.reminder_methods import send_email_reminders, send_sms_reminders

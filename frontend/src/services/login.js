@@ -1,4 +1,4 @@
-// tarkista kirjautumistiedot
+// tarkista kirjautumistiedot; backend/src/controllers/login.py
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/login'
 

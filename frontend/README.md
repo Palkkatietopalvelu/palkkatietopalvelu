@@ -1,6 +1,6 @@
-# Frontend palkkatietopalvelusovellukselle
+# Frontend palkkatietosovellukselle
 
-Frontend on toteutettu Vite Reactilla
+Frontend on toteutettu Vite Reactilla.
 
 ### Käynnistys ja komennot:
 
@@ -25,13 +25,13 @@ npm run lint -- --fix
 
 ```VITE_BACKEND_URL```
 
-Kyseinen ympäriströmuuttuja määrittää sovelluksen backendin osoitteen. Jos sovellus on ajettu paikallisesti, osoite on todennäköisesti localhostin portti 5000
+Kyseinen ympäristömuuttuja määrittää sovelluksen backendin osoitteen. Jos sovellus on ajettu paikallisesti, osoite on todennäköisesti localhostin portti 5000.
 
 ### Kansiorakenne
 
 #### /assets
 
-kansiossa on sovelluksen käyttämät kuvat, kuten reilun logo
+Kansiossa on sovelluksen käyttämät kuvat ja css-tiedostot
 
 #### /src/components
 
@@ -39,24 +39,24 @@ Tiedostot ovat sivun eri komponentteja ja toimintoja, kuten kaikki sivut, lomakk
 
 #### /src/hooks
 
-Tiedostot käyttävät reactin "hook" toimintoja
+Tiedostot käyttävät Reactin hooks-toimintoja
 
 #### /src/reducers
 
-Tiedostot sisältävät sovelluksen eri osiin liityviä metodeja
+Tiedostot sisältävät sovelluksen eri osiin liittyviä metodeja
 
 #### /src/services
 
-Tiedostot sisältävät metodit jotka kutsuvat sovelluksen backendiä
+Tiedostot sisältävät metodit, jotka kutsuvat sovelluksen backendiä
 
 ### Tiedostot
 
-index.html, src/App.jsx, src/main.jsx ja store.js tiedostot kokoavat sovelluksen eri komponentit yhdeksi sivustoksi
+<b>index.html</b>, <b>src/App.jsx</b>, <b>src/main.jsx</b> ja <b>store.js</b> tiedostot kokoavat sovelluksen eri komponentit yhdeksi sivustoksi
 
-.eslint-tiedostot sisältävät lint configuraatiota
+<b>.eslint</b>-tiedostot sisältävät lint-konfiguraatiot
 
-Dockerfile määrittää miten frontend kontitetaan dockerissa
+<b>Dockerfile</b> määrittää, miten frontend kontitetaan dockerissa
 
-package-tiedostot sisältävät frontendin käyttämät kirjastot ja komennot, kuten 'npm run' 
+<b>package</b>-tiedostot sisältävät frontendin käyttämät kirjastot ja komennot, kuten 'npm run'
 
-vite.config.js tiedosto määrittää vite-konfiguraatiot
+<b>vite.config.js</b> tiedosto määrittää vite-konfiguraatiot

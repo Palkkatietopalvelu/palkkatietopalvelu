@@ -1,6 +1,6 @@
 # Backend palkkatietosovellukselle
 
-Backend on toteutettu flaskilla
+Backend on toteutettu Flaskilla.
 
 ### Käynnistys ja komennot:
 ```
@@ -41,25 +41,25 @@ poetry run invoke revision
 
 ```DATABASE_URL```
 
-Postgresql-tietokanta on erillinen prosessi, ja tietokannan muokkaamista varten pitää olla yhteys tietokantaan. osoitteen määrittelemiseen tietoa [täällä](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING)
+Postgresql-tietokanta on erillinen prosessi, ja tietokannan muokkaamista varten pitää olla yhteys tietokantaan. Osoitteen määrittelemiseen tietoa [täällä](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING).
 
 ```SECRET_KEY```
 
-Salaista avainta käytetään esimerkiksi käyttäjien salasanojen enkyproinnissa. 
+Salaista avainta käytetään esimerkiksi käyttäjien salasanojen enkryptaamisessa.
 
 ```MAIL_USERNAME```, ```MAIL_PASSWORD```, ```MAIL_SERVER``` & ```MAIL_PORT```
 
 Nämä ympäristömuuttujat mahdollistavat sähköpostiviestien lähettämisen smtp-palveluista.
 
-Joskus näiden ympäristömmuutujien arvot ei toimi lainausmerkkejen sisällä, vaan pelkästään heittomerkeissä.
+Joskus näiden ympäristömuuttujien arvot eivät toimi lainausmerkkien sisällä, vaan pelkästään heittomerkeissä.
 
 ```SMS_PASSWORD```
 
-Tekstari.fi käyttäjän salasana. sovellus on kovakoodattu käyttämään kyseistä palvelua tekstiviestien lähettämistä varten.
+Tekstari.fi käyttäjän salasana. Sovellus on kovakoodattu käyttämään kyseistä palvelua tekstiviestien lähettämistä varten.
 
 ```CORS_ORIGINS```
 
-Cors-suojaus määrittää mistä osoitteista sovelluksen backendiä/apia voi kutsua. Tuotannossa tämän kuuluisi olla frontendin osoite, jos arvo on "*", sovellus ei ole suojattu.
+Cors-suojaus määrittää, mistä osoitteista sovelluksen backendiä/apia voi kutsua. Tuotannossa tämän kuuluisi olla frontendin osoite, jos arvo on "*", sovellus ei ole suojattu.
 
 #### Tietokanta:
 
@@ -70,67 +70,69 @@ Tietokantaa alustaessa käyttäen poetryn dbupdate komentoa, sovellukseen lisät
 #### Testit:
 
 ```TEST_DATABASE_URL```
-Tietokanta jota käytetään yksikkö- ja robottesteissä. Tämä tietokanta tyhjennetään testejä varten, joten älä käytä tietokantaa missä on mitään tärkeätä.
+
+Tietokanta, jota käytetään yksikkö- ja robottesteissä. Tämä tietokanta tyhjennetään testejä varten, joten älä käytä tietokantaa, jossa on jotain tärkeää.
 
 ```FLASK_ENV```
-Tietokannan suojaamiseksi, testejen suoritaminen sallitaan vain jos tämän ympäristömuuttujan arvo on "development".
+
+Tietokannan suojaamiseksi, testien suorittaminen sallitaan vain, jos tämän ympäristömuuttujan arvo on "development".
 
 ### Kansiorakenne
 
 #### /file_storage
 Tänne tallennetaan asiakaskäyttäjien palauttamat aineistot
 
-#### /src/routes
-Tiedostot hallitsevat sovelluksen eri osotteita
+#### /src/controllers
+Tiedostot hallitsevat sovelluksen eri osoitteita
 
 #### /src/migrations
-Tiedostot liittyvät sovelluksen tietokannan versiohallintaan alembicilla
+Tiedostot liittyvät sovelluksen tietokannan versionhallintaan alembicilla
 
 #### /src/models
-Tiedostot sisältävät malleja jotka helpottavat joidenkin tietokannan elementtejen hallitsemisessa
+Tiedostot sisältävät malleja, jotka helpottavat joidenkin tietokannan elementtejen hallitsemisessa
 
 #### /src/sched_settings
-Tiedostot sisältävät auttomattisten muistutusten asetukset
+Tiedostot sisältävät automaattisten muistutusten asetukset
 
 #### /src/tests
-Tiedostot sovelluksen robot-ja yksikkötesteihin liittyen
+Tiedostot sovelluksen robot- ja yksikkötesteihin liittyen
 
 #### /src/utilities
 Tiedostot sisältävät metodeja backendin toimintoihin liittyen, kuten tietokannan tietojen hallitsemista
 
 ### Tiedostot
 
-.coveragerc määrittää mitkä tiedostot ei sisälly coverageen
+<b>.coveragerc</b> määrittää, mitkä tiedostot eivät sisälly coverageen
 
-.pylintrc määrittää mitkä tiedostot ei sisälly linttiin
+<b>.pylintrc</b> määrittää, mitkä tiedostot eivät sisälly linttiin
 
-Dockerfile määrittää miten backend kontitetaan dockerissa
+<b>Dockerfile</b> määrittää, miten backend kontitetaan dockerissa
 
-poetry.lock & pyproject.toml sisältävät backendin käyttämät kirjastot
+<b>poetry.lock</b> & <b>pyproject.toml</b> sisältävät backendin käyttämät kirjastot
 
-pytest.ini määrittää mitä .env tiedostoa käytetään testejä ajaessa
+<b>pytest.ini</b> määrittää, mitä .env tiedostoa käytetään testejä ajaessa
 
-tasks.py sisältää sovelluksen poetry-komennot, kuten 'poetry run invoke start'
+<b>tasks.py</b> sisältää sovelluksen poetry-komennot, kuten 'poetry run invoke start'
 
 
 #### /src
-app.py on backendin juuritiedosto
+<b>app.py</b> on backendin juuritiedosto
 
-AppLibrary.py sisältää metodeja joita tarvitaan testejen suorittamiseen
+<b>AppLibrary.py</b> sisältää metodeja, joita tarvitaan testien suorittamiseen
 
-check_env.py Tarkistaa onko flask_env development
+<b>check_env.py</b> tarkistaa, onko ```FLASK_ENV="development"```
 
-config.py sisältää konfiguraatiota robottestejä varten
+<b>config.py</b> sisältää konfiguraatiota robottestejä varten
 
-daily_scheduler.py sisältää toimintoja joita sovellus ajaa kerran päivässä
+<b>daily_scheduler.py</b> sisältää toimintoja, joita sovellus ajaa kerran päivässä
 
-db.py sisältää yhteyden sovelluksen tietokantaan
+<b>db.py</b> sisältää yhteyden sovelluksen tietokantaan
 
-initialize_db.py alustaa tietokannan. Tätä käytetään testeissä
+<b>initialize_db.py</b> alustaa tietokannan; käytetään testeissä
 
-mail_schedjuler.py sisälttää metodeja liittyen automaattisiin muistutukssin
+<b>mail_scheduler.py</b> sisältää metodeja liittyen automaattisiin muistutuksiin
 
-schema.sql sisältää sovelluksen tietokannan rakenteen
+<b>schema.sql</b> sisältää sovelluksen tietokannan rakenteen
 
 
 

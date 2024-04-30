@@ -1,4 +1,4 @@
-// Auttomaattisten muistutuksien asetusten elementit
+// Automaattisten muistutuksien asetusten elementit
 const weekDays = [
   'ma',
   'ti',

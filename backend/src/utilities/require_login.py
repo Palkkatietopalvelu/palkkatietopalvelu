@@ -1,4 +1,4 @@
-"""Metodi joka tarkistaa onko käyttäjä kirjautunut"""
+"""Metodi, joka tarkistaa onko käyttäjä kirjautunut"""
 import os
 from functools import wraps
 from flask import request, jsonify
