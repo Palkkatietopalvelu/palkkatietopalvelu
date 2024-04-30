@@ -4,11 +4,10 @@ import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { isPast } from 'date-fns'
 
-const ClientsOrder = ({ clients, setFilteredCompanies, setSortingCriteria }) => {
-  /* alphabetic, due date, late, not late, deactivated
-    sets the text in the menu box
-    alphabetical order is the default */
-  const [sortedBy, setSortedBy] = useState('Aakkosjärjestys')
+const ClientsOrder = ({ 
+  clients, 
+  setFilteredCompanies, setSortingCriteria, 
+  sortedBy, setSortedBy }) => {
 
   const showInactive = () => {
     setSortingCriteria('company') // alphabetical order
@@ -27,15 +26,13 @@ const ClientsOrder = ({ clients, setFilteredCompanies, setSortingCriteria }) => 
     setSortingCriteria('date')
     setSortedBy('Ei myöhässä')
     setFilteredCompanies(clients.filter(client =>
-      client.deadlines[0] && !isPast(client.deadlines[0]) &&
-      client.active))
+      client.deadlines[0] && !isPast(client.deadlines[0])))
   }
 
   const orderByDate = () => {
     setSortingCriteria('date')
     setSortedBy('Eräpäivä')
-    setFilteredCompanies(clients.filter(client => client.active &&
-      client.deadlines[0]))
+    setFilteredCompanies(clients.filter(client => client.deadlines[0]))
   }
 
   const showAllCompanies = () => {
@@ -104,7 +101,7 @@ const ClientsFilter = ({ setFilterByUser }) => {
   dateToggle.displayName = 'dateToggle'
 
   return (
-    <Dropdown id='dropdown_files_sorter'>
+    <Dropdown id='dropdown_clients_sorter'>
       <Dropdown.Toggle as={dateToggle}>
         <b>{filteredBy}</b>
       </Dropdown.Toggle>
