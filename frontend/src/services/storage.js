@@ -1,3 +1,4 @@
+// käyttäjän evästeiden hallitseminen
 const KEY = 'loggedAppUser'
 
 const saveUser = (user) => {

@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät automaattisten muistutuksien asetuksiin"""
 import json
 from pathlib import Path
 #Pathlib mahdollistaa suhteellisen tiedostopolun käyttämisen tiedostoja avatessa
