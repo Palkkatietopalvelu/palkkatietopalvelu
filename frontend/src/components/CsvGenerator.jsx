@@ -120,131 +120,38 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
 
   str += 'POISSAOLOT' + '\r\n'
   str += 'Palkansaaja,Syy,Palkallinen,Ajalta\n'
-  for (let i = 0; i < array.length; i++) {
-    let line = ''
 
-    if (array[i].absence_reason_1 !== undefined &&
-      array[i].absence_compensated_1 !== undefined &&
-      array[i].absence_time_period_1 !== undefined) {
-      totals.absence_reason_1 += (array[i].absence_reason_1 || '')
-      totals.absence_compensated_1 += (array[i].absence_compensated_1 || '')
-      totals.absence_time_period_1 += (array[i].absence_time_period_1 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_1 || ''}",`
-      line += `"${array[i].absence_compensated_1 || ''}",`
-      line += `"${array[i].absence_time_period_1 || ''}",\n`
+  // Loop through each employee
+  array.forEach(employee => {
+    let hasAbsences = false
+    let employeeLines = ''
+
+    // Loop through each possible absence
+    for (let i = 1; i <= 10; i++) {
+      const reason = employee[`absence_reason_${i}`]
+      const compensated = employee[`absence_compensated_${i}`]
+      const period = employee[`absence_time_period_${i}`]
+
+      if (reason !== undefined && compensated !== undefined && period !== undefined) {
+        hasAbsences = true
+        // Update totals
+        totals[`absence_reason_${i}`] += (reason || '')
+        totals[`absence_compensated_${i}`] += (compensated || '')
+        totals[`absence_time_period_${i}`] += (period || '')
+
+        employeeLines += `"${employee.employee_name}",`
+        employeeLines += `"${reason || ''}",`
+        employeeLines += `"${compensated || ''}",`
+        employeeLines += `"${period || ''}",\n`
+      }
     }
 
-    if (array[i].absence_reason_2 !== undefined &&
-      array[i].absence_compensated_2 !== undefined &&
-      array[i].absence_time_period_2 !== undefined) {
-      totals.absence_reason_2 += (array[i].absence_reason_2 || '')
-      totals.absence_compensated_2 += (array[i].absence_compensated_2 || '')
-      totals.absence_time_period_2 += (array[i].absence_time_period_2 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_2 || ''}",`
-      line += `"${array[i].absence_compensated_2 || ''}",`
-      line += `"${array[i].absence_time_period_2 || ''}",\n`
+    if (!hasAbsences) {
+      employeeLines += `"${employee.employee_name}","Ei syötettyjä poissaoloja",,,\n`
     }
 
-    if (array[i].absence_reason_3 !== undefined &&
-      array[i].absence_compensated_3 !== undefined &&
-      array[i].absence_time_period_3 !== undefined) {
-      totals.absence_reason_3 += (array[i].absence_reason_3 || '')
-      totals.absence_compensated_3 += (array[i].absence_compensated_3 || '')
-      totals.absence_time_period_3 += (array[i].absence_time_period_3 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_3 || ''}",`
-      line += `"${array[i].absence_compensated_3 || ''}",`
-      line += `"${array[i].absence_time_period_3 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_4 !== undefined &&
-      array[i].absence_compensated_4 !== undefined &&
-      array[i].absence_time_period_4 !== undefined) {
-      totals.absence_reason_4 += (array[i].absence_reason_4 || '')
-      totals.absence_compensated_4 += (array[i].absence_compensated_4 || '')
-      totals.absence_time_period_4 += (array[i].absence_time_period_4 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_4 || ''}",`
-      line += `"${array[i].absence_compensated_4 || ''}",`
-      line += `"${array[i].absence_time_period_4 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_5 !== undefined &&
-      array[i].absence_compensated_5 !== undefined &&
-      array[i].absence_time_period_5 !== undefined) {
-      totals.absence_reason_5 += (array[i].absence_reason_5 || '')
-      totals.absence_compensated_5 += (array[i].absence_compensated_5 || '')
-      totals.absence_time_period_5 += (array[i].absence_time_period_5 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_5 || ''}",`
-      line += `"${array[i].absence_compensated_5 || ''}",`
-      line += `"${array[i].absence_time_period_5 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_6 !== undefined &&
-      array[i].absence_compensated_6 !== undefined &&
-      array[i].absence_time_period_6 !== undefined) {
-      totals.absence_reason_6 += (array[i].absence_reason_6 || '')
-      totals.absence_compensated_6 += (array[i].absence_compensated_6 || '')
-      totals.absence_time_period_6 += (array[i].absence_time_period_6 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_6 || ''}",`
-      line += `"${array[i].absence_compensated_6 || ''}",`
-      line += `"${array[i].absence_time_period_6 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_7 !== undefined &&
-      array[i].absence_compensated_7 !== undefined &&
-      array[i].absence_time_period_7 !== undefined) {
-      totals.absence_reason_7 += (array[i].absence_reason_7 || '')
-      totals.absence_compensated_7 += (array[i].absence_compensated_7 || '')
-      totals.absence_time_period_7 += (array[i].absence_time_period_7 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_7 || ''}",`
-      line += `"${array[i].absence_compensated_7 || ''}",`
-      line += `"${array[i].absence_time_period_7 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_8 !== undefined &&
-      array[i].absence_compensated_8 !== undefined &&
-      array[i].absence_time_period_8 !== undefined) {
-      totals.absence_reason_8 += (array[i].absence_reason_8 || '')
-      totals.absence_compensated_8 += (array[i].absence_compensated_8 || '')
-      totals.absence_time_period_8 += (array[i].absence_time_period_8 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_8 || ''}",`
-      line += `"${array[i].absence_compensated_8 || ''}",`
-      line += `"${array[i].absence_time_period_8 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_9 !== undefined &&
-      array[i].absence_compensated_9 !== undefined &&
-      array[i].absence_time_period_9 !== undefined) {
-      totals.absence_reason_9 += (array[i].absence_reason_9 || '')
-      totals.absence_compensated_9 += (array[i].absence_compensated_9 || '')
-      totals.absence_time_period_9 += (array[i].absence_time_period_9 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_9 || ''}",`
-      line += `"${array[i].absence_compensated_9 || ''}",`
-      line += `"${array[i].absence_time_period_9 || ''}",\n`
-    }
-
-    if (array[i].absence_reason_10 !== undefined &&
-      array[i].absence_compensated_10 !== undefined &&
-      array[i].absence_time_period_10 !== undefined) {
-      totals.absence_reason_10 += (array[i].absence_reason_10 || '')
-      totals.absence_compensated_10 += (array[i].absence_compensated_10 || '')
-      totals.absence_time_period_10 += (array[i].absence_time_period_10 || '')
-      line += `"${array[i].employee_name}",`
-      line += `"${array[i].absence_reason_10 || ''}",`
-      line += `"${array[i].absence_compensated_10 || ''}",`
-      line += `"${array[i].absence_time_period_10 || ''}",\n`
-    }
-
-    str += line
-  }
+    str += employeeLines
+  })
   str += '\r\n'
   return str
 }
