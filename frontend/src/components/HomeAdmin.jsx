@@ -15,7 +15,7 @@ const HomeAdmin = () => {
   const [filteredCompanies, setFilteredCompanies] = useState([])  // mitkä asiakkaat näytetään
   const [sortedBy, setSortedBy] = useState('Aakkosjärjestys')     // dropdown menu filtterin teksti, filtterikategoria
   const [sortingCriteria, setSortingCriteria] = useState('company')  // ei näy käyttäjälle, järjestelee asiakkaat (jat.)
-      // (jat.)  company = aakkosjärjestykseen tai date = eräpäivän mukaan
+  // (jat.)  company = aakkosjärjestykseen tai date = eräpäivän mukaan
   const [filterByUser, setFilterByUser] = useState(true)  // omat / kaikki asiakkaat
   const englishToDigitsMonths = { 'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
     'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12' }
@@ -34,11 +34,11 @@ const HomeAdmin = () => {
 
   const handleCompanySearch = (event) => {
     event.target.value === ''
-        // jos textbox filtteri on tyhjä, filtteröidään asiakkaat dropdown menu filtterin mukaisesti
+    // jos textbox filtteri on tyhjä, filtteröidään asiakkaat dropdown menu filtterin mukaisesti
       ? setFilteredCompanies(clients.filter(client => matchesFilter(client)))
-        // jos textbox filtterillä yritetään etsiä asiakasta, tarkastetaan mikä filtteri dropdown menussa on
-        // ja etsitään asiakasta niistä vaihtoehdoista
-      : setFilteredCompanies(clients.filter(client => matchesFilter(client) && 
+    // jos textbox filtterillä yritetään etsiä asiakasta, tarkastetaan mikä filtteri dropdown menussa on
+    // ja etsitään asiakasta niistä vaihtoehdoista
+      : setFilteredCompanies(clients.filter(client => matchesFilter(client) &&
         client.company.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
@@ -83,7 +83,7 @@ const HomeAdmin = () => {
             <div className="row">
               <div className="col">
                 <ClientsOrder clients={clients} setFilteredCompanies={setFilteredCompanies}
-                setSortingCriteria={setSortingCriteria} sortedBy={sortedBy} setSortedBy={setSortedBy} /></div>
+                  setSortingCriteria={setSortingCriteria} sortedBy={sortedBy} setSortedBy={setSortedBy} /></div>
               <div className="col"><ClientsFilter setFilterByUser={setFilterByUser}/></div>
               <br /><br />
             </div>
@@ -105,10 +105,10 @@ const HomeAdmin = () => {
               {[...filteredCompanies]
                 .filter(((c) => filterByUser ? c.user_id === user.id : true)) // filters clients by user only if filterByUser is true
                 .sort(sortingCriteria === 'company'
-                    // alphabetical order, asiakkaat aakkosjärjestyksessä
+                // alphabetical order, asiakkaat aakkosjärjestyksessä
                   ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)
-                    // order by due date, earlier first. does not show undefined deadlines.
-                    // asiakkaat eräpäivän mukaan järjestetty
+                // order by due date, earlier first. does not show undefined deadlines.
+                // asiakkaat eräpäivän mukaan järjestetty
                   : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))   // sortingCriteria === 'date'
                 .map(client => {
                   return (

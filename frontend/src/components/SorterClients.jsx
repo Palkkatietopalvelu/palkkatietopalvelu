@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { isPast } from 'date-fns'
 
-const ClientsOrder = ({ 
-  clients, 
-  setFilteredCompanies, setSortingCriteria, 
+const ClientsOrder = ({
+  clients,
+  setFilteredCompanies, setSortingCriteria,
   sortedBy, setSortedBy }) => {
 
   const showInactive = () => {

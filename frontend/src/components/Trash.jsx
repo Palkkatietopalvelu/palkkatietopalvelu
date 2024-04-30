@@ -62,7 +62,7 @@ const Trash = () => {
             {files.map((file) => {
               return (
                 <tr key={file.id}>
-                  <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap'}}>
+                  <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap' }}>
                     <Button id={file.id+'lataa'} variant="primary" size="sm"
                       onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
                     <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
