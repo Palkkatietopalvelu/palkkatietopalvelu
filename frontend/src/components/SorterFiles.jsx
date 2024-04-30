@@ -84,7 +84,7 @@ const FilesFilter = ({ user, files, clients, setFilteredFiles }) => {
   dateToggle.displayName = 'dateToggle'
 
   return (
-    <Dropdown id='dropdown_files_sorter'>
+    <Dropdown id='dropdown_files_user_sorter'>
       <Dropdown.Toggle as={dateToggle}>
         <b>{filteredBy}</b>
       </Dropdown.Toggle>
