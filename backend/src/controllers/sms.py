@@ -1,3 +1,4 @@
+"""Reititys tekstiviestien lähettämiselle"""
 import urllib.parse
 from flask import jsonify, request
 import requests

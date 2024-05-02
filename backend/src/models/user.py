@@ -1,3 +1,4 @@
+"""Malli, joka helpottaa hallitsemaan käyttäjien tietoja tietokannassa"""
 from db import db
 
 class User(db.Model):

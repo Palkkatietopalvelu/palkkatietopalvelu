@@ -1,13 +1,14 @@
-// ./client (Lisää asiakas)
+// ./client (Asiakkaan lisäyslomake)
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index'
 import { addClient } from '../reducers/clientsReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
-import { DateSelect } from '../hooks/DatePicker'
+import { useDateSelect } from '../hooks/DatePicker'
 import DatePicker from 'react-multi-date-picker'
 import { useState } from 'react'
 import days from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -21,10 +22,10 @@ const ClientForm = () => {
   const email = useField()
   const phonenumber = useField()
   const bicode = useField()
-  const deadlines = DateSelect()
+  const deadlines = useDateSelect()
   const payperiod = useField()
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

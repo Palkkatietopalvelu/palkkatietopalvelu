@@ -1,4 +1,4 @@
-// ./mypage (Omat sivut, admin ja asiakas)
+// ./mypage (Omat asetukset ja tiedot, admin ja asiakas)
 import { useSelector } from 'react-redux'
 import PasswordChange from './PasswordForm'
 import RegisterForm from './RegisterForm'
@@ -6,12 +6,13 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import DueDateBadge from './DueDateBadge'
 import Notification from './Notification'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const MyPage = () => {
   const user = useSelector(({ user }) => user)
   const client = useSelector(({ clients }) => clients).find(c => c.email === user.username)
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

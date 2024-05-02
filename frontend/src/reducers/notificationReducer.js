@@ -1,3 +1,4 @@
+// ilmoituksiin liittyviä metodeja (virhe- ja onnistumistilanteet)
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = []
@@ -14,7 +15,7 @@ const slice = createSlice({
       return initialState
     },
     add(state, action) {
-      console.log(action.payload)
+      console.log(action.payload) // tulostaa viestin konsoliin
       return state.concat(action.payload)
     },
     remove(state) {
@@ -23,6 +24,8 @@ const slice = createSlice({
   },
 })
 
+// the default color of the message is green='success'
+// if its an error message, you have to define type as 'danger'=red
 export const notify = (content, type='success') => {
   return async dispatch => {
     dispatch(add({ content, type }))

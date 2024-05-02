@@ -1,4 +1,4 @@
-// (Alareuna)
+// (Alapalkki)
 import { NavLink } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { useState } from 'react'

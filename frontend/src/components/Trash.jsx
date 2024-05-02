@@ -1,3 +1,4 @@
+// ./client/id/trash (Roskakori)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -7,6 +8,7 @@ import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { useState } from 'react'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -14,7 +16,7 @@ const Trash = () => {
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
-  const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
+  const files = useSelector(({ files }) => files).filter(f => f.delete_date !== null && f.deleted_by === user.id)
   const [showModal, setShowModal] = useState(false)
   const [varyingFileId, setVaryingFileId] = useState(0)
   const [varyingFileName, setVaryingFileName] = useState('')
@@ -34,7 +36,7 @@ const Trash = () => {
     setShowModal(false)
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
@@ -61,7 +63,7 @@ const Trash = () => {
             {files.map((file) => {
               return (
                 <tr key={file.id}>
-                  <td style={{ textAlign:'right', width: '11%' }}>
+                  <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap' }}>
                     <Button id={file.id+'lataa'} variant="primary" size="sm"
                       onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
                     <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
