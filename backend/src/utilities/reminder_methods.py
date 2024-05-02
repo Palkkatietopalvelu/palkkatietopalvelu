@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät muistutuksiin"""
 from datetime import date, datetime, timedelta
 from flask_mail import Message
 from app import app, mail

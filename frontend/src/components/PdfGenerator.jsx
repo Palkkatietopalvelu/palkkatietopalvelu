@@ -1,3 +1,4 @@
+// (Generoi palkkatietolomakkeesta pdf-tiedoston)
 import { jsPDF } from 'jspdf'
 import { addFile } from '../reducers/fileReducer'
 

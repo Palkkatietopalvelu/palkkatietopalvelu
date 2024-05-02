@@ -1,3 +1,4 @@
+// Pilleri, joka kertoo jäljellä olevan ajan palkkapäivään
 import { formatDistanceToNow, isPast, endOfDay } from 'date-fns'
 import Badge from 'react-bootstrap/Badge'
 

@@ -1,4 +1,4 @@
-// (Ylärivin valikko)
+// (Yläpalkki ja valikko)
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Dropdown, Container } from 'react-bootstrap'

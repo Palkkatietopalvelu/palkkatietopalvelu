@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät asiakkaiden lähettämiin aineistoihin"""
 import os
 from datetime import datetime, timedelta
 from sqlalchemy.sql import text

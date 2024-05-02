@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import settingsService from '../services/reminderSettings'
 import reminderInfoModule from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays } = reminderInfoModule
 
@@ -24,7 +25,7 @@ const ReminderSettings = () => {
     }
   }, [user])
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

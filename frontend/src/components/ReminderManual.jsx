@@ -9,6 +9,7 @@ import { notify } from '../reducers/notificationReducer'
 import { Table, Form, Button } from 'react-bootstrap'
 import CheckBox from './CheckBox'
 import reminderInfoModule from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { defaultremindertext } = reminderInfoModule
 
@@ -49,7 +50,7 @@ const ClientReminder = () => {
     }))
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

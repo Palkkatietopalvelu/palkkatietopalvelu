@@ -1,3 +1,4 @@
+"""tarkistaa flask_env ympäristömuuttujan"""
 from config import ENV
 
 if ENV != "development":

@@ -1,10 +1,11 @@
-// ./mypage (Omat sivut, admin ja asiakas)
+// ./mypage (Omat sivut, admin ja asiakas) Salasananvaihtolomake
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { useField } from '../hooks'
 import Togglable from './Togglable'
 import { changePassword } from '../reducers/userReducer'
 import { Form, Button } from 'react-bootstrap'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const PasswordChange = () => {
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const PasswordChange = () => {
   const newPassword = useField()
   const confirmPassword = useField()
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 
