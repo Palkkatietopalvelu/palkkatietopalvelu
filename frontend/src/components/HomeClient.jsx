@@ -44,16 +44,16 @@ const HomeClient = () => {
           <Notification />
           <h4 className='client'>{client.company}</h4>
           <div className='table-responsive'>
-          <Table striped>
-            <tbody key={client.email}>
-              <tr><td>Seuraavat eräpäivät</td><td>{client.deadlines.map(date =>
-                <div key={date}>
-                  {new Date(date).toLocaleString('fi-FI',
-                    { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-                  {' '} <DueDateBadge deadline={client.deadlines[0]} /> </div>)}</td></tr>
-              <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
-            </tbody>
-          </Table>
+            <Table striped>
+              <tbody key={client.email}>
+                <tr><td>Seuraavat eräpäivät</td><td>{client.deadlines.map(date =>
+                  <div key={date}>
+                    {new Date(date).toLocaleString('fi-FI',
+                      { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
+                    {' '} <DueDateBadge deadline={client.deadlines[0]} /> </div>)}</td></tr>
+                <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
+              </tbody>
+            </Table>
           </div>
           {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} />}
           <br/><br/>

@@ -49,31 +49,31 @@ const Trash = () => {
         <p>Tiedostot poistetaan roskakorista automaattisesti viikon kuluttua niiden siirtämisestä roskakoriin</p>
         <Notification />
         <div className='table-responsive'>
-        <Table striped>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Tiedosto</th>
-              <th>Päivämäärä</th>
-            </tr>
-          </thead>
-          <tbody>
-            {files.map((file) => {
-              return (
-                <tr key={file.id}>
-                  <td style={{ textAlign:'right', width: '11%' }}>
-                    <Button id={file.id+'lataa'} variant="primary" size="sm"
-                      onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
-                    <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
-                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
-                  <td>{file.name}</td>
-                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
-                </tr>
-              )})}
-          </tbody>
-          <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
-            showModal={showModal} setShowModal={setShowModal} />
-        </Table>
+          <Table striped>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Tiedosto</th>
+                <th>Päivämäärä</th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => {
+                return (
+                  <tr key={file.id}>
+                    <td style={{ textAlign:'right', width: '11%' }}>
+                      <Button id={file.id+'lataa'} variant="primary" size="sm"
+                        onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
+                      {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                    <td>{file.name}</td>
+                    <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
+                  </tr>
+                )})}
+            </tbody>
+            <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
+              showModal={showModal} setShowModal={setShowModal} />
+          </Table>
         </div>
       </div>
     )}

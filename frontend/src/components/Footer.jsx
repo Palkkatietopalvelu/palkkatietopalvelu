@@ -42,10 +42,10 @@ const Footer = () => {
       <footer className="footer" style={footerStyle}>
         <div className="container" style={containerStyle}>
           <section className="text-center p-5">
-                <Container>
+            <Container>
               <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
               <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
-              </Container>
+            </Container>
           </section>
           <br/>
 
