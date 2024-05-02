@@ -1,5 +1,6 @@
-// (Alareuna)
+// (Alapalkki)
 import { NavLink } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import { useState } from 'react'
 
 const Footer = () => {
@@ -11,15 +12,16 @@ const Footer = () => {
   }
 
   const textStyle = {
-    paddingLeft: '80px',
-    paddingRight: '160px',
+    paddingLeft: '2%',
+    paddingRight: '10%',
     fontWeight: 'bold',
     color: 'white'
   }
 
   const containerStyle = {
+    maxWidth: '100%',
     position: 'absolute',
-    paddingTop: '30px',
+    paddingTop: '5%',
     backgroundColor: '#055e05'
     //backgroundColor: 'rgb(13, 177, 13)'
   }
@@ -40,10 +42,10 @@ const Footer = () => {
       <footer className="footer" style={footerStyle}>
         <div className="container" style={containerStyle}>
           <section className="text-center p-5">
-            <div className="col-md-20">
+            <Container>
               <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/privacypolicy">TIETOSUOJASELOSTE</NavLink>
               <NavLink style={textStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/instructions">OHJEET</NavLink>
-            </div>
+            </Container>
           </section>
           <br/>
 

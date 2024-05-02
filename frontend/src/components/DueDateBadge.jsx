@@ -1,15 +1,16 @@
+// Pilleri, joka kertoo jäljellä olevan ajan palkkapäivään
 import { formatDistanceToNow, isPast, endOfDay } from 'date-fns'
 import Badge from 'react-bootstrap/Badge'
 
-const DueDateBadge = ({ client }) => {
+const DueDateBadge = ({ deadline }) => {
   const now = endOfDay(new Date())
-  const late = isPast(client.deadlines[0])
+  const late = isPast(deadline)
 
-  if (!client.deadlines[0]) {
+  if (!deadline) {
     return
   }
 
-  let days_left = formatDistanceToNow(client.deadlines[0], now).split(' ')
+  let days_left = formatDistanceToNow(deadline, now).split(' ')
   if (late) {
     if(days_left[0] === 'about' && days_left[2] ==='hours') {
       days_left = 'tänään'

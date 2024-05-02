@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät asiakkaiden lähettämiin aineistoihin"""
 import os
 from datetime import datetime, timedelta
 from sqlalchemy.sql import text
@@ -21,7 +22,7 @@ def get_all_files():
         ORDER BY f.date DESC
     """)
     result = db.session.execute(sql)
-    return [{
+    all_files = [{
         "id": row[0],
         "owner": row[1],
         "name": row[2],
@@ -31,6 +32,14 @@ def get_all_files():
         "deleted_by": row[6], 
         "company": row[7]
     } for row in result.fetchall()]
+
+    # add clients' deadlines to files
+    for i, file in enumerate(all_files):
+        sql = text("""SELECT deadline FROM deadlines WHERE client_id=:owner ORDER BY deadline""")
+        result = db.session.execute(sql, {"owner": file["owner"]})
+        all_files[i]["deadlines"] =  [row[0] for row in result.fetchall()]
+
+    return all_files
 
 def get_file(file_id):
     sql = text("SELECT id, owner, name, path, date FROM files WHERE id=:id")

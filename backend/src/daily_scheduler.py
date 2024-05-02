@@ -1,3 +1,4 @@
+"""Metodit, jotka ajetaan kerran päivässä"""
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy.sql import text
@@ -25,7 +26,7 @@ def delete_old_files_from_trash():
 
 def delete_old_expired_tokens():
     with app.app_context():
-        check_date = datetime.now().date() - timedelta(days=1)
+        check_date = datetime.utcnow().date() - timedelta(days=1)
         sql = text("DELETE FROM expired_tokens WHERE date<:date")
         db.session.execute(sql, {"date": check_date})
         db.session.commit()

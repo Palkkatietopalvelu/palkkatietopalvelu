@@ -1,0 +1,46 @@
+services:
+  nginx:
+    container_name: nginx
+    restart: always
+    image: nginx:1.25.4
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro #asettaa conf-tiedoston asetukset
+    ports:
+      - 8080:80   #sovellus avautuu porttiin 8080
+    depends_on:
+      - frontend
+
+  frontend:
+    container_name: frontend
+    restart: always
+    image: palkkatieto-front
+    ports:
+      - 3000:3000
+
+  backend:
+    container_name: backend
+    restart: always
+    image: palkkatieto-back
+    ports:
+      - 5000:5000
+    volumes:
+      - files:/app/file_storage #säästää palautetiedostot palvelimelle ettei katoa jos kontti sulkeutu
+
+  postgresql:
+    container_name: postgresql
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres          #Käyttäjätunnus ja salasana tietokantaan. Salasana kannattaa vaitaa
+      - POSTGRES_PASSWORD=password123   #
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data #säästää tietokannan jos kontti suljetaan
+
+
+volumes:  #minne tiedostot säästetään
+  db:
+    driver: local
+  files:
+    driver: local

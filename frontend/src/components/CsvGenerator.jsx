@@ -1,4 +1,4 @@
-// CsvGenerator.jsx
+// (Generoi palkkatietolomakkeesta csv-tiedoston)
 import { addFile } from '../reducers/fileReducer'
 
 function convertToCSV(objArray, clientDetails, date) {
@@ -109,7 +109,7 @@ Km-korvaus (km),Kotimaan päiväraha,Kotimaan osapäivä,Ulkomaan päivärahat (
   const totalBenefits = totals.flat_benefit + totals.car_benefit + totals.phone_benefit
   str += `"${totalBenefits}",\n`
   str += ',,,,,,,,"Vähennykset",-'
-  str += `${totals.lunch_benefit_total + (totals.sport_benefit * totals.sport_benefit_value)},\n`
+  str += `${totals.lunch_benefit_total},\n`
 
   str += 'POISSAOLOT' + '\r\n'
   str += 'Palkansaaja,Syy,Palkallinen,Ajalta\n'

@@ -3,6 +3,7 @@ version: '3.9'
 services:
 
   backend:
+    image: palkkatieto-back
     build: 
       context: ./backend/
       dockerfile: Dockerfile
@@ -16,6 +17,7 @@ services:
       FLASK_ENV: development
     
   frontend:
+    image: palkkatieto-front
     build: 
       context: ./frontend/
       dockerfile: Dockerfile

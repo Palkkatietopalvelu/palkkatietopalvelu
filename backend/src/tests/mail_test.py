@@ -42,4 +42,5 @@ class TestMailController(unittest.TestCase):
         data = {'recipients': [5]}
         with app.test_request_context():
             response = app.test_client().post("/api/mail", headers=self.headers, json=data)
-            self.assertEqual(response.status_code, 500)
+            self.assertEqual(response.status_code, 404)
+

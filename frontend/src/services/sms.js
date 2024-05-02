@@ -1,3 +1,4 @@
+// tekstiviestien lähettäminen; backend/src/controllers/sms.py
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/sms'
 import storage from './storage'

@@ -1,3 +1,4 @@
+// manuaalisten sähköpostiviestien lähetys ja eräpäivien hakeminen; backend/src/controllers/manual_reminders.py
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/mail'
 import storage from './storage'

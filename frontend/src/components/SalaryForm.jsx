@@ -6,6 +6,7 @@ import { useField } from '../hooks'
 import SalaryFormContent from './SalaryFormContent'
 import { generatePDF, uploadGeneratedPDF } from './PdfGenerator'
 import { generateCSV, uploadGeneratedCSV } from './CsvGenerator'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const SalaryForm = () => {
   const navigate = useNavigate()
@@ -100,20 +101,15 @@ const SalaryForm = () => {
       const number = Number(value.replace(',', '.'))
       return isNaN(number) ? null : number
     }
-    const total = (toNumber(lunch_benefit) * toNumber(lunch_benefit_value)) +
-                  (toNumber(sport_benefit) * toNumber(sport_benefit_value))
+    const total = (toNumber(lunch_benefit) * toNumber(lunch_benefit_value))
     setReductionsTotal(total.toFixed(2))
   }, [
     lunch_benefit,
     lunch_benefit_value,
-    sport_benefit,
-    sport_benefit_value,
   ])
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    } else if (!client || client.id !== urlClientId) {
+    if (!client || client.id !== urlClientId) {
       console.error('Unauthorized access or client not found.')
       navigate('/')
     }
@@ -243,6 +239,10 @@ const SalaryForm = () => {
     const newEmployees = [...employees]
     newEmployees.splice(index, 1)
     setEmployees(newEmployees)
+  }
+
+  if (!useCheckLogin()) {
+    return ('Et ole kirjautunut sisään')
   }
 
   return (

@@ -44,3 +44,25 @@ class TestLoginController(unittest.TestCase):
             data = {"username": "hacker", "password": ""}
             response = app.test_client().post("/api/login", json=data)
             self.assertEqual(response.status_code, 401)
+    
+    def test_login_email_not_case_sensitive(self):
+        with app.test_request_context():
+            create_user_data = {"username": "Pekka@mail.com", "password": "pekka123", "role": 1}
+            response = app.test_client().post("/api/users", json=create_user_data)
+            self.assertEqual(response.status_code, 201)
+            # user created with email Pekka@mail.com
+            # lets log in as pekka@mail.com
+            login_data = {"username": "pekka@mail.com", "password": "pekka123"}
+            response = app.test_client().post("/api/login", json=login_data)
+            self.assertEqual(response.status_code, 200) # works
+    
+    def test_login_email_not_case_sensitive_part2(self):
+        with app.test_request_context():
+            create_user_data = {"username": "matti@mail.com", "password": "matti123", "role": 1}
+            response = app.test_client().post("/api/users", json=create_user_data)
+            self.assertEqual(response.status_code, 201)
+            # user created with email matti@mail.com
+            # lets log in as MATTI@mail.com
+            login_data = {"username": "MATTI@mail.com", "password": "matti123"}
+            response = app.test_client().post("/api/login", json=login_data)
+            self.assertEqual(response.status_code, 200) # works

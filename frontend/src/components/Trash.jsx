@@ -1,3 +1,4 @@
+// ./client/id/trash (Roskakori)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -7,6 +8,7 @@ import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
 import { useState } from 'react'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Trash = () => {
   const dispatch = useDispatch()
@@ -14,7 +16,7 @@ const Trash = () => {
   const user = useSelector(({ user }) => user)
   const id = Number(useParams().id)
   const client = useSelector(({ clients }) => clients).find(c => c.id === id)
-  const files = useSelector(({ file }) => file).filter(f => f.delete_date !== null && f.deleted_by === user.id)
+  const files = useSelector(({ files }) => files).filter(f => f.delete_date !== null && f.deleted_by === user.id)
   const [showModal, setShowModal] = useState(false)
   const [varyingFileId, setVaryingFileId] = useState(0)
   const [varyingFileName, setVaryingFileName] = useState('')
@@ -34,13 +36,13 @@ const Trash = () => {
     setShowModal(false)
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
   } else if (client.email===user.username || client.user_id===user.id) {
     return (
-      <div>
+      <div className='container'>
         {user.role === 1 && <div><br />
           <Button variant="secondary" onClick={() => navigate(`/client/${id}`)}
             style={{ marginBottom: '20px' }}>Takaisin asiakkaan tietoihin</Button>
@@ -48,31 +50,33 @@ const Trash = () => {
         <h4>Roskakori</h4>
         <p>Tiedostot poistetaan roskakorista automaattisesti viikon kuluttua niiden siirtämisestä roskakoriin</p>
         <Notification />
-        <Table striped>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Tiedosto</th>
-              <th>Päivämäärä</th>
-            </tr>
-          </thead>
-          <tbody>
-            {files.map((file) => {
-              return (
-                <tr key={file.id}>
-                  <td style={{ textAlign:'right', width: '11%' }}>
-                    <Button id={file.id+'lataa'} variant="primary" size="sm"
-                      onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
-                    <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
-                    {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
-                  <td>{file.name}</td>
-                  <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
-                </tr>
-              )})}
-          </tbody>
-          <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
-            showModal={showModal} setShowModal={setShowModal} />
-        </Table>
+        <div className='table-responsive'>
+          <Table striped>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Tiedosto</th>
+                <th>Päivämäärä</th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => {
+                return (
+                  <tr key={file.id}>
+                    <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap' }}>
+                      <Button id={file.id+'lataa'} variant="primary" size="sm"
+                        onClick={() => handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                      <Button id={file.id+'poista'} variant="danger" size="sm" onClick={() =>
+                      {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                    <td>{file.name}</td>
+                    <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
+                  </tr>
+                )})}
+            </tbody>
+            <DeleteFileModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileDelete={handleFileDelete}
+              showModal={showModal} setShowModal={setShowModal} />
+          </Table>
+        </div>
       </div>
     )}
   else {

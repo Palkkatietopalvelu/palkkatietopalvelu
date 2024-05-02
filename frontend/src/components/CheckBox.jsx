@@ -1,3 +1,5 @@
+// CheckBox-elementti
+// käytetään automaattisissa ja manuaalisissa muistutuksissa
 const CheckBox = ({ name, id, inputs, setInputs, checked }) => {
   const handleCheckChange = () => {
     if (Array.isArray(inputs)) {
