@@ -40,7 +40,7 @@ const Client = () => {
     <div>
       {user.role === 1 &&
       <div>
-        <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
+        <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2><hr/>
         <h5><Badge bg={client.active ? 'success' : 'warning'} pill>
           {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></h5>
         <Notification />
