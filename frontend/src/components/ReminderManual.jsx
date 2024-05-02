@@ -86,7 +86,7 @@ const ClientReminder = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {user.role === 1 && <div>
         <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2><hr/>
         <Notification />
@@ -103,34 +103,36 @@ const ClientReminder = () => {
               onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
             />
             <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>Sähköpostimuistustus</th>
-                  <th>Tekstiviestimuistustus</th>
-                  <th>Yritys</th>
-                  <th>Seuraava eräpäivä</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clients.map((client) => (
-                  <tr key={client.id}>
-                    <td><CheckBox name={client.id}
-                      id={'mail'+client.id}
-                      inputs={emailinputs}
-                      setInputs={setEmailinputs}
-                    /></td>
-                    <td><CheckBox name={client.id}
-                      id={'sms'+client.id}
-                      inputs={smsinputs}
-                      setInputs={setSmsinputs}
-                    /></td>
-                    <td>{client.company}</td>
-                    <td>{format(new Date(client.deadline), 'dd.MM.yyyy')}</td>
+            <div className='table-responsive'>
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>Sähköpostimuistustus</th>
+                    <th>Tekstiviestimuistustus</th>
+                    <th>Yritys</th>
+                    <th>Seuraava eräpäivä</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {clients.map((client) => (
+                    <tr key={client.id}>
+                      <td><CheckBox name={client.id}
+                        id={'mail'+client.id}
+                        inputs={emailinputs}
+                        setInputs={setEmailinputs}
+                      /></td>
+                      <td><CheckBox name={client.id}
+                        id={'sms'+client.id}
+                        inputs={smsinputs}
+                        setInputs={setSmsinputs}
+                      /></td>
+                      <td>{client.company}</td>
+                      <td>{format(new Date(client.deadline), 'dd.MM.yyyy')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
             <Button type="submit" disabled={isSending}>{isSending ? 'Lähetetään...' : 'Lähetä'}</Button>
           </Form.Group>
         </Form>

@@ -74,7 +74,7 @@ const HomeAdmin = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       {user.role === 1 &&
         <div>
           <br /><h2>Asiakkaat</h2><hr />
@@ -88,46 +88,48 @@ const HomeAdmin = () => {
               <br /><br />
             </div>
           </div>
-          <Table striped>
-            <thead>
-              <tr>
-                <th>Yritys</th>
-                <th>Seuraava eräpäivä</th>
-                <th>Status</th>
-              </tr>
-              <tr>
-                <th><input id="companyFilter" onChange={handleCompanySearch} /></th>
-                <th><input id="dateFilter" onChange={handleDateSearch} /></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...filteredCompanies]
-                .filter(((c) => filterByUser ? c.user_id === user.id : true)) // filters clients by user only if filterByUser is true
-                .sort(sortingCriteria === 'company'
-                // alphabetical order, asiakkaat aakkosjärjestyksessä
-                  ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)
-                // order by due date, earlier first. does not show undefined deadlines.
-                // asiakkaat eräpäivän mukaan järjestetty
-                  : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))   // sortingCriteria === 'date'
-                .map(client => {
-                  return (
-                    <tr key={client.id}>
-                      <td>
-                        <Link to={`/client/${client.id}`}>
-                          {client.company}
-                        </Link>
-                      </td>
-                      <td>{client.deadlines != '' &&
+          <div className='table-responsive'>
+            <Table striped>
+              <thead>
+                <tr>
+                  <th>Yritys</th>
+                  <th>Seuraava eräpäivä</th>
+                  <th>Status</th>
+                </tr>
+                <tr>
+                  <th><input id="companyFilter" onChange={handleCompanySearch} className='form-control filter-width'/></th>
+                  <th><input id="dateFilter" onChange={handleDateSearch} className='form-control filter width'/></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...filteredCompanies]
+                  .filter(((c) => filterByUser ? c.user_id === user.id : true)) // filters clients by user only if filterByUser is true
+                  .sort(sortingCriteria === 'company'
+                  // alphabetical order, asiakkaat aakkosjärjestyksessä
+                    ? ((a,b) => a.company.toLowerCase() > b.company.toLowerCase() ? 1 : -1)
+                  // order by due date, earlier first. does not show undefined deadlines.
+                  // asiakkaat eräpäivän mukaan järjestetty
+                    : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))   // sortingCriteria === 'date'
+                  .map(client => {
+                    return (
+                      <tr key={client.id}>
+                        <td>
+                          <Link to={`/client/${client.id}`}>
+                            {client.company}
+                          </Link>
+                        </td>
+                        <td>{client.deadlines != '' &&
                         format(client.deadlines[0], 'dd.MM.yyyy')} {' '}
-                      <DueDateBadge deadline={client.deadlines[0]} /></td>
-                      <td><Badge bg={client.active ? 'success' : 'warning'} pill>
-                        {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
-                    </tr>
+                        <DueDateBadge deadline={client.deadlines[0]} /></td>
+                        <td><Badge bg={client.active ? 'success' : 'warning'} pill>
+                          {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></td>
+                      </tr>
+                    )}
                   )}
-                )}
-            </tbody>
-          </Table>
+              </tbody>
+            </Table>
+          </div>
         </div>
       }
     </div>

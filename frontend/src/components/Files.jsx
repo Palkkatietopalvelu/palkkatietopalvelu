@@ -42,7 +42,7 @@ const Files = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {user.role === 1 && <div>
         <br /><h2> Saapuneet aineistot</h2><hr/>
         <div className="container">
@@ -53,47 +53,49 @@ const Files = () => {
             <br /><br />
           </div>
         </div>
-        <Table striped>
-          <thead>
-            <tr>
-              <th>Yritys</th>
-              <th>Seuraava eräpäivä</th>
-              <th>Saapumisaika</th>
-              <th>Aineisto</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[...filteredFiles]
-              .sort(sortingCriteria === 'arrival time newest'
-              // order by arrival time newest first, the default
-                ? ((a,b) => new Date(b.date) - new Date(a.date))
-                : sortingCriteria == 'arrival time oldest'
-                // order by arrival time oldest first
-                  ? ((a,b) => new Date(a.date) - new Date(b.date))
-                // order by due date
-                  : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))
-              .map(file => {
-                return (
-                  <tr key={file.id}>
-                    <td>
-                      <Link to={`/client/${file.owner}`}>
-                        {file.company}
-                      </Link>
-                    </td>
-                    <td>
-                      <DueDateBadge deadline={file.deadlines[0]}/>
-                    </td>
-                    <td>
-                      {format(new Date(file.date), 'dd.MM.yyyy HH:mm')}
-                    </td>
-                    <td>
-                      {file.name}
-                    </td>
-                  </tr>
+        <div className='table-responsive'>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Yritys</th>
+                <th>Seuraava eräpäivä</th>
+                <th>Saapumisaika</th>
+                <th>Aineisto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...filteredFiles]
+                .sort(sortingCriteria === 'arrival time newest'
+                // order by arrival time newest first, the default
+                  ? ((a,b) => new Date(b.date) - new Date(a.date))
+                  : sortingCriteria == 'arrival time oldest'
+                  // order by arrival time oldest first
+                    ? ((a,b) => new Date(a.date) - new Date(b.date))
+                  // order by due date
+                    : ((a,b) => new Date(a.deadlines[0]) - new Date(b.deadlines[0])))
+                .map(file => {
+                  return (
+                    <tr key={file.id}>
+                      <td>
+                        <Link to={`/client/${file.owner}`}>
+                          {file.company}
+                        </Link>
+                      </td>
+                      <td>
+                        <DueDateBadge deadline={file.deadlines[0]}/>
+                      </td>
+                      <td>
+                        {format(new Date(file.date), 'dd.MM.yyyy HH:mm')}
+                      </td>
+                      <td>
+                        {file.name}
+                      </td>
+                    </tr>
+                  )}
                 )}
-              )}
-          </tbody>
-        </Table>
+            </tbody>
+          </Table>
+        </div>
       </div>
       }
     </div>

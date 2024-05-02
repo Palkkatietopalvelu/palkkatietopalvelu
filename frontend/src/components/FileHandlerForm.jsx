@@ -32,7 +32,7 @@ const FileHandlerForm = ({
   DeadlinesModal,
 }) => {
   return (
-    <div>
+    <div className='container'>
       <br></br>
       <h4>
         {nextDL && (
@@ -80,31 +80,33 @@ const FileHandlerForm = ({
       }
       <div>
         {files.length > 0 ? (
-          <Table striped>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Tiedoston nimi</th>
-                <th>Päivämäärä</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file) => {
-                return (
-                  <tr key={file.id}>
-                    <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap' }}>
-                      <Button variant="primary" size="sm" onClick={() =>
-                        handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
-                      <Button id={file.id} variant="danger" size="sm" onClick={() =>
-                      {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
-                    <td style={{ width: '50%' }}>{file.name}</td>
-                    <td style={{ width: '50%' }}>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
-                  </tr>
-                )})}
-            </tbody>
-            <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
-              showModal={showModal} setShowModal={setShowModal} />
-          </Table>
+          <div className='table-responsive'>
+            <Table striped>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Tiedoston nimi</th>
+                  <th>Päivämäärä</th>
+                </tr>
+              </thead>
+              <tbody>
+                {files.map((file) => {
+                  return (
+                    <tr key={file.id}>
+                      <td style={{ textAlign:'right', width: '10%', whiteSpace: 'nowrap' }}>
+                        <Button variant="primary" size="sm" onClick={() =>
+                          handleFileDownload(file.id, file.name)}>Lataa</Button>{' '}
+                        <Button id={file.id} variant="danger" size="sm" onClick={() =>
+                        {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
+                      <td style={{ width: '50%' }}>{file.name}</td>
+                      <td style={{ width: '50%' }}>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}{' '}</td>
+                    </tr>
+                  )})}
+              </tbody>
+              <FileToTrashModal varyingFileId={varyingFileId} varyingFileName={varyingFileName} handleFileToTrash={handleFileToTrash}
+                showModal={showModal} setShowModal={setShowModal} />
+            </Table>
+          </div>
         ) : (
           nextDL && (
             <div>Palkkatietoja ei ole vielä ilmoitettu</div>
