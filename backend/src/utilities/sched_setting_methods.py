@@ -24,7 +24,9 @@ def save_settings(data, filename = 'custom.json'):
         'email': data['email'],
         'sms': data['sms'],
         'remindertext': data['remindertext'],
-        'latetext' : data['latetext']
+        'latetext' : data['latetext'],
+        'remindermail': data['remindermail'],
+        'latemail': data['latemail']
     }
     validated_data = validate_settings(settings_data)
     path = Path(__file__).parent / f'../sched_settings/{filename}'

@@ -118,7 +118,7 @@ const ReminderFormFields = ({
               id='remindermail'
               as="textarea"
               rows={3}
-              required={emailinputs && checked}
+              required={checked}
               value={remindermail}
               onChange={(e) => setRemindermail(e.target.value)}
             />
@@ -128,7 +128,7 @@ const ReminderFormFields = ({
               id='latemail'
               as="textarea"
               rows={3}
-              required={emailinputs && checked}
+              required={checked}
               value={latemail}
               onChange={(e) => setLatemail(e.target.value)}
             />
@@ -139,7 +139,7 @@ const ReminderFormFields = ({
               id='remindertext'
               as="textarea"
               rows={3}
-              required={smsinputs && checked}
+              required={checked}
               value={remindertext}
               maxLength={140}
               onChange={(e) => setRemindertext(e.target.value.slice(0, 140))}
@@ -151,7 +151,7 @@ const ReminderFormFields = ({
               id='latetext'
               as="textarea"
               rows={3}
-              required={smsinputs && checked}
+              required={checked}
               value={latetext}
               maxLength={140}
               onChange={(e) => setLatetext(e.target.value.slice(0, 140))}
