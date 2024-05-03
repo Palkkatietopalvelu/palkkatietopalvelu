@@ -21,7 +21,7 @@ def update_scheduler(minute = 0, second = 0):
 
             return True
 
-        except: # pylint: disable=bare-except
+        except ValueError:
             settings = recover_settings()
 
     return False

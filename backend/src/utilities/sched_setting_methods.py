@@ -9,6 +9,12 @@ def load_settings(filename = 'custom.json'):
         path = Path(__file__).parent / f'../sched_settings/{filename}'
         with path.open(encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
+            try:
+                validate_settings(settings)
+            except (ValueError, KeyError):
+                delete_custom(filename)
+                raise FileNotFoundError
+
     except FileNotFoundError:
         path = Path(__file__).parent / '../sched_settings/default.json'
         with path.open(encoding='utf-8') as setting_file:
@@ -45,7 +51,9 @@ def get_readable_settings():
         'email': settings['email'],
         'sms': settings['sms'],
         'remindertext': settings['remindertext'],
-        'latetext' : settings['latetext']
+        'latetext' : settings['latetext'],
+        'remindermail': settings['remindermail'],
+        'latemail' : settings['latemail']
     }
     return readable_settings
 
@@ -68,6 +76,10 @@ def validate_settings(settings):
         if len(settings['remindertext']) < 2:
             raise ValueError('Muistutusviesti puuttuu')
         if len(settings['latetext']) < 2:
+            raise ValueError('Myöhästymisviesti puuttuu')
+        if len(settings['remindermail']) < 2:
+            raise ValueError('Muistutusviesti puuttuu')
+        if len(settings['latemail']) < 2:
             raise ValueError('Myöhästymisviesti puuttuu')
 
     return settings

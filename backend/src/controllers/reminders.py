@@ -17,7 +17,7 @@ def reminder_settings():
             data = request.json
             save_settings(data)
             return get_readable_settings()
-        except ValueError as error:
+        except (ValueError, KeyError) as error:
             return str(error), 400
 
     return 400
