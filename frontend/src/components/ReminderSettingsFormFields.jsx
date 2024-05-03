@@ -110,9 +110,9 @@ const ReminderFormFields = ({
               <Button id={'tallenna'} type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
             </div>
             <hr/>
-            <h3 style={{marginTop: '30px'}}>Viestien sisältö</h3>
-            <p>Jokaisen viestin loppuun lisätään "eräpäivä: dd.mm.yy"</p>
-            <h4 style={{marginTop: '30px'}}>Sähköpostit</h4>
+            <h3 style={{ marginTop: '30px' }}>Viestien sisältö</h3>
+            <p>Jokaisen viestin loppuun lisätään &quot;eräpäivä: dd.mm.yy&quot;</p>
+            <h4 style={{ marginTop: '30px' }}>Sähköpostit</h4>
             <Form.Label style={{ marginTop: '20px' }}>Muistutussähköpostin sisältö</Form.Label>
             <Form.Control
               id='remindermail'
@@ -133,7 +133,7 @@ const ReminderFormFields = ({
               onChange={(e) => setLatemail(e.target.value)}
             />
             <br></br>
-            <h4 style={{marginTop: '30px'}}>Tekstiviestit</h4>
+            <h4 style={{ marginTop: '30px' }}>Tekstiviestit</h4>
             <Form.Label style={{ marginTop: '20px' }}>Muistutustekstiviestin sisältö (Max. 140 merkkiä)</Form.Label>
             <Form.Control
               id='remindertext'

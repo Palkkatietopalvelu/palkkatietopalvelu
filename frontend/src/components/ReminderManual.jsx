@@ -93,8 +93,8 @@ const ClientReminder = () => {
         <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-          <h3 style={{marginTop: '30px'}}>Viestien sisältö</h3>
-          <Form.Label style={{ marginTop: '20px' }}>Muistutussähköpostin sisältö</Form.Label>
+            <h3 style={{ marginTop: '30px' }}>Viestien sisältö</h3>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutussähköpostin sisältö</Form.Label>
             <Form.Control
               id='remindermail'
               as="textarea"

@@ -11,9 +11,9 @@ def load_settings(filename = 'custom.json'):
             settings = json.load(setting_file)
             try:
                 validate_settings(settings)
-            except (ValueError, KeyError):
+            except (ValueError, KeyError) as exc:
                 delete_custom(filename)
-                raise FileNotFoundError
+                raise FileNotFoundError from exc
 
     except FileNotFoundError:
         path = Path(__file__).parent / '../sched_settings/default.json'
