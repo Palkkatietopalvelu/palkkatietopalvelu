@@ -134,29 +134,29 @@ const ReminderFormFields = ({
             />
             <br></br>
             <h4 style={{marginTop: '30px'}}>Tekstiviestit</h4>
-            <Form.Label style={{ marginTop: '20px' }}>Muistutustekstiviestin sisältö (Max. 142 merkkiä)</Form.Label>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutustekstiviestin sisältö (Max. 140 merkkiä)</Form.Label>
             <Form.Control
               id='remindertext'
               as="textarea"
               rows={3}
               required={smsinputs && checked}
               value={remindertext}
-              maxLength={142}
-              onChange={(e) => setRemindertext(e.target.value.slice(0, 142))}
+              maxLength={140}
+              onChange={(e) => setRemindertext(e.target.value.slice(0, 140))}
             />
-            <span>{`${remindertext ? remindertext.length : 0}/142`}</span>
+            <span>{`${remindertext ? remindertext.length : 0}/140`}</span>
             <br></br>
-            <Form.Label style={{ marginTop: '20px' }}>Myöhästymistekstiviestin sisältö (Max. 142 merkkiä)</Form.Label>
+            <Form.Label style={{ marginTop: '20px' }}>Myöhästymistekstiviestin sisältö (Max. 140 merkkiä)</Form.Label>
             <Form.Control
               id='latetext'
               as="textarea"
               rows={3}
               required={smsinputs && checked}
               value={latetext}
-              maxLength={142}
-              onChange={(e) => setLatetext(e.target.value.slice(0, 142))}
+              maxLength={140}
+              onChange={(e) => setLatetext(e.target.value.slice(0, 140))}
             />
-            <span>{`${latetext ? latetext.length : 0}/142`}</span>
+            <span>{`${latetext ? latetext.length : 0}/140`}</span>
             <br></br>
             <Button id={'tallenna'} type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
           </Form.Group>
