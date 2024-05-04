@@ -8,5 +8,7 @@
     "email": false,
     "sms": false,
     "remindertext": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
-    "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"
+    "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto",
+    "remindermail": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
+    "latemail": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"
 }
