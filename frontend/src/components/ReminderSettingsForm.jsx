@@ -69,11 +69,10 @@ const ReminderSettingsForm = () => {
         remindermail: remindermail,
         latemail: latemail
       }
-      const response = await settingsService.send(settingsToSave)
+      await settingsService.send(settingsToSave)
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
-      console.error(e)
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'danger'))
+      dispatch(notify(e.response?.data?.error || 'Tapahtui virhe, yritä uudelleen', 'danger'))
     }
   }
 

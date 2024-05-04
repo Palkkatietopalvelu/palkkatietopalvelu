@@ -11,13 +11,13 @@ def require_login(f):
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split()[1]
         if not token:
-            return jsonify({'message' : 'Token puuttuu'}), 401
+            return jsonify({'error' : 'Token puuttuu'}), 401
 
         try:
             user_data = jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256']) # pylint: disable=unused-variable
         except: # pylint: disable=bare-except
             return jsonify({
-                'message' : 'Virheellinen token'
+                'error' : 'Virheellinen tai vanhentunut token. Kirjaudu sisään uudelleen'
             }), 401
         return  f(*args, **kwargs)
 
