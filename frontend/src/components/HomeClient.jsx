@@ -1,5 +1,4 @@
 // ./ (asiakas) Asiakkaan etusivu.
-import '../../assets/style.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'

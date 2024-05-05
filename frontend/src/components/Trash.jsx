@@ -1,5 +1,5 @@
 // ./client/id/trash (Roskakori)
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { deleteFile, downloadFile } from '../reducers/fileReducer'
@@ -7,7 +7,6 @@ import { Button, Modal, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
-import { useState } from 'react'
 import useCheckLogin from '../hooks/CheckLogin'
 
 const Trash = () => {

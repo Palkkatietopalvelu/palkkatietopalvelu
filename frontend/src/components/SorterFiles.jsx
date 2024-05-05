@@ -1,7 +1,6 @@
 // ./files (admin) ; järjestä aineistot
 import React from 'react'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 
 const FilesOrder = ({ setSortingCriteria }) => {
