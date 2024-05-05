@@ -10,6 +10,7 @@ import { useDateSelect } from '../hooks/DatePicker'
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import days from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -30,7 +31,7 @@ const UpdateClient = () => {
   const deadlines = useDateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
   const payperiod = useField(client ? client.payperiod : '')
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return

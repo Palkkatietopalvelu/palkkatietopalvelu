@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät asiakaskäyttäjiin"""
 import secrets
 from flask import jsonify, request
 from flask_mail import Message

@@ -1,3 +1,4 @@
+// Automaattisten muistutuksien asetusten elementit
 const weekDays = [
   'ma',
   'ti',
@@ -59,4 +60,6 @@ const deltaList = [
 
 const defaultremindertext = 'Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto'
 
-export default { weekDays, relativeDays, defaultremindertext, months, deltaList }
+const defaultremindermail = 'Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto'
+
+export default { weekDays, relativeDays, defaultremindertext, defaultremindermail, months, deltaList }

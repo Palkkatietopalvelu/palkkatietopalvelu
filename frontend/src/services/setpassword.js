@@ -1,6 +1,6 @@
+// Salasanan asettaminen ensi kertaa (asiakastili); backend/src/controllers/users.py
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_BACKEND_URL+'/api/setpassword'
-import storage from './storage'
 
 const get = async token => {
   const response = await axios.get(`${baseUrl}/${token}`)

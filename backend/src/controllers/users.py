@@ -1,3 +1,4 @@
+"""Reititykset käyttäjään liittyen (tilitoimisto ja asiakas)"""
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash
 from models.user import User, db

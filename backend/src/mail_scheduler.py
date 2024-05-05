@@ -1,3 +1,4 @@
+"""Automaattisten muistutuksien lähetys"""
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from utilities.reminder_methods import send_email_reminders, send_sms_reminders
@@ -20,7 +21,7 @@ def update_scheduler(minute = 0, second = 0):
 
             return True
 
-        except: # pylint: disable=bare-except
+        except ValueError:
             settings = recover_settings()
 
     return False
@@ -33,7 +34,7 @@ def run_new_job(trigger, settings):
     if settings['email']:
         sched.add_job(
             send_email_reminders,
-            args=[settings['remindertext'], settings['latetext']],
+            args=[settings['remindermail'], settings['latemail']],
             trigger=trigger,
             id='email_reminders',
             max_instances=1

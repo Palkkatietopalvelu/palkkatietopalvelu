@@ -1,3 +1,4 @@
+"""metodeja testeille"""
 import requests
 from initialize_db import initialize_database
 from utilities.token_methods import generate_setpassword_token

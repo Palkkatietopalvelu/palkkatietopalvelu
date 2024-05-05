@@ -5,6 +5,7 @@ import { notify } from '../reducers/notificationReducer'
 import settingsService from '../services/reminderSettings'
 import reminderInfoModule from './ReminderInfo'
 import ReminderFormFields from './ReminderSettingsFormFields'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, relativeDays, deltaList } = reminderInfoModule
 
@@ -19,6 +20,8 @@ const ReminderSettingsForm = () => {
   const [smsinputs, setSmsinputs] = useState(false)
   const [remindertext, setRemindertext] = useState('')
   const [latetext, setLatetext] = useState('')
+  const [remindermail, setRemindermail] = useState('')
+  const [latemail, setLatemail] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -31,6 +34,8 @@ const ReminderSettingsForm = () => {
         setSmsinputs(settings.sms === 'True' || settings.sms === true)
         setRemindertext(settings.remindertext)
         setLatetext(settings.latetext)
+        setRemindermail(settings.remindermail)
+        setLatemail(settings.latemail)
       })
     }}, [user])
 
@@ -38,7 +43,7 @@ const ReminderSettingsForm = () => {
     setChecked(nextChecked)
   }
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 
@@ -60,13 +65,14 @@ const ReminderSettingsForm = () => {
         email: emailinputs,
         sms: smsinputs,
         remindertext: remindertext,
-        latetext: latetext
+        latetext: latetext,
+        remindermail: remindermail,
+        latemail: latemail
       }
-      const response = await settingsService.send(settingsToSave)
+      await settingsService.send(settingsToSave)
       dispatch(notify('Asetukset tallennettu'))
     } catch(e) {
-      console.error(e)
-      dispatch(notify(e.response?.data || 'Tapahtui virhe, yritä uudelleen', 'danger'))
+      dispatch(notify(e.response?.data?.error || 'Tapahtui virhe, yritä uudelleen', 'danger'))
     }
   }
 
@@ -85,8 +91,12 @@ const ReminderSettingsForm = () => {
             setSmsinputs={setSmsinputs}
             remindertext={remindertext}
             setRemindertext={setRemindertext}
+            remindermail={remindermail}
+            setRemindermail={setRemindermail}
             latetext={latetext}
             setLatetext={setLatetext}
+            latemail={latemail}
+            setLatemail={setLatemail}
             days={days}
             setDays={setDays}
             weekDays={weekDays}
