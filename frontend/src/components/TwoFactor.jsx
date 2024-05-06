@@ -3,7 +3,7 @@ import { useField } from '../hooks'
 import Togglable from './Togglable'
 import { Form, Button } from 'react-bootstrap'
 import { useRef, useState } from 'react'
-import { enableTwoFactor, confirmTwoFactor } from '../reducers/userReducer'
+import { enableTwoFactor, confirmTwoFactor, disableTwoFactor } from '../reducers/userReducer'
 import QRCode from "react-qr-code";
 
 const TwoFactor = () => {
@@ -17,9 +17,16 @@ const TwoFactor = () => {
 
   const handleRemoveSubmit = async (event) => {
     event.preventDefault()
-    dispatch(removeTwoFa({
-
-    }))
+    dispatch(disableTwoFactor({
+      user_id: user.id,
+      password: password.value,
+      code: verification.value })).then(result => {
+        if (result) {
+          formRef.current.toggleVisibility()
+          password.onReset()
+          token.onReset()
+        }
+      })
   }
 
   const handleEnableSubmit = async (event) => {

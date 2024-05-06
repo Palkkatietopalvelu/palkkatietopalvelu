@@ -15,4 +15,7 @@ def create_totp_generator(username, secret = pyotp.random_base32()):
 
 def confirm_two_factor(user_id, code):
     totp = pyotp.TOTP(totp_methods.get_totp_secret(user_id))
-    return totp.verify(code)
+    try:
+        return totp.verify(code)
+    except TypeError:
+        return False

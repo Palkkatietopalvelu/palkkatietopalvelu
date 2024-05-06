@@ -14,4 +14,10 @@ const confirmTwoFactor = async object => {
   return response.data
 }
 
-export default { enableTwoFactor, confirmTwoFactor }
+const disableTwoFactor = async object => {
+  const id = object.user_id
+  const response = await axios.post(`${baseUrl}/disable/${id}`, object, { headers: storage.setHeaders() })
+  return response.data
+}
+
+export default { enableTwoFactor, confirmTwoFactor, disableTwoFactor }

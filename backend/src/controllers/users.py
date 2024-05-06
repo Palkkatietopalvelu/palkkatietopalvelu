@@ -6,8 +6,8 @@ from app import app
 from utilities.require_login import require_login
 from utilities import user_methods
 from utilities import token_methods
-from utilities.two_factor_authentication import enable_two_factor, confirm_two_factor
-from utilities.totp_methods import set_active
+import utilities.two_factor_authentication as tfa
+from utilities.totp_methods import set_active, remove_two_factor
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -88,13 +88,24 @@ def enabletwofactor(user_id):
     user = User.query.filter_by(id=user_id).first()
     if not user_methods.confirm_password(data['password'], user):
         return "Virheellinen salasana", 400
-    return enable_two_factor(user), 200
+    return tfa.enable_two_factor(user), 200
 
 @app.route('/api/twofactor/confirm/<int:user_id>', methods=['POST'])
 def confirmtwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
-    if not confirm_two_factor(user.id, data['code']):
+    if not tfa.confirm_two_factor(user.id, data['code']):
         return "Virheellinen koodi", 400
     set_active(user_id)
     return "Käyttöönotto onnistui", 200
+
+@app.route('/api/twofactor/disable/<int:user_id>', methods=['POST'])
+def disabletwofactor(user_id):
+    data = request.get_json()
+    user = User.query.filter_by(id=user_id).first()
+    if not user_methods.confirm_password(data['password'], user):
+        return "Virheellinen salasana", 400
+    if not tfa.confirm_two_factor(user.id, data['code']):
+        return "Virheellinen koodi", 400
+    remove_two_factor(user_id)
+    return "Kaksivaiheinen tunnistautuminen poistetty käytöstä", 200

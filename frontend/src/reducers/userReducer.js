@@ -125,8 +125,7 @@ export const enableTwoFactor = (data) => {
     try {
       const uri = await TwoFactorService.enableTwoFactor(data)
       return uri
-    }
-    catch (e) {
+    } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
       return false
     }
@@ -139,9 +138,19 @@ export const confirmTwoFactor = (data) => {
       await TwoFactorService.confirmTwoFactor(data)
       dispatch(notify('Käyttöönotto onnistui'))
       return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
     }
-    catch (e) {
-      console.log(e.response?.data)
+  }
+}
+
+export const disableTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      await TwoFactorService.disableTwoFactor(data)
+      dispatch(notify('Kaksivaiheinen tunnistautuminen poistetty käytöstä'))
+      return true
+    } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
     }
   }

@@ -8,6 +8,7 @@ from werkzeug.security import check_password_hash
 from sqlalchemy import func
 from models.user import User
 from utilities.client_methods import get_status
+from utilities.totp_methods import check_active_status
 from app import app
 
 @app.route('/api/login', methods=['POST'])
@@ -22,14 +23,18 @@ def login():
     if user and check_password_hash(user.password, password):
         if user.role == 2 and not get_status(user.username):
             return jsonify({"error": "Tili on asetettu epäaktiiviseksi."}), 401
+        two_fa = False
+        if check_active_status(user.id):
+            two_fa = True
         valid_for = timedelta(hours=10)
         expiration_time = datetime.now(timezone.utc) + valid_for
         user_info = {"username": user.username,
                      "id": user.id,
                      "role": user.role,
-                     "exp": expiration_time}
+                     "exp": expiration_time,
+                     "two_fa": two_fa}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username,
-                        "id": user.id, "role": user.role, "two_fa": False,
+                        "id": user.id, "role": user.role, "two_fa": two_fa,
                         "exp": (now_ms + (valid_for/timedelta(milliseconds=1)))}), 200
     return jsonify({"error": "Väärä käyttäjätunnus tai salasana"}), 401

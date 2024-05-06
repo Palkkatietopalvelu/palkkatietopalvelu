@@ -30,3 +30,10 @@ def remove_two_factor(user_id):
     sql = text("""DELETE FROM two_factor_secrets WHERE user_id=:user_id""")
     db.session.execute(sql, {"user_id": user_id})
     db.session.commit()
+
+def check_active_status(user_id):
+    sql = text("""SELECT active FROM two_factor_secrets WHERE user_id=:user_id""")
+    result = db.session.execute(sql, {"user_id": user_id}).fetchone()
+    if result:
+        return result.active
+    return False
