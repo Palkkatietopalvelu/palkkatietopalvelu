@@ -24,17 +24,17 @@ const LoginForm = () => {
     if (!twoFaChecked) {
       dispatch(checkTwoFactor({
         username: username.value,
-        password: password.value})).then(result => {
-          setTwoFaChecked(true)
-          if (!result.two_factor) {
-            dispatch(loginUser({
-              username: username.value,
-              password: password.value}))
-            navigate('/')
-          }
-          else {
-            setRequireToken(true)
-          }
+        password: password.value })).then(result => {
+        setTwoFaChecked(true)
+        if (!result.two_factor) {
+          dispatch(loginUser({
+            username: username.value,
+            password: password.value }))
+          navigate('/')
+        }
+        else {
+          setRequireToken(true)
+        }
       })
     }
     else {

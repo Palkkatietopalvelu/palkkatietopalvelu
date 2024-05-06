@@ -1,7 +1,7 @@
-from sqlalchemy.sql import text
-from db import db
 import os
+from sqlalchemy.sql import text
 from cryptography.fernet import Fernet
+from db import db
 
 def add_totp_secret(secret, user_id):
     if get_totp_secret(user_id):

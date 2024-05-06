@@ -7,9 +7,8 @@ from utilities.require_login import require_login
 from utilities import user_methods
 from utilities import token_methods
 import utilities.two_factor_authentication as tfa
-from utilities.user_methods import generate_user_info
+from utilities.user_methods import generate_user_info, check_credentials
 from utilities.totp_methods import set_active, remove_two_factor, check_active_status
-from sqlalchemy import func
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -88,7 +87,7 @@ def resetpassword():
 def enabletwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
-    if not user_methods.confirm_password(data['password'], user):
+    if not check_password_hash(user.password, data['password']):
         return "Virheellinen salasana", 401
     return tfa.enable_two_factor(user), 200
 
@@ -105,7 +104,7 @@ def confirmtwofactor(user_id):
 def disabletwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
-    if not user_methods.confirm_password(data['password'], user):
+    if not check_password_hash(user.password, data['password']):
         return "Virheellinen salasana", 401
     if not tfa.confirm_two_factor(user.id, data['code']):
         return "Virheellinen koodi", 401
@@ -115,12 +114,8 @@ def disabletwofactor(user_id):
 @app.route('/api/twofactor/check', methods=['POST'])
 def checktwofactor():
     data = request.get_json()
-    username = data['username']
-    password = data['password']
-
-    user = User.query.filter(func.lower(User.username) == func.lower(username)).first()
-
-    if user and check_password_hash(user.password, password):
+    user = check_credentials(data)
+    if user:
         return jsonify({"two_factor": check_active_status(user.id)}), 200
 
     return jsonify({"error": "Väärä käyttäjätunnus tai salasana"}), 401

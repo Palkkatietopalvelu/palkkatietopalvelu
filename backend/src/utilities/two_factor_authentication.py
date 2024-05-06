@@ -1,7 +1,5 @@
 import pyotp
-import time
-from cryptography.fernet import Fernet
-import utilities.totp_methods as totp_methods
+from utilities import totp_methods
 
 def enable_two_factor(user):
     secret = pyotp.random_base32()

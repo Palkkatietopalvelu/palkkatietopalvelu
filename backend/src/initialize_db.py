@@ -61,7 +61,7 @@ def create_tables():
             date DATE
         );
         """))
-    
+
     db.session.execute(text("""
         CREATE TABLE two_factor_secrets (
             id SERIAL PRIMARY KEY,
@@ -95,7 +95,7 @@ def drop_tables():
     db.session.execute(text("""
         DROP TABLE IF EXISTS expired_tokens CASCADE;
     """))
-    
+
     db.session.execute(text("""
         DROP TABLE IF EXISTS two_factor_secrets CASCADE;
     """))
