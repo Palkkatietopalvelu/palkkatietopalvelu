@@ -59,6 +59,7 @@ const TwoFactor = () => {
         <Form onSubmit={handleConfirmTwoFactor}>
           <Form.Group>
             <p>Skannaa koodi valitsemassasi todennussovelluksessa (esim google authenticator), ja viimeistele käyttöönotto syöttämällä vahvistuskoodi</p>
+            <p>HUOM! Käyttöönoton jälkeen pääset kirjautumaan käyttäjälle vain, jos sinulla on sovelluksen generoima koodi.</p>
             <QRCode value={uri}/><br />
             <Form.Label style={{ marginTop: '20px' }}>vahvistuskoodi</Form.Label>
             <Form.Control id='verificationcode' {...token} required /> <br />
