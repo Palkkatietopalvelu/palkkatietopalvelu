@@ -16,6 +16,7 @@
       ```
       DATABASE_URL="sinun_osoite"
       SECRET_KEY="sinun_salainen_avain"
+      FERNET_KEY="toinen salainen avain"
       MAIL_USERNAME="lähetyssähköpostiosoite_tai_-tunnus"
       MAIL_PASSWORD="lähetyssähköpostin_salasana"
       MAIL_SERVER ='käyttämäsi_smtp_palvelin'
@@ -23,7 +24,12 @@
       SMS_PASSWORD="Tekstari.fi salasana"
       CORS_ORIGINS="*"
       ```
-      
+    - Fernet keyn voi luoda seuraavilla komennoilla:
+      ```
+      python3
+      from cryptography.fernet import Fernet
+      print(Fernet.generate_key().decode())
+      ```
     - Lisää frontendin .env tiedostoon tämä muuttuja:
       ```
       VITE_BACKEND_URL="http://localhost:5000"
