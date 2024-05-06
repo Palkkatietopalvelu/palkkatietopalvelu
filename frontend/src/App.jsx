@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route
 } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import '../assets/style.css'
+import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'
 import ClientForm from './components/ClientForm'

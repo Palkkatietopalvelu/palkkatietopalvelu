@@ -58,7 +58,7 @@ const ClientForm = () => {
   }
 
   const style = {
-    width: '90vw',
+    width: '50vw',
     padding: '0rem',
     color: '#495057',
     border: 0,

@@ -109,7 +109,9 @@ const SalaryForm = () => {
   ])
 
   useEffect(() => {
-    if (!client || client.id !== urlClientId) {
+    if (!client) {
+      return
+    } else if (client.id !== urlClientId) {
       console.error('Unauthorized access or client not found.')
       navigate('/')
     }

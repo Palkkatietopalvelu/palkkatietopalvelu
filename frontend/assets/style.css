@@ -23,3 +23,13 @@
     width: 100%;
   }
 }
+
+.login-width {
+  width: 30%;
+}
+
+@media (max-width: 768px) {
+  .login-width {
+    width: 50%;
+  }
+}
