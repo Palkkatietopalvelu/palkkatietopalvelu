@@ -1,18 +1,16 @@
 // ./login (kirjautuminen)
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useNavigate, Link } from 'react-router-dom'
 import { useField } from '../hooks'
 import { loginUser, checkTwoFactor } from '../reducers/userReducer'
 import Notification from './Notification'
 import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import useCheckLogin from '../hooks/CheckLogin'
 import { useState } from 'react'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector(({ user }) => user)
   const username = useField()
   const password = useField()
   const twoFaToken = useField()
@@ -54,7 +52,7 @@ const LoginForm = () => {
       {!useCheckLogin() && <div>
         <h2>Kirjaudu sisään</h2>
         <Notification />
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handleLogin} className='login-width'>
           <Form.Group>
             <Form.Label>Sähköposti</Form.Label>
             <Form.Control id='username' type='text' {...username} required />

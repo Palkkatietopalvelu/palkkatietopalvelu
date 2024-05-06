@@ -18,7 +18,7 @@ const Files = () => {
   // files and clients have to be defined without any filters bc they are used in SorterFiles.jsx
   // and otherwise the useEffect gets messed up
   const [filteredFiles, setFilteredFiles] = useState([])
-  const [sortingCriteria, setSortingCriteria] = useState('arrival time newest')  // arrival time newest, arrival time oldest, due date
+  const [sortingCriteria, setSortingCriteria] = useState('due date')  // arrival time newest, arrival time oldest, due date
 
   useEffect(() => {
     if (user) {

@@ -1,14 +1,13 @@
 // ./files (admin) ; järjestä aineistot
 import React from 'react'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 
 const FilesOrder = ({ setSortingCriteria }) => {
   /* arrival time newest, arrival time oldest, due date
     sets the text in the menu box
-    arrival time newest is the default */
-  const [sortedBy, setSortedBy] = useState('Saapumisaika (uusin ensin)')
+    due date is the default */
+  const [sortedBy, setSortedBy] = useState('Eräpäivän mukaan')
 
   const orderByArrivalNewest = () => {
     setSortingCriteria('arrival time newest')
