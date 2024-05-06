@@ -15,14 +15,13 @@ const TwoFactor = () => {
   const token = useField()
   const [uri, setUri] = useState('')
 
-  const handleRemoveSubmit = async (event) => {
+  const handleDisableSubmit = async (event) => {
     event.preventDefault()
     dispatch(disableTwoFactor({
       user_id: user.id,
       password: password.value,
       code: verification.value })).then(result => {
         if (result) {
-          formRef.current.toggleVisibility()
           password.onReset()
           token.onReset()
         }
@@ -53,7 +52,6 @@ const TwoFactor = () => {
         }
       })
   }
-
   return (
     <div>
       {uri && <div style={{ background: 'white', padding: '16px' }}>
@@ -71,7 +69,7 @@ const TwoFactor = () => {
         {user.two_fa && <div>
           Kaksivaiheinen tunnistautuminen on käytössä
           <Togglable buttonLabel='Poista käytöstä' ref={formRef}>
-            <Form onSubmit={handleRemoveSubmit}>
+            <Form onSubmit={handleDisableSubmit}>
             <Form.Group>
                 <Form.Label>Salasana</Form.Label>
                 <Form.Control id='passwordconfirmation' type='password' {...password} required />

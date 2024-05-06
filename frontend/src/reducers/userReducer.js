@@ -135,11 +135,14 @@ export const enableTwoFactor = (data) => {
 export const confirmTwoFactor = (data) => {
   return async dispatch => {
     try {
-      await TwoFactorService.confirmTwoFactor(data)
+      const user = await TwoFactorService.confirmTwoFactor(data)
+      storageService.saveUser(user)
+      dispatch(set(user))
       dispatch(notify('Käyttöönotto onnistui'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
     }
   }
 }
@@ -147,11 +150,27 @@ export const confirmTwoFactor = (data) => {
 export const disableTwoFactor = (data) => {
   return async dispatch => {
     try {
-      await TwoFactorService.disableTwoFactor(data)
+      const user = await TwoFactorService.disableTwoFactor(data)
+      storageService.saveUser(user)
+      dispatch(set(user))
       dispatch(notify('Kaksivaiheinen tunnistautuminen poistetty käytöstä'))
       return true
     } catch (e) {
       dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
+    }
+  }
+}
+
+export const checkTwoFactor = (credentials) => {
+  return async dispatch => {
+    try {
+      const response = await TwoFactorService.checktwofactor(credentials)
+      return response
+    } catch (e) {
+      dispatch(notify(e.response?.data.error ||
+        'Väärä käyttäjätunnus tai salasana', 'danger'))
+      return false
     }
   }
 }

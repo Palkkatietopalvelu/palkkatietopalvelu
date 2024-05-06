@@ -20,4 +20,9 @@ const disableTwoFactor = async object => {
   return response.data
 }
 
-export default { enableTwoFactor, confirmTwoFactor, disableTwoFactor }
+const checktwofactor = async credentials => {
+  const response = await axios.post(`${baseUrl}/check`, credentials)
+  return response.data
+}
+
+export default { enableTwoFactor, confirmTwoFactor, disableTwoFactor, checktwofactor }

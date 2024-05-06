@@ -20,9 +20,9 @@ const MyPage = () => {
   return (
     <div>
       <br /><h2 style={{ marginBottom: '20px' }}>Omat sivut</h2><hr />
+      <Notification />
       <h4 style={{ marginTop: '20px' }}>Käyttäjätilin asetukset</h4>
       <p>Käyttäjätunnus: {user.username}</p>
-      <Notification />
       <TwoFactor />
       <br />
       <PasswordChange />

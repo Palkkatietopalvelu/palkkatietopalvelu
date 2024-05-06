@@ -1,13 +1,15 @@
 """Reititykset käyttäjään liittyen (tilitoimisto ja asiakas)"""
 from flask import request, jsonify
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User, db
 from app import app
 from utilities.require_login import require_login
 from utilities import user_methods
 from utilities import token_methods
 import utilities.two_factor_authentication as tfa
-from utilities.totp_methods import set_active, remove_two_factor
+from utilities.user_methods import generate_user_info
+from utilities.totp_methods import set_active, remove_two_factor, check_active_status
+from sqlalchemy import func
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -87,7 +89,7 @@ def enabletwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
     if not user_methods.confirm_password(data['password'], user):
-        return "Virheellinen salasana", 400
+        return "Virheellinen salasana", 401
     return tfa.enable_two_factor(user), 200
 
 @app.route('/api/twofactor/confirm/<int:user_id>', methods=['POST'])
@@ -95,17 +97,30 @@ def confirmtwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
     if not tfa.confirm_two_factor(user.id, data['code']):
-        return "Virheellinen koodi", 400
+        return "Virheellinen koodi", 401
     set_active(user_id)
-    return "Käyttöönotto onnistui", 200
+    return generate_user_info(user), 200
 
 @app.route('/api/twofactor/disable/<int:user_id>', methods=['POST'])
 def disabletwofactor(user_id):
     data = request.get_json()
     user = User.query.filter_by(id=user_id).first()
     if not user_methods.confirm_password(data['password'], user):
-        return "Virheellinen salasana", 400
+        return "Virheellinen salasana", 401
     if not tfa.confirm_two_factor(user.id, data['code']):
-        return "Virheellinen koodi", 400
+        return "Virheellinen koodi", 401
     remove_two_factor(user_id)
-    return "Kaksivaiheinen tunnistautuminen poistetty käytöstä", 200
+    return generate_user_info(user), 200
+
+@app.route('/api/twofactor/check', methods=['POST'])
+def checktwofactor():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+
+    user = User.query.filter(func.lower(User.username) == func.lower(username)).first()
+
+    if user and check_password_hash(user.password, password):
+        return jsonify({"two_factor": check_active_status(user.id)}), 200
+
+    return jsonify({"error": "Väärä käyttäjätunnus tai salasana"}), 401
