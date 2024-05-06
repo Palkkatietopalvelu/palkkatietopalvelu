@@ -26,7 +26,6 @@ apscheduler = "^3.10.4"
 alembic = "^1.13.1"
 flask-migrate = "^4.0.7"
 pyotp = "^2.9.0"
-qrcode = "^7.4.2"
 cryptography = "^42.0.5"
 
 
