@@ -7,6 +7,7 @@ import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
 import { getClients } from './clientsReducer'
+import TwoFactorService from '../services/twofactor'
 
 const initialState = null
 
@@ -118,4 +119,32 @@ export const validateToken = (token) => {
     }
   }
 }
+
+export const enableTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      const uri = await TwoFactorService.enableTwoFactor(data)
+      return uri
+    }
+    catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
+    }
+  }
+}
+
+export const confirmTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      await TwoFactorService.confirmTwoFactor(data)
+      dispatch(notify('Käyttöönotto onnistui'))
+      return true
+    }
+    catch (e) {
+      console.log(e.response?.data)
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+    }
+  }
+}
+
 export default slice.reducer

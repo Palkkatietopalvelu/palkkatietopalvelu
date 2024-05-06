@@ -30,6 +30,6 @@ def login():
                      "exp": expiration_time}
         token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
         return jsonify({"token": token, "username": user.username,
-                        "id": user.id, "role": user.role, "two_fa": True,
+                        "id": user.id, "role": user.role, "two_fa": False,
                         "exp": (now_ms + (valid_for/timedelta(milliseconds=1)))}), 200
     return jsonify({"error": "Väärä käyttäjätunnus tai salasana"}), 401

@@ -81,3 +81,6 @@ def get_resetpassword_token(email):
     data = {"username": email, "exp": expiration_time}
     token = jwt.encode(data, os.environ.get('SECRET_KEY'), algorithm='HS256')
     return token
+
+def confirm_password(password, user):
+    return check_password_hash(user.password, password)
