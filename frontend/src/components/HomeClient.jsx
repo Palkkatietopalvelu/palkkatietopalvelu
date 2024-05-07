@@ -1,5 +1,4 @@
 // ./ (asiakas) Asiakkaan etusivu.
-import '../../assets/style.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -51,7 +50,7 @@ const HomeClient = () => {
                   <div key={date}>
                     {new Date(date).toLocaleString('fi-FI',
                       { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-                    {' '} <DueDateBadge deadline={client.deadlines[0]} /> </div>)}</td></tr>
+                    {' '} {date == client.deadlines[0] && <DueDateBadge deadline={client.deadlines[0]} />} </div>)}</td></tr>
                 <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
               </tbody>
             </Table>

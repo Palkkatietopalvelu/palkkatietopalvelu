@@ -76,8 +76,6 @@ const Menu = () => {
     setLinkColor('black')
   }
 
-  // <NavLink style={navLinkStyles} onClick={handleActiveLinkChange} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} to="/client">LISÄÄ ASIAKAS</NavLink>
-
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" style={navbar}>

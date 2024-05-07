@@ -16,6 +16,10 @@ const ReminderFormFields = ({
   setRemindertext,
   latetext,
   setLatetext,
+  remindermail,
+  setRemindermail,
+  latemail,
+  setLatemail,
   days,
   setDays,
   weekDays,
@@ -60,31 +64,7 @@ const ReminderFormFields = ({
               checked={smsinputs}
             />
             {' '}{'Tekstiviestillä'}
-            <br></br>
-            <Form.Label style={{ marginTop: '20px' }}>Muistutusviestin teksti (Max. 137 merkkiä)</Form.Label>
-            <Form.Control
-              id='remindertext'
-              as="textarea"
-              rows={3}
-              required={checked}
-              value={remindertext}
-              maxLength={137}
-              onChange={(e) => setRemindertext(e.target.value.slice(0, 137))}
-            />
-            <span>{`${remindertext ? remindertext.length : 0}/137`}</span>
-            <br></br>
-            <Form.Label style={{ marginTop: '20px' }}>Myöhästymismuistutuksen teksti (Max. 137 merkkiä)</Form.Label>
-            <Form.Control
-              id='latetext'
-              as="textarea"
-              rows={3}
-              required={checked}
-              value={latetext}
-              maxLength={137}
-              onChange={(e) => setLatetext(e.target.value.slice(0, 137))}
-            />
-            <span>{`${latetext ? latetext.length : 0}/137`}</span>
-            <br></br>
+            < br/>
             <Form.Label style={{ marginTop: '20px' }}>
             Muistutuspäivät
             </Form.Label>
@@ -127,7 +107,57 @@ const ReminderFormFields = ({
                 </div>
               ))}
               <div>Päivää eräpäivän jälkeen</div>
+              <Button id={'tallenna'} type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
             </div>
+            <hr/>
+            <h3 style={{ marginTop: '30px' }}>Viestien sisältö</h3>
+            <p>Jokaisen viestin loppuun lisätään &quot;eräpäivä: dd.mm.yy&quot;</p>
+            <h4 style={{ marginTop: '30px' }}>Sähköpostit</h4>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutussähköpostin sisältö</Form.Label>
+            <Form.Control
+              id='remindermail'
+              as="textarea"
+              rows={3}
+              required={checked}
+              value={remindermail}
+              onChange={(e) => setRemindermail(e.target.value)}
+            />
+            <br></br>
+            <Form.Label>Myöhästymissähköpostin sisältö</Form.Label>
+            <Form.Control
+              id='latemail'
+              as="textarea"
+              rows={3}
+              required={checked}
+              value={latemail}
+              onChange={(e) => setLatemail(e.target.value)}
+            />
+            <br></br>
+            <h4 style={{ marginTop: '30px' }}>Tekstiviestit</h4>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutustekstiviestin sisältö (Max. 140 merkkiä)</Form.Label>
+            <Form.Control
+              id='remindertext'
+              as="textarea"
+              rows={3}
+              required={checked}
+              value={remindertext}
+              maxLength={140}
+              onChange={(e) => setRemindertext(e.target.value.slice(0, 140))}
+            />
+            <span>{`${remindertext ? remindertext.length : 0}/140`}</span>
+            <br></br>
+            <Form.Label style={{ marginTop: '20px' }}>Myöhästymistekstiviestin sisältö (Max. 140 merkkiä)</Form.Label>
+            <Form.Control
+              id='latetext'
+              as="textarea"
+              rows={3}
+              required={checked}
+              value={latetext}
+              maxLength={140}
+              onChange={(e) => setLatetext(e.target.value.slice(0, 140))}
+            />
+            <span>{`${latetext ? latetext.length : 0}/140`}</span>
+            <br></br>
             <Button id={'tallenna'} type="submit" style={{ marginTop: '20px' }}>Tallenna</Button>
           </Form.Group>
         </Form>

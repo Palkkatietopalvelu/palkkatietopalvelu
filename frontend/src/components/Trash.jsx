@@ -1,5 +1,5 @@
 // ./client/id/trash (Roskakori)
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { deleteFile, downloadFile } from '../reducers/fileReducer'
@@ -7,7 +7,6 @@ import { Button, Modal, Table } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { getFile } from '../reducers/fileReducer'
 import Notification from './Notification'
-import { useState } from 'react'
 import useCheckLogin from '../hooks/CheckLogin'
 
 const Trash = () => {
@@ -40,7 +39,7 @@ const Trash = () => {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
-  } else if (client.email===user.username || client.user_id===user.id) {
+  } else {
     return (
       <div className='container'>
         {user.role === 1 && <div><br />
@@ -57,6 +56,7 @@ const Trash = () => {
                 <th></th>
                 <th>Tiedosto</th>
                 <th>Päivämäärä</th>
+                <th>Yritys</th>
               </tr>
             </thead>
             <tbody>
@@ -70,6 +70,7 @@ const Trash = () => {
                       {setShowModal(true), setVaryingFileName(file.name), setVaryingFileId(file.id)}}>Poista</Button></td>
                     <td>{file.name}</td>
                     <td>{format(new Date(file.date), 'yyyy-MM-dd HH:mm')}</td>
+                    <td>{file.company}</td>
                   </tr>
                 )})}
             </tbody>
@@ -79,9 +80,6 @@ const Trash = () => {
         </div>
       </div>
     )}
-  else {
-    return ('Sinulla ei ole oikeuksia tälle sivulle')
-  }
 }
 
 const DeleteFileModal = ({ varyingFileId, varyingFileName, handleFileDelete, showModal, setShowModal }) => {

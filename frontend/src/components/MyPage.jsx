@@ -25,7 +25,7 @@ const MyPage = () => {
       <PasswordChange />
       {user.role === 1 && <div>
         <RegisterForm /> </div>}
-      {user.role === 2 && <div> <hr />
+      {user.role === 2 && client && <div> <hr />
         <h5 style={{ marginTop: '20px' }}>Yhteystiedot</h5>
         <Table striped>
           <tbody key={client.email} >
@@ -41,7 +41,7 @@ const MyPage = () => {
               <div key={date}>
                 {new Date(date).toLocaleString('fi-FI',
                   { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' })}
-                {' '} <DueDateBadge deadline={client.deadlines[0]} />
+                {' '} {date == client.deadlines[0] && <DueDateBadge deadline={client.deadlines[0]} />}
               </div>)}</td></tr>
             <tr><td>Palkkakausi</td><td>{client.payperiod}</td></tr>
           </tbody>

@@ -98,7 +98,7 @@ const HomeAdmin = () => {
                 </tr>
                 <tr>
                   <th><input id="companyFilter" onChange={handleCompanySearch} className='form-control filter-width'/></th>
-                  <th><input id="dateFilter" onChange={handleDateSearch} className='form-control filter width'/></th>
+                  <th><input id="dateFilter" onChange={handleDateSearch} className='form-control filter-width'/></th>
                   <th></th>
                 </tr>
               </thead>

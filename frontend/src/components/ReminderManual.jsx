@@ -11,7 +11,7 @@ import CheckBox from './CheckBox'
 import reminderInfoModule from './ReminderInfo'
 import useCheckLogin from '../hooks/CheckLogin'
 
-const { defaultremindertext } = reminderInfoModule
+const { defaultremindertext, defaultremindermail } = reminderInfoModule
 
 const ClientReminder = () => {
   const dispatch = useDispatch()
@@ -20,6 +20,7 @@ const ClientReminder = () => {
   const [emailinputs, setEmailinputs] = useState([])
   const [smsinputs, setSmsinputs] = useState([])
   const [remindertext, setRemindertext] = useState(defaultremindertext)
+  const [remindermail, setRemindermail] = useState(defaultremindermail)
   const [isSending, setIsSending] = useState(false)
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const ClientReminder = () => {
     }
     if (emailinputs.length > 0) {
       try {
-        await mailService.send({ recipients: emailinputs, message: remindertext })
+        await mailService.send({ recipients: emailinputs, message: remindermail })
         dispatch(notify('Sähköpostimuistutukset lähetetty'))
       } catch (error) {
         console.error('An error occurred while sending emails:', error)
@@ -88,11 +89,21 @@ const ClientReminder = () => {
   return (
     <div className='container'>
       {user.role === 1 && <div>
-        <br /><h2>Valitse asiakkaat, joille muistutus lähetetään</h2><hr/>
+        <br /><h2>Manuaaliset muistutukset</h2><hr/>
         <Notification />
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label style={{ marginTop: '20px' }}>Muistutusviestin teksti (Max. 160 merkkiä)</Form.Label>
+            <h3 style={{ marginTop: '30px' }}>Viestien sisältö</h3>
+            <Form.Label style={{ marginTop: '20px' }}>Muistutussähköpostin sisältö</Form.Label>
+            <Form.Control
+              id='remindermail'
+              as="textarea"
+              rows={5}
+              required
+              value={remindermail}
+              onChange={(e) => setRemindermail(e.target.value)}
+            />
+            <Form.Label style={{ marginTop: '20px' }}>Muistutustekstiviestin sisältö (Max. 160 merkkiä)</Form.Label>
             <Form.Control
               id='remindertext'
               as="textarea"
@@ -103,6 +114,7 @@ const ClientReminder = () => {
               onChange={(e) => setRemindertext(e.target.value.slice(0, 160))}
             />
             <span>{`${remindertext ? remindertext.length : 0}/160`}</span>
+            <br /><h3 style={{ marginTop: '20px' }}>Valitse asiakkaat, joille muistutus lähetetään</h3><hr />
             <div className='table-responsive'>
               <Table striped>
                 <thead>

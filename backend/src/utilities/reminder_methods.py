@@ -16,9 +16,9 @@ def send_email_reminders(remindertext, latetext):
                         sender = app.config['MAIL_USERNAME'],
                         recipients = [recipient])
             if is_late(deadline):
-                msg.body = f'{latetext}\nEräpäivä oli {deadline.strftime("%d.%m.%y")}'
+                msg.body = f'{latetext}\nEräpäivä: {deadline.strftime("%d.%m.%y")}'
             else:
-                msg.body = f'{remindertext}\nEräpäivä on {deadline.strftime("%d.%m.%y")}'
+                msg.body = f'{remindertext}\nEräpäivä: {deadline.strftime("%d.%m.%y")}'
             mail.send(msg)
 
 def is_late(deadline):
