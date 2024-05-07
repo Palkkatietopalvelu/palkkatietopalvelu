@@ -57,6 +57,28 @@ const SalaryForm = () => {
   const absence_reason_3 = useField()
   const absence_compensated_3 = useField()
   const absence_time_period_3 = useField()
+  const absence_reason_4 = useField()
+  const absence_compensated_4 = useField()
+  const absence_time_period_4 = useField()
+  const absence_reason_5 = useField()
+  const absence_compensated_5 = useField()
+  const absence_time_period_5 = useField()
+  const absence_reason_6 = useField()
+  const absence_compensated_6 = useField()
+  const absence_time_period_6 = useField()
+  const absence_reason_7 = useField()
+  const absence_compensated_7 = useField()
+  const absence_time_period_7 = useField()
+  const absence_reason_8 = useField()
+  const absence_compensated_8 = useField()
+  const absence_time_period_8 = useField()
+  const absence_reason_9 = useField()
+  const absence_compensated_9 = useField()
+  const absence_time_period_9 = useField()
+  const absence_reason_10 = useField()
+  const absence_compensated_10 = useField()
+  const absence_time_period_10 = useField()
+  const [visibleAbsenceRows, setVisibleAbsenceRows] = useState(3)
   const extra = useField()
 
   const calculateWageTotalGross = useCallback(() => {
@@ -163,6 +185,19 @@ const SalaryForm = () => {
       alert('Työntekijän nimi ja palkkajakso ovat pakollisia tietoja.')
       return
     }
+    for (let i = 0; i < absencesTable.length; i++) {
+      let filledRowItems = 0
+      for (let j = 0; j <= 2; j++) {
+        if (absencesTable[i][j].value.trim() === '') {
+          filledRowItems++
+        }
+      }
+      if (filledRowItems === 1 || filledRowItems == 2) {
+        alert(`Poissaolotaulukon riviltä ${i+1} puuttuu tietoja.`)
+        return
+      }
+    }
+    setVisibleAbsenceRows(3)
     let employeeData = {
       employee_name: employee_name.value,
       salary_type: formType === 'monthly' ? 'Kuukausipalkkalainen' : 'Tuntipalkkalainen',
@@ -203,6 +238,27 @@ const SalaryForm = () => {
     if (absence_reason_3.value) employeeData.absence_reason_3 = absence_reason_3.value
     if (absence_compensated_3.value) employeeData.absence_compensated_3 = absence_compensated_3.value
     if (absence_time_period_3.value) employeeData.absence_time_period_3 = absence_time_period_3.value
+    if (absence_reason_4.value) employeeData.absence_reason_4 = absence_reason_4.value
+    if (absence_compensated_4.value) employeeData.absence_compensated_4 = absence_compensated_4.value
+    if (absence_time_period_4.value) employeeData.absence_time_period_4 = absence_time_period_4.value
+    if (absence_reason_5.value) employeeData.absence_reason_5 = absence_reason_5.value
+    if (absence_compensated_5.value) employeeData.absence_compensated_5 = absence_compensated_5.value
+    if (absence_time_period_5.value) employeeData.absence_time_period_5 = absence_time_period_5.value
+    if (absence_reason_6.value) employeeData.absence_reason_6 = absence_reason_6.value
+    if (absence_compensated_6.value) employeeData.absence_compensated_6 = absence_compensated_6.value
+    if (absence_time_period_6.value) employeeData.absence_time_period_6 = absence_time_period_6.value
+    if (absence_reason_7.value) employeeData.absence_reason_7 = absence_reason_7.value
+    if (absence_compensated_7.value) employeeData.absence_compensated_7 = absence_compensated_7.value
+    if (absence_time_period_7.value) employeeData.absence_time_period_7 = absence_time_period_7.value
+    if (absence_reason_8.value) employeeData.absence_reason_8 = absence_reason_8.value
+    if (absence_compensated_8.value) employeeData.absence_compensated_8 = absence_compensated_8.value
+    if (absence_time_period_8.value) employeeData.absence_time_period_8 = absence_time_period_8.value
+    if (absence_reason_9.value) employeeData.absence_reason_9 = absence_reason_9.value
+    if (absence_compensated_9.value) employeeData.absence_compensated_9 = absence_compensated_9.value
+    if (absence_time_period_9.value) employeeData.absence_time_period_9 = absence_time_period_9.value
+    if (absence_reason_10.value) employeeData.absence_reason_10 = absence_reason_10.value
+    if (absence_compensated_10.value) employeeData.absence_compensated_10 = absence_compensated_10.value
+    if (absence_time_period_10.value) employeeData.absence_time_period_10 = absence_time_period_10.value
     if (extra.value) employeeData.extra = extra.value
     setEmployees([...employees, employeeData])
     employee_name.onReset()
@@ -218,9 +274,9 @@ const SalaryForm = () => {
     setLunchBenefitValue('')
     setSportBenefit('')
     setSportBenefitValue('')
-    setWageTotalGross('')
-    setBenefitsTotal('')
-    setReductionsTotal('')
+    setWageTotalGross(Number('0'.replace(',', '.')).toFixed(2))
+    setBenefitsTotal(Number('0'.replace(',', '.')).toFixed(2))
+    setReductionsTotal(Number('0'.replace(',', '.')).toFixed(2))
     mileage_allowance.onReset()
     daily_allowance_domestic.onReset()
     daily_allowance_domestic_part_time.onReset()
@@ -228,12 +284,33 @@ const SalaryForm = () => {
     absence_reason_1.onReset()
     absence_reason_2.onReset()
     absence_reason_3.onReset()
+    absence_reason_4.onReset()
+    absence_reason_5.onReset()
+    absence_reason_6.onReset()
+    absence_reason_7.onReset()
+    absence_reason_8.onReset()
+    absence_reason_9.onReset()
+    absence_reason_10.onReset()
     absence_compensated_1.onReset()
     absence_compensated_2.onReset()
     absence_compensated_3.onReset()
+    absence_compensated_4.onReset()
+    absence_compensated_5.onReset()
+    absence_compensated_6.onReset()
+    absence_compensated_7.onReset()
+    absence_compensated_8.onReset()
+    absence_compensated_9.onReset()
+    absence_compensated_10.onReset()
     absence_time_period_1.onReset()
     absence_time_period_2.onReset()
     absence_time_period_3.onReset()
+    absence_time_period_4.onReset()
+    absence_time_period_5.onReset()
+    absence_time_period_6.onReset()
+    absence_time_period_7.onReset()
+    absence_time_period_8.onReset()
+    absence_time_period_9.onReset()
+    absence_time_period_10.onReset()
     extra.onReset()
   }
 
@@ -243,6 +320,19 @@ const SalaryForm = () => {
     setEmployees(newEmployees)
   }
 
+  // this matrix holds all absence related variables
+  const absencesTable = [
+    [absence_reason_1, absence_compensated_1, absence_time_period_1],
+    [absence_reason_2, absence_compensated_2, absence_time_period_2],
+    [absence_reason_3, absence_compensated_3, absence_time_period_3],
+    [absence_reason_4, absence_compensated_4, absence_time_period_4],
+    [absence_reason_5, absence_compensated_5, absence_time_period_5],
+    [absence_reason_6, absence_compensated_6, absence_time_period_6],
+    [absence_reason_7, absence_compensated_7, absence_time_period_7],
+    [absence_reason_8, absence_compensated_8, absence_time_period_8],
+    [absence_reason_9, absence_compensated_9, absence_time_period_9],
+    [absence_reason_10, absence_compensated_10, absence_time_period_10],
+  ]
   if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
@@ -285,15 +375,9 @@ const SalaryForm = () => {
         daily_allowance_domestic={daily_allowance_domestic}
         daily_allowance_domestic_part_time={daily_allowance_domestic_part_time}
         daily_allowance_foreign={daily_allowance_foreign}
-        absence_reason_1={absence_reason_1}
-        absence_compensated_1={absence_compensated_1}
-        absence_time_period_1={absence_time_period_1}
-        absence_reason_2={absence_reason_2}
-        absence_compensated_2={absence_compensated_2}
-        absence_time_period_2={absence_time_period_2}
-        absence_reason_3={absence_reason_3}
-        absence_compensated_3={absence_compensated_3}
-        absence_time_period_3={absence_time_period_3}
+        absencesTable={absencesTable}
+        visibleAbsenceRows={visibleAbsenceRows}
+        setVisibleAbsenceRows={setVisibleAbsenceRows}
         extra={extra}
         addEmployee={addEmployee}
         employees={employees}
