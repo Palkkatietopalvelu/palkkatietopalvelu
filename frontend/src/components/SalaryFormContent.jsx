@@ -1,11 +1,12 @@
 // ./client/{client.id}/salaryform (Palkkatietolomake, vain asiakkaille, lomakeosa)
 import React from 'react'
 import { useState } from 'react'
-import { Form, Button, Accordion, Card } from 'react-bootstrap'
+import { Container, Form, Button, Accordion, Card } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
 import days from './ReminderInfo'
+//import './Styles.css'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -64,7 +65,7 @@ const SalaryFormContent = ({
     boxShadow: 'none'
   }
 
-  const tableStyle = { margin: '15px' }
+  const tableStyle = { margin: '15px', width: '67vw' }
   const buttonStyle = { margin: '10px 5px 20px' }
   const buttonStyle2 = { margin: '60px 5px 0px' }
 
@@ -95,7 +96,8 @@ const SalaryFormContent = ({
       {client ? <h5>{client.company}</h5> : null} <br />
       <div>
         <h5>PALKKATIEDOT</h5>
-        <Table style={tableStyle}>
+        <Container>
+        <Table style={{margin: '15px'}}>
           <tbody>
             <tr>
               <td>Palkansaaja <Form.Control id='employee name' {...employee_name} /></td>
@@ -103,6 +105,9 @@ const SalaryFormContent = ({
             </tr>
           </tbody>
         </Table>
+        </Container>
+        <Container>
+          <div className='table-responsive'>
         <Table style={tableStyle}>
           <tbody>
             <tr>
@@ -232,9 +237,9 @@ const SalaryFormContent = ({
               </td>
             </tr>
           </tbody>
-        </Table><br/>
+        </Table></div></Container><br/>
         <h5>POISSAOLOT</h5>
-        <Table style={tableStyle}>
+        <Table style={{margin: '15px'}}>
           <thead>
             <tr>
               <th>Syy</th>
