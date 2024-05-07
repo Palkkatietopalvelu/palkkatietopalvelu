@@ -1,11 +1,12 @@
 // ./client/{client.id}/salaryform (Palkkatietolomake, vain asiakkaille, lomakeosa)
 import React from 'react'
 import { useState } from 'react'
-import { Form, Button, Accordion, Card } from 'react-bootstrap'
+import { Container, Form, Button, Accordion, Card } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
 import days from './ReminderInfo'
+//import './Styles.css'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -64,7 +65,7 @@ const SalaryFormContent = ({
     boxShadow: 'none'
   }
 
-  const tableStyle = { margin: '15px' }
+  const tableStyle = { margin: '15px', width: '67vw' }
   const buttonStyle = { margin: '10px 5px 20px' }
   const buttonStyle2 = { margin: '60px 5px 0px' }
 
@@ -95,146 +96,150 @@ const SalaryFormContent = ({
       {client ? <h5>{client.company}</h5> : null} <br />
       <div>
         <h5>PALKKATIEDOT</h5>
-        <Table style={tableStyle}>
-          <tbody>
-            <tr>
-              <td>Palkansaaja <Form.Control id='employee name' {...employee_name} /></td>
-              <td>Palkkajakso <Form.Control id='month' {...month} /></td>
-            </tr>
-          </tbody>
-        </Table>
-        <Table style={tableStyle}>
-          <tbody>
-            <tr>
-              <th>Palkat</th>
-            </tr>
-            <tr>
-              <td>Tuntimäärä (arkipäivät)
-                <Form.Control
-                  id='total_hours_weekdays'
-                  value={total_hours_weekdays}
-                  onChange={(e) => setTotalHoursWeekdays(e.target.value)}
-                />
-              </td>
-              <td>Sunnuntaitunnit
-                <Form.Control
-                  id='total_hours_sundays'
-                  value={total_hours_sundays}
-                  onChange={(e) => setTotalHoursSundays(e.target.value)}
-                />
-              </td>
-              <td>Tuntipalkka
-                <Form.Control
-                  id='wage_hourly'
-                  value={wage_hourly}
-                  onChange={(e) => setWageHourly(e.target.value)}
-                />
-              </td>
-              <td>Kk-palkat
-                <Form.Control
-                  id='wage_monthly'
-                  value={wage_monthly}
-                  onChange={(e) => setWageMonthly(e.target.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>Luontoisedut</th>
-            </tr>
-            <tr>
-              <td>Asuntoetu
-                <Form.Control
-                  id='flat_benefit'
-                  value={flat_benefit}
-                  onChange={(e) => setFlatBenefit(e.target.value)}
-                />
-              </td>
-              <td>Autoetu
-                <Form.Control
-                  id='car_benefit'
-                  value={car_benefit}
-                  onChange={(e) => setCarBenefit(e.target.value)}
-                />
-              </td>
-              <td>Puhelinetu
-                <Form.Control
-                  id='phone_benefit'
-                  value={phone_benefit}
-                  onChange={(e) => setPhoneBenefit(e.target.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>Vähennykset</th>
-            </tr>
-            <tr>
-              <td>Lounarimäärä
-                <Form.Control
-                  id='lunch_benefit'
-                  value={lunch_benefit}
-                  onChange={(e) => setLunchBenefit(e.target.value)}
-                />
-              </td>
-              <td>Lounarihinta
-                <Form.Control
-                  id='lunch_benefit_value'
-                  value={lunch_benefit_value}
-                  onChange={(e) => setLunchBenefitValue(e.target.value)}
-                />
-              </td>
-              <td>Liikuntasetelit
-                <Form.Control
-                  id='sport_benefit'
-                  value={sport_benefit}
-                  onChange={(e) => setSportBenefit(e.target.value)}
-                />
-              </td>
-              <td>Liikuntasetelin arvo
-                <Form.Control
-                  id='sport_benefit_value'
-                  value={sport_benefit_value}
-                  onChange={(e) => setSportBenefitValue(e.target.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>Tarkistus</th>
-            </tr>
-            <tr>
-              <td>
-                <div>Bruttopalkka yhteensä</div>
-                <div>
-                  <p><b>{wage_total_gross} €</b></p>
-                </div>
-              </td>
-              <td>
-                <div>Luontoisedut</div>
-                <div>
-                  <p><b>{benefits_total} €</b></p>
-                </div>
-              </td>
-              <td>
-                <div>Vähennykset</div>
-                <div>
-                  <p><b>- {reductions_total} €</b></p>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>Korvaukset ja päivärahat</th>
-            </tr>
-            <tr>
-              <td>Km-korvaus <Form.Control id='mileage_allowance' {...mileage_allowance} /></td>
-              <td>Kotimaan päiväraha <Form.Control id='daily_allowance_domestic' {...daily_allowance_domestic} /></td>
-              <td>Kotimaan osapäivä <Form.Control id='daily_allowance_domestic_part_time' {...daily_allowance_domestic_part_time} /></td>
-              <td style={{ marginTop: '-25px' }}>
+        <Container>
+          <Table style={{ margin: '15px' }}>
+            <tbody>
+              <tr>
+                <td>Palkansaaja <Form.Control id='employee name' {...employee_name} /></td>
+                <td>Palkkajakso <Form.Control id='month' {...month} /></td>
+              </tr>
+            </tbody>
+          </Table>
+        </Container>
+        <Container>
+          <div className='table-responsive'>
+            <Table style={tableStyle}>
+              <tbody>
+                <tr>
+                  <th>Palkat</th>
+                </tr>
+                <tr>
+                  <td>Tuntimäärä (arkipäivät)
+                    <Form.Control
+                      id='total_hours_weekdays'
+                      value={total_hours_weekdays}
+                      onChange={(e) => setTotalHoursWeekdays(e.target.value)}
+                    />
+                  </td>
+                  <td>Sunnuntaitunnit
+                    <Form.Control
+                      id='total_hours_sundays'
+                      value={total_hours_sundays}
+                      onChange={(e) => setTotalHoursSundays(e.target.value)}
+                    />
+                  </td>
+                  <td>Tuntipalkka
+                    <Form.Control
+                      id='wage_hourly'
+                      value={wage_hourly}
+                      onChange={(e) => setWageHourly(e.target.value)}
+                    />
+                  </td>
+                  <td>Kk-palkat
+                    <Form.Control
+                      id='wage_monthly'
+                      value={wage_monthly}
+                      onChange={(e) => setWageMonthly(e.target.value)}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Luontoisedut</th>
+                </tr>
+                <tr>
+                  <td>Asuntoetu
+                    <Form.Control
+                      id='flat_benefit'
+                      value={flat_benefit}
+                      onChange={(e) => setFlatBenefit(e.target.value)}
+                    />
+                  </td>
+                  <td>Autoetu
+                    <Form.Control
+                      id='car_benefit'
+                      value={car_benefit}
+                      onChange={(e) => setCarBenefit(e.target.value)}
+                    />
+                  </td>
+                  <td>Puhelinetu
+                    <Form.Control
+                      id='phone_benefit'
+                      value={phone_benefit}
+                      onChange={(e) => setPhoneBenefit(e.target.value)}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Vähennykset</th>
+                </tr>
+                <tr>
+                  <td>Lounarimäärä
+                    <Form.Control
+                      id='lunch_benefit'
+                      value={lunch_benefit}
+                      onChange={(e) => setLunchBenefit(e.target.value)}
+                    />
+                  </td>
+                  <td>Lounarihinta
+                    <Form.Control
+                      id='lunch_benefit_value'
+                      value={lunch_benefit_value}
+                      onChange={(e) => setLunchBenefitValue(e.target.value)}
+                    />
+                  </td>
+                  <td>Liikuntasetelit
+                    <Form.Control
+                      id='sport_benefit'
+                      value={sport_benefit}
+                      onChange={(e) => setSportBenefit(e.target.value)}
+                    />
+                  </td>
+                  <td>Liikuntasetelin arvo
+                    <Form.Control
+                      id='sport_benefit_value'
+                      value={sport_benefit_value}
+                      onChange={(e) => setSportBenefitValue(e.target.value)}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Tarkistus</th>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Bruttopalkka yhteensä</div>
+                    <div>
+                      <p><b>{wage_total_gross} €</b></p>
+                    </div>
+                  </td>
+                  <td>
+                    <div>Luontoisedut</div>
+                    <div>
+                      <p><b>{benefits_total} €</b></p>
+                    </div>
+                  </td>
+                  <td>
+                    <div>Vähennykset</div>
+                    <div>
+                      <p><b>- {reductions_total} €</b></p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Korvaukset ja päivärahat</th>
+                </tr>
+                <tr>
+                  <td>Km-korvaus <Form.Control id='mileage_allowance' {...mileage_allowance} /></td>
+                  <td>Kotimaan päiväraha <Form.Control id='daily_allowance_domestic' {...daily_allowance_domestic} /></td>
+                  <td>Kotimaan osapäivä <Form.Control id='daily_allowance_domestic_part_time' {...daily_allowance_domestic_part_time} /></td>
+                  <td style={{ marginTop: '-25px' }}>
                 Ulkomaan päivärahat (maa ja päivien määrä) <Form.Control id='daily_allowance_foreign' {...daily_allowance_foreign} />
-              </td>
-            </tr>
-          </tbody>
-        </Table><br/>
+                  </td>
+                </tr>
+              </tbody>
+            </Table></div></Container><br/>
         <h5>POISSAOLOT</h5>
-        <Table style={tableStyle}>
+        <Table style={{ margin: '15px' }}>
           <thead>
             <tr>
               <th>Syy</th>
