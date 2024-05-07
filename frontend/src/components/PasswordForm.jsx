@@ -43,7 +43,7 @@ const PasswordChange = () => {
     <div>
       <Togglable buttonLabel='Vaihda salasana' ref={formRef}>
         <hr/><h3>Vaihda salasana</h3>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className='better-width'>
           <Form.Group>
             <Form.Label>Nykyinen salasana</Form.Label>
             <Form.Control id='oldPassword' type='password' {...oldPassword} required />

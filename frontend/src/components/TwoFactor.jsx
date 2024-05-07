@@ -56,7 +56,7 @@ const TwoFactor = () => {
   return (
     <div>
       {uri && <div style={{ background: 'white', padding: '16px' }}>
-        <Form onSubmit={handleConfirmTwoFactor}>
+        <Form onSubmit={handleConfirmTwoFactor} className='better-width'>
           <Form.Group>
             <p>Skannaa koodi valitsemassasi todennussovelluksessa (esim google authenticator), ja viimeistele käyttöönotto syöttämällä vahvistuskoodi</p>
             <p>HUOM! Käyttöönoton jälkeen pääset kirjautumaan käyttäjälle vain, jos sinulla on sovelluksen generoima koodi.</p>
@@ -71,7 +71,7 @@ const TwoFactor = () => {
       {user.two_fa && <div>
           Kaksivaiheinen tunnistautuminen on käytössä
         <Togglable buttonLabel='Poista käytöstä' ref={formRef}>
-          <Form onSubmit={handleDisableSubmit}>
+          <Form onSubmit={handleDisableSubmit} className='better-width'>
             <Form.Group>
               <Form.Label>Salasana</Form.Label>
               <Form.Control id='passwordconfirmation' type='password' {...password} required />
@@ -87,7 +87,7 @@ const TwoFactor = () => {
       {!user.two_fa && !uri && <div>
           Kaksivaiheinen tunnistautuminen ei ole käytössä
         <Togglable buttonLabel='Ota käyttöön' ref={formRef}>
-          <Form onSubmit={handleEnableSubmit}>
+          <Form onSubmit={handleEnableSubmit} className='better-width'>
             <Form.Group>
               <Form.Label>Salasana</Form.Label>
               <Form.Control id='passwordconfirmation' type='password' {...password} required />

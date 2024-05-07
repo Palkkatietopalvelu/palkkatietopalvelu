@@ -44,7 +44,7 @@ const SetPassword = () => {
       <div><br/>
         <h2>Aseta uusi salasana</h2>
         <Notification />
-        <Form onSubmit={handleSetPassword}>
+        <Form onSubmit={handleSetPassword} className='better-width'>
           <Form.Group>
             <Form.Label>Salasana</Form.Label>
             <Form.Control id='password' type='password' {...password} required />

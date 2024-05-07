@@ -6,7 +6,6 @@ import Table from 'react-bootstrap/Table'
 //import DatePicker from 'react-multi-date-picker'
 import Notification from './Notification'
 import days from './ReminderInfo'
-import './Styles.css'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))

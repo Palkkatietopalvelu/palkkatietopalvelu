@@ -52,7 +52,7 @@ const LoginForm = () => {
       {!useCheckLogin() && <div>
         <h2>Kirjaudu sisään</h2>
         <Notification />
-        <Form onSubmit={handleLogin} className='login-width'>
+        <Form onSubmit={handleLogin} className='better-width'>
           <Form.Group>
             <Form.Label>Sähköposti</Form.Label>
             <Form.Control id='username' type='text' {...username} required />

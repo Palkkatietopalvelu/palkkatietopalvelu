@@ -43,7 +43,7 @@ const RegisterForm = () => {
       {user.role === 1 && <div>
         <Togglable buttonLabel='Luo uusi tilitoimistokäyttäjä' ref={formRef} variant={'warning'}>
           <hr/><h3>Luo uusi tilitoimistokäyttäjä</h3>
-          <Form onSubmit={handleRegistration}>
+          <Form onSubmit={handleRegistration} className='better-width'>
             <Form.Group>
               <Form.Label>Sähköposti</Form.Label>
               <Form.Control id='username' type='text' {...username} required />
