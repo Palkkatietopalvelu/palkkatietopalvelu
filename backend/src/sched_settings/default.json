@@ -5,5 +5,8 @@
   "deltas": [0],
   "email": false,
   "sms": false,
-  "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto"
+  "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto",
+  "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto",
+  "remindermail": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto",
+  "latemail": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"
 }

@@ -1,4 +1,4 @@
-// ./client/{client.id} (Asiakaskohtainen sivu)
+// ./client/{client.id} ("asiakkaan tiedot"-sivu. Asiakaskohtainen)
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate, Link } from 'react-router-dom'
@@ -7,6 +7,7 @@ import Notification from './Notification'
 import { Table, Button, Badge } from 'react-bootstrap'
 import FileHandler from './FileHandler'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const Client = () => {
   const dispatch = useDispatch()
@@ -20,28 +21,26 @@ const Client = () => {
       dispatch(getFile())}
   }, [dispatch, id, user])
 
-  const files = useSelector(({ file }) => file).filter(f => f.owner === id && f.delete_date === null)
+  const files = useSelector(({ files }) => files).filter(f => f.owner === id && f.delete_date === null)
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
   }
 
-  let remainingDeadlines = []
   let nextDL = null
   if (client.deadlines.length > 0) {
     const sortedDeadlines = [...client.deadlines].sort((a, b) => new Date(a) - new Date(b))
     const earliestDate = new Date(sortedDeadlines[0])
     nextDL = earliestDate.toLocaleString('fi-FI', { year: 'numeric', month: 'numeric', day: 'numeric' })
-    remainingDeadlines = sortedDeadlines.slice(1).map(date => (new Date(date)).getTime())
   }
 
   return (
     <div>
       {user.role === 1 &&
       <div>
-        <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2>
+        <br /><h2 style={{ marginBottom: '20px' }}>{client.company}</h2><hr/>
         <h5><Badge bg={client.active ? 'success' : 'warning'} pill>
           {client.active ? 'aktiivinen' : 'epäaktiivinen'}</Badge></h5>
         <Notification />
@@ -66,7 +65,7 @@ const Client = () => {
           </tbody>
         </Table>
         <Button onClick={() => navigate(`/client/${client.id}/update`)}>Muuta asiakkaan tietoja</Button>
-        {nextDL && <FileHandler client={client} files={files} nextDL={nextDL} remainingDeadlines={remainingDeadlines} />}
+        <FileHandler client={client} files={files} nextDL={nextDL} />
         <br/><br/>
         <h4>Poistetut tiedostot</h4>
         <Link to={`/client/${client.id}/trash`} id='trash'>Roskakori <i className="bi bi-trash"></i></Link>

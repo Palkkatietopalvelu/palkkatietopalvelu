@@ -1,3 +1,4 @@
+"""Reititys manuaalisille muistutuksille"""
 from flask import jsonify, request
 from flask_mail import Message
 

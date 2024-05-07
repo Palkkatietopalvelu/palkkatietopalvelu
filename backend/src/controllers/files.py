@@ -1,3 +1,4 @@
+"""Reititykset liittyen asiakkaiden lähettämiin aineistoihin"""
 import os
 from datetime import datetime
 import jwt

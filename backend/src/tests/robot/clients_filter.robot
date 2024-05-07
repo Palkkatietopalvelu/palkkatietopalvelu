@@ -58,6 +58,17 @@ Search Company With Incorrect Month
     Page Should Not Contain  Kallen kiska
     Page Should Not Contain  Nokia
 
+All Clients Filter Works In Home Page
+    Setup With Two Existing Users And Two Clients
+    Log Out
+    Login As Admin
+    Page Should Contain  testi oy
+    Page Should Not Contain  asiakas oy
+    Click Link  Omat asiakkaat
+    Click Link  Kaikki asiakkaat
+    Page Should Contain  testi oy
+    Page Should Contain  asiakas oy
+
 *** Keywords ***
 Search Company
     [Arguments]  ${companyFilter}

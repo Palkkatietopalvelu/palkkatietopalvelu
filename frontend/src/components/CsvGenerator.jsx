@@ -1,4 +1,4 @@
-// CsvGenerator.jsx
+// (Generoi palkkatietolomakkeesta csv-tiedoston)
 import { addFile } from '../reducers/fileReducer'
 
 function convertToCSV(objArray, clientDetails, date) {

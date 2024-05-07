@@ -1,4 +1,4 @@
-// ./resetpassword (Unohtunut salasana, vain asiakkaille)
+// ./resetpassword (Unohtunut salasana)
 import { useDispatch } from 'react-redux'
 import { useField } from '../hooks'
 import { resetClientPassword } from '../reducers/userReducer'

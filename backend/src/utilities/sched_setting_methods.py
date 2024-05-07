@@ -1,3 +1,4 @@
+"""Metodit, jotka liittyvät automaattisten muistutuksien asetuksiin"""
 import json
 from pathlib import Path
 #Pathlib mahdollistaa suhteellisen tiedostopolun käyttämisen tiedostoja avatessa
@@ -8,6 +9,12 @@ def load_settings(filename = 'custom.json'):
         path = Path(__file__).parent / f'../sched_settings/{filename}'
         with path.open(encoding='utf-8') as setting_file:
             settings = json.load(setting_file)
+            try:
+                validate_settings(settings)
+            except (ValueError, KeyError) as exc:
+                delete_custom(filename)
+                raise FileNotFoundError from exc
+
     except FileNotFoundError:
         path = Path(__file__).parent / '../sched_settings/default.json'
         with path.open(encoding='utf-8') as setting_file:
@@ -22,7 +29,10 @@ def save_settings(data, filename = 'custom.json'):
         'deltas': data['deltas'],
         'email': data['email'],
         'sms': data['sms'],
-        'remindertext': data['remindertext']
+        'remindertext': data['remindertext'],
+        'latetext' : data['latetext'],
+        'remindermail': data['remindermail'],
+        'latemail': data['latemail']
     }
     validated_data = validate_settings(settings_data)
     path = Path(__file__).parent / f'../sched_settings/{filename}'
@@ -40,7 +50,10 @@ def get_readable_settings():
         'deltas': settings['deltas'],
         'email': settings['email'],
         'sms': settings['sms'],
-        'remindertext': settings['remindertext']
+        'remindertext': settings['remindertext'],
+        'latetext' : settings['latetext'],
+        'remindermail': settings['remindermail'],
+        'latemail' : settings['latemail']
     }
     return readable_settings
 
@@ -62,6 +75,12 @@ def validate_settings(settings):
             raise ValueError('Valitse ainakin yksi lähetystapa')
         if len(settings['remindertext']) < 2:
             raise ValueError('Muistutusviesti puuttuu')
+        if len(settings['latetext']) < 2:
+            raise ValueError('Myöhästymisviesti puuttuu')
+        if len(settings['remindermail']) < 2:
+            raise ValueError('Muistutusviesti puuttuu')
+        if len(settings['latemail']) < 2:
+            raise ValueError('Myöhästymisviesti puuttuu')
 
     return settings
 

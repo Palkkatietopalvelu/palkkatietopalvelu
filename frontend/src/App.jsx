@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes, Route
 } from 'react-router-dom'
+import '../assets/style.css'
 import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import { getClients } from './reducers/clientsReducer'

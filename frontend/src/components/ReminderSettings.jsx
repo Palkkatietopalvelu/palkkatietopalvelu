@@ -1,10 +1,11 @@
 // ./remindersettings (Automaattiset muistutukset)
 import { useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import settingsService from '../services/reminderSettings'
 import reminderInfoModule from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays } = reminderInfoModule
 
@@ -24,7 +25,7 @@ const ReminderSettings = () => {
     }
   }, [user])
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
 

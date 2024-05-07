@@ -1,5 +1,7 @@
 import unittest
 import json
+import os
+import jwt
 import check_env
 from app import app
 from utilities import client_methods
@@ -13,6 +15,9 @@ class TestSchedSettingMethods(unittest.TestCase):
         initialize_database()
         data = {"username": "pekka@mail.com", "password": "pekka123", "role": 1}
         app.test_client().post("/api/users", json=data)
+        token = jwt.encode(
+            {"username": "pekka", "id": "1", "role": 1}, os.environ.get('SECRET_KEY'), algorithm='HS256')
+        self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
         self.client_data = {"user_id": "1",
                             "company": "Testiyritys",
@@ -29,14 +34,20 @@ class TestSchedSettingMethods(unittest.TestCase):
                         "deltas": [0],
                         "email": True,
                         "sms": False,
-                        "remindertext": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto"}
+                        "remindertext": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
+                        "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto",
+                        "remindermail": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
+                        "latemail": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"}
         self.default_data = {"days": "0,2,4",
                         "hour": "10",
                         "enabled": False,
                         "deltas": [0],
                         "email": False,
                         "sms": False,
-                        "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto"}
+                        "remindertext": "Hei! Tämä on automaattinen muistutus palkka-ainestojen toimituksen lähestyvästä eräpäivästä. T. Reilu Hallinto",
+                        "latetext": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto",
+                        "remindermail": "Hei! T\u00e4m\u00e4 on automaattinen muistutus palkka-ainestojen toimituksen l\u00e4hestyv\u00e4st\u00e4 er\u00e4p\u00e4iv\u00e4st\u00e4. T. Reilu Hallinto",
+                        "latemail": "Hei! Palkka-aineistosi ovat my\u00f6h\u00e4ss\u00e4. Toimitathan ne mahdollisimman pian. T. Reilu Hallinto"}
 
     def test_load_settings_with_invalid_filename(self):
         settings = sched.load_settings(filename= 'wrong')
@@ -85,7 +96,35 @@ class TestSchedSettingMethods(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             sched.save_settings(self.enabled_data, filename= 'test_custom.json')
         self.assertEqual(str(context.exception), 'Muistutusviesti puuttuu')
+
+    def test_save_settings_with_short_late_text(self):
+        self.enabled_data["latetext"] = "!"
+        with self.assertRaises(ValueError) as context:
+            sched.save_settings(self.enabled_data, filename= 'test_custom.json')
+        self.assertEqual(str(context.exception), 'Myöhästymisviesti puuttuu')   
     
     def test_recover_settings(self):
         settings = sched.recover_settings(filename= 'test_custom.json')
         self.assertEqual(settings, self.default_data)
+    
+    def test_get_readable_settings(self):
+        settings = sched.get_readable_settings()
+        with app.test_request_context():
+            res = app.test_client().get("/api/reminders", headers=self.headers)
+            res_data = json.loads(res.data.decode('utf-8'))
+            self.assertDictEqual(settings, res_data)
+
+    def test_update_settings(self):
+        # this test changes directly the custom.json but will also restore the file back to its original format
+        og_settings = sched.get_readable_settings()
+        with app.test_request_context():
+            res = app.test_client().post("/api/reminders", headers=self.headers, json=self.default_data)
+            res_data = json.loads(res.data.decode('utf-8'))
+            self.assertDictEqual(self.default_data, res_data)
+        sched.save_settings(og_settings)  # restores the file back to the original format
+
+    def test_update_settings_fails_with_valueerror(self):
+        self.enabled_data["latetext"] = "!"
+        with app.test_request_context():
+            res = app.test_client().post("/api/reminders", headers=self.headers, json=self.enabled_data)
+            self.assertEqual(res.status_code, 400)

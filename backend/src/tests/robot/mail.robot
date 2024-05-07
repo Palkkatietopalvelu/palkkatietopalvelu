@@ -44,12 +44,8 @@ Turning On Automatic Email Reminder Fails Without Email Checkbox Selected
 
 Turning On Automatic Email Reminder Fails Without Sending Day Selected
     Select Checkbox  email
-    Unselect Checkbox  day-0
-    Unselect Checkbox  day-2
-    Unselect Checkbox  day-4
-    Checkbox Should Not Be Selected  day-0
-    Checkbox Should Not Be Selected  day-2
-    Checkbox Should Not Be Selected  day-4
+    Unselect Days
+    Scroll Element Into View   id=tallenna
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetyspäivä
     Select Checkbox  day-0

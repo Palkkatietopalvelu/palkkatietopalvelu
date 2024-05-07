@@ -6,10 +6,11 @@ import { updateClient, deleteClient, updateStatus } from '../reducers/clientsRed
 import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import DatePicker from 'react-multi-date-picker'
-import { DateSelect } from '../hooks/DatePicker'
+import { useDateSelect } from '../hooks/DatePicker'
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import days from './ReminderInfo'
+import useCheckLogin from '../hooks/CheckLogin'
 
 const { weekDays, months } = days
 const weekDaysSorted = weekDays.slice(6).concat(weekDays.slice(0, 6))
@@ -27,10 +28,10 @@ const UpdateClient = () => {
   const email = useField(client ? client.email : '')
   const phonenumber = useField(client ? client.phonenumber : '')
   const bicode = useField(client ? client.bi_code : '')
-  const deadlines = DateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
+  const deadlines = useDateSelect(client ? client.deadlines.map(deadline => new Date(deadline).getTime()) : new Date())
   const payperiod = useField(client ? client.payperiod : '')
 
-  if (!user) {
+  if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   } else if (!client) {
     return
@@ -72,7 +73,7 @@ const UpdateClient = () => {
   }
 
   const style = {
-    width: '90vw',
+    width: '50vw',
     padding: '0rem',
     color: '#495057',
     border: 0,

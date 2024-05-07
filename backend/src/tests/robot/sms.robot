@@ -44,7 +44,8 @@ Turning On Automatic Sms Reminder Fails Without Sms Checkbox Selected
 
 Turning On Automatic Sms Reminder Fails Without Sending Day Selected
     Select Checkbox  sms
-    Unselect Checkbox  day-0
+    Unselect Days
+    Scroll Element Into View   id=tallenna
     Click Button  Tallenna
     Wait For  Valitse ainakin yksi lähetyspäivä
     Select Checkbox  day-0
