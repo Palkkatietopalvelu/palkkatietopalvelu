@@ -79,6 +79,8 @@ Lisää testien ajon ajaksi backendin .env tiedostoon myös seuraavat:
 Muista ottaa FLASK_ENV muuttuja pois .env tiedostosta testien ajon jälkeen. Kun FLASK_ENV="development" on määritelty, ohjelma käyttää tietokantana TEST_DATABASE_URL määriteltyä tietokantaa eikä asiakkaita lisätessä lähetetä sähköposteja.
 
 robot-testit:
+- Osa näistä epäonnistuu satunnaisesti.
+- Erityisesti jos "Link expires after use" epäonnistuu, kannattaa ensimmäisenä kokeilla testien ajoa uudelleen.
 ```
 poetry run invoke robottests
 ```
