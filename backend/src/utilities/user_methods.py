@@ -1,14 +1,17 @@
 """Metodit, jotka liittyvät käyttäjiin (tilitoimisto ja asiakas)"""
 import os
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import time
 import jwt
+from sqlalchemy import func
 from flask import jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mail import Message
 from models.user import User, db
 from app import app, mail
 from utilities import client_user
+from utilities.totp_methods import check_active_status
 
 def create_user(username, password, role):
     validate_credentials(username, password)
@@ -81,3 +84,31 @@ def get_resetpassword_token(email):
     data = {"username": email, "exp": expiration_time}
     token = jwt.encode(data, os.environ.get('SECRET_KEY'), algorithm='HS256')
     return token
+
+def verify_password(password, user):
+    return check_password_hash(user.password, password)
+
+def generate_user_info (user):
+    now_ms = int( time.time_ns() / 10**6)
+    two_fa = False
+    if check_active_status(user.id):
+        two_fa = True
+    valid_for = timedelta(hours=10)
+    expiration_time = datetime.now(timezone.utc) + valid_for
+    user_info = {"username": user.username,
+                    "id": user.id,
+                    "role": user.role,
+                    "exp": expiration_time,
+                    "two_fa": two_fa}
+    token = jwt.encode(user_info, os.environ.get('SECRET_KEY'), algorithm='HS256')
+    return jsonify({"token": token, "username": user.username,
+                    "id": user.id, "role": user.role, "two_fa": two_fa,
+                    "exp": (now_ms + (valid_for/timedelta(milliseconds=1)))})
+
+def check_credentials(data):
+    username = data['username']
+    password = data['password']
+    user = User.query.filter(func.lower(User.username) == func.lower(username)).first()
+    if user and check_password_hash(user.password, password):
+        return user
+    return False

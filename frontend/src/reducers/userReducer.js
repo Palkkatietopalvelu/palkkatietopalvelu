@@ -7,6 +7,7 @@ import loginService from '../services/login'
 import storageService from '../services/storage'
 import { notify } from './notificationReducer'
 import { getClients } from './clientsReducer'
+import TwoFactorService from '../services/twofactor'
 
 const initialState = null
 
@@ -118,4 +119,60 @@ export const validateToken = (token) => {
     }
   }
 }
+
+export const enableTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      const uri = await TwoFactorService.enableTwoFactor(data)
+      return uri
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
+    }
+  }
+}
+
+export const confirmTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      const user = await TwoFactorService.confirmTwoFactor(data)
+      storageService.saveUser(user)
+      dispatch(set(user))
+      dispatch(notify('Käyttöönotto onnistui'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
+    }
+  }
+}
+
+export const disableTwoFactor = (data) => {
+  return async dispatch => {
+    try {
+      const user = await TwoFactorService.disableTwoFactor(data)
+      storageService.saveUser(user)
+      dispatch(set(user))
+      dispatch(notify('Kaksivaiheinen tunnistautuminen poistetty käytöstä'))
+      return true
+    } catch (e) {
+      dispatch(notify(e.response?.data || 'Tapahtui virhe', 'danger'))
+      return false
+    }
+  }
+}
+
+export const checkTwoFactor = (credentials) => {
+  return async dispatch => {
+    try {
+      const response = await TwoFactorService.checktwofactor(credentials)
+      return response
+    } catch (e) {
+      dispatch(notify(e.response?.data.error ||
+        'Väärä käyttäjätunnus tai salasana', 'danger'))
+      return false
+    }
+  }
+}
+
 export default slice.reducer

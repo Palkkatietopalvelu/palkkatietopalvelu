@@ -40,3 +40,10 @@ CREATE TABLE expired_tokens (
   token TEXT,
   date DATE
 );
+
+CREATE TABLE two_factor_secrets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  totp_secret TEXT,
+  active BOOLEAN
+);
