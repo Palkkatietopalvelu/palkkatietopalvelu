@@ -320,7 +320,6 @@ const SalaryForm = () => {
     setEmployees(newEmployees)
   }
 
-<<<<<<< HEAD
   // this matrix holds all absence related variables
   const absencesTable = [
     [absence_reason_1, absence_compensated_1, absence_time_period_1],
@@ -334,11 +333,9 @@ const SalaryForm = () => {
     [absence_reason_9, absence_compensated_9, absence_time_period_9],
     [absence_reason_10, absence_compensated_10, absence_time_period_10],
   ]
-=======
   if (!useCheckLogin()) {
     return ('Et ole kirjautunut sisään')
   }
->>>>>>> main
 
   return (
     <>
