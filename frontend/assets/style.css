@@ -24,12 +24,12 @@
   }
 }
 
-.login-width {
+.better-width {
   width: 30%;
 }
 
 @media (max-width: 768px) {
-  .login-width {
+  .better-width {
     width: 50%;
   }
 }

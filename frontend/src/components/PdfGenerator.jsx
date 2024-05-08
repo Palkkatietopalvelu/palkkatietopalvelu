@@ -135,40 +135,55 @@ const generatePDF = (formData, clientDetails, date) => {
         doc.text(`${employee.daily_allowance_foreign}`, 155, yPosition)
       }
       yPosition += increment
-      // yPosition = changePDFPage(doc)
-      // Absences
-      if (employee.absence_reason_1) {
-        yPosition += increment
-        doc.text('POISSAOLOT', 10, yPosition)
-        yPosition += increment
-        doc.text('Syy', 15, yPosition)
-        doc.text('Palkallinen', 100, yPosition)
-        doc.text('Ajalta', 140, yPosition)
+
+      yPosition += increment
+      doc.text('POISSAOLOT', 10, yPosition)
+      yPosition += increment
+      let noAbsences = true
+      const totalAbsences = 10
+      const initialYPosition = yPosition
+
+      for (let i = 1; i <= totalAbsences; i++) {
+        if (employee[`absence_reason_${i}`] && employee[`absence_compensated_${i}`] && employee[`absence_time_period_${i}`]) {
+          if (noAbsences) {
+            doc.text('Syy', 15, yPosition)
+            doc.text('Palkallinen', 100, yPosition)
+            doc.text('Ajalta', 140, yPosition)
+            yPosition += increment
+          }
+          noAbsences = false
+          break
+        }
+      }
+
+      // Then, loop through each absence entry
+      for (let i = 1; i <= totalAbsences; i++) {
+        if (employee[`absence_reason_${i}`] && employee[`absence_compensated_${i}`] && employee[`absence_time_period_${i}`]) {
+          doc.text(`${employee[`absence_reason_${i}`]}`, 15, yPosition)
+          doc.text(`${employee[`absence_compensated_${i}`]}`, 100, yPosition)
+          doc.text(`${employee[`absence_time_period_${i}`]}`, 140, yPosition)
+          yPosition += increment
+        }
+      }
+
+      if (noAbsences) {
+        yPosition = initialYPosition
+        doc.text('Ei syötettyjä poissaoloja', 15, yPosition)
         yPosition += increment
       }
-      if (employee.absence_compensated_1) {
-        doc.text(`${employee.absence_reason_1}`, 15, yPosition)
-        doc.text(`${employee.absence_compensated_1}`, 100, yPosition)
-        doc.text(`${employee.absence_time_period_1}`, 140, yPosition)
-        yPosition += increment
-      }
-      if (employee.absence_reason_2) {
-        doc.text(`${employee.absence_reason_2}`, 15, yPosition)
-        doc.text(`${employee.absence_compensated_2}`, 100, yPosition)
-        doc.text(`${employee.absence_time_period_2}`, 140, yPosition)
-        yPosition += increment
-      }
-      if (employee.absence_reason_3) {
-        doc.text(`${employee.absence_reason_3}`, 15, yPosition)
-        doc.text(`${employee.absence_compensated_3}`, 100, yPosition)
-        doc.text(`${employee.absence_time_period_3}`, 140, yPosition)
-        yPosition += increment
+      if (yPosition > 280) {
+        doc.addPage()
+        yPosition = 10
       }
       yPosition += increment
       // Additional information
+      doc.text('LISÄTIEDOT', 10, yPosition)
+      yPosition += increment
       if (employee.extra) {
-        doc.text(`Lisätiedot: ${employee.extra}`, 10, yPosition)
-        yPosition += increment
+        doc.text(`${employee.extra}`, 15, yPosition)
+      }
+      else if (!employee.extra) {
+        doc.text('Ei syötettyjä lisätietoja', 15, yPosition)
       }
       // Ensure there's a visual separation between employees
       // yPosition += 5 // Add a little extra space before the next employee

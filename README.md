@@ -79,6 +79,8 @@ Lisää testien ajon ajaksi backendin .env tiedostoon myös seuraavat:
 Muista ottaa FLASK_ENV muuttuja pois .env tiedostosta testien ajon jälkeen. Kun FLASK_ENV="development" on määritelty, ohjelma käyttää tietokantana TEST_DATABASE_URL määriteltyä tietokantaa eikä asiakkaita lisätessä lähetetä sähköposteja.
 
 robot-testit:
+- Osa näistä epäonnistuu satunnaisesti.
+- Erityisesti jos "Link expires after use" epäonnistuu, kannattaa ensimmäisenä kokeilla testien ajoa uudelleen.
 ```
 poetry run invoke robottests
 ```
@@ -114,6 +116,10 @@ Tietokannan alustamisen yhteydessä lisätään ensimmäinen tilitoimistokäytt�
 
 ## Julkaisuohjeet
 [julkaisuohjeet](https://github.com/Palkkatietopalvelu/palkkatietopalvelu/blob/main/documents/Julkaisu/julkaisu.md)
+
+## Kaksivaiheinen tunnistautuminen
+* Sovelluksessa ei ole tapaa palauttaa käyttäjän pääsyä sovellukseen, mikäli tämä on ottanut kaksivaiheisen tunnistautumisen käyttöön, ja menettänyt pääsyn todennussovellukseensa
+* Käyttäjän voi palauttaa poistamalla todennusavainten tietokantataulusta käyttäjää koskevan rivin
 
 ## Backlogit
 [backlog](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit#gid=0](https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1jwWQK4tsHwZ1lQ-sYIJoU5UrBi-TOOu_HQ8tnd9n4GE/edit?usp=sharing)
